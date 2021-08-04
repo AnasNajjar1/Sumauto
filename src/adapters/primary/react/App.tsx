@@ -1,22 +1,26 @@
 import React, { FunctionComponent } from 'react';
 import { BrowserRouter, Switch, Route, useParams, useHistory } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
 import { Appointment } from './Components/Appointment';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
 import { themeSelector } from './Components/Themes';
 import { ErrorPage } from './Components/ErrorPage';
+import { clients } from '../../../config/config';
+import { setClientIdentifierUseCase } from '../../../hexagon/usecases/setClientIdentifier/setClientIdentifier';
 
 const App: FunctionComponent = () => {
     const history = useHistory();
     const { clientSlug } = useParams<RouteParams>();
 
-    // if (!clientSlug) {
-    //     history.push('/error/404');
-    // }
-
-    console.log(clientSlug);
+    const dispatch = useDispatch();
+    if (!clients.includes(clientSlug)) {
+        history.push('/error/404');
+    } else {
+        dispatch(setClientIdentifierUseCase(clientSlug));
+    }
 
     return (
         <React.Suspense fallback={<></>}>
@@ -26,6 +30,7 @@ const App: FunctionComponent = () => {
                     <main>
                         <Switch>
                             <Route path="/appointment" component={Appointment} />
+
                             <Route path="/" component={FormVehicle} />
                         </Switch>
                     </main>
@@ -38,7 +43,10 @@ const App: FunctionComponent = () => {
 
 const ClientHandler: FunctionComponent = () => (
     <BrowserRouter>
-        <Route path={['/:clientSlug', '/']} component={App} />
+        <Switch>
+            <Route exact path="/error/:errorCode" component={ErrorPage} />
+            <Route path={['/:clientSlug', '/']} component={App} />
+        </Switch>
     </BrowserRouter>
 );
 

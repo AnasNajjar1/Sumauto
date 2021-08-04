@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import { RouteParams } from '../../../../hexagon/interfaces';
+import './Themes/default.scss';
 
 export const ErrorPage: FunctionComponent = () => {
     const { errorCode } = useParams<{ errorCode: string }>();
