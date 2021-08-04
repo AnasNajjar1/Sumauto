@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormGroup, Label, Input, Col, FormText, Spinner } from 'reactstrap';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { isMandatoryQuestion } from '../../../../../hexagon/shared/utils/config';
 import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
 type ReferentialInputProps = {
@@ -15,6 +14,7 @@ type ReferentialInputProps = {
     list: any;
     value: string;
     error: any;
+    required: boolean;
 };
 
 export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
@@ -23,6 +23,7 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
     list,
     value,
     error,
+    required,
 }) => {
     const dispatch = useDispatch();
     const handleChange = (e: ReferentialItem, name: string) => {
@@ -37,7 +38,7 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
                         className={`label-${id} ${list.status === 'failed' ? 'text-danger' : ''}`}
                         for={id}
                     >
-                        {text.label} {isMandatoryQuestion(id) && '*'}
+                        {text.label} {required && '*'}
                         {list?.status === 'loading' && <Spinner size="sm" />}
                     </Label>
                     <div className="input-with-validation">

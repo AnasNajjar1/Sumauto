@@ -1,17 +1,30 @@
 import { AnyAction, combineReducers } from 'redux';
+import { getClientConfig } from '../../config';
+import { TClientConfig } from '../../hexagon/interfaces';
 import { FetchStatus } from '../appState';
-
-export const identifier = (state = '', action: AnyAction) => {
-    if (action.type === 'client/SET_IDENTIFIER') {
-        return action.payload.identifier;
-    }
-    return state;
-};
 
 export const name = (state = '', action: AnyAction) => {
     if (action.type === 'client/SET_NAME') {
         return action.payload.name;
     }
+    return state;
+};
+
+const clientConfigInitialState: TClientConfig = {
+    identifier: '',
+    displayRegistrationOption: false,
+    registrationRegex: '',
+    zipCodeRegex: '',
+    phoneRegex: '',
+    mileageMin: 0,
+    mileageMax: 0,
+    questionsGroup: [],
+    required: [],
+    cascadeOrder: [],
+};
+
+export const config = (state: TClientConfig = clientConfigInitialState, action: AnyAction) => {
+    if (action.type === 'client/SET_CONFIG') return action.payload.config;
     return state;
 };
 
@@ -31,7 +44,7 @@ export const status = (state: FetchStatus = 'idle', action: AnyAction) => {
 
 export const clientReducer = combineReducers({
     status,
-    identifier,
     name,
+    config,
     recordId,
 });

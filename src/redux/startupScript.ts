@@ -8,10 +8,12 @@ import { someDealers } from '../adapters/secondary/gateways/inMemory/stubs/someD
 import { someDealerSlots } from '../adapters/secondary/gateways/inMemory/stubs/someDealerSlots';
 import { InMemoryRecordGateway } from '../adapters/secondary/gateways/inMemory/inMemoryRecordGateway';
 import { aRecordIds } from '../adapters/secondary/gateways/inMemory/stubs/aRecord';
+import { InMemoryClientConfigGateway } from '../adapters/secondary/gateways/inMemory/inMemoryClientConfigGateway';
 
 let referentialGateway;
 let dealerGateway;
 let recordGateway;
+let clientConfigGateway;
 
 switch (process.env.REACT_APP_SOURCE) {
     case 'inMemory':
@@ -24,6 +26,8 @@ switch (process.env.REACT_APP_SOURCE) {
 
         recordGateway = new InMemoryRecordGateway();
         recordGateway.feedWith(aRecordIds);
+
+        clientConfigGateway = new InMemoryClientConfigGateway();
         break;
 
     default:
@@ -35,6 +39,8 @@ switch (process.env.REACT_APP_SOURCE) {
 
         recordGateway = new InMemoryRecordGateway();
         recordGateway.feedWith(aRecordIds);
+
+        clientConfigGateway = new InMemoryClientConfigGateway();
         break;
 }
 
@@ -42,6 +48,7 @@ const store = configureStore({
     referentialGateway,
     dealerGateway,
     recordGateway,
+    clientConfigGateway,
 });
 
 export default store;

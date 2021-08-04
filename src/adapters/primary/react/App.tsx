@@ -8,7 +8,7 @@ import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
 import { themeSelector } from './Components/Themes';
 import { ErrorPage } from './Components/ErrorPage';
-import { clients } from '../../../config/config';
+import { clients } from '../../../config';
 import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName';
 
 const App: FunctionComponent = () => {

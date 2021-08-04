@@ -7,7 +7,7 @@ export const saveVehicleAndUserInformations =
     (): ThunkResult<void> =>
     async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
         dispatch(actionCreators.Actions.saveVehicleAndUserInformationsSaving());
-        const { identifier } = getState().client;
+        const { config } = getState().client;
         const {
             make,
             model,
@@ -28,12 +28,12 @@ export const saveVehicleAndUserInformations =
             running,
         } = getState().form.vehicle;
 
-        const resultUser = await recordGateway.saveUserInformation(identifier, {
+        const resultUser = await recordGateway.saveUserInformation(config.identifier, {
             phone,
             email,
             zipCode,
         });
-        const resultVehicle = await recordGateway.saveVehicleInformation(identifier, {
+        const resultVehicle = await recordGateway.saveVehicleInformation(config.identifier, {
             makeId: Number(make),
             modelId: Number(model),
             month: Number(month),
@@ -47,11 +47,14 @@ export const saveVehicleAndUserInformations =
             mileage: Number(mileage),
         });
 
-        const resultVehicleState = await recordGateway.saveVehicleStateInformation(identifier, {
-            imported: imported === 'Y',
-            service_history: history === 'Y',
-            running: running === 'Y' ? 1 : 0,
-        });
+        const resultVehicleState = await recordGateway.saveVehicleStateInformation(
+            config.identifier,
+            {
+                imported: imported === 'Y',
+                service_history: history === 'Y',
+                running: running === 'Y' ? 1 : 0,
+            },
+        );
 
         if (isRight(resultUser) && isRight(resultVehicle) && isRight(resultVehicleState)) {
             dispatch(actionCreators.Actions.saveVehicleAndUserInformationsSaved(resultUser.right));

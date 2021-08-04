@@ -1,6 +1,5 @@
 import { isRight } from 'fp-ts/lib/Either';
 import { ReferentialMapper } from '../../../adapters/secondary/gateways/autobizApi/mappers/vehicleFilter.mapper';
-import { formVehicleOptions } from '../../../config/config';
 import { ThunkResult } from '../../../redux/configureStore';
 import { ReferentialGateway } from '../../gateways/referentialGateway.interface';
 import { QuestionKey, ReferentialItem } from '../../interfaces';
@@ -17,7 +16,7 @@ export const setVehicleValueCascade =
     ) => {
         dispatch(Actions.vehicleValueSet({ key, value }));
 
-        const { cascadeOrder } = formVehicleOptions;
+        const { cascadeOrder } = getState().client.config;
 
         const i = cascadeOrder.findIndex((s) => s === key);
 
@@ -43,7 +42,7 @@ export const setVehicleValueCascade =
         if (value && nextKey) {
             dispatch(Actions.listFetching(nextKey));
 
-            const { identifier } = getState().client;
+            const { identifier } = getState().client.config;
             const result = await referentialGateway.requestList(
                 identifier,
                 nextKey,

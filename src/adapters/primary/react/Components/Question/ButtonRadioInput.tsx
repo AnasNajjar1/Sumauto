@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormGroup, Label, FormText, ButtonGroup, Button } from 'reactstrap';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { isMandatoryQuestion } from '../../../../../hexagon/shared/utils/config';
 import { t } from '../../../../../hexagon/shared/utils/translate';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
@@ -26,6 +25,7 @@ type ButtonRadioInputProps = {
     data: Data[];
     value: string;
     error: any;
+    required: boolean;
 };
 
 export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
@@ -34,6 +34,7 @@ export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
     data,
     value,
     error,
+    required,
 }) => {
     const dispatch = useDispatch();
 
@@ -41,7 +42,7 @@ export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
         <div className={`question question-${id}`}>
             <FormGroup>
                 <Label className={`label-${id}`} for={id}>
-                    {t(text.label)} {isMandatoryQuestion(id) && '*'}
+                    {t(text.label)} {required && '*'}
                 </Label>
                 <div className="input-with-validation">
                     <ButtonGroup>

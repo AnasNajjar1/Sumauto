@@ -11,11 +11,9 @@ export const getMakeList =
         { referentialGateway }: { referentialGateway: ReferentialGateway },
     ) => {
         dispatch(actionCreators.Actions.makeListFetching());
-        const { identifier, name } = getState().client;
+        const { config } = getState().client;
 
-        console.log(name);
-
-        const result = await referentialGateway.requestAllMakes(identifier);
+        const result = await referentialGateway.requestAllMakes(config.identifier);
 
         if (isRight(result)) {
             dispatch(actionCreators.Actions.makeListRetrieved(result.right.others));

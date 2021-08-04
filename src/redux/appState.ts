@@ -1,13 +1,21 @@
-import { Dealer, Error, FormVehicle, Makes, Slot, VehicleElement } from '../hexagon/interfaces';
+import {
+    Dealer,
+    Error,
+    FormVehicle,
+    Makes,
+    Slot,
+    TClientConfig,
+    VehicleElement,
+} from '../hexagon/interfaces';
 
 export type FetchStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 
 export interface AppState {
     client: {
-        identifier: string;
         name: string;
         recordId: string;
         status: FetchStatus;
+        config: TClientConfig;
     };
     record: {
         id: number;

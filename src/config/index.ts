@@ -10,3 +10,5 @@ export const getClientConfig = (client: TClient): TClientConfig => {
     if (client === 'unoauto') return unoauto;
     return autocasion;
 };
+
+export const clients: TClient[] = ['unoauto', 'autocasion', 'autoscout24'];

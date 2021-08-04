@@ -2,18 +2,20 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Spinner } from 'reactstrap';
-import { formVehicleOptions } from '../../../../../config/config';
+
+import config from '../../../../../config/unoauto';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { isMandatoryQuestion } from '../../../../../hexagon/shared/utils/config';
 import { t } from '../../../../../hexagon/shared/utils/translate';
 import { showError } from '../../../../../hexagon/usecases/displayError/displayError';
 import { getCarDetailsByRegistrationUseCase } from '../../../../../hexagon/usecases/getCarDetailsByRegistration/getCarDetailsByRegistration';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
+import { getClientSelector } from '../../../view-models-generators/clientSelector';
 import { getRegistrationSelector } from '../../../view-models-generators/registrationSelector';
 
 type RegistrationInputProps = {
     id: ReferentialItem;
     value: string;
+    required: boolean;
     text: {
         label?: string;
         placeholder?: string;
@@ -25,13 +27,17 @@ export const RegistrationInput: FunctionComponent<RegistrationInputProps> = ({
     id,
     value,
     text,
+    required,
 }) => {
     const dispatch = useDispatch();
 
     const [registration, setRegistration] = useState(value || '');
-    const { registrationRegex } = formVehicleOptions;
 
     const { status } = useSelector(getRegistrationSelector);
+
+    const { client } = useSelector(getClientSelector);
+    const { registrationRegex } = client.config;
+
     const submitingRegistration = () => {
         if (registration.search(new RegExp(registrationRegex)) === 0) {
             dispatch(setVehicleValue('registration', registration));
@@ -55,7 +61,7 @@ export const RegistrationInput: FunctionComponent<RegistrationInputProps> = ({
             <div className={`question question-${id}`}>
                 <FormGroup>
                     <Label>
-                        {text.label} {isMandatoryQuestion(id) && '*'}
+                        {text.label} {required && '*'}
                         {status === 'loading' && <Spinner size="sm" />}
                     </Label>
                     <InputGroup>

@@ -1,9 +1,9 @@
 import { ActionsUnion, createAction } from '../../../redux/customActions';
-import { TClient } from '../../interfaces';
+import { TClient, TClientConfig } from '../../interfaces';
 
 export const Actions = {
     setClientName: (name: TClient) => createAction('client/SET_NAME', { name }),
-    setClientId: (identifier: string) => createAction('client/SET_IDENTIFIER', { identifier }),
+    setClientConfig: (config: TClientConfig) => createAction('client/SET_CONFIG', { config }),
 };
 
 export type ActionsType = ActionsUnion<typeof Actions>;

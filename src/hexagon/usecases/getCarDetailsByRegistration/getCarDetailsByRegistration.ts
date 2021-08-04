@@ -2,7 +2,7 @@ import { isRight } from 'fp-ts/lib/Either';
 
 import { ThunkResult } from '../../../redux/configureStore';
 import { ReferentialGateway } from '../../gateways/referentialGateway.interface';
-import { displayQuestion } from '../../shared/utils/config';
+import { QuestionKey } from '../../interfaces';
 import { setVehicleValueCascade } from '../setVehicleValue/setVehicleValue';
 import * as actionCreators from './actionCreators';
 
@@ -30,6 +30,9 @@ export const getCarDetailsByRegistrationUseCase =
                 month,
                 year,
             } = result.right;
+
+            const displayQuestion = (question: QuestionKey) =>
+                getState().client.config.questionsGroup.flat().includes(question);
 
             if (status) {
                 if (displayQuestion('make'))

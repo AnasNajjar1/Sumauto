@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { clients } from '../../../../../config/config';
+import { clients } from '../../../../../config';
 import { TClient } from '../../../../../hexagon/interfaces';
 
 export const themeSelector = (client: TClient) => {

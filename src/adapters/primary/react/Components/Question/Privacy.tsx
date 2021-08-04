@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, FormGroup, Input, Label } from 'reactstrap';
-import { isMandatoryQuestion } from '../../../../../hexagon/shared/utils/config';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
 export const Privacy: FunctionComponent = () => {
@@ -18,7 +17,7 @@ export const Privacy: FunctionComponent = () => {
             <FormGroup check>
                 <Label check>
                     <Input type="checkbox" onChange={() => handleChange()} /> He leido la Politica
-                    de privacidad {isMandatoryQuestion('privacy') && '*'}
+                    de privacidad
                 </Label>
             </FormGroup>
         </Col>

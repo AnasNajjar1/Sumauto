@@ -109,18 +109,6 @@ export type CarDetails = {
     engine: string;
 };
 
-export type FormVehicleOptions = {
-    displayRegistrationOption: boolean;
-    cascadeOrder: ReferentialItem[];
-    questionsGroup: QuestionKey[][];
-    required: QuestionKey[];
-    zipCodeRegex: string;
-    phoneRegex: string;
-    mileageMin: number;
-    mileageMax: number;
-    registrationRegex: string;
-};
-
 export type TClientConfig = {
     identifier: string;
     displayRegistrationOption: boolean;

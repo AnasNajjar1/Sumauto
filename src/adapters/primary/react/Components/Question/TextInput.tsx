@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Input, Label } from 'reactstrap';
 import { QuestionKey, ReferentialItem } from '../../../../../hexagon/interfaces';
-import { isMandatoryQuestion } from '../../../../../hexagon/shared/utils/config';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
 type TextInputProps = {
@@ -15,16 +14,24 @@ type TextInputProps = {
         help?: string;
     };
     error: any;
+    required: boolean;
 };
 
-export const TextInput: FunctionComponent<TextInputProps> = ({ id, value, text, type, error }) => {
+export const TextInput: FunctionComponent<TextInputProps> = ({
+    id,
+    value,
+    text,
+    type,
+    error,
+    required,
+}) => {
     const dispatch = useDispatch();
 
     return (
         <div className="question question-mileage">
             <FormGroup>
                 <Label className="label-text" for="label-text">
-                    {text?.label} {isMandatoryQuestion(id) && <>*</>}
+                    {text?.label} {required && <>*</>}
                 </Label>
                 <div className="input-with-validation">
                     <Input

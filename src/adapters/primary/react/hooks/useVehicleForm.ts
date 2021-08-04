@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
-import { formVehicleOptions } from '../../../../config/config';
+
 import { QuestionKey } from '../../../../hexagon/interfaces';
 import { t } from '../../../../hexagon/shared/utils/translate';
 import {
@@ -14,14 +14,10 @@ import { Privacy } from '../Components/Question/Privacy';
 import { ReferentialInput } from '../Components/Question/ReferentialInput';
 import { RegistrationInput } from '../Components/Question/RegistrationInput';
 import { TextInput } from '../Components/Question/TextInput';
-import {
-    isEmailValid,
-    isMileageValid,
-    isPhoneValid,
-    isZipCodeValid,
-} from '../../../../hexagon/shared/utils/TextUtils';
+
 import { getMakeList } from '../../../../hexagon/usecases/getMakeList/getMakeList';
-import { isMandatoryQuestion } from '../../../../hexagon/shared/utils/config';
+import { getClientSelector } from '../../view-models-generators/clientSelector';
+import { isEmailValid } from '../../../../hexagon/shared/utils/TextUtils';
 
 type TError = {
     validation: boolean;
@@ -44,6 +40,7 @@ type InputComponents = {
             data?: any;
             type?: any;
             error?: TError;
+            required: boolean;
         };
     };
 };
@@ -54,6 +51,7 @@ const useVehicleForm = () => {
     const dispatch = useDispatch();
 
     const lists = useSelector(getFormListSelector);
+    const { client } = useSelector(getClientSelector);
 
     const setError = (field: string, message?: string) => {
         setValidation((prevState: TValidation) => ({
@@ -68,6 +66,27 @@ const useVehicleForm = () => {
             [field]: { validation: false },
         }));
     };
+
+    const isMandatoryQuestion = (question: QuestionKey): boolean =>
+        client.config.required?.includes(question);
+
+    const isZipCodeValid = (zipCode: string): boolean =>
+        zipCode.search(new RegExp(client.config.zipCodeRegex)) === 0;
+
+    const isPhoneValid = (phone: string): boolean =>
+        phone.search(new RegExp(client.config.phoneRegex)) === 0;
+
+    const isMileageValid = (mileage: number): boolean => {
+        if (mileage > client.config.mileageMax) {
+            return false;
+        }
+
+        if (mileage < client.config.mileageMin) {
+            return false;
+        }
+        return true;
+    };
+
     useEffect(() => {
         dispatch(getMakeList());
     }, [dispatch]);
@@ -151,7 +170,7 @@ const useVehicleForm = () => {
     const shouldDisplayQuestionsGroup = (group: number) => {
         const groupsDisplay: any = [];
         groupsDisplay[0] = true;
-        formVehicleOptions.questionsGroup.forEach((element, key) => {
+        client.config.questionsGroup.forEach((element, key) => {
             const empty: any = {};
             element.forEach((e) => {
                 empty[e] = '';
@@ -169,19 +188,19 @@ const useVehicleForm = () => {
     };
 
     const canQuote = () =>
-        formVehicleOptions.required.every(
+        client.config.required.every(
             (e) => vehicle[e] && vehicle[e] !== '' && validation[e]?.validation === false,
         );
 
     const vehicleProgress = () => {
         let filledQuestion = 0;
-        formVehicleOptions.required.forEach((e) => {
+        client.config.required.forEach((e) => {
             if (vehicle[e] && vehicle[e] !== '' && validation[e]?.validation === false) {
                 filledQuestion += 1;
             }
         });
 
-        return ((filledQuestion / formVehicleOptions.required.length) * 100) / 2;
+        return ((filledQuestion / client.config.required.length) * 100) / 2;
     };
 
     const inputComponents: InputComponents = {
@@ -191,6 +210,7 @@ const useVehicleForm = () => {
                 id: 'registration',
                 value: vehicle.registration,
                 text: { label: t('registration') },
+                required: isMandatoryQuestion('registration'),
             },
         },
         makeLogo: {
@@ -201,6 +221,7 @@ const useVehicleForm = () => {
                 text: { label: t('make') },
                 list: lists.make.preferred,
                 error: validation.make,
+                required: isMandatoryQuestion('make'),
             },
         },
         make: {
@@ -208,9 +229,10 @@ const useVehicleForm = () => {
             props: {
                 id: 'make',
                 value: vehicle.make,
-                text: { label: t('other_makes') },
+                text: { label: t('makes') },
                 list: lists.make,
                 error: validation.make,
+                required: isMandatoryQuestion('make'),
             },
         },
         model: {
@@ -221,6 +243,7 @@ const useVehicleForm = () => {
                 text: { label: t('model') },
                 list: lists.model,
                 error: validation.model,
+                required: isMandatoryQuestion('model'),
             },
         },
         month: {
@@ -231,6 +254,7 @@ const useVehicleForm = () => {
                 text: { label: t('month') },
                 list: lists.month,
                 error: validation.month,
+                required: isMandatoryQuestion('month'),
             },
         },
         year: {
@@ -241,6 +265,7 @@ const useVehicleForm = () => {
                 text: { label: t('year') },
                 list: lists.year,
                 error: validation.year,
+                required: isMandatoryQuestion('year'),
             },
         },
         fuel: {
@@ -251,6 +276,7 @@ const useVehicleForm = () => {
                 text: { label: t('fuel') },
                 list: lists.fuel,
                 error: validation.fuel,
+                required: isMandatoryQuestion('fuel'),
             },
         },
         body: {
@@ -261,6 +287,7 @@ const useVehicleForm = () => {
                 text: { label: t('body') },
                 list: lists.body,
                 error: validation.body,
+                required: isMandatoryQuestion('body'),
             },
         },
         door: {
@@ -271,6 +298,7 @@ const useVehicleForm = () => {
                 text: { label: t('door') },
                 list: lists.door,
                 error: validation.door,
+                required: isMandatoryQuestion('door'),
             },
         },
         gear: {
@@ -281,6 +309,7 @@ const useVehicleForm = () => {
                 text: { label: t('gear') },
                 list: lists.gear,
                 error: validation.gear,
+                required: isMandatoryQuestion('gear'),
             },
         },
         engine: {
@@ -291,6 +320,7 @@ const useVehicleForm = () => {
                 text: { label: t('engine') },
                 list: lists.engine,
                 error: validation.engine,
+                required: isMandatoryQuestion('engine'),
             },
         },
         version: {
@@ -301,6 +331,7 @@ const useVehicleForm = () => {
                 text: { label: t('version'), help: t('version_help') },
                 list: lists.version,
                 error: validation.version,
+                required: isMandatoryQuestion('version'),
             },
         },
         mileage: {
@@ -311,6 +342,7 @@ const useVehicleForm = () => {
                 value: vehicle.mileage,
                 text: { label: t('mileage') },
                 error: validation.mileage,
+                required: isMandatoryQuestion('mileage'),
             },
         },
         imported: {
@@ -324,6 +356,7 @@ const useVehicleForm = () => {
                     { name: t('no'), value: '2' },
                 ],
                 error: validation.imported,
+                required: isMandatoryQuestion('imported'),
             },
         },
         running: {
@@ -337,6 +370,7 @@ const useVehicleForm = () => {
                     { name: t('no'), value: '2' },
                 ],
                 error: validation.running,
+                required: isMandatoryQuestion('running'),
             },
         },
         history: {
@@ -350,6 +384,7 @@ const useVehicleForm = () => {
                     { name: t('no'), value: '2' },
                 ],
                 error: validation.history,
+                required: isMandatoryQuestion('history'),
             },
         },
         sellProject: {
@@ -364,6 +399,7 @@ const useVehicleForm = () => {
                     { name: t('3 months'), value: '3' },
                 ],
                 error: validation.sellProject,
+                required: isMandatoryQuestion('sellProject'),
             },
         },
 
@@ -375,6 +411,7 @@ const useVehicleForm = () => {
                 value: vehicle.email,
                 text: { label: t('email') },
                 error: validation.email,
+                required: isMandatoryQuestion('email'),
             },
         },
         emailConfirmation: {
@@ -385,6 +422,7 @@ const useVehicleForm = () => {
                 value: vehicle.emailConfirmation,
                 text: { label: t('emailConfirmation') },
                 error: validation.emailConfirmation,
+                required: isMandatoryQuestion('emailConfirmation'),
             },
         },
         zipCode: {
@@ -395,6 +433,7 @@ const useVehicleForm = () => {
                 value: vehicle.zipCode,
                 text: { label: t('zipCode') },
                 error: validation.zipCode,
+                required: isMandatoryQuestion('zipCode'),
             },
         },
         phone: {
@@ -405,9 +444,17 @@ const useVehicleForm = () => {
                 value: vehicle.phone,
                 text: { label: t('phone') },
                 error: validation.phone,
+                required: isMandatoryQuestion('phone'),
             },
         },
-        privacy: { component: Privacy, props: { id: 'privacy', error: validation.privacy } },
+        privacy: {
+            component: Privacy,
+            props: {
+                id: 'privacy',
+                error: validation.privacy,
+                required: isMandatoryQuestion('privacy'),
+            },
+        },
     };
 
     return {
@@ -418,6 +465,7 @@ const useVehicleForm = () => {
         shouldDisplayQuestionsGroup,
         canQuote,
         vehicleProgress,
+        isMandatoryQuestion,
     };
 };
 
