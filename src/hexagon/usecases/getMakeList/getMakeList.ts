@@ -11,14 +11,15 @@ export const getMakeList =
         { referentialGateway }: { referentialGateway: ReferentialGateway },
     ) => {
         dispatch(actionCreators.Actions.makeListFetching());
-        const { identifier } = getState().client;
+        const { identifier, name } = getState().client;
+
+        console.log(name);
 
         const result = await referentialGateway.requestAllMakes(identifier);
 
         if (isRight(result)) {
             dispatch(actionCreators.Actions.makeListRetrieved(result.right.others));
             dispatch(actionCreators.Actions.makeListSetPreferred(result.right.preferred));
-            // dispatch(actionCreators.Actions.makeListRetrieved(result.right));
         } else {
             dispatch(actionCreators.Actions.makeListFailed());
         }

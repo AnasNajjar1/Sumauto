@@ -8,6 +8,13 @@ export const identifier = (state = '', action: AnyAction) => {
     return state;
 };
 
+export const name = (state = '', action: AnyAction) => {
+    if (action.type === 'client/SET_NAME') {
+        return action.payload.name;
+    }
+    return state;
+};
+
 export const recordId = (state = '', action: AnyAction) => {
     if (action.type === 'record/SAVED') {
         return action.payload.id;
@@ -25,5 +32,6 @@ export const status = (state: FetchStatus = 'idle', action: AnyAction) => {
 export const clientReducer = combineReducers({
     status,
     identifier,
+    name,
     recordId,
 });

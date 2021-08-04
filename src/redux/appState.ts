@@ -5,6 +5,7 @@ export type FetchStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
 export interface AppState {
     client: {
         identifier: string;
+        name: string;
         recordId: string;
         status: FetchStatus;
     };

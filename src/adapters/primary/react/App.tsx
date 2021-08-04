@@ -9,7 +9,7 @@ import { RouteParams } from '../../../hexagon/interfaces';
 import { themeSelector } from './Components/Themes';
 import { ErrorPage } from './Components/ErrorPage';
 import { clients } from '../../../config/config';
-import { setClientIdentifierUseCase } from '../../../hexagon/usecases/setClientIdentifier/setClientIdentifier';
+import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName';
 
 const App: FunctionComponent = () => {
     const history = useHistory();
@@ -19,7 +19,7 @@ const App: FunctionComponent = () => {
     if (!clients.includes(clientSlug)) {
         history.push('/error/404');
     } else {
-        dispatch(setClientIdentifierUseCase(clientSlug));
+        dispatch(setClientNameUseCase(clientSlug));
     }
 
     return (
