@@ -1,16 +1,16 @@
 import { VehicleElement } from '../../../hexagon/interfaces';
 
-import { AppState, FetchStatus } from '../../../redux/appState';
+import { AppState, TActionStatus } from '../../../redux/appState';
 
 export interface ListVm<T> {
     data: T[];
-    status: FetchStatus;
+    status: TActionStatus;
 }
 
 export interface MakeListVm<T> {
     data: T[];
     preferred: T[];
-    status: FetchStatus;
+    status: TActionStatus;
 }
 
 export type Selectors = {

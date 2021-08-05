@@ -2,7 +2,7 @@ import { ActionsUnion, createAction } from '../../../redux/customActions';
 import { Slot } from '../../interfaces';
 
 export const Actions = {
-    dealerSlotListFetching: () => createAction('dealerSlotList/FETCHING'),
+    dealerSlotListFetching: () => createAction('dealerSlotList/PENDING'),
     dealerSlotListFailed: () => createAction('dealerSlotList/FAILED'),
     dealerSlotListRetrieved: (dealerSlotList: Slot[]) =>
         createAction('dealerSlotList/SUCCESS', { dealerSlotList }),

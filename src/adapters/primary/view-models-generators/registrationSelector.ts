@@ -1,7 +1,7 @@
-import { AppState, FetchStatus } from '../../../redux/appState';
+import { AppState, TActionStatus } from '../../../redux/appState';
 
 export type Selectors = {
-    status: FetchStatus;
+    status: TActionStatus;
 };
 
 export const getRegistrationSelector = (state: AppState): Selectors => ({

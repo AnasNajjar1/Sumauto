@@ -1,8 +1,7 @@
 import { ActionsUnion, createAction } from '../../../redux/customActions';
-import { CarDetails } from '../../interfaces';
 
 export const Actions = {
-    carDetailsFetching: () => createAction('carDetails/FETCHING'),
+    carDetailsLoading: () => createAction('carDetails/PENDING'),
     carDetailsFailed: () => createAction('carDetails/FAILED'),
     carDetailsRetrieved: () => createAction('carDetails/SUCCESS'),
 };

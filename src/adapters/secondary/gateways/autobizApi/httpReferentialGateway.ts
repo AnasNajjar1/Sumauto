@@ -73,8 +73,6 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
         filters: VehicleFilters,
     ): Promise<ApiResponse<Scope[]>> {
         try {
-            // const queryString = TextUtils.encodeQueryData(filters, '&');
-
             const queryString = this.encodeQueryData(filters, '&');
 
             let url = API_URL_PREFIX;

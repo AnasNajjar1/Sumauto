@@ -1,6 +1,8 @@
 import { TClientConfig } from '../hexagon/interfaces';
 
 const config: TClientConfig = {
+    locale: 'es-ES',
+    currency: 'EUR',
     identifier: 'unoauto1234',
     displayRegistrationOption: true,
     registrationRegex:

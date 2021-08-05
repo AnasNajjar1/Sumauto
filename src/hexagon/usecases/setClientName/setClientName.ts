@@ -1,4 +1,3 @@
-import { getClientConfig } from '../../../config';
 import { ThunkResult } from '../../../redux/configureStore';
 import { TClient } from '../../interfaces';
 import * as actionCreators from './actionCreators';

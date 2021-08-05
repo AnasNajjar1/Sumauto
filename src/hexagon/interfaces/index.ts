@@ -110,6 +110,8 @@ export type CarDetails = {
 };
 
 export type TClientConfig = {
+    locale: string;
+    currency: string;
     identifier: string;
     displayRegistrationOption: boolean;
     cascadeOrder: ReferentialItem[];
@@ -131,7 +133,7 @@ export type RecordIds = {
     reference?: string;
 };
 
-export type VehicleInformation = {
+export type TVehicle = {
     makeId: number;
     modelId: number;
     month: number;
@@ -155,7 +157,12 @@ export type VehicleStateInformation = {
     running?: number;
 };
 
-export type VehicleUserInformation = {
+export type TValuation = {
+    value: number;
+    status: boolean;
+};
+
+export type TCustomer = {
     email?: string;
     phone?: string;
     lastName?: string;
@@ -165,6 +172,24 @@ export type VehicleUserInformation = {
     civility?: string;
     dealerId?: number;
     unsubscribed?: number;
+};
+
+export type TVehicleNames = {
+    makeName: string;
+    modelName: string;
+};
+
+export type TAppointment = {
+    status: boolean;
+};
+
+export type TRecord = {
+    id: number;
+    status: string;
+    customer: TCustomer;
+    vehicle: TVehicleNames;
+    valuation: TValuation;
+    appointment: TAppointment;
 };
 
 export type UpdateStatus = {

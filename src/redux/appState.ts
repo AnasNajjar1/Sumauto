@@ -5,66 +5,67 @@ import {
     Makes,
     Slot,
     TClientConfig,
+    TRecord,
     VehicleElement,
 } from '../hexagon/interfaces';
 
-export type FetchStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
+export type TActionStatus = 'idle' | 'pending' | 'succeeded' | 'failed';
 
 export interface AppState {
     client: {
         name: string;
         recordId: string;
-        status: FetchStatus;
+        status: TActionStatus;
         config: TClientConfig;
     };
     record: {
         id: number;
-        status: FetchStatus;
-        data: any;
+        status: TActionStatus;
+        data: TRecord;
     };
     referential: {
         carDetails: {
-            status: FetchStatus;
+            status: TActionStatus;
         };
         make: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
             preferred: VehicleElement[];
         };
         model: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
         version: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
         year: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
         month: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
         fuel: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
         body: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
         door: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
         gear: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
         engine: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: VehicleElement[];
         };
     };
@@ -73,11 +74,11 @@ export interface AppState {
     };
     dealer: {
         dealerList: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: Dealer[];
         };
         dealerSlotList: {
-            status: FetchStatus;
+            status: TActionStatus;
             data: Slot[];
         };
     };

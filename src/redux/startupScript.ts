@@ -7,7 +7,10 @@ import { InMemoryDealerGateway } from '../adapters/secondary/gateways/inMemory/i
 import { someDealers } from '../adapters/secondary/gateways/inMemory/stubs/someDealers';
 import { someDealerSlots } from '../adapters/secondary/gateways/inMemory/stubs/someDealerSlots';
 import { InMemoryRecordGateway } from '../adapters/secondary/gateways/inMemory/inMemoryRecordGateway';
-import { aRecordIds } from '../adapters/secondary/gateways/inMemory/stubs/aRecord';
+import {
+    aRecordIds,
+    somesRecords,
+} from '../adapters/secondary/gateways/inMemory/stubs/someRecords';
 import { InMemoryClientConfigGateway } from '../adapters/secondary/gateways/inMemory/inMemoryClientConfigGateway';
 
 let referentialGateway;
@@ -25,7 +28,8 @@ switch (process.env.REACT_APP_SOURCE) {
         dealerGateway.feedDealerSlotListWith(someDealerSlots);
 
         recordGateway = new InMemoryRecordGateway();
-        recordGateway.feedWith(aRecordIds);
+        recordGateway.feedRecordIdsWith(aRecordIds);
+        recordGateway.feedRecordsWith(somesRecords);
 
         clientConfigGateway = new InMemoryClientConfigGateway();
         break;
@@ -38,7 +42,8 @@ switch (process.env.REACT_APP_SOURCE) {
         dealerGateway.feedDealerSlotListWith(someDealerSlots);
 
         recordGateway = new InMemoryRecordGateway();
-        recordGateway.feedWith(aRecordIds);
+        recordGateway.feedRecordIdsWith(aRecordIds);
+        recordGateway.feedRecordsWith(somesRecords);
 
         clientConfigGateway = new InMemoryClientConfigGateway();
         break;

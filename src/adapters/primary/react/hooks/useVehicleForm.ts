@@ -17,7 +17,7 @@ import { TextInput } from '../Components/Question/TextInput';
 
 import { getMakeList } from '../../../../hexagon/usecases/getMakeList/getMakeList';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
-import { isEmailValid } from '../../../../hexagon/shared/utils/TextUtils';
+import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 
 type TError = {
     validation: boolean;
@@ -140,7 +140,7 @@ const useVehicleForm = () => {
         if (sellProject) removeError('sellProject');
 
         // Email
-        if (email && !isEmailValid(email)) setError('email', t('wrong_email'));
+        if (email && !TextUtils.isEmailValid(email)) setError('email', t('wrong_email'));
         else if (isMandatoryQuestion('email') && email === '')
             setError('email', t('mandatory field'));
         else removeError('email');

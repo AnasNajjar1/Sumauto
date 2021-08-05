@@ -39,7 +39,7 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
                         for={id}
                     >
                         {text.label} {required && '*'}
-                        {list?.status === 'loading' && <Spinner size="sm" />}
+                        {list?.status === 'pending' && <Spinner size="sm" />}
                     </Label>
                     <div className="input-with-validation">
                         <Input

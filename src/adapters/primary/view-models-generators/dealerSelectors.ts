@@ -1,10 +1,10 @@
 import { Dealer, Slot } from '../../../hexagon/interfaces';
 
-import { AppState, FetchStatus } from '../../../redux/appState';
+import { AppState, TActionStatus } from '../../../redux/appState';
 
 export interface ListVm<T> {
     data: T[];
-    status: FetchStatus;
+    status: TActionStatus;
 }
 export const getDealerListSelector = (state: AppState): ListVm<Dealer> => ({
     status: state.dealer.dealerList.status,

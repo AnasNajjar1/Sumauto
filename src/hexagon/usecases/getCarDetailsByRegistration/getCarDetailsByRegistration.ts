@@ -13,7 +13,7 @@ export const getCarDetailsByRegistrationUseCase =
         getState,
         { referentialGateway }: { referentialGateway: ReferentialGateway },
     ) => {
-        dispatch(actionCreators.Actions.carDetailsFetching());
+        dispatch(actionCreators.Actions.carDetailsLoading());
 
         const result = await referentialGateway.requestCartDetailsByRegsitration(registration);
 

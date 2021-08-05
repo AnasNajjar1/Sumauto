@@ -62,7 +62,7 @@ export const RegistrationInput: FunctionComponent<RegistrationInputProps> = ({
                 <FormGroup>
                     <Label>
                         {text.label} {required && '*'}
-                        {status === 'loading' && <Spinner size="sm" />}
+                        {status === 'pending' && <Spinner size="sm" />}
                     </Label>
                     <InputGroup>
                         <Input

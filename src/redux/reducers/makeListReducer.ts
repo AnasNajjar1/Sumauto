@@ -1,6 +1,6 @@
 import { AnyAction, combineReducers } from 'redux';
 import { VehicleElement } from '../../hexagon/interfaces';
-import { FetchStatus } from '../appState';
+import { TActionStatus } from '../appState';
 
 export const data = (state: VehicleElement[] = [], action: AnyAction) => {
     if (action.type === 'make/SUCCESS') {
@@ -16,8 +16,8 @@ export const preferred = (state: VehicleElement[] = [], action: AnyAction) => {
     return state;
 };
 
-export const status = (state: FetchStatus = 'idle', action: AnyAction) => {
-    if (action.type === 'make/FETCHING') return 'loading';
+export const status = (state: TActionStatus = 'idle', action: AnyAction) => {
+    if (action.type === 'make/PENDING') return 'pending';
     if (action.type === 'make/SUCCESS') return 'succeeded';
     if (action.type === 'make/FAILED') return 'failed';
     return state;

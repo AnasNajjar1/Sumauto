@@ -1,9 +1,10 @@
 import {
     RecordIds,
     UpdateStatus,
-    VehicleInformation,
+    TVehicle,
     VehicleStateInformation,
-    VehicleUserInformation,
+    TCustomer,
+    TRecord,
 } from '../interfaces';
 
 import { ApiResponse } from '../infra/ApiResponse';
@@ -11,13 +12,13 @@ import { ApiResponse } from '../infra/ApiResponse';
 export interface RecordGateway {
     saveVehicleInformation(
         identifier: string,
-        vehicleInformation: VehicleInformation,
+        vehicleInformation: TVehicle,
     ): Promise<ApiResponse<RecordIds>>;
 
     updateVehicleInformation(
         identifier: string,
         recordId: number,
-        vehicleInformation: VehicleInformation,
+        vehicleInformation: TVehicle,
     ): Promise<ApiResponse<UpdateStatus>>;
 
     saveVehicleStateInformation(
@@ -33,12 +34,14 @@ export interface RecordGateway {
 
     saveUserInformation(
         identifier: string,
-        vehicleUserInformation: VehicleUserInformation,
+        vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<RecordIds>>;
 
     updateUserInformation(
         identifier: string,
         recordId: number,
-        vehicleUserInformation: VehicleUserInformation,
+        vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<UpdateStatus>>;
+
+    getRecord(identifier: string, recordId: string): Promise<ApiResponse<TRecord>>;
 }

@@ -3,9 +3,10 @@ import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import {
     RecordIds,
     UpdateStatus,
-    VehicleInformation,
+    TVehicle,
     VehicleStateInformation,
-    VehicleUserInformation,
+    TCustomer,
+    TRecord,
 } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { RecordGateway } from '../../../../hexagon/gateways/recordGateway.interface';
@@ -13,9 +14,11 @@ import { RecordGateway } from '../../../../hexagon/gateways/recordGateway.interf
 export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     private recordIds = {} as RecordIds;
 
+    private records = [] as TRecord[];
+
     async saveVehicleInformation(
         identifier: string,
-        vehicleInformation: VehicleInformation,
+        vehicleInformation: TVehicle,
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
             return right(this.recordIds);
@@ -27,7 +30,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     async updateVehicleInformation(
         identifier: string,
         recordId: number,
-        vehicleInformation: VehicleInformation,
+        vehicleInformation: TVehicle,
     ): Promise<ApiResponse<UpdateStatus>> {
         if (this.recordIds) {
             return right({ status: true });
@@ -61,7 +64,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async saveUserInformation(
         identifier: string,
-        vehicleUserInformation: VehicleUserInformation,
+        vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
             return right(this.recordIds);
@@ -73,7 +76,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     async updateUserInformation(
         identifier: string,
         recordId: number,
-        vehicleUserInformation: VehicleUserInformation,
+        vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<UpdateStatus>> {
         if (this.recordIds) {
             return right({ status: true });
@@ -82,7 +85,21 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return left('unknown record');
     }
 
-    feedWith(recordIds: RecordIds) {
+    async getRecord(identifier: string, recordId: string): Promise<ApiResponse<TRecord>> {
+        const found = this.records.find((e) => e.id === Number(recordId));
+
+        if (found) {
+            return right(found);
+        }
+
+        return left('unknown record');
+    }
+
+    feedRecordIdsWith(recordIds: RecordIds) {
         this.recordIds = recordIds;
+    }
+
+    feedRecordsWith(records: TRecord[]) {
+        this.records = records;
     }
 }

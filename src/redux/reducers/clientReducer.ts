@@ -1,7 +1,6 @@
 import { AnyAction, combineReducers } from 'redux';
-import { getClientConfig } from '../../config';
 import { TClientConfig } from '../../hexagon/interfaces';
-import { FetchStatus } from '../appState';
+import { TActionStatus } from '../appState';
 
 export const name = (state = '', action: AnyAction) => {
     if (action.type === 'client/SET_NAME') {
@@ -10,18 +9,7 @@ export const name = (state = '', action: AnyAction) => {
     return state;
 };
 
-const clientConfigInitialState: TClientConfig = {
-    identifier: '',
-    displayRegistrationOption: false,
-    registrationRegex: '',
-    zipCodeRegex: '',
-    phoneRegex: '',
-    mileageMin: 0,
-    mileageMax: 0,
-    questionsGroup: [],
-    required: [],
-    cascadeOrder: [],
-};
+const clientConfigInitialState = {} as TClientConfig;
 
 export const config = (state: TClientConfig = clientConfigInitialState, action: AnyAction) => {
     if (action.type === 'client/SET_CONFIG') return action.payload.config;
@@ -29,16 +17,16 @@ export const config = (state: TClientConfig = clientConfigInitialState, action: 
 };
 
 export const recordId = (state = '', action: AnyAction) => {
-    if (action.type === 'record/SAVED') {
+    if (action.type === 'record/saving/SUCCESS') {
         return action.payload.id;
     }
     return state;
 };
 
-export const status = (state: FetchStatus = 'idle', action: AnyAction) => {
-    if (action.type === 'record/SAVING') return 'loading';
-    if (action.type === 'record/SAVED') return 'succeeded';
-    if (action.type === 'record/FAILED') return 'failed';
+export const status = (state: TActionStatus = 'idle', action: AnyAction) => {
+    if (action.type === 'record/saving/PENDING') return 'pending';
+    if (action.type === 'record/saving/SUCCESS') return 'succeeded';
+    if (action.type === 'record/saving/FAILED') return 'failed';
     return state;
 };
 

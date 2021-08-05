@@ -10,6 +10,7 @@ import { themeSelector } from './Components/Themes';
 import { ErrorPage } from './Components/ErrorPage';
 import { clients } from '../../../config';
 import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName';
+import { Record } from './Components/Record';
 
 const App: FunctionComponent = () => {
     const history = useHistory();
@@ -30,6 +31,7 @@ const App: FunctionComponent = () => {
                     <main>
                         <Switch>
                             <Route path="/appointment" component={Appointment} />
+                            <Route path="/record/:recordId" component={Record} />
 
                             <Route path="/" component={FormVehicle} />
                         </Switch>

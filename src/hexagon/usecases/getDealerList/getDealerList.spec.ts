@@ -35,7 +35,7 @@ describe('Dealers retrieval', () => {
     it('track the dealer list retrieval process', async () => {
         const unsubscribe = store.subscribe(() => {
             expect(store.getState().dealer.dealerList).toEqual({
-                status: 'loading',
+                status: 'pending',
                 data: [],
             });
             unsubscribe();

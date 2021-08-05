@@ -15,7 +15,7 @@ describe('Dealer Slots retrieval', () => {
     it('track the dealer slot list retrieval process', async () => {
         const unsubscribe = store.subscribe(() => {
             expect(store.getState().dealer.dealerSlotList).toEqual({
-                status: 'loading',
+                status: 'pending',
                 data: [],
             });
             unsubscribe();

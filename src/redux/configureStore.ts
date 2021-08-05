@@ -9,6 +9,7 @@ import { dealerReducer } from './reducers/dealerReducer';
 import { formReducer } from './reducers/formReducer';
 import { errorReducer } from './reducers/errorReducer';
 import { clientReducer } from './reducers/clientReducer';
+import { recordReducer } from './reducers/recordReducer';
 
 export const configureStore = (dependencies?: Partial<Dependencies>) =>
     createStore(
@@ -16,6 +17,7 @@ export const configureStore = (dependencies?: Partial<Dependencies>) =>
             client: clientReducer,
             referential: referentialReducer,
             dealer: dealerReducer,
+            record: recordReducer,
             form: formReducer,
             error: errorReducer,
         }),

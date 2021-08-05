@@ -1,25 +1,24 @@
 import React from 'react';
 import { Spinner } from 'reactstrap';
+import { TActionStatus } from '../../../../redux/appState';
 
-import { FetchStatus } from '../../../../redux/appState';
-
-type LoaderProps = {
-    status: FetchStatus;
+type TLoaderProps = {
+    status: TActionStatus;
     children: React.ReactNode;
 };
 
-export const Loader: React.FC<LoaderProps> = ({ status, children }: LoaderProps) => {
+export const Loader: React.FC<TLoaderProps> = ({ status, children }: TLoaderProps) => {
     switch (status) {
-        case 'loading':
+        case 'idle':
+            return <></>;
+        case 'pending':
             return (
                 <div className="m-3 text-center">
                     <Spinner />
                 </div>
             );
-            break;
 
         default:
             return <>{children}</>;
-            break;
     }
 };

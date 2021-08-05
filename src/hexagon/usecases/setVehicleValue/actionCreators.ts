@@ -5,7 +5,7 @@ export const Actions = {
     vehicleValueSet: (formValue: FormValue) =>
         createAction('form/vehicle/SET_VALUE', { formValue }),
 
-    listFetching: (listName?: string) => createAction(`${listName}/FETCHING`),
+    listFetching: (listName?: string) => createAction(`${listName}/PENDING`),
     listFailed: (listName?: string) => createAction(`${listName}/FAILED`),
     listReset: (listName?: string) => createAction(`${listName}/RESET`),
     listRetrieved: (listName: string, list: VehicleElement[]) =>
