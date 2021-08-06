@@ -3,27 +3,25 @@ import { Row, Col, Button, Input, FormGroup, Label, Container } from 'reactstrap
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams,
-    useRouteMatch,
-} from 'react-router-dom';
-import {
     getDealerListSelector,
     getDealerSlotListSelector,
 } from '../../view-models-generators/dealerSelectors';
 import { getDealerList } from '../../../../hexagon/usecases/getDealerList/getDealerList';
 import { Loader } from './Loader';
 import { getDealerSlotList } from '../../../../hexagon/usecases/getDealerSlotList/getDealerSlotList';
-import { Hour, RouteParams } from '../../../../hexagon/interfaces';
+import { Hour } from '../../../../hexagon/interfaces';
 import { t } from '../../../../hexagon/shared/utils/translate';
+import { CtaBlock } from './CtaBlock';
 
-export const Appointment: FunctionComponent = () => {
+type TAppointmentProps = {
+    zipCode: string;
+};
+
+export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) => {
     const dispatch = useDispatch();
 
     const [dealerId, setDealerId] = useState<number | undefined>(undefined);
+    const [showAllDealers, setShowAllDealers] = useState<boolean>(false);
     const [date, setDate] = useState<string>('');
     const [hour, setHour] = useState<string>('');
     const [name, setName] = useState<string>('');
@@ -36,8 +34,8 @@ export const Appointment: FunctionComponent = () => {
         useSelector(getDealerSlotListSelector);
 
     useEffect(() => {
-        dispatch(getDealerList('75001'));
-    }, [dispatch]);
+        dispatch(getDealerList(zipCode));
+    }, [dispatch, zipCode]);
 
     useEffect(() => {
         if (dealerId) {
@@ -64,29 +62,33 @@ export const Appointment: FunctionComponent = () => {
 
     return (
         <Container fluid>
-            <h3>{t('we_make_an_appointment')}</h3>
-            <div className="text-center">
-                <div>{t('the_valuation_of_your')}</div>
-                <div className="display-3 ">3400 €</div>
-                <p>Lorem impsum</p>
-            </div>
-            <h5>1.Elige el centro de compra</h5>
+            <h5>{t('choose_your_point_of_sale')}</h5>
             <Loader status={dealerStatus}>
-                {dealerList.map((d) => (
-                    <Button
-                        className="mb-2"
-                        block
-                        key={d.id}
-                        onClick={() => setDealerId(d.dealerId)}
-                        color={d.dealerId === dealerId ? 'primary' : 'secondary'}
-                    >
-                        {d.name} ({d.distance} km)
-                    </Button>
-                ))}
+                <div className={`dealers-list ${showAllDealers ? 'show-all' : ''}`}>
+                    {dealerList.map((dealer, i) => (
+                        <Button
+                            className={i >= 3 ? 'hidden-dealer' : ''}
+                            block
+                            key={dealer.id}
+                            onClick={() => setDealerId(dealer.dealerId)}
+                            color={dealer.dealerId === dealerId ? 'primary' : 'secondary'}
+                        >
+                            {dealer.name} ({dealer.distance} km)
+                        </Button>
+                    ))}
+                </div>
+
+                <div
+                    role="button"
+                    aria-hidden="true"
+                    onClick={() => setShowAllDealers(!showAllDealers)}
+                >
+                    {t(showAllDealers ? 'show_less_dealers' : 'show_more_dealers')}
+                </div>
             </Loader>
             {dealerId && (
                 <>
-                    <h5 className="mt-4">2. Elige la fecha de hora</h5>
+                    <h5 className="mt-4">{t('choose_your_date')}</h5>
                     <Loader status={dealerSlotStatus}>
                         <Row>
                             <Col>
@@ -124,12 +126,12 @@ export const Appointment: FunctionComponent = () => {
                         </Row>
                     </Loader>
 
-                    <h5 className="mt-4">3 Tus datos de contacto</h5>
+                    <h5 className="mt-4">{t('your_contact')}</h5>
 
                     <Row>
                         <Col xs={12} sm={6}>
                             <FormGroup>
-                                <Label for="name">Nombre</Label>
+                                <Label for="name">{t('name')}</Label>
                                 <Input
                                     type="text"
                                     name="name"
@@ -141,7 +143,7 @@ export const Appointment: FunctionComponent = () => {
 
                         <Col xs={12} sm={6}>
                             <FormGroup>
-                                <Label for="phone">Numero de téléfono</Label>
+                                <Label for="phone">{t('phone_number')}</Label>
                                 <Input
                                     type="tel"
                                     name="phone"
@@ -153,19 +155,17 @@ export const Appointment: FunctionComponent = () => {
                     </Row>
                 </>
             )}
-            <Row>
-                <Col>
-                    <Button
-                        color="primary"
-                        disabled={!formValid}
-                        block
-                        className="mt-3"
-                        onClick={submitAppointment}
-                    >
-                        Reservar una cita ahora
-                    </Button>
-                </Col>
-            </Row>
+            <CtaBlock>
+                <Button
+                    color="primary"
+                    disabled={!formValid}
+                    block
+                    className="mt-3"
+                    onClick={submitAppointment}
+                >
+                    Reservar una cita ahora
+                </Button>
+            </CtaBlock>
         </Container>
     );
 };

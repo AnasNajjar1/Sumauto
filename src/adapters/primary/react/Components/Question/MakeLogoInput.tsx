@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { QuestionKey } from '../../../../../hexagon/interfaces';
+import { t } from '../../../../../hexagon/shared/utils/translate';
 import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
 type MakeLogoInputProps = {
@@ -19,7 +20,7 @@ export const MakeLogoInput: FunctionComponent<MakeLogoInputProps> = ({ id, value
     return (
         <>
             <Col>
-                <div className="registration-or-make-logo">OR</div>
+                <div className="registration-or-make-logo">{t('or')}</div>
             </Col>
 
             <div className={`question question-${id}`}>

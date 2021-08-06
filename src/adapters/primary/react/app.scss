@@ -120,3 +120,19 @@ $label-margin-bottom: 0rem;
     margin: 2em 0;
     text-align: center;
 }
+
+.dealers-list{
+    button{
+        margin-bottom: 1em;
+        &.hidden-dealer{
+            display: none;
+        }
+    }
+
+    &.show-all{
+        button.hidden-dealer{
+            display: block;
+        }
+    }
+    
+}

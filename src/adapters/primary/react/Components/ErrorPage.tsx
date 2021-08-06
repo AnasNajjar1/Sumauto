@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'reactstrap';
+import { t } from '../../../../hexagon/shared/utils/translate';
 import './Themes/default.scss';
 
 export const ErrorPage: FunctionComponent = () => {
@@ -8,9 +9,9 @@ export const ErrorPage: FunctionComponent = () => {
 
     return (
         <Container fluid className="text-center">
-            <h1>Oops!</h1>
+            <h1>{t('error_title')}</h1>
             <h2>{errorCode}</h2>
-            <div>Sorry, an error has occured</div>
+            <div>{t('error_message')}</div>
         </Container>
     );
 };

@@ -43,7 +43,7 @@ export const RegistrationInput: FunctionComponent<RegistrationInputProps> = ({
             dispatch(setVehicleValue('registration', registration));
             dispatch(getCarDetailsByRegistrationUseCase(registration));
         } else {
-            dispatch(showError("<p>Le numéro d'immatriculation est invalide</p>"));
+            dispatch(showError(`<p>${t('the_registration_number_is_invalid')}</p>`));
         }
     };
 

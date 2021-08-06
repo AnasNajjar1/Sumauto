@@ -26,7 +26,7 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
     required,
 }) => {
     const dispatch = useDispatch();
-
+    console.log(value, error);
     return (
         <div className="question question-mileage">
             <FormGroup>
@@ -44,7 +44,7 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
                         onBlur={(e) => dispatch(setVehicleValue(id, e.target.value))}
                     />
                     <div className="input-validation">
-                        {error?.validation === false && <span className="valid">✓</span>}
+                        {error?.validation === false && value && <span className="valid">✓</span>}
                         {error?.validation === true && <span className="invalid">✗</span>}
                     </div>
                 </div>
