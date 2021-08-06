@@ -30,10 +30,9 @@ const App: FunctionComponent = () => {
                 <div className={`app-${clientSlug}`}>
                     <main>
                         <Switch>
-                            <Route path="/appointment" component={Appointment} />
+                            <Route exact path="/" component={FormVehicle} />
                             <Route path="/record/:recordId" component={Record} />
-
-                            <Route path="/" component={FormVehicle} />
+                            {/* <Route path="/appointment" component={Appointment} /> */}
                         </Switch>
                     </main>
                     <ErrorModal />

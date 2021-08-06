@@ -1,7 +1,7 @@
 import { RecordIds, TRecord } from '../../../../../hexagon/interfaces';
 
 export const aRecordIds: RecordIds = {
-    id: 104715,
+    id: 100,
     reference: 'a145zdse58bc',
 };
 
@@ -12,6 +12,15 @@ export const somesRecords: TRecord[] = [
         vehicle: {
             makeName: 'Peugeot',
             modelName: '2008',
+            yearName: '2020',
+            monthName: 'Enero',
+            bodyName: 'Sedan',
+            fuelName: 'Gasolina',
+            engineName: '92CH',
+            gearName: 'automatica',
+            versionName: '1.6 bluehdi 75 active',
+            import: true,
+            mileage: 45000,
         },
         customer: {
             email: 'john@doe.fr',
@@ -23,6 +32,8 @@ export const somesRecords: TRecord[] = [
         valuation: {
             value: 10000,
             status: true,
+            archived: false,
+            date: new Date('2020-08-20'),
         },
         appointment: {
             status: false,
@@ -34,6 +45,15 @@ export const somesRecords: TRecord[] = [
         vehicle: {
             makeName: 'Fiat',
             modelName: 'Panda',
+            yearName: '2020',
+            monthName: 'Enero',
+            bodyName: 'Sedan',
+            fuelName: 'Gasolina',
+            engineName: '92CH',
+            gearName: 'automatica',
+            versionName: '1.6 bluehdi 75 active',
+            import: true,
+            mileage: 15000,
         },
         customer: {
             email: 'john@doe.fr',
@@ -43,8 +63,10 @@ export const somesRecords: TRecord[] = [
             zipCode: '12345',
         },
         valuation: {
-            value: 10000,
+            value: 6000,
             status: true,
+            archived: false,
+            date: new Date('2020-08-20'),
         },
         appointment: {
             status: true,
@@ -54,8 +76,50 @@ export const somesRecords: TRecord[] = [
         id: 300,
         status: 'created',
         vehicle: {
+            makeName: 'Renault',
+            modelName: 'Clio',
+            yearName: '2020',
+            monthName: 'Enero',
+            bodyName: 'Sedan',
+            fuelName: 'Gasolina',
+            engineName: '92CH',
+            gearName: 'automatica',
+            versionName: '1.6 bluehdi 75 active',
+            import: true,
+            mileage: 20000,
+        },
+        customer: {
+            email: 'john@doe.fr',
+            phone: '912341234',
+            lastName: 'doe',
+            firstName: 'john',
+            zipCode: '12345',
+        },
+        valuation: {
+            value: 18000,
+            status: true,
+            archived: true,
+            date: new Date('2020-01-01'),
+        },
+        appointment: {
+            status: true,
+        },
+    },
+    {
+        id: 400,
+        status: 'created',
+        vehicle: {
             makeName: 'Peugeot',
             modelName: '2008',
+            yearName: '2020',
+            monthName: 'Enero',
+            bodyName: 'Sedan',
+            fuelName: 'Gasolina',
+            engineName: '92CH',
+            gearName: 'automatica',
+            versionName: '1.6 bluehdi 75 active',
+            import: true,
+            mileage: 90000,
         },
         customer: {
             email: 'john@doe.fr',
@@ -67,6 +131,8 @@ export const somesRecords: TRecord[] = [
         valuation: {
             value: 0,
             status: false,
+            archived: false,
+            date: new Date('2020-08-20'),
         },
         appointment: {
             status: false,

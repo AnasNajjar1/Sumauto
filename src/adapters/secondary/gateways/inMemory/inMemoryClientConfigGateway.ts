@@ -1,8 +1,4 @@
-import { left, right } from 'fp-ts/Either';
-import { BaseApi } from '../../../../hexagon/infra/BaseApi';
-import { Dealer, Slot, TClient, TClientConfig } from '../../../../hexagon/interfaces';
-import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
-import { DealerGateway } from '../../../../hexagon/gateways/dealerGateway.interface';
+import { TClient, TClientConfig } from '../../../../hexagon/interfaces';
 import { ClientConfigGateway } from '../../../../hexagon/gateways/clientConfigGateway.interface';
 
 import autocasion from '../../../../config/autocasion';

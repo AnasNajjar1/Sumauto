@@ -4,13 +4,7 @@ import {
     Scope,
     ReferentialGateway,
 } from '../../../../hexagon/gateways/referentialGateway.interface';
-import {
-    VehicleElement,
-    ReferentialItem,
-    CarDetails,
-    VehicleFilters,
-    Makes,
-} from '../../../../hexagon/interfaces';
+import { ReferentialItem, CarDetails, VehicleFilters, Makes } from '../../../../hexagon/interfaces';
 
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { InMemoryReferential } from './stubs/referential';

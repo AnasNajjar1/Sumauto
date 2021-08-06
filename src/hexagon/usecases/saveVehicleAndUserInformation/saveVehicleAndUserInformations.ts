@@ -52,7 +52,7 @@ export const saveVehicleAndUserInformations =
             {
                 imported: imported === 'Y',
                 service_history: history === 'Y',
-                running: running === 'Y' ? 1 : 0,
+                running: running === 'Y',
             },
         );
 

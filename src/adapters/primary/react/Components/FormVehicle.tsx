@@ -1,20 +1,31 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Col, Container, Row } from 'reactstrap';
+import { useHistory } from 'react-router-dom';
+import { Button, Container } from 'reactstrap';
 import { t } from '../../../../hexagon/shared/utils/translate';
+import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord';
 import { saveVehicleAndUserInformations } from '../../../../hexagon/usecases/saveVehicleAndUserInformation/saveVehicleAndUserInformations';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
-import { getFormVehicleValue } from '../../view-models-generators/referentialSelectors';
+import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import useVehicleForm from '../hooks/useVehicleForm';
+import { CtaBlock } from './CtaBlock';
 import { ProgressMenu } from './ProgressMenu';
 
 export const FormVehicle: FunctionComponent = () => {
-    const { inputComponents, shouldDisplayQuestionsGroup, canQuote, validation, vehicleProgress } =
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { inputComponents, shouldDisplayQuestionsGroup, canQuote, vehicleProgress } =
         useVehicleForm();
-    const { vehicle } = useSelector(getFormVehicleValue);
     const { client } = useSelector(getClientSelector);
 
-    const dispatch = useDispatch();
+    const { id: recordId } = useSelector(getRecordSelector);
+
+    useEffect(() => {
+        if (recordId > 0) {
+            history.push(`./record/${recordId}`);
+        }
+    }, [dispatch, recordId]);
 
     return (
         <Container fluid>
@@ -41,25 +52,15 @@ export const FormVehicle: FunctionComponent = () => {
                         ))}
                     </div>
                 ))}
-
-                {canQuote() && (
-                    <div className="form-cta">
-                        <Button block onClick={() => dispatch(saveVehicleAndUserInformations())}>
-                            {t('value_your_car_now')}
-                        </Button>
-                    </div>
-                )}
-
-                {/* <hr />
-                <Row>
-                    <Col>
-                        FormState : <pre>{JSON.stringify(vehicle, null, 2)}</pre>
-                    </Col>
-
-                    <Col>
-                        validation : <pre>{JSON.stringify(validation, null, 2)}</pre>
-                    </Col>
-                </Row> */}
+                <CtaBlock>
+                    <Button
+                        disabled={!canQuote()}
+                        block
+                        onClick={() => dispatch(saveVehicleAndUserInformations())}
+                    >
+                        {t('value_your_car_now')}
+                    </Button>
+                </CtaBlock>
             </div>
         </Container>
     );

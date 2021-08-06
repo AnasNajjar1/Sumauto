@@ -154,12 +154,14 @@ export type VehicleStateInformation = {
     mechanical?: boolean;
     damaged?: boolean;
     defaults?: boolean;
-    running?: number;
+    running?: boolean;
 };
 
 export type TValuation = {
     value: number;
     status: boolean;
+    archived: boolean;
+    date: Date;
 };
 
 export type TCustomer = {
@@ -177,6 +179,15 @@ export type TCustomer = {
 export type TVehicleNames = {
     makeName: string;
     modelName: string;
+    yearName: string;
+    monthName: string;
+    fuelName: string;
+    bodyName: string;
+    engineName: string;
+    gearName: string;
+    mileage: number;
+    import: boolean;
+    versionName: string;
 };
 
 export type TAppointment = {

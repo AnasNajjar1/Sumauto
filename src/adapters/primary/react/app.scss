@@ -90,9 +90,7 @@ $label-margin-bottom: 0rem;
 
 
 }    
-.form-cta{
-    @extend .mt-3;
-}
+
 .progress-menu{
     position: fixed;
     width: 100%;
@@ -116,4 +114,9 @@ $label-margin-bottom: 0rem;
 
 .page{
     padding-top: 100px;
+}
+
+.cta-block{
+    margin: 2em 0;
+    text-align: center;
 }

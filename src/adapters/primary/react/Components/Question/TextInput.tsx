@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FormGroup, Input, Label } from 'reactstrap';
-import { QuestionKey, ReferentialItem } from '../../../../../hexagon/interfaces';
+import { QuestionKey } from '../../../../../hexagon/interfaces';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
 type TextInputProps = {
