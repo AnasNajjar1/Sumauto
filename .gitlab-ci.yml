@@ -1,0 +1,201 @@
+image: docker-proxy.aut.bz/docker:18.09
+stages:
+  - testing
+  - dependencies
+  - build_dev
+  - build_stg
+  - build_ppr
+  - build_prod
+  - deploy_dev
+  - deploy_stg
+  - deploy_ppr
+  - deploy_prod
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+before_script:
+  - source ./.cicd_tools/tools.sh
+
+test_merge_master:
+  stage: testing
+  script:
+    - test_merge_master_to_this_branch
+  except:
+    - master
+  allow_failure : true
+  tags:
+    - docker
+
+refresh_cached_dependencies:
+  stage: dependencies
+  image: docker-proxy.aut.bz/node:10
+  cache: 
+    key: app-sumauto
+    paths:
+      - node_modules/
+    policy: push
+  script:
+    - npm_install_optimized
+  only:
+    - master
+  when: manual
+  tags:
+    - docker
+
+
+build_dev:
+  stage: build_dev
+  image: docker-proxy.aut.bz/node:10
+  script:
+    - change_environment_variable_to "${CI_ENVIRONMENT_NAME}"
+    - npm_install_optimized
+    - npm_build
+  artifacts:
+    paths:
+      - ./build
+  except:
+    - master-staging
+    - master
+  environment:
+    name: dev
+  tags:
+    - docker
+
+
+deploy_dev:
+  stage: deploy_dev
+  image: docker-proxy.aut.bz/python:3.8.3-slim-buster
+  script:
+    - assert_build_folder_exists
+    - echo ${S3_BUCKET}
+    - deploy_build_to_s3_bucket "${S3_BUCKET}"
+  environment:
+    name: dev
+    url: https://dev-sumauto.shakazoola.com
+  when: manual
+  except:
+    - master-staging
+    - master
+  dependencies:
+    - build_dev
+  tags:
+    - docker
+
+build_stg:
+  stage: build_stg
+  image: docker-proxy.aut.bz/node:10
+  cache: 
+    key: app-sumauto
+    paths:
+      - node_modules/
+    policy: pull
+  script:
+    - change_environment_variable_to "${CI_ENVIRONMENT_NAME}"
+    - npm_install_optimized
+    - npm_build
+  artifacts:
+    paths:
+      - ./build
+  only:
+    - master-staging
+  environment:
+    name: staging
+  tags:
+    - docker
+
+deploy_staging:
+  stage: deploy_stg
+  image: docker-proxy.aut.bz/python:3.8.3-slim-buster
+  script:
+    - assert_build_folder_exists
+    - echo ${S3_BUCKET}
+    - deploy_build_to_s3_bucket "${S3_BUCKET}"
+  only:
+    - master-staging
+  environment:
+    name: staging
+    url: https://stg-sumauto.shakazoola.com
+  when: manual
+  dependencies:
+    - build_stg
+  tags:
+    - docker
+    
+build_ppr:
+  stage: build_ppr
+  image: docker-proxy.aut.bz/node:10
+  cache: 
+    key: app-sumauto
+    paths:
+      - node_modules/
+    policy: pull
+  script:
+    - change_environment_variable_to "${CI_ENVIRONMENT_NAME}"
+    - npm_install_optimized
+    - npm_build
+  artifacts:
+    paths:
+      - ./build
+  only:
+    - master
+  environment:
+    name: ppr
+  tags:
+    - docker
+
+deploy_ppr:
+  stage: deploy_ppr
+  image: docker-proxy.aut.bz/python:3.8.3-slim-buster
+  script:
+    - assert_build_folder_exists
+    - deploy_build_to_s3_bucket "${S3_BUCKET}"
+  only:
+    - master
+  environment:
+    name: ppr
+    url: https://ppr-sumauto.autobiz.com
+  when: manual
+  dependencies: 
+    - build_ppr
+  tags:
+    - docker
+
+build_prod:
+  stage: build_prod
+  image: docker-proxy.aut.bz/node:10
+  cache: 
+    key: app-sumauto
+    paths:
+      - node_modules/
+    policy: pull
+  script:
+    - change_environment_variable_to "${CI_ENVIRONMENT_NAME}"
+    - npm_install_optimized
+    - npm_build
+  artifacts:
+    paths:
+      - ./build
+  only:
+    - master
+  environment:
+    name: prod
+  tags:
+    - docker
+
+deploy_prod:
+  stage: deploy_prod
+  image: docker-proxy.aut.bz/python:3.8.3-slim-buster
+  script:
+    - assert_build_folder_exists
+    - deploy_build_to_s3_bucket "${S3_BUCKET}"
+  only:
+    - master
+  environment:
+    name: prod
+    url: https://sumauto.autobiz.com
+  when: manual
+  dependencies: 
+    - build_prod
+  tags:
+    - docker
