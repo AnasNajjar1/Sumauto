@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { BrowserRouter, Switch, Route, useParams, useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
+import { TranslateProvider } from 'autobiz-translate';
 import { Appointment } from './Components/Appointment';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
@@ -24,21 +25,23 @@ const App: FunctionComponent = () => {
     }
 
     return (
-        <React.Suspense fallback={<></>}>
-            {themeSelector(clientSlug)}
-            <BrowserRouter basename={`/${clientSlug}`}>
-                <div className={`app-${clientSlug}`}>
-                    <main>
-                        <Switch>
-                            <Route exact path="/" component={FormVehicle} />
-                            <Route path="/record/:recordId" component={Record} />
-                            {/* <Route path="/appointment" component={Appointment} /> */}
-                        </Switch>
-                    </main>
-                    <ErrorModal />
-                </div>
-            </BrowserRouter>
-        </React.Suspense>
+        <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
+            <React.Suspense fallback={<></>}>
+                {themeSelector(clientSlug)}
+                <BrowserRouter basename={`/${clientSlug}`}>
+                    <div className={`app-${clientSlug}`}>
+                        <main>
+                            <Switch>
+                                <Route exact path="/" component={FormVehicle} />
+                                <Route path="/record/:recordId" component={Record} />
+                                {/* <Route path="/appointment" component={Appointment} /> */}
+                            </Switch>
+                        </main>
+                        <ErrorModal />
+                    </div>
+                </BrowserRouter>
+            </React.Suspense>
+        </TranslateProvider>
     );
 };
 

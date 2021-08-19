@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Row, Col, Button, Input, FormGroup, Label, Container } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { t } from 'autobiz-translate';
 import {
     getDealerListSelector,
     getDealerSlotListSelector,
@@ -10,7 +11,6 @@ import { getDealerList } from '../../../../hexagon/usecases/getDealerList/getDea
 import { Loader } from './Loader';
 import { getDealerSlotList } from '../../../../hexagon/usecases/getDealerSlotList/getDealerSlotList';
 import { Hour } from '../../../../hexagon/interfaces';
-import { t } from '../../../../hexagon/shared/utils/translate';
 import { CtaBlock } from './CtaBlock';
 
 type TAppointmentProps = {

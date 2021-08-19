@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Container } from 'reactstrap';
+import { t } from 'autobiz-translate';
 import { TRecord } from '../../../../../hexagon/interfaces';
-import { t } from '../../../../../hexagon/shared/utils/translate';
 import { ActiveValuation } from './ActiveValuation';
 import { ArchivedValuation } from './ArchivedValuation';
 import { NoValuation } from './NoValuation';

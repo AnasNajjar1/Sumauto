@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, Row } from 'reactstrap';
+import { t } from 'autobiz-translate';
 import { QuestionKey } from '../../../../../hexagon/interfaces';
-import { t } from '../../../../../hexagon/shared/utils/translate';
 import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
 type MakeLogoInputProps = {

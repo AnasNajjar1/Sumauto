@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 
+import { t } from 'autobiz-translate';
 import { QuestionKey } from '../../../../hexagon/interfaces';
-import { t } from '../../../../hexagon/shared/utils/translate';
 import {
     getFormListSelector,
     getFormVehicleValue,

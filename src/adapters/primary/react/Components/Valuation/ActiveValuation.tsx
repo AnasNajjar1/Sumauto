@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Collapse } from 'reactstrap';
+import { t } from 'autobiz-translate';
 import { TRecord } from '../../../../../hexagon/interfaces';
 import { TextUtils } from '../../../../../hexagon/shared/utils/TextUtils';
-import { t } from '../../../../../hexagon/shared/utils/translate';
 import { getClientSelector } from '../../../view-models-generators/clientSelector';
 
 export const ActiveValuation: FunctionComponent<TRecord> = (props) => {

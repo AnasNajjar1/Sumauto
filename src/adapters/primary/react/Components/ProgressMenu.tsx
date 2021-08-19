@@ -1,6 +1,6 @@
 import React from 'react';
 import { Progress } from 'reactstrap';
-import { t } from '../../../../hexagon/shared/utils/translate';
+import { t } from 'autobiz-translate';
 
 type ProgressMenuProps = {
     step: number;

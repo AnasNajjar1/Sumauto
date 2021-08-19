@@ -3,11 +3,11 @@ import { Container } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useParams } from 'react-router-dom';
+import { t } from 'autobiz-translate';
 import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import { Loader } from './Loader';
 import { Valuation } from './Valuation/Valuation';
-import { t } from '../../../../hexagon/shared/utils/translate';
 import { Appointment } from './Appointment';
 
 export const Record: FunctionComponent = () => {

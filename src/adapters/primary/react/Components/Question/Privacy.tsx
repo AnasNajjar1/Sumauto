@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, FormGroup, Input, Label } from 'reactstrap';
-import { t } from '../../../../../hexagon/shared/utils/translate';
+import { t } from 'autobiz-translate';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
 export const Privacy: FunctionComponent = () => {

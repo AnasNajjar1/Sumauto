@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormGroup, Label, FormText, ButtonGroup, Button } from 'reactstrap';
+import { t } from 'autobiz-translate';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { t } from '../../../../../hexagon/shared/utils/translate';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
 type Data = {

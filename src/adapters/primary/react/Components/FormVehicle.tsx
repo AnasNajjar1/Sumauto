@@ -3,7 +3,7 @@ import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
-import { t } from '../../../../hexagon/shared/utils/translate';
+import { t } from 'autobiz-translate';
 import { saveVehicleAndUserInformations } from '../../../../hexagon/usecases/saveVehicleAndUserInformation/saveVehicleAndUserInformations';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';

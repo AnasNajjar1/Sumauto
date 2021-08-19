@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import { t } from '../../../../hexagon/shared/utils/translate';
+import { t } from 'autobiz-translate';
 import './Themes/default.scss';
 
 export const ErrorPage: FunctionComponent = () => {

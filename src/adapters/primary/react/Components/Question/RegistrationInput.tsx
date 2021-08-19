@@ -3,9 +3,9 @@ import React, { FunctionComponent, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Spinner } from 'reactstrap';
 
+import { t } from 'autobiz-translate';
 import config from '../../../../../config/unoauto';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { t } from '../../../../../hexagon/shared/utils/translate';
 import { showError } from '../../../../../hexagon/usecases/displayError/displayError';
 import { getCarDetailsByRegistrationUseCase } from '../../../../../hexagon/usecases/getCarDetailsByRegistration/getCarDetailsByRegistration';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
