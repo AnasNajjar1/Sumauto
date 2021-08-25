@@ -115,7 +115,7 @@ export type TClientConfig = {
     identifier: string;
     displayRegistrationOption: boolean;
     cascadeOrder: ReferentialItem[];
-    questionsGroup: QuestionKey[][];
+    questionsGroup: { title: string; questions: QuestionKey[] }[];
     required: QuestionKey[];
     zipCodeRegex: string;
     phoneRegex: string;
@@ -190,8 +190,23 @@ export type TVehicleNames = {
     versionName: string;
 };
 
+export type TCoordinates = {
+    lat: number;
+    lng: number;
+};
+
 export type TAppointment = {
     status: boolean;
+    dateHour: Date;
+    place: {
+        sellerName: string;
+        name: string;
+        address: string;
+        zipCode: string;
+        city: string;
+        phone: string;
+        position: TCoordinates;
+    };
 };
 
 export type TRecord = {
@@ -210,4 +225,10 @@ export type UpdateStatus = {
 export type TClient = 'autocasion' | 'autoscout24' | 'unoauto';
 export type RouteParams = {
     clientSlug: TClient;
+};
+
+export type TSubscription = {
+    identifier: string;
+    email: string;
+    phone?: string;
 };

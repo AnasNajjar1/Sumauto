@@ -1,7 +1,7 @@
 import { TClientConfig } from '../hexagon/interfaces';
 
 const config: TClientConfig = {
-    locale: 'es-ES',
+    locale: 'fr-FR',
     currency: 'EUR',
     identifier: 'unoauto1234',
     displayRegistrationOption: true,
@@ -12,11 +12,36 @@ const config: TClientConfig = {
     mileageMin: 100,
     mileageMax: 499999,
     questionsGroup: [
-        ['registration', 'makeLogo', 'make', 'model', 'month', 'year', 'fuel', 'body'],
-        ['door', 'gear', 'engine'],
-        ['version'],
-        ['mileage', 'imported', 'history', 'running', 'sellProject'],
-        ['email', 'emailConfirmation', 'zipCode', 'phone', 'privacy'],
+        {
+            title: 'basic_information',
+            questions: [
+                'registration',
+                'makeLogo',
+                'make',
+                'model',
+                'month',
+                'year',
+                'fuel',
+                'body',
+            ],
+        },
+        {
+            title: 'more_details',
+            questions: ['door', 'gear', 'engine', 'version', 'mileage', 'imported'],
+        },
+        {
+            title: 'additional_informations',
+            questions: [
+                'history',
+                'running',
+                'sellProject',
+                'email',
+                'emailConfirmation',
+                'zipCode',
+                'phone',
+                'privacy',
+            ],
+        },
     ],
     required: [
         'make',

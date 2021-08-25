@@ -11,8 +11,21 @@ const config: TClientConfig = {
     phoneRegex: '^[6,7,8,9][0-9]{8}$|^(376)[0-9]{9}$',
     mileageMin: 0,
     mileageMax: 1000000,
-    questionsGroup: [['make', 'model', 'version', 'mileage', 'zipCode']],
     required: ['make', 'model', 'version', 'mileage', 'zipCode'],
+    questionsGroup: [
+        {
+            title: 'basic_information',
+            questions: ['make', 'model', 'version'],
+        },
+        {
+            title: 'more_details',
+            questions: ['mileage'],
+        },
+        {
+            title: 'additional_informations',
+            questions: ['email', 'zipCode'],
+        },
+    ],
 
     cascadeOrder: ['make', 'model', 'version'],
 };

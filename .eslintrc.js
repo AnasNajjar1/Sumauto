@@ -36,5 +36,7 @@ module.exports = {
         'react/jsx-props-no-spreading': "off",
         'react/no-danger': "off", 
         'react-hooks/exhaustive-deps':"warn",
+        "react/prop-types": "off",
+        "react/require-default-props": "off"
     },
 };

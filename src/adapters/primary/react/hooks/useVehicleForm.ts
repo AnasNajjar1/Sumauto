@@ -172,10 +172,10 @@ const useVehicleForm = () => {
         groupsDisplay[0] = true;
         client.config.questionsGroup.forEach((element, key) => {
             const empty: any = {};
-            element.forEach((e) => {
+            element.questions.forEach((e) => {
                 empty[e] = '';
             });
-            const picked = _.pick(vehicle, element);
+            const picked = _.pick(vehicle, element.questions);
             const result = { ...empty, ...picked };
             Object.keys(result).forEach((e: any) => {
                 if (!isMandatoryQuestion(e)) delete result[e];
@@ -394,9 +394,9 @@ const useVehicleForm = () => {
                 value: vehicle.sellProject,
                 text: { label: t('sellProject') },
                 data: [
-                    { name: t('1-3 weeks'), value: '1' },
-                    { name: t('1 month'), value: '2' },
-                    { name: t('3 months'), value: '3' },
+                    { name: t('1-3_weeks'), value: '1' },
+                    { name: t('1_month'), value: '2' },
+                    { name: t('3_months'), value: '3' },
                 ],
                 error: validation.sellProject,
                 required: isMandatoryQuestion('sellProject'),

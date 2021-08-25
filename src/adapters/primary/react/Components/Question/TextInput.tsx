@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormGroup, Input, Label } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { QuestionKey } from '../../../../../hexagon/interfaces';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
@@ -26,7 +28,6 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
     required,
 }) => {
     const dispatch = useDispatch();
-    console.log(value, error);
     return (
         <div className="question question-mileage">
             <FormGroup>
@@ -44,8 +45,8 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
                         onBlur={(e) => dispatch(setVehicleValue(id, e.target.value))}
                     />
                     <div className="input-validation">
-                        {error?.validation === false && value && <span className="valid">✓</span>}
-                        {error?.validation === true && <span className="invalid">✗</span>}
+                        {error?.validation === false && value && <FontAwesomeIcon icon={faCheck} />}
+                        {error?.validation === true && <FontAwesomeIcon icon={faTimes} />}
                     </div>
                 </div>
                 {error?.validation && <p className="text-danger">{error.message}</p>}

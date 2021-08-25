@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormGroup, Label, Input, Col, FormText, Spinner } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
 import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
@@ -61,10 +63,10 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
                         </Input>
                         <div className="input-validation">
                             {value && error?.validation === false && (
-                                <span className="valid">✓</span>
+                                <FontAwesomeIcon icon={faCheck} />
                             )}
                             {value && error?.validation === true && (
-                                <span className="invalid">✗</span>
+                                <FontAwesomeIcon icon={faTimes} />
                             )}
                         </div>
                     </div>

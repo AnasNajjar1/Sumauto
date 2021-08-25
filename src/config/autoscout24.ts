@@ -11,12 +11,38 @@ const config: TClientConfig = {
     phoneRegex: '^[6,7,8,9][0-9]{8}$|^(376)[0-9]{9}$',
     mileageMin: 100,
     mileageMax: 499999,
+
     questionsGroup: [
-        ['registration', 'makeLogo', 'make', 'model', 'month', 'year', 'fuel', 'body'],
-        ['door', 'gear', 'engine'],
-        ['version'],
-        ['mileage', 'imported', 'history', 'running', 'sellProject'],
-        ['email', 'emailConfirmation', 'zipCode', 'phone', 'privacy'],
+        {
+            title: 'basic_information',
+            questions: [
+                'registration',
+                'makeLogo',
+                'make',
+                'model',
+                'month',
+                'year',
+                'fuel',
+                'body',
+            ],
+        },
+        {
+            title: 'more_details',
+            questions: ['door', 'gear', 'engine', 'version', 'mileage', 'imported'],
+        },
+        {
+            title: 'additional_informations',
+            questions: [
+                'history',
+                'running',
+                'sellProject',
+                'email',
+                'emailConfirmation',
+                'zipCode',
+                'phone',
+                'privacy',
+            ],
+        },
     ],
     required: [
         'make',

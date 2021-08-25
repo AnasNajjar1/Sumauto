@@ -31,8 +31,13 @@ export const getCarDetailsByRegistrationUseCase =
                 year,
             } = result.right;
 
-            const displayQuestion = (question: QuestionKey) =>
-                getState().client.config.questionsGroup.flat().includes(question);
+            const displayQuestion = (question: QuestionKey) => {
+                const q = getState().client.config.questionsGroup.reduce((a: any, b) => {
+                    a.push(b.questions);
+                    return a;
+                }, []);
+                return q.flat().includes(question);
+            };
 
             if (status) {
                 if (displayQuestion('make'))

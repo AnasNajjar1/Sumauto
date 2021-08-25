@@ -2,6 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormGroup, Label, FormText, ButtonGroup, Button } from 'reactstrap';
 import { t } from 'autobiz-translate';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
 
@@ -57,8 +59,8 @@ export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
                         ))}
                     </ButtonGroup>
                     <div className="input-validation">
-                        {value && error?.validation === false && <span className="valid">✓</span>}
-                        {value && error?.validation === true && <span className="invalid">✗</span>}
+                        {value && error?.validation === false && <FontAwesomeIcon icon={faCheck} />}
+                        {value && error?.validation === true && <FontAwesomeIcon icon={faTimes} />}
                     </div>
                 </div>
                 {value && error?.validation && <p className="text-danger">{error.message}</p>}

@@ -12,6 +12,8 @@ import { ErrorPage } from './Components/ErrorPage';
 import { clients } from '../../../config';
 import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName';
 import { Record } from './Components/Record';
+import { UnsubscribePage } from './Components/UnsubscribePage';
+import { Confirmation } from './Components/Confirmation';
 
 const App: FunctionComponent = () => {
     const history = useHistory();
@@ -33,8 +35,14 @@ const App: FunctionComponent = () => {
                         <main>
                             <Switch>
                                 <Route exact path="/" component={FormVehicle} />
+                                <Route path="/unsubscribe" component={UnsubscribePage} />
+
+                                <Route
+                                    path="/record/confirmation/:recordId"
+                                    component={Confirmation}
+                                />
                                 <Route path="/record/:recordId" component={Record} />
-                                {/* <Route path="/appointment" component={Appointment} /> */}
+                                <Route path="/error/:errorCode" component={ErrorPage} />
                             </Switch>
                         </main>
                         <ErrorModal />

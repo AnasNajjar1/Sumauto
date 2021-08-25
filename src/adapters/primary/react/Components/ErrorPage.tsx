@@ -8,10 +8,12 @@ export const ErrorPage: FunctionComponent = () => {
     const { errorCode } = useParams<{ errorCode: string }>();
 
     return (
-        <Container fluid className="text-center">
-            <h1>{t('error_title')}</h1>
-            <h2>{errorCode}</h2>
-            <div>{t('error_message')}</div>
-        </Container>
+        <div className="page page-error">
+            <Container fluid>
+                <h1>{t('error_title')}</h1>
+                {/* <h2>{errorCode}</h2> */}
+                <p>{t('error_message')}</p>
+            </Container>
+        </div>
     );
 };

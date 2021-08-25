@@ -1,8 +1,33 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Row, Col, Button, Input, FormGroup, Label, Container } from 'reactstrap';
+import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
+import {
+    Row,
+    Col,
+    Button,
+    Input,
+    FormGroup,
+    Label,
+    Container,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText,
+} from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faUser,
+    faPhone,
+    faCalendarAlt,
+    faClock,
+    faPlusCircle,
+    faMinusCircle,
+    faMapMarkerAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+    faDotCircle as farDotCircle,
+    faCircle as farCircle,
+} from '@fortawesome/free-regular-svg-icons';
 import { t } from 'autobiz-translate';
+import { useHistory } from 'react-router-dom';
 import {
     getDealerListSelector,
     getDealerSlotListSelector,
@@ -12,13 +37,17 @@ import { Loader } from './Loader';
 import { getDealerSlotList } from '../../../../hexagon/usecases/getDealerSlotList/getDealerSlotList';
 import { Hour } from '../../../../hexagon/interfaces';
 import { CtaBlock } from './CtaBlock';
+import { getClientSelector } from '../../view-models-generators/clientSelector';
 
 type TAppointmentProps = {
     zipCode: string;
+    recordId: string;
 };
 
-export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) => {
+export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zipCode }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
+    const { client } = useSelector(getClientSelector);
 
     const [dealerId, setDealerId] = useState<number | undefined>(undefined);
     const [showAllDealers, setShowAllDealers] = useState<boolean>(false);
@@ -26,7 +55,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) =
     const [hour, setHour] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [phone, setPhone] = useState<string>('');
-    const [terms, setTerms] = useState<boolean>(false);
+    const [phoneValid, setPhoneValid] = useState<boolean>(false);
     const [hourList, setHourList] = useState<Hour[]>([]);
 
     const { data: dealerList, status: dealerStatus } = useSelector(getDealerListSelector);
@@ -46,6 +75,10 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) =
     }, [dispatch, dealerId]);
 
     useEffect(() => {
+        setPhoneValid(phone.search(new RegExp(client.config.phoneRegex)) === 0);
+    }, [dispatch, phone]);
+
+    useEffect(() => {
         if (date && dealerSlotList) {
             const found = dealerSlotList.find((s) => s.date === date)?.hours;
             if (found) {
@@ -54,10 +87,11 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) =
         }
     }, [dispatch, date, dealerSlotList]);
 
-    const formValid = [hour, date, dealerId, name, phone, terms].every(Boolean);
+    const formValid = [hour, date, dealerId, name, phoneValid].every(Boolean);
 
     const submitAppointment = () => {
-        console.log(terms);
+        // saving appointment
+        history.push(`./confirmation/${recordId}`);
     };
 
     return (
@@ -66,15 +100,27 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) =
             <Loader status={dealerStatus}>
                 <div className={`dealers-list ${showAllDealers ? 'show-all' : ''}`}>
                     {dealerList.map((dealer, i) => (
-                        <Button
-                            className={i >= 3 ? 'hidden-dealer' : ''}
-                            block
+                        <div
+                            className={`button-dealer ${i >= 3 ? 'hidden-dealer' : ''} ${
+                                dealer.dealerId === dealerId ? 'selected' : ''
+                            }`}
                             key={dealer.id}
+                            role="button"
+                            aria-hidden="true"
                             onClick={() => setDealerId(dealer.dealerId)}
-                            color={dealer.dealerId === dealerId ? 'primary' : 'secondary'}
                         >
-                            {dealer.name} ({dealer.distance} km)
-                        </Button>
+                            <div className="button-dealer-icon">
+                                <FontAwesomeIcon
+                                    icon={dealer.dealerId === dealerId ? farDotCircle : farCircle}
+                                />
+                            </div>
+                            <div>
+                                <div className="button-dealer-name">{dealer.name}</div>
+                                <div>
+                                    <FontAwesomeIcon icon={faMapMarkerAlt} /> {dealer.distance} Km
+                                </div>
+                            </div>
+                        </div>
                     ))}
                 </div>
 
@@ -83,6 +129,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) =
                     aria-hidden="true"
                     onClick={() => setShowAllDealers(!showAllDealers)}
                 >
+                    <FontAwesomeIcon icon={showAllDealers ? faMinusCircle : faPlusCircle} />{' '}
                     {t(showAllDealers ? 'show_less_dealers' : 'show_more_dealers')}
                 </div>
             </Loader>
@@ -92,35 +139,52 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) =
                     <Loader status={dealerSlotStatus}>
                         <Row>
                             <Col>
-                                <Input
-                                    type="select"
-                                    onChange={(e) => setDate(e.currentTarget.value)}
-                                >
-                                    <option value="">--</option>
-                                    {dealerSlotList.map((s) => (
-                                        <option value={s.date} key={s.date}>
-                                            {s.date}
-                                        </option>
-                                    ))}
-                                </Input>
-                            </Col>
-                            <Col>
-                                {hourList && (
+                                <InputGroup>
                                     <Input
                                         type="select"
-                                        onChange={(e) => setHour(e.currentTarget.value)}
+                                        onChange={(e) => setDate(e.currentTarget.value)}
                                     >
                                         <option value="">--</option>
-                                        {hourList.map((s) => (
-                                            <option
-                                                value={s.id}
-                                                key={s.id}
-                                                disabled={s.status === 'closed'}
-                                            >
-                                                {s.hour}
+                                        {dealerSlotList.map((s) => (
+                                            <option value={s.date} key={s.date}>
+                                                {s.date}
                                             </option>
                                         ))}
                                     </Input>
+                                    <InputGroupAddon addonType="append">
+                                        <InputGroupText>
+                                            <FontAwesomeIcon icon={faCalendarAlt} />
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                </InputGroup>
+                            </Col>
+                            <Col>
+                                {hourList && (
+                                    <InputGroup>
+                                        <Input
+                                            type="select"
+                                            onChange={(e) => setHour(e.currentTarget.value)}
+                                        >
+                                            <option value="">--</option>
+                                            {hourList.map((s) => (
+                                                <option
+                                                    value={s.id}
+                                                    key={s.id}
+                                                    disabled={s.status === 'closed'}
+                                                >
+                                                    {s.hour}{' '}
+                                                    {s.status === 'closed'
+                                                        ? `(${t('unavailable')})`
+                                                        : ''}
+                                                </option>
+                                            ))}
+                                        </Input>
+                                        <InputGroupAddon addonType="append">
+                                            <InputGroupText>
+                                                <FontAwesomeIcon icon={faClock} />
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                    </InputGroup>
                                 )}
                             </Col>
                         </Row>
@@ -131,25 +195,39 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) =
                     <Row>
                         <Col xs={12} sm={6}>
                             <FormGroup>
-                                <Label for="name">{t('name')}</Label>
-                                <Input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    onChange={(e) => setName(e.currentTarget.value)}
-                                />
+                                <Label for="name">{t('name')} *</Label>
+                                <InputGroup>
+                                    <Input
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        onChange={(e) => setName(e.currentTarget.value)}
+                                    />
+                                    <InputGroupAddon addonType="append">
+                                        <InputGroupText>
+                                            <FontAwesomeIcon icon={faUser} />
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                </InputGroup>
                             </FormGroup>
                         </Col>
 
                         <Col xs={12} sm={6}>
                             <FormGroup>
                                 <Label for="phone">{t('phone_number')}</Label>
-                                <Input
-                                    type="tel"
-                                    name="phone"
-                                    id="phone"
-                                    onChange={(e) => setPhone(e.currentTarget.value)}
-                                />
+                                <InputGroup>
+                                    <Input
+                                        type="tel"
+                                        name="phone"
+                                        id="phone"
+                                        onChange={(e) => setPhone(e.currentTarget.value)}
+                                    />
+                                    <InputGroupAddon addonType="append">
+                                        <InputGroupText>
+                                            <FontAwesomeIcon icon={faPhone} />
+                                        </InputGroupText>
+                                    </InputGroupAddon>
+                                </InputGroup>
                             </FormGroup>
                         </Col>
                     </Row>
@@ -163,7 +241,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ zipCode }) =
                     className="mt-3"
                     onClick={submitAppointment}
                 >
-                    Reservar una cita ahora
+                    {t('book_an_appointment_now')}
                 </Button>
             </CtaBlock>
         </Container>

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, Fragment } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -20,43 +20,45 @@ export const FormVehicle: FunctionComponent = () => {
 
     const { id: recordId } = useSelector(getRecordSelector);
 
-    useEffect(() => {
+    const handleSubmitForm = () => {
+        dispatch(saveVehicleAndUserInformations());
         if (recordId > 0) {
             history.push(`./record/${recordId}`);
         }
-    }, [dispatch, recordId]);
-
+    };
     return (
         <Container fluid>
             <ProgressMenu step={1} progress={vehicleProgress()} />
+
             <div className="page page-formvehicle">
                 <h1>{t('tell_us_about_your_car')}</h1>
+
                 {client.config.questionsGroup.map((group, key) => (
                     <div
-                        key={group[0]}
+                        key={group.title}
                         className={
                             shouldDisplayQuestionsGroup(key)
                                 ? 'questions-group'
                                 : 'questions-group d-none'
                         }
                     >
-                        {group.map((question) => (
-                            <React.Fragment key={inputComponents[question]?.props.id}>
+                        <div className="col-12">
+                            <h2>{t(group.title)}</h2>
+                            <hr />
+                        </div>
+                        {group.questions.map((question) => (
+                            <Fragment key={inputComponents[question]?.props.id}>
                                 {inputComponents[question] &&
                                     React.createElement(
                                         inputComponents[question]?.component,
                                         inputComponents[question]?.props,
                                     )}
-                            </React.Fragment>
+                            </Fragment>
                         ))}
                     </div>
                 ))}
                 <CtaBlock>
-                    <Button
-                        disabled={!canQuote()}
-                        block
-                        onClick={() => dispatch(saveVehicleAndUserInformations())}
-                    >
+                    <Button disabled={!canQuote()} block onClick={handleSubmitForm}>
                         {t('value_your_car_now')}
                     </Button>
                 </CtaBlock>

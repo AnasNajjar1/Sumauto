@@ -37,6 +37,20 @@ export const somesRecords: TRecord[] = [
         },
         appointment: {
             status: false,
+            dateHour: new Date('2020-09-20 10:00:00'),
+
+            place: {
+                sellerName: 'Juan',
+                name: 'Centro de compra de Madrid',
+                address: 'Calle Alcala 234',
+                zipCode: '2812',
+                city: 'Madrid',
+                phone: '+34951345529',
+                position: {
+                    lat: -3.745,
+                    lng: -38.523,
+                },
+            },
         },
     },
     {
@@ -70,6 +84,20 @@ export const somesRecords: TRecord[] = [
         },
         appointment: {
             status: true,
+            dateHour: new Date('2020-08-20 10:00:00'),
+
+            place: {
+                sellerName: 'Juan',
+                name: 'Centro de compra de Madrid',
+                address: 'Calle Alcala 234',
+                zipCode: '2812',
+                city: 'Madrid',
+                phone: '+34951345529',
+                position: {
+                    lat: -3.745,
+                    lng: -38.523,
+                },
+            },
         },
     },
     {
@@ -103,6 +131,19 @@ export const somesRecords: TRecord[] = [
         },
         appointment: {
             status: true,
+            dateHour: new Date('2020-08-20 10:00:00'),
+            place: {
+                sellerName: 'Juan',
+                name: 'Centro de compra de Madrid',
+                address: 'Calle Alcala 234',
+                zipCode: '2812',
+                city: 'Madrid',
+                phone: '+34951345529',
+                position: {
+                    lat: -3.745,
+                    lng: -38.523,
+                },
+            },
         },
     },
     {
@@ -136,6 +177,19 @@ export const somesRecords: TRecord[] = [
         },
         appointment: {
             status: false,
+            dateHour: new Date('2020-08-20 10:00:00'),
+            place: {
+                sellerName: 'Juan',
+                name: 'Centro de compra de Madrid',
+                address: 'Calle Alcala 234',
+                zipCode: '2812',
+                city: 'Madrid',
+                phone: '+34951345529',
+                position: {
+                    lat: -3.745,
+                    lng: -38.523,
+                },
+            },
         },
     },
 ];

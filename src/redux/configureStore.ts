@@ -10,6 +10,7 @@ import { formReducer } from './reducers/formReducer';
 import { errorReducer } from './reducers/errorReducer';
 import { clientReducer } from './reducers/clientReducer';
 import { recordReducer } from './reducers/recordReducer';
+import { unsubscribeReducer } from './reducers/unsubscribeReducer';
 
 export const configureStore = (dependencies?: Partial<Dependencies>) =>
     createStore(
@@ -20,6 +21,7 @@ export const configureStore = (dependencies?: Partial<Dependencies>) =>
             record: recordReducer,
             form: formReducer,
             error: errorReducer,
+            unsubscribe: unsubscribeReducer,
         }),
         composeWithDevTools(
             applyMiddleware(
