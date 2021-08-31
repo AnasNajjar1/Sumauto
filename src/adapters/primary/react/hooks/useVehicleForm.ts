@@ -15,7 +15,7 @@ import { ReferentialInput } from '../Components/Question/ReferentialInput';
 import { RegistrationInput } from '../Components/Question/RegistrationInput';
 import { TextInput } from '../Components/Question/TextInput';
 
-import { getMakeList } from '../../../../hexagon/usecases/getMakeList/getMakeList';
+import { getMakeListUseCase } from '../../../../hexagon/usecases/getMakeList/getMakeList.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 
@@ -88,7 +88,7 @@ const useVehicleForm = () => {
     };
 
     useEffect(() => {
-        dispatch(getMakeList());
+        dispatch(getMakeListUseCase());
     }, [dispatch]);
 
     useEffect(() => {
@@ -229,7 +229,7 @@ const useVehicleForm = () => {
             props: {
                 id: 'make',
                 value: vehicle.make,
-                text: { label: t('makes') },
+                text: { label: t('other_makes') },
                 list: lists.make,
                 error: validation.make,
                 required: isMandatoryQuestion('make'),
@@ -251,7 +251,9 @@ const useVehicleForm = () => {
             props: {
                 id: 'month',
                 value: vehicle.month,
-                text: { label: t('month') },
+                text: {
+                    label: t('registration_date'),
+                },
                 list: lists.month,
                 error: validation.month,
                 required: isMandatoryQuestion('month'),
@@ -262,7 +264,10 @@ const useVehicleForm = () => {
             props: {
                 id: 'year',
                 value: vehicle.year,
-                text: { label: t('year') },
+                text: {
+                    label: '',
+                    help: 'registratin_date_help',
+                },
                 list: lists.year,
                 error: validation.year,
                 required: isMandatoryQuestion('year'),

@@ -14,9 +14,13 @@ export type TActionStatus = 'idle' | 'pending' | 'succeeded' | 'failed';
 export interface AppState {
     client: {
         name: string;
+        journeyType: string;
         config: TClientConfig;
     };
     unsubscribe: {
+        status: TActionStatus;
+    };
+    cancelAppoitment: {
         status: TActionStatus;
     };
     record: {

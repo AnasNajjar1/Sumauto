@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
-import { hideError } from '../../../../hexagon/usecases/displayError/displayError';
+import { hideErrorUseCase } from '../../../../hexagon/usecases/displayError/displayError.useCase';
 import { getErrorSelector } from '../../view-models-generators/errorSelector';
 
 const ErrorModal = () => {
@@ -9,7 +9,7 @@ const ErrorModal = () => {
     const error = useSelector(getErrorSelector);
 
     const hide = () => {
-        dispatch(hideError());
+        dispatch(hideErrorUseCase());
     };
 
     return (

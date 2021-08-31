@@ -9,6 +9,13 @@ export const name = (state = '', action: AnyAction) => {
     return state;
 };
 
+export const journeyType = (state = '', action: AnyAction) => {
+    if (action.type === 'client/SET_JOURNEY_TYPE') {
+        return action.payload.journeyType;
+    }
+    return state;
+};
+
 const clientConfigInitialState = {} as TClientConfig;
 
 export const config = (state: TClientConfig = clientConfigInitialState, action: AnyAction) => {
@@ -16,15 +23,9 @@ export const config = (state: TClientConfig = clientConfigInitialState, action: 
     return state;
 };
 
-// export const recordId = (state = '', action: AnyAction) => {
-//     if (action.type === 'record/saving/SUCCESS') {
-//         return action.payload.id;
-//     }
-//     return state;
-// };
-
 export const clientReducer = combineReducers({
     name,
+    journeyType,
     config,
     // recordId,
 });

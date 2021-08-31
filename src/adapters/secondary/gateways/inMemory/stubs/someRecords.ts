@@ -21,6 +21,7 @@ export const somesRecords: TRecord[] = [
             versionName: '1.6 bluehdi 75 active',
             import: true,
             mileage: 45000,
+            doors: '5',
         },
         customer: {
             email: 'john@doe.fr',
@@ -68,6 +69,7 @@ export const somesRecords: TRecord[] = [
             versionName: '1.6 bluehdi 75 active',
             import: true,
             mileage: 15000,
+            doors: '5',
         },
         customer: {
             email: 'john@doe.fr',
@@ -115,6 +117,7 @@ export const somesRecords: TRecord[] = [
             versionName: '1.6 bluehdi 75 active',
             import: true,
             mileage: 20000,
+            doors: '5',
         },
         customer: {
             email: 'john@doe.fr',
@@ -161,6 +164,7 @@ export const somesRecords: TRecord[] = [
             versionName: '1.6 bluehdi 75 active',
             import: true,
             mileage: 90000,
+            doors: '5',
         },
         customer: {
             email: 'john@doe.fr',

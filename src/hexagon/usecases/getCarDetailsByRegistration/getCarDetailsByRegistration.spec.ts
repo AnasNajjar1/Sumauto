@@ -1,7 +1,7 @@
 import { configureStore, ReduxStore } from '../../../redux/configureStore';
 import { InMemoryReferentialGateway } from '../../../adapters/secondary/gateways/inMemory/inMemoryReferentialGateway';
 import { AppState } from '../../../redux/appState';
-import { getCarDetailsByRegistrationUseCase } from './getCarDetailsByRegistration';
+import { getCarDetailsByRegistrationUseCase } from './getCarDetailsByRegistration.useCase';
 import { CarDetails } from '../../interfaces/index';
 
 describe('Player point attribution', () => {
@@ -11,7 +11,7 @@ describe('Player point attribution', () => {
 
     beforeEach(() => {
         referentialGateway = new InMemoryReferentialGateway();
-        store = configureStore({ referentialGateway });
+        // store = configureStore({ referentialGateway });
         initialState = store.getState();
     });
 

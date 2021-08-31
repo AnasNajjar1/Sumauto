@@ -32,12 +32,17 @@ import {
     getDealerListSelector,
     getDealerSlotListSelector,
 } from '../../view-models-generators/dealerSelectors';
-import { getDealerList } from '../../../../hexagon/usecases/getDealerList/getDealerList';
+import { getDealerListUseCase } from '../../../../hexagon/usecases/getDealerList/getDealerList.useCase';
 import { Loader } from './Loader';
-import { getDealerSlotList } from '../../../../hexagon/usecases/getDealerSlotList/getDealerSlotList';
+import { getDealerSlotListUseCase } from '../../../../hexagon/usecases/getDealerSlotList/getDealerSlotList.useCase';
 import { Hour } from '../../../../hexagon/interfaces';
 import { CtaBlock } from './CtaBlock';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
+import { AccordionInfo } from './AccordionInfo/AccordionInfo';
+import { FeatureGroup } from './FeatureGroup';
+import { Feature } from './Feature';
+import { Picture } from './Picture';
+import { AppointmentResume } from './AppointmentResume';
 
 type TAppointmentProps = {
     zipCode: string;
@@ -63,12 +68,12 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
         useSelector(getDealerSlotListSelector);
 
     useEffect(() => {
-        dispatch(getDealerList(zipCode));
+        dispatch(getDealerListUseCase(zipCode));
     }, [dispatch, zipCode]);
 
     useEffect(() => {
         if (dealerId) {
-            dispatch(getDealerSlotList(dealerId.toString()));
+            dispatch(getDealerSlotListUseCase(dealerId.toString()));
             setDate('');
             setHour('');
         }
@@ -96,7 +101,22 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
 
     return (
         <Container fluid>
-            <h5>{t('choose_your_point_of_sale')}</h5>
+            <h2>1. {t('choose_your_point_of_sale')}</h2>
+            <AccordionInfo
+                iconType="circle"
+                titleKey="professional_info"
+                detailsKey="professional_info_details"
+            />
+            <AccordionInfo
+                iconType="circle"
+                titleKey="pay_service_info"
+                detailsKey="pay_service_info_details"
+            />
+            <AccordionInfo
+                iconType="circle"
+                titleKey="selling_service_info"
+                detailsKey="selling_service_info_details"
+            />
             <Loader status={dealerStatus}>
                 <div className={`dealers-list ${showAllDealers ? 'show-all' : ''}`}>
                     {dealerList.map((dealer, i) => (
@@ -135,7 +155,24 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
             </Loader>
             {dealerId && (
                 <>
-                    <h5 className="mt-4">{t('choose_your_date')}</h5>
+                    <h2 className="mt-4">2. {t('choose_your_date')}</h2>
+
+                    <AccordionInfo
+                        iconType="circle"
+                        titleKey="sell_requirement_info"
+                        detailsKey="sell_requirement_info_details"
+                    />
+                    <AccordionInfo
+                        iconType="circle"
+                        titleKey="appointment_info"
+                        detailsKey="appointment_info_details"
+                    />
+                    <AccordionInfo
+                        iconType="circle"
+                        titleKey="wainting_info"
+                        detailsKey="wainting_info_details"
+                    />
+
                     <Loader status={dealerSlotStatus}>
                         <Row>
                             <Col>
@@ -143,6 +180,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                                     <Input
                                         type="select"
                                         onChange={(e) => setDate(e.currentTarget.value)}
+                                        value={date}
                                     >
                                         <option value="">--</option>
                                         {dealerSlotList.map((s) => (
@@ -164,6 +202,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                                         <Input
                                             type="select"
                                             onChange={(e) => setHour(e.currentTarget.value)}
+                                            value={hour}
                                         >
                                             <option value="">--</option>
                                             {hourList.map((s) => (
@@ -190,8 +229,12 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                         </Row>
                     </Loader>
 
-                    <h5 className="mt-4">{t('your_contact')}</h5>
-
+                    <h2 className="mt-4">3. {t('your_contact')}</h2>
+                    <AccordionInfo
+                        iconType="circle"
+                        titleKey="contact_info"
+                        detailsKey="contact_info_details"
+                    />
                     <Row>
                         <Col xs={12} sm={6}>
                             <FormGroup>
@@ -201,6 +244,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                                         type="text"
                                         name="name"
                                         id="name"
+                                        value={name}
                                         onChange={(e) => setName(e.currentTarget.value)}
                                     />
                                     <InputGroupAddon addonType="append">
@@ -220,6 +264,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                                         type="tel"
                                         name="phone"
                                         id="phone"
+                                        value={phone}
                                         onChange={(e) => setPhone(e.currentTarget.value)}
                                     />
                                     <InputGroupAddon addonType="append">
@@ -233,17 +278,36 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                     </Row>
                 </>
             )}
+
+            {formValid && (
+                <>
+                    <h2 className="mt-4">{t('appointment_resume')}</h2>
+                    <Row>
+                        <Col>{/* <AppointmentResume date={date} hour={hour} /> */}</Col>
+                        <Col>
+                            <Picture background="calendar" />
+                        </Col>
+                    </Row>
+                </>
+            )}
             <CtaBlock>
                 <Button
                     color="primary"
                     disabled={!formValid}
-                    block
                     className="mt-3"
                     onClick={submitAppointment}
                 >
                     {t('book_an_appointment_now')}
                 </Button>
             </CtaBlock>
+            <FeatureGroup>
+                <Feature label="immediate_sale_and_without_obligation" icon="clock" />
+                <Feature label="total_security" icon="lock" />
+                <Feature label="without_cumbersome_procedures" icon="check" />
+            </FeatureGroup>
+            <div>
+                <small>{t('appoitment_note')}</small>
+            </div>
         </Container>
     );
 };

@@ -1,6 +1,18 @@
 $label-margin-bottom: 0rem;
+$progress-height:5px; 
+$progress-border-radius:0;
+$modal-content-border-width:0;
 @import '~bootstrap/scss/bootstrap';
 
+$primaryOpacity : rgba($primary, .1);
+$dangerOpacity : rgba($danger, .1);
+$halfGutter : $grid-gutter-width / 2;
+
+
+body{
+    padding-bottom: $halfGutter;
+    min-width: 320px;
+}
 
 @include media-breakpoint-down(xs) {
     .label-year{
@@ -20,7 +32,26 @@ $label-margin-bottom: 0rem;
     @include make-row();
 }
 .registration-or-make-logo{
-    text-align: center;
+    width: 100%; 
+    text-align: center; 
+    border-bottom: 1px solid $primary; 
+    font-size: 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: $primary; 
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    span{
+        background:$body-bg; 
+        padding:0 10px; 
+    }
+}
+
+.incitation{
+    position:absolute;
+    right: $halfGutter;
+    background-color: $primaryOpacity;
+    padding:$halfGutter;
 }
 .question{
     @include make-col-ready();
@@ -32,9 +63,9 @@ $label-margin-bottom: 0rem;
     }
     &.question-registration{
         @include make-col(12);
-        @include media-breakpoint-up(lg) {
+        @include media-breakpoint-up(sm) {
             .form-group{
-                width: 40%;
+                max-width: 300px;
             }
         }
     }
@@ -54,19 +85,39 @@ $label-margin-bottom: 0rem;
 
     &.question-makelogo{
         @include make-col(12);
+        .row{
+            margin: -$halfGutter / 2;
+        }
+        margin-bottom: $halfGutter;
+        display: flex;
         .logo-button-container{
-            @include make-col-ready();
-            @include make-col(3);
-            button{
-                margin: 10px auto;
+ 
+                width: calc(100% / 5);
+            
+            font-size: .7em;
+            text-align: center;
+            div{
+                margin: 5px $halfGutter / 2;
+                border:1px solid #ccc; 
                 display: block;
                 &.selected{
                     border:2px solid $primary;
                 }
+                img{width: 100%; padding: 5px;}
             }
         }
     }
 
+    @include media-breakpoint-up(md) {
+
+        &.question-year{
+            .form-text{
+                width: 200%;
+                left: calc(-100% - 30px); 
+                position: relative;
+            }
+        }
+    }
 
 
 
@@ -92,27 +143,6 @@ $label-margin-bottom: 0rem;
         .fa-times{
             width: 12px;
             @extend .text-danger;
-        }
-    }
-}
-
-.progress-menu{
-    position: fixed;
-    width: 100%;
-    background-color: white;
-    padding: 15px 0 15px 0;
-    z-index: 100;
-    ul{
-        display: flex;
-        margin:  0 0 10px 0;
-        padding: 0;
-        list-style-type: none;
-        li{
-            flex: 1;
-            text-align: center;
-            &.completed{
-                text-decoration: line-through;
-            }
         }
     }
 }
@@ -143,7 +173,7 @@ $label-margin-bottom: 0rem;
         }
         &.selected{
             border-color: $primary;
-            background-color: rgba($primary, .1);
+            background-color: $primaryOpacity;
         } 
     }
 
@@ -170,10 +200,7 @@ $label-margin-bottom: 0rem;
             @extend .text-primary;
         }
     }
-    &.page-formvehicle{
-        padding-top: 100px;
 
-    }
 } 
 
 .form-unsubscribe{
@@ -194,6 +221,134 @@ $label-margin-bottom: 0rem;
     display: flex;
     .unsubscribe-return-message{
         @extend .pl-2;
+    }
+}
+
+.feature-group{
+    .feature{
+        background-repeat: no-repeat;
+        background-position-x: center;
+        background-position-y: top;
+        padding-top: 50px;
+        flex: 1;
+        text-align: center;
+        color:$primary
+    }
+}
+
+.quotation-box{
+    padding: $halfGutter;
+    background-color: $primaryOpacity;
+    .quotation-value{
+        font-weight: 700;
+        font-size: 2em;
+        color: $secondary;
+    }
+}
+
+
+.accordion-info{
+    .accordion-info-title{
+        color: $primary;
+        .accordion-info-title-text{
+            text-decoration: underline;
+        }
+    }
+}
+
+
+
+.progress-steps{
+    margin: $grid-gutter-width 0 $grid-gutter-width*2 0 ;
+    text-align: center;
+    ul{
+        list-style-type: none;
+        display: flex;
+        margin: 0;
+        padding:0;
+
+        li{
+            height:10px;
+            width:10px;
+            flex-grow: 1;
+
+
+            
+            &:before{
+                content : "1";
+                background-color: white;
+                text-align: center;
+                width: 30px;
+                height: 30px;
+                line-height: 28px;
+                display: block;
+                position: relative;
+                left: calc(50% - 15px);
+                border:1px solid $primary;
+                color:$primary;
+                font-weight: bold;
+                border-radius: 50%;
+                top:-($progress-height / 2); 
+            }
+
+
+            &:nth-child(2){
+                &:before{
+                    content : "2";
+                }
+            }
+            &:nth-child(3){
+                &:before{
+                    content : "3";
+                }
+            }
+            &:nth-child(4){
+                &:before{
+                    content : "4";
+                }
+            }
+
+            &.completed{
+                &:before{
+                    background-color: $primary;
+                    content:"";
+                    background-image:   url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAWCAYAAAChWZ5EAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAE2SURBVEiJvdK9K0ZRHAdwD2WRSQaLwWa2YDEabSYvWeQtiUFeVpGJEpKiLP4D/gRlshnkJQuLyLMofCyeuh7ncHtc97fe8/1+fud0q6pyHsygiBt05Y0v+TrXeeIrvs9jXvhqAIfxPPDyZy/NYh74cgRf+G+4gLUIPp8Hvh7B52KhVrSjkAG+EYDfMRULTX8egGPU/wHfjOCTPwWfywKnaKwA347gE7+FLwPBczSnxKuxE8HH0hR04ilQcIvWFPhuBB9Jc4FSURvuA0UP6IhkCtiq+OaBwhZcBAqL6A7cfC8zPFHchLNA8Qt6P8/UYD+Cj1aMJ5ZowEkAeMUoDgLf3jD0ZzyxRB2OAlBoXjGYGZ5YohaHKfCBzPHEEjXCf3oJ7/83vGyR2QDelwueWGIYd7hCT1a9H+P3VnHFgNzZAAAAAElFTkSuQmCC');
+                    background-repeat: no-repeat;
+                    background-size: 15px;
+                    background-position: center;
+                }
+            }
+
+            
+        }
+    }
+}
+
+
+.motivation{
+    background-color: $gray-100;
+    padding:1em;
+    margin:1em 0em;
+    .motivation-title{
+        font-weight: bold;
+        font-size: 21px;
+        color:$primary;
+        margin-bottom: 1em;
+    }
+}
+
+.alert-covid{
+    background-color: $dangerOpacity;
+    padding:1em;
+}
+
+.appointment-resume{
+    background-color: $primaryOpacity;
+    padding: $halfGutter;
+    display: flex;
+    margin-bottom: $halfGutter;
+    .appointment-resume-text{
+        padding-left:$halfGutter;
     }
 }
 

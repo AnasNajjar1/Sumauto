@@ -3,16 +3,16 @@ import { ThunkResult } from '../../../redux/configureStore';
 import { DealerGateway } from '../../gateways/dealerGateway.interface';
 import * as actionCreators from './actionCreators';
 
-export const getDealerList =
-    (zipcode: string): ThunkResult<void> =>
+export const getDealerSlotListUseCase =
+    (dealerId: string): ThunkResult<void> =>
     async (dispatch, getState, { dealerGateway }: { dealerGateway: DealerGateway }) => {
-        dispatch(actionCreators.Actions.dealerListFetching());
+        dispatch(actionCreators.Actions.dealerSlotListFetching());
 
-        const result = await dealerGateway.requestDealerList(zipcode);
+        const result = await dealerGateway.requestDealerSlotList(dealerId);
 
         if (isRight(result)) {
-            dispatch(actionCreators.Actions.dealerListRetrieved(result.right));
+            dispatch(actionCreators.Actions.dealerSlotListRetrieved(result.right));
         } else {
-            dispatch(actionCreators.Actions.dealerListFailed());
+            dispatch(actionCreators.Actions.dealerSlotListFailed());
         }
     };

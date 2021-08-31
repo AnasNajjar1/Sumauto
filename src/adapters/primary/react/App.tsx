@@ -3,34 +3,38 @@ import { BrowserRouter, Switch, Route, useParams, useHistory } from 'react-route
 
 import { useDispatch } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
+import { iframeResizer } from 'iframe-resizer';
 import { Appointment } from './Components/Appointment';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
 import { themeSelector } from './Components/Themes';
 import { ErrorPage } from './Components/ErrorPage';
-import { clients } from '../../../config';
-import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName';
+import { clients, journeys } from '../../../config';
+import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName.useCase';
 import { Record } from './Components/Record';
 import { UnsubscribePage } from './Components/UnsubscribePage';
 import { Confirmation } from './Components/Confirmation';
+import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
 
 const App: FunctionComponent = () => {
     const history = useHistory();
-    const { clientSlug } = useParams<RouteParams>();
+    const { clientSlug, journeyType } = useParams<RouteParams>();
+    const iframeInstance = iframeResizer;
 
     const dispatch = useDispatch();
-    if (!clients.includes(clientSlug)) {
+    if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
         history.push('/error/404');
     } else {
         dispatch(setClientNameUseCase(clientSlug));
+        dispatch(setJourneyTypeUseCase(journeyType));
     }
 
     return (
         <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
             <React.Suspense fallback={<></>}>
                 {themeSelector(clientSlug)}
-                <BrowserRouter basename={`/${clientSlug}`}>
+                <BrowserRouter basename={`/${clientSlug}/${journeyType}`}>
                     <div className={`app-${clientSlug}`}>
                         <main>
                             <Switch>
@@ -57,7 +61,7 @@ const ClientHandler: FunctionComponent = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/error/:errorCode" component={ErrorPage} />
-            <Route path={['/:clientSlug', '/']} component={App} />
+            <Route path={['/:clientSlug/:journeyType', '/']} component={App} />
         </Switch>
     </BrowserRouter>
 );

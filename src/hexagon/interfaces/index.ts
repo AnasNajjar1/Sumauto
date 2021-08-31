@@ -188,6 +188,7 @@ export type TVehicleNames = {
     mileage: number;
     import: boolean;
     versionName: string;
+    doors: string;
 };
 
 export type TCoordinates = {
@@ -223,8 +224,10 @@ export type UpdateStatus = {
 };
 
 export type TClient = 'autocasion' | 'autoscout24' | 'unoauto';
+export type TJourney = 'sell' | 'quotation';
 export type RouteParams = {
     clientSlug: TClient;
+    journeyType: TJourney;
 };
 
 export type TSubscription = {

@@ -3,7 +3,7 @@ import { isRight } from 'fp-ts/lib/Either';
 import { ThunkResult } from '../../../redux/configureStore';
 import { ReferentialGateway } from '../../gateways/referentialGateway.interface';
 import { QuestionKey } from '../../interfaces';
-import { setVehicleValueCascade } from '../setVehicleValue/setVehicleValue';
+import { setVehicleValueCascade } from '../setVehicleValue/setVehicleValue.useCase';
 import * as actionCreators from './actionCreators';
 
 export const getCarDetailsByRegistrationUseCase =

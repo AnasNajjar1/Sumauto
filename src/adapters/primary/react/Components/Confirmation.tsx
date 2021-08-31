@@ -1,38 +1,56 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { Container, Row, Col, Button } from 'reactstrap';
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import {
+    Container,
+    Row,
+    Col,
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+} from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import moment from 'moment';
 
 import { Map } from './Map';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
-import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord';
+import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
+import { FeatureGroup } from './FeatureGroup';
+import { Feature } from './Feature';
+import { AppointmentResume } from './AppointmentResume';
+import { cancelAppointmentUseCase } from '../../../../hexagon/usecases/cancelAppoitment/cancelAppointment.useCase';
 
 export const Confirmation = () => {
     const dispatch = useDispatch();
     const { recordId } = useParams<{ recordId: string }>();
     const { data: record, status } = useSelector(getRecordSelector);
     const { client } = useSelector(getClientSelector);
+    const [modalCancel, setModalCancel] = useState(true);
+    const toggleModalCancel = () => setModalCancel(!modalCancel);
     const handlePrint = () => {
         window.print();
     };
-
-    import(`moment/locale/${'fr'}`).then();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getRecordUseCase(recordId));
     }, [dispatch, recordId]);
+
+    const handleSubmitForm = () => {
+        dispatch(cancelAppointmentUseCase(recordId));
+    };
 
     return (
         <div className="page page-confirmation">
             <Container fluid>
                 <div className="d-flex ">
                     <div className="w-100">
-                        <h1>{t('your_appointment_has_been_confirmed')}</h1>
+                        <h1>{t('confirmation.title')}</h1>
                     </div>
                     <div
                         className="align-self-center text-nowrap"
@@ -46,11 +64,13 @@ export const Confirmation = () => {
                 </div>
                 {record.appointment && (
                     <>
+                        <AppointmentResume
+                            date={record.appointment.dateHour}
+                            placeName={record.appointment.place.name}
+                        />
                         <Row>
                             <Col>
-                                <p>{t('we_wish_you_a_pleasant_date')}</p>
-                                <p>{moment(record.appointment.dateHour).format('LLLL')}</p>
-                                <h2>{t('address')}</h2>
+                                <h2>{t('your_point_of_sale')}</h2>
                                 <p>
                                     {record.appointment.place.address}
                                     <br />
@@ -73,7 +93,7 @@ export const Confirmation = () => {
                                 </Button>
                             </Col>
                             <Col>
-                                <Button block color="secondary">
+                                <Button block color="secondary" onClick={toggleModalCancel}>
                                     {t('cancel_appointment')}
                                 </Button>
                             </Col>
@@ -87,8 +107,27 @@ export const Confirmation = () => {
                                 {t('other_informations_text')}
                             </Col>
                         </Row>
+                        <Modal isOpen={modalCancel} toggle={toggleModalCancel} centered>
+                            <ModalHeader toggle={toggleModalCancel}>
+                                {t('cancel_appointment.title')}
+                            </ModalHeader>
+                            <ModalBody>{t('cancel_appointment.description')}</ModalBody>
+                            <ModalFooter className="justify-content-center">
+                                <Button color="primary" onClick={() => handleSubmitForm()}>
+                                    {t('cancel_appointment.cta')}
+                                </Button>
+                            </ModalFooter>
+                        </Modal>
                     </>
                 )}
+
+                <div className="mt-5">
+                    <FeatureGroup>
+                        <Feature label="personal_evaluation" icon="user" />
+                        <Feature label="100_free" icon="like" />
+                        <Feature label="without_obligation" icon="sun" />
+                    </FeatureGroup>
+                </div>
             </Container>
         </div>
     );

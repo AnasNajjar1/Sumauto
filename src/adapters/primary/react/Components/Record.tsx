@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useHistory, useParams } from 'react-router-dom';
 import { t } from 'autobiz-translate';
-import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord';
+import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import { Loader } from './Loader';
 import { Valuation } from './Valuation/Valuation';

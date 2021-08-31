@@ -3,7 +3,7 @@ import { ThunkResult } from '../../../redux/configureStore';
 import { ReferentialGateway } from '../../gateways/referentialGateway.interface';
 import * as actionCreators from './actionCreators';
 
-export const getMakeList =
+export const getMakeListUseCase =
     (): ThunkResult<void> =>
     async (
         dispatch,

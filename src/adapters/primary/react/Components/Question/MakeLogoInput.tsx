@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
 import { QuestionKey } from '../../../../../hexagon/interfaces';
-import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
+import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
+import { Incitation } from './Incitation';
 
 type MakeLogoInputProps = {
     id: QuestionKey;
@@ -20,15 +21,18 @@ export const MakeLogoInput: FunctionComponent<MakeLogoInputProps> = ({ id, value
     return (
         <>
             <Col>
-                <div className="registration-or-make-logo">{t('or')}</div>
+                <div className="registration-or-make-logo">
+                    <span>{t('or')}</span>
+                </div>
             </Col>
 
             <div className={`question question-${id}`}>
                 <Row>
                     {list.map((f: any) => (
                         <div className="logo-button-container" key={f.id}>
-                            <button
-                                type="button"
+                            <div
+                                role="button"
+                                aria-hidden
                                 onClick={() =>
                                     dispatch(setVehicleValueCascade('make', f.id.toString()))
                                 }
@@ -38,7 +42,8 @@ export const MakeLogoInput: FunctionComponent<MakeLogoInputProps> = ({ id, value
                                     src={`https://b2b-pictures-prod.s3-eu-west-1.amazonaws.com/brandsLogos/${f.name}.jpg`}
                                     alt={f.name}
                                 />
-                            </button>
+                            </div>
+                            {f.name}
                         </div>
                     ))}
                 </Row>

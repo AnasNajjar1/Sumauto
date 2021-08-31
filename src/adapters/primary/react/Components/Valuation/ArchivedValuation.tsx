@@ -1,44 +1,86 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { Col, Row } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
 import { TRecord } from '../../../../../hexagon/interfaces';
 import { TextUtils } from '../../../../../hexagon/shared/utils/TextUtils';
 import { getClientSelector } from '../../../view-models-generators/clientSelector';
+import { FeatureGroup } from '../FeatureGroup';
+import { Feature } from '../Feature';
+import { VehicleInformations } from '../VehicleInformations';
+import { Picture } from '../Picture';
+import { CtaBlock } from '../CtaBlock';
 
 export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
-    const { id, vehicle, valuation } = props;
+    const { id, vehicle, valuation, customer } = props;
     const { client } = useSelector(getClientSelector);
     const { locale, currency } = client.config;
     return (
         <>
-            <p>{t('your_quotation_is_archived')}</p>
-            <p>
-                {t('file_number')} {id}
-            </p>
+            <Row>
+                <Col>
+                    <h1>{t('archived_valuation.title')}</h1>
+                    <p>
+                        {t('your_file_number')} <strong>{id}</strong>
+                    </p>
+                </Col>
+                <Col>
+                    <Picture background="archive" />
+                </Col>
+            </Row>
+
             <hr />
             <Row>
-                <Col>Apppointment info</Col>
                 <Col>
-                    <p>{t('your_quotation')}</p>
-                    {TextUtils.formatPrice(locale, currency, valuation.value)}
+                    <h2>{t('your_information')}</h2>
                     <p>
-                        {t('quotation_date')} {TextUtils.formatDateNumeric(locale, valuation.date)}
+                        <strong>{t('email')}</strong>
+                        <br />
+                        {customer.email}
+                    </p>
+                    <p>
+                        <strong>{t('zipCode')}</strong>
+                        <br />
+                        {customer.zipCode}
                     </p>
                 </Col>
-            </Row>
-            <Row>
                 <Col>
-                    <p>{t('your_car')}</p>
-                    <p>
-                        {t('make')}: <strong>{vehicle.makeName}</strong>
-                        <br />
-                        {t('model')}: <strong>{vehicle.modelName}</strong>
-                        <br />
-                        {t('mileage')}: <strong>{vehicle.mileage}</strong>
-                    </p>
+                    <div className="quotation-box">
+                        <h2>{t('your_quotation')}</h2>
+                        <div className="quotation-value">
+                            {TextUtils.formatPrice(locale, currency, valuation.value)}
+                        </div>
+                        <p>
+                            <small>
+                                {t('quotation_date')}{' '}
+                                {TextUtils.formatDateNumeric(locale, valuation.date)}
+                            </small>
+                        </p>
+                    </div>
                 </Col>
             </Row>
+            <VehicleInformations vehicle={vehicle} />
+
+            <CtaBlock>
+                <Row>
+                    <Col>
+                        <Button block color="secondary">
+                            {t('refresh_valuation')}
+                        </Button>
+                    </Col>
+                    <Col>
+                        <Button block color="primary">
+                            {t('modify_valuation')}
+                        </Button>
+                    </Col>
+                </Row>
+            </CtaBlock>
+
+            <FeatureGroup>
+                <Feature label="personal_evaluation" icon="user" />
+                <Feature label="100_free" icon="like" />
+                <Feature label="without_obligation" icon="sun" />
+            </FeatureGroup>
         </>
     );
 };

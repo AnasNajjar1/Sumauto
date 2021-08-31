@@ -1,12 +1,12 @@
 import { ThunkResult } from '../../../redux/configureStore';
 import * as actionCreators from './actionCreators';
 
-export const showError =
+export const dislayErrorUseCase =
     (description: string): ThunkResult<void> =>
     async (dispatch) => {
         dispatch(actionCreators.Actions.errorShow(description));
     };
 
-export const hideError = (): ThunkResult<void> => async (dispatch) => {
+export const hideErrorUseCase = (): ThunkResult<void> => async (dispatch) => {
     dispatch(actionCreators.Actions.errorHide());
 };

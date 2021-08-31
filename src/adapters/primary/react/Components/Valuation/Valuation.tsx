@@ -12,7 +12,6 @@ export const Valuation: FunctionComponent<TRecord> = (props) => {
         <Container fluid>
             {valuation.status && (
                 <>
-                    <h3>{t('we_make_an_appointment')}</h3>
                     {valuation.archived ? (
                         <ArchivedValuation {...props} />
                     ) : (

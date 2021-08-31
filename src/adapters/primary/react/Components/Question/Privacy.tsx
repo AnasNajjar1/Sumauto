@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { Col, FormGroup, Input, Label } from 'reactstrap';
 import { t } from 'autobiz-translate';
-import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
+import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 
 export const Privacy: FunctionComponent = () => {
     const dispatch = useDispatch();

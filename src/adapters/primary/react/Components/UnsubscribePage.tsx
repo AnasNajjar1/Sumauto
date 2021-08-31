@@ -23,7 +23,7 @@ import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
-import { unsubscribeUseCase } from '../../../../hexagon/usecases/unsubscribe/unsubscribe';
+import { unsubscribeUseCase } from '../../../../hexagon/usecases/unsubscribe/unsubscribe.useCase';
 import { getUnsubscribeSelector } from '../../view-models-generators/unsubscribeSelectors';
 import { Loader } from './Loader';
 
@@ -66,15 +66,15 @@ export const UnsubscribePage: FunctionComponent = () => {
     };
 
     useEffect(() => {
-        setPhone('912451245');
-        setEmail('m.azzop@aazaza.fr');
+        setPhone('');
+        setEmail('');
     }, [dispatch]);
 
     return (
         <div className="page page-unsubscribe">
             <Container fluid>
-                <h1>{t('unscubscribe_title')}</h1>
-                <p>{t('unscubscribe_description')}</p>
+                <h1>{t('unscubscribe.title')}</h1>
+                <p>{t('unscubscribe.description')}</p>
 
                 <div className="form-unsubscribe">
                     <FormGroup>

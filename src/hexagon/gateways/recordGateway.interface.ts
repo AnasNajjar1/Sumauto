@@ -44,4 +44,6 @@ export interface RecordGateway {
     ): Promise<ApiResponse<UpdateStatus>>;
 
     getRecord(identifier: string, recordId: string): Promise<ApiResponse<TRecord>>;
+
+    cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>>;
 }

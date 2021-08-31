@@ -1,10 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormGroup, Label, Input, Col, FormText, Spinner } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
+import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
+import { Incitation } from './Incitation';
 
 type ReferentialInputProps = {
     text: {
@@ -28,6 +29,8 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
     required,
 }) => {
     const dispatch = useDispatch();
+    const inputRef = useRef(null);
+
     const handleChange = (e: ReferentialItem, name: string) => {
         dispatch(setVehicleValueCascade(e, name));
     };
@@ -40,12 +43,13 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
                         className={`label-${id} ${list.status === 'failed' ? 'text-danger' : ''}`}
                         for={id}
                     >
-                        {text.label} {required && '*'}
+                        {text.label}
                         {list?.status === 'pending' && <Spinner size="sm" />}
                     </Label>
                     <div className="input-with-validation">
                         <Input
                             type="select"
+                            innerRef={inputRef}
                             className="form-control"
                             name={id}
                             id={id}

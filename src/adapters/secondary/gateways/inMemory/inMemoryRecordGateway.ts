@@ -95,6 +95,12 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return left('unknown record');
     }
 
+    async cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
+        // Do something
+
+        return right(true);
+    }
+
     feedRecordIdsWith(recordIds: RecordIds) {
         this.recordIds = recordIds;
     }

@@ -1,5 +1,5 @@
 import { configureStore, ReduxStore } from '../../../redux/configureStore';
-import { getDealerSlotList } from './getDealerSlotList';
+import { getDealerSlotList } from './getDealerSlotList.useCase';
 import { InMemoryDealerGateway } from '../../../adapters/secondary/gateways/inMemory/inMemoryDealerGateway';
 import { someDealerSlots } from '../../../adapters/secondary/gateways/inMemory/stubs/someDealerSlots';
 
@@ -9,7 +9,7 @@ describe('Dealer Slots retrieval', () => {
 
     beforeEach(() => {
         dealerGateway = new InMemoryDealerGateway();
-        store = configureStore({ dealerGateway });
+        // store = configureStore({ dealerGateway });
     });
 
     it('track the dealer slot list retrieval process', async () => {

@@ -6,11 +6,12 @@ import { FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Spinner }
 import { t } from 'autobiz-translate';
 import config from '../../../../../config/unoauto';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { showError } from '../../../../../hexagon/usecases/displayError/displayError';
-import { getCarDetailsByRegistrationUseCase } from '../../../../../hexagon/usecases/getCarDetailsByRegistration/getCarDetailsByRegistration';
-import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
+import { dislayErrorUseCase } from '../../../../../hexagon/usecases/displayError/displayError.useCase';
+import { getCarDetailsByRegistrationUseCase } from '../../../../../hexagon/usecases/getCarDetailsByRegistration/getCarDetailsByRegistration.useCase';
+import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { getClientSelector } from '../../../view-models-generators/clientSelector';
 import { getRegistrationSelector } from '../../../view-models-generators/registrationSelector';
+import { Incitation } from './Incitation';
 
 type RegistrationInputProps = {
     id: ReferentialItem;
@@ -43,7 +44,7 @@ export const RegistrationInput: FunctionComponent<RegistrationInputProps> = ({
             dispatch(setVehicleValue('registration', registration));
             dispatch(getCarDetailsByRegistrationUseCase(registration));
         } else {
-            dispatch(showError(`<p>${t('the_registration_number_is_invalid')}</p>`));
+            dispatch(dislayErrorUseCase(`<p>${t('the_registration_number_is_invalid')}</p>`));
         }
     };
 

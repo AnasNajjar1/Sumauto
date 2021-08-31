@@ -5,7 +5,7 @@ import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue';
+import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 
 type Data = {
     name: 'string';
@@ -51,7 +51,7 @@ export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
                         {data.map((d) => (
                             <Button
                                 key={d.value}
-                                color={value === d.value ? 'primary' : 'secondary'}
+                                color={value === d.value ? 'primary' : 'light'}
                                 onClick={() => dispatch(setVehicleValue(id, d.value))}
                             >
                                 {t(d.name)}
