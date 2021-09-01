@@ -41,6 +41,10 @@ type InputComponents = {
             type?: any;
             error?: TError;
             required: boolean;
+            encouragement?: {
+                title?: string;
+                body?: string;
+            };
         };
     };
 };
@@ -244,6 +248,10 @@ const useVehicleForm = () => {
                 list: lists.model,
                 error: validation.model,
                 required: isMandatoryQuestion('model'),
+                encouragement: {
+                    title: t('encouragement_engine_title'),
+                    body: t('encouragement_engine_body'),
+                },
             },
         },
         month: {
@@ -337,6 +345,10 @@ const useVehicleForm = () => {
                 list: lists.version,
                 error: validation.version,
                 required: isMandatoryQuestion('version'),
+                encouragement: {
+                    title: t('encouragement_version_title'),
+                    body: t('encouragement_version_body'),
+                },
             },
         },
         mileage: {
@@ -428,6 +440,10 @@ const useVehicleForm = () => {
                 text: { label: t('emailConfirmation') },
                 error: validation.emailConfirmation,
                 required: isMandatoryQuestion('emailConfirmation'),
+                encouragement: {
+                    title: t('encouragement_email_title'),
+                    body: t('encouragement_email_running_body'),
+                },
             },
         },
         zipCode: {

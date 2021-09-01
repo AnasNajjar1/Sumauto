@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
     Row,
     Col,
@@ -42,7 +42,6 @@ import { AccordionInfo } from './AccordionInfo/AccordionInfo';
 import { FeatureGroup } from './FeatureGroup';
 import { Feature } from './Feature';
 import { Picture } from './Picture';
-import { AppointmentResume } from './AppointmentResume';
 
 type TAppointmentProps = {
     zipCode: string;
@@ -238,7 +237,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                     <Row>
                         <Col xs={12} sm={6}>
                             <FormGroup>
-                                <Label for="name">{t('name')} *</Label>
+                                <Label htmlFor="name">{t('name')} *</Label>
                                 <InputGroup>
                                     <Input
                                         type="text"
@@ -258,7 +257,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
 
                         <Col xs={12} sm={6}>
                             <FormGroup>
-                                <Label for="phone">{t('phone_number')}</Label>
+                                <Label htmlFor="phone">{t('phone_number')}</Label>
                                 <InputGroup>
                                     <Input
                                         type="tel"

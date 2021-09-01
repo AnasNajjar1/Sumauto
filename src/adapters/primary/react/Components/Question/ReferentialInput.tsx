@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { FormGroup, Label, Input, Col, FormText, Spinner } from 'reactstrap';
+import { FormGroup, Label, Input, FormText, Spinner } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
 import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
-import { Incitation } from './Incitation';
+import { Encouragement } from './Encouragement';
 
 type ReferentialInputProps = {
     text: {
@@ -18,6 +18,10 @@ type ReferentialInputProps = {
     value: string;
     error: any;
     required: boolean;
+    encouragement?: {
+        title: string;
+        body: string;
+    };
 };
 
 export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
@@ -26,7 +30,7 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
     list,
     value,
     error,
-    required,
+    encouragement,
 }) => {
     const dispatch = useDispatch();
     const inputRef = useRef(null);
@@ -41,7 +45,7 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
                 <FormGroup>
                     <Label
                         className={`label-${id} ${list.status === 'failed' ? 'text-danger' : ''}`}
-                        for={id}
+                        htmlFor={id}
                     >
                         {text.label}
                         {list?.status === 'pending' && <Spinner size="sm" />}
@@ -76,6 +80,13 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
                     </div>
                     {value && error?.validation && <p className="text-danger">{error.message}</p>}
                     {text.help && <FormText color="muted">{text.help}</FormText>}
+                    {encouragement && (
+                        <Encouragement
+                            id={id}
+                            title={encouragement.title}
+                            body={encouragement.body}
+                        />
+                    )}
                 </FormGroup>
             </div>
         </>

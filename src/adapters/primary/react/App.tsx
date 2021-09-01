@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Route, useParams, useHistory } from 'react-route
 import { useDispatch } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
 import { iframeResizer } from 'iframe-resizer';
-import { Appointment } from './Components/Appointment';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';

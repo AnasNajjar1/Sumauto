@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
+import { Encouragement } from './Encouragement';
 
 type Data = {
     name: 'string';
@@ -28,6 +29,10 @@ type ButtonRadioInputProps = {
     value: string;
     error: any;
     required: boolean;
+    encouragement?: {
+        title: string;
+        body: string;
+    };
 };
 
 export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
@@ -36,15 +41,15 @@ export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
     data,
     value,
     error,
-    required,
+    encouragement,
 }) => {
     const dispatch = useDispatch();
 
     return (
         <div className={`question question-${id}`}>
             <FormGroup>
-                <Label className={`label-${id}`} for={id}>
-                    {t(text.label)} {required && '*'}
+                <Label className={`label-${id}`} htmlFor={id}>
+                    {t(text.label)}
                 </Label>
                 <div className="input-with-validation">
                     <ButtonGroup>
@@ -65,6 +70,9 @@ export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
                 </div>
                 {value && error?.validation && <p className="text-danger">{error.message}</p>}
                 {text.help && <FormText color="muted">{text.help}</FormText>}
+                {encouragement && (
+                    <Encouragement id={id} title={encouragement.title} body={encouragement.body} />
+                )}
             </FormGroup>
         </div>
     );

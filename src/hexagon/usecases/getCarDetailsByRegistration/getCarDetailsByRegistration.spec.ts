@@ -11,7 +11,7 @@ describe('Player point attribution', () => {
 
     beforeEach(() => {
         referentialGateway = new InMemoryReferentialGateway();
-        // store = configureStore({ referentialGateway });
+        store = configureStore({ referentialGateway });
         initialState = store.getState();
     });
 

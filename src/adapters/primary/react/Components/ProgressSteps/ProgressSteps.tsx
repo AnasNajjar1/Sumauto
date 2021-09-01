@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { t } from 'autobiz-translate';
 import { Progress } from 'reactstrap';
 

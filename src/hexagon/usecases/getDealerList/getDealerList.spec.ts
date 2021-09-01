@@ -1,5 +1,5 @@
 import { configureStore, ReduxStore } from '../../../redux/configureStore';
-import { getDealerList } from './getDealerList.useCase';
+import { getDealerListUseCase } from './getDealerList.useCase';
 import { InMemoryDealerGateway } from '../../../adapters/secondary/gateways/inMemory/inMemoryDealerGateway';
 import { AppState } from '../../../redux/appState';
 import { Dealer } from '../../interfaces';
@@ -29,7 +29,7 @@ describe('Dealers retrieval', () => {
 
     beforeEach(() => {
         dealerGateway = new InMemoryDealerGateway();
-        // store = configureStore({ dealerGateway });
+        store = configureStore({ dealerGateway });
     });
 
     it('track the dealer list retrieval process', async () => {
@@ -40,12 +40,12 @@ describe('Dealers retrieval', () => {
             });
             unsubscribe();
         });
-        await store.dispatch(getDealerList('75001'));
+        await store.dispatch(getDealerListUseCase('75001'));
     });
 
     describe('No dealer exist', () => {
         it('should not retrieve any dealers', async () => {
-            await store.dispatch(getDealerList('00000'));
+            await store.dispatch(getDealerListUseCase('00000'));
             expect(store.getState().dealer.dealerList).toEqual({
                 status: 'succeeded',
                 data: [],
@@ -59,7 +59,7 @@ describe('Dealers retrieval', () => {
         });
 
         it('should retrieve them', async () => {
-            await store.dispatch(getDealerList('75001'));
+            await store.dispatch(getDealerListUseCase('75001'));
             expect(store.getState().dealer.dealerList).toEqual({
                 status: 'succeeded',
                 data: someDealers,

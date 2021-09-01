@@ -113,6 +113,7 @@ export type TClientConfig = {
     locale: string;
     currency: string;
     identifier: string;
+    privateSellLink: string;
     displayRegistrationOption: boolean;
     cascadeOrder: ReferentialItem[];
     questionsGroup: { title: string; questions: QuestionKey[] }[];

@@ -4,7 +4,6 @@ import { Col, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
 import { QuestionKey } from '../../../../../hexagon/interfaces';
 import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
-import { Incitation } from './Incitation';
 
 type MakeLogoInputProps = {
     id: QuestionKey;

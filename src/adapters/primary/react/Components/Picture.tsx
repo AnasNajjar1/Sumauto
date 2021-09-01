@@ -1,6 +1,13 @@
 import React from 'react';
 
-type TBackground = 'searching' | 'archive' | 'calendar' | 'icon-calendar' | 'steps';
+type TBackground =
+    | 'searching'
+    | 'archive'
+    | 'calendar'
+    | 'icon-calendar'
+    | 'steps'
+    | 'chat'
+    | 'meeting';
 
 type TPictureProps = {
     background: TBackground;

@@ -14,7 +14,6 @@ import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { useHistory, useParams } from 'react-router-dom';
-import moment from 'moment';
 
 import { Map } from './Map';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
@@ -28,14 +27,12 @@ import { cancelAppointmentUseCase } from '../../../../hexagon/usecases/cancelApp
 export const Confirmation = () => {
     const dispatch = useDispatch();
     const { recordId } = useParams<{ recordId: string }>();
-    const { data: record, status } = useSelector(getRecordSelector);
-    const { client } = useSelector(getClientSelector);
-    const [modalCancel, setModalCancel] = useState(true);
+    const { data: record } = useSelector(getRecordSelector);
+    const [modalCancel, setModalCancel] = useState(false);
     const toggleModalCancel = () => setModalCancel(!modalCancel);
     const handlePrint = () => {
         window.print();
     };
-    const history = useHistory();
 
     useEffect(() => {
         dispatch(getRecordUseCase(recordId));

@@ -47,11 +47,33 @@ body{
     }
 }
 
-.incitation{
-    position:absolute;
-    right: $halfGutter;
+.encouragement{
+    margin-top: $halfGutter;
     background-color: $primaryOpacity;
+    color: $primary;
     padding:$halfGutter;
+    font-size: .9em;
+
+    @include media-breakpoint-up(sm) {
+        margin-top: 0;
+        position:absolute;
+        top:0;
+        width: 30vw;
+        right: -31vw;
+    }
+
+    .encouragement-title{
+        display: flex;
+        margin-bottom: .5em;
+        font-weight: 700;
+        .encouragement-title-icon{
+            margin-right: 5px;
+        }
+    }
+
+    p{
+        margin: 0;
+    }
 }
 .question{
     @include make-col-ready();
@@ -70,16 +92,17 @@ body{
         }
     }
 
-    &.question-version{
-        @include make-col(12);
-    }
-
+    &.question-version,
     &.question-mileage,
     &.question-imported,
     &.question-history,
     &.question-running,
     &.question-sellProject{
         @include make-col(12);
+    }
+
+    &.question-email{
+        @include make-col(6);
     }
 
 
@@ -108,7 +131,7 @@ body{
         }
     }
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
 
         &.question-year{
             .form-text{

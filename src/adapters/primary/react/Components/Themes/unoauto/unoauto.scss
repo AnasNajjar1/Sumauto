@@ -11,6 +11,11 @@ $secondary: #E65508 ;
         &.feature-clock{background-image: url('img/icon_clock.svg');}
         &.feature-lock{background-image: url('img/icon_lock.svg');}
         &.feature-check{background-image: url('img/icon_check.svg');}
+        &.feature-target{background-image: url('img/icon_target.svg');}
+        &.feature-cockade{background-image: url('img/icon_cockade.svg');}
+        &.feature-bulb{background-image: url('img/icon_bulb.svg');}
+
+
     }
 }
 
@@ -40,6 +45,20 @@ $secondary: #E65508 ;
         background-image: url('img/bg_steps.svg');
         background-position: top center;
         height: 100px;
+        margin-top: 15px; 
+    }
+
+    &.picture-chat{
+        background-image: url('img/bg_chat.svg');
+        background-position: top center;
+        height: 165px;
+        margin-top: 15px; 
+    }
+
+    &.picture-meeting{
+        background-image: url('img/bg_meeting.svg');
+        background-position: top center;
+        height: 165px;
         margin-top: 15px; 
     }
 

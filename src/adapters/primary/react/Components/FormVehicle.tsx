@@ -1,10 +1,9 @@
-import React, { FunctionComponent, Fragment, useEffect, useState } from 'react';
+import React, { FunctionComponent, Fragment, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
-import { words } from 'lodash';
 import { saveVehicleAndUserInformationsUseCase } from '../../../../hexagon/usecases/saveVehicleAndUserInformation/saveVehicleAndUserInformations.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
@@ -12,7 +11,6 @@ import useVehicleForm from '../hooks/useVehicleForm';
 import { CtaBlock } from './CtaBlock';
 import { ProgressSteps } from './ProgressSteps/ProgressSteps';
 import { Picture } from './Picture';
-import { Incitation } from './Question/Incitation';
 import { getFormVehicleValue } from '../../view-models-generators/referentialSelectors';
 
 export const FormVehicle: FunctionComponent = () => {
@@ -26,23 +24,29 @@ export const FormVehicle: FunctionComponent = () => {
 
     const { vehicle } = useSelector(getFormVehicleValue);
 
-    const [incitation, setIncitation] = useState<string>('');
-    const [incitationTop, setIncitationTop] = useState<number>(0);
-
     const handleSubmitForm = () => {
         dispatch(saveVehicleAndUserInformationsUseCase());
     };
 
     useEffect(() => {
-        const modelTop = document.getElementById('model')?.getBoundingClientRect().top || 0;
+        const encouragementVersion = document.getElementById('encouragement_version');
+        const encouragementEmail = document.getElementById('encouragement_emailConfirmation');
+        if (encouragementVersion) {
+            if (vehicle.engine) {
+                encouragementVersion.classList.remove('d-none');
+            } else {
+                encouragementVersion.classList.add('d-none');
+            }
+        }
 
-        const incitationCol =
-            document.getElementById('incitation_col')?.getBoundingClientRect().top || 0;
-
-        setIncitationTop(
-            document.getElementById('model')?.getBoundingClientRect().top || 0 - window.scrollY,
-        );
-    }, [dispatch, vehicle.model]);
+        if (encouragementEmail) {
+            if (vehicle.running) {
+                encouragementEmail.classList.remove('d-none');
+            } else {
+                encouragementEmail.classList.add('d-none');
+            }
+        }
+    }, [dispatch, vehicle]);
     useEffect(() => {
         if (recordId > 0) history.push(`./record/${recordId}`);
     }, [dispatch, recordId]);
@@ -87,9 +91,7 @@ export const FormVehicle: FunctionComponent = () => {
                             </div>
                         ))}
                     </Col>
-                    <Col id="incitation_col">
-                        <Incitation top={incitationTop} />
-                    </Col>
+                    <Col />
                 </Row>
                 <CtaBlock>
                     <Button disabled={!canQuote()} block onClick={handleSubmitForm}>

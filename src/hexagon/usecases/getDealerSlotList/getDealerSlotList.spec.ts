@@ -1,5 +1,5 @@
 import { configureStore, ReduxStore } from '../../../redux/configureStore';
-import { getDealerSlotList } from './getDealerSlotList.useCase';
+import { getDealerSlotListUseCase } from './getDealerSlotList.useCase';
 import { InMemoryDealerGateway } from '../../../adapters/secondary/gateways/inMemory/inMemoryDealerGateway';
 import { someDealerSlots } from '../../../adapters/secondary/gateways/inMemory/stubs/someDealerSlots';
 
@@ -9,7 +9,7 @@ describe('Dealer Slots retrieval', () => {
 
     beforeEach(() => {
         dealerGateway = new InMemoryDealerGateway();
-        // store = configureStore({ dealerGateway });
+        store = configureStore({ dealerGateway });
     });
 
     it('track the dealer slot list retrieval process', async () => {
@@ -21,12 +21,12 @@ describe('Dealer Slots retrieval', () => {
             unsubscribe();
         });
 
-        await store.dispatch(getDealerSlotList('1'));
+        await store.dispatch(getDealerSlotListUseCase('1'));
     });
 
     describe('No dealer Slot exist', () => {
         it('should not retrieve any slots', async () => {
-            await store.dispatch(getDealerSlotList('1'));
+            await store.dispatch(getDealerSlotListUseCase('1'));
             expect(store.getState().dealer.dealerSlotList).toEqual({
                 status: 'succeeded',
                 data: [],
@@ -40,7 +40,7 @@ describe('Dealer Slots retrieval', () => {
         });
 
         it('should retrieve them', async () => {
-            await store.dispatch(getDealerSlotList('75001'));
+            await store.dispatch(getDealerSlotListUseCase('75001'));
             expect(store.getState().dealer.dealerSlotList).toEqual({
                 status: 'succeeded',
                 data: someDealerSlots,
