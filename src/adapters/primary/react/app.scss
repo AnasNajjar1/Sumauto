@@ -8,6 +8,24 @@ $primaryOpacity : rgba($primary, .1);
 $dangerOpacity : rgba($danger, .1);
 $halfGutter : $grid-gutter-width / 2;
 
+$btn-border-radius: 0;
+$input-border-radius: 0;
+
+$input-active-border-color:#333333;
+$input-inactive-border-color: #3333338c;
+$input-error-border-color:#d91a2a;
+$input-success-border-color:#3cc850;
+
+$input-active-color:#333333;
+$input-inactive-color:#3333338c;
+$input-error-color:#333333;
+
+$input-active-bg: #ffffff;
+$input-inactive-bg: #ffffff;
+$input-error-bg: #ffdddd;
+
+$input-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
+
 
 body{
     padding-bottom: $halfGutter;
@@ -17,7 +35,7 @@ body{
 @include media-breakpoint-down(xs) {
     .label-year{
         display: none;
-    }  
+    }
 }
 
 .btn-group{
@@ -32,18 +50,18 @@ body{
     @include make-row();
 }
 .registration-or-make-logo{
-    width: 100%; 
-    text-align: center; 
-    border-bottom: 1px solid $primary; 
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid $primary;
     font-size: 2em;
     font-weight: bold;
     text-transform: uppercase;
-    color: $primary; 
+    color: $primary;
     line-height: 0.1em;
     margin: 10px 0 20px;
     span{
-        background:$body-bg; 
-        padding:0 10px; 
+        background:$body-bg;
+        padding:0 10px;
     }
 }
 
@@ -114,14 +132,12 @@ body{
         margin-bottom: $halfGutter;
         display: flex;
         .logo-button-container{
- 
-                width: calc(100% / 5);
-            
+            width: calc(100% / 5);
             font-size: .7em;
             text-align: center;
             div{
                 margin: 5px $halfGutter / 2;
-                border:1px solid #ccc; 
+                border:1px solid #ccc;
                 display: block;
                 &.selected{
                     border:2px solid $primary;
@@ -136,7 +152,7 @@ body{
         &.question-year{
             .form-text{
                 width: 200%;
-                left: calc(-100% - 30px); 
+                left: calc(-100% - 30px);
                 position: relative;
             }
         }
@@ -144,17 +160,15 @@ body{
 
 
 
-}    
+}
 
 .input-with-validation{
     display: flex;
     align-items: center;
     input{
         flex:1;
- 
     }
     .input-validation{
-
         width: 30px;
         display: flex;
         justify-content: center;
@@ -182,14 +196,13 @@ body{
         display: flex;
         border:1px solid $gray-300;
         padding: .5em;
-        margin-bottom: .5em; 
+        margin-bottom: .5em;
         .button-dealer-name{
             font-weight: bold;
         }
         .button-dealer-icon{
             width: 30px;
             align-self: center;
-    
         }
         &.hidden-dealer{
             display: none;
@@ -197,7 +210,7 @@ body{
         &.selected{
             border-color: $primary;
             background-color: $primaryOpacity;
-        } 
+        }
     }
 
     &.show-all{
@@ -205,47 +218,229 @@ body{
             display: flex;
         }
     }
-    
 }
 
 
 .google-map{
-    width: 100%;
-    height: 400px;
+    margin-left: auto;
+    max-width: 300px;
+    height: 200px;
 }
 
 
 
 .page{
-    &.page-error{
+    padding: 0 50px;
+    padding-top: 30px;
+
+    @media all and (max-width: 720px) {
+        padding: 0 20px;
+        padding-top: 15px;
+    }
+
+    &.page-confirmation{
         h1{
-            
             @extend .text-primary;
+            margin: 40px 0 60px 0;
+        }
+        .left-side {
+            flex-grow: 2;
+
+            h2{
+                @extend .text-primary;
+                font-size: 20px;
+                margin-bottom: 0;
+            }
+
+            .location {
+                font-size: 13px;
+
+                b {
+                    padding: 0 15px;
+                    margin: 10px 0;
+                }
+            }
+
+            .button-row {
+                margin-top: 20px;
+                padding: 0 15px;
+
+                .button-col {
+                    padding: 0;
+                    width: 45%;
+                    flex-grow: unset;
+                    margin-right: 20px;
+                }
+            }
+        }
+        
+        .right-side {
+            font-size: 13px;
+            width: 30%;
+            flex-grow: 1;
+
+            h2 {
+                font-size: 13px;
+            }
+
+            hr {
+                border-color: #00000000
+            }
+        }
+
+        @media all and (max-width: 720px) {
+            .container {
+                flex-direction: column;
+            }
+            .left-side {
+                flex-grow: 1;
+            }
         }
     }
 
-} 
-
-.form-unsubscribe{
-    max-width: 400px
-}
-
-.unsubscribe-return{
-    @extend .p-2;
-    background-color: azure;
-    &.valid{
-        .unsubscribe-return-icon{
-            @extend .text-success;
-        } 
-    }
-    &.error{
-        @extend .text-danger;    
-    }
-    display: flex;
-    .unsubscribe-return-message{
-        @extend .pl-2;
+    &.page-error{
+        h1{
+            @extend .text-primary;
+        }
     }
 }
+
+.page-error {
+    .cta-block button{
+        width: 400px;
+    }
+
+    @media all and (max-width: 480px){
+        .cta-block button{
+            width: 100%;
+        }
+    }
+}
+
+.page-unsubscribe{
+    h1{
+        @extend .text-primary;
+    }
+
+    .form-unsubscribe{
+        max-width: 400px;
+    }
+
+    .unsubscribe-return{
+        @extend .p-2;
+        background-color: $primaryOpacity;
+        width: 50%;
+        &.valid{
+            .unsubscribe-return-icon{
+                @extend .text-success;
+            }
+        }
+        &.error{
+            @extend .text-danger;
+        }
+        display: flex;
+        .unsubscribe-return-message{
+            @extend .pl-2;
+        }
+    }
+
+    .cta-block {
+        width: 400px;
+
+        button{
+            width: 100%;
+            border-radius: $btn-border-radius;
+        }
+    }
+
+    @media all and (max-width:768px){
+        .unsubscribe-return,
+        .cta-block{
+            width: 100%;
+
+            button{
+                width: 50%;
+            }
+        }
+
+    }
+    @media all and (max-width: 480px){
+        h1{
+            font-size: 1.2rem;
+        }
+        .cta-block button{
+            width: 100%;
+        }
+    }
+}
+
+.form-group{
+    label{
+        font-size: $font-size-base;
+        line-height: $line-height-base;
+        color: $input-inactive-color;
+        transition: $input-transition;
+    }
+
+    .text-danger {
+        margin: 5px 0;
+    }
+
+    &:focus-within{
+        label {
+            color: $input-active-color;
+        }
+        .input-with-validation{
+            .input-group{
+                border-color: $input-active-border-color;
+                .input-group-append .input-group-text{
+                    color: $input-active-color;
+                }
+            }
+        }
+    }
+
+    .input-with-validation{
+        .input-group{
+            border: 1px solid $input-inactive-border-color;
+
+            .form-control,
+            .input-group-append .input-group-text{
+                border: none;
+                background-color: $input-inactive-bg;
+            }
+
+            .form-control{
+                font-size: $font-size-base;
+                line-height: $line-height-base;
+                padding: 4px 12px;
+            }
+
+            .form-control:focus{
+                outline: none;
+                box-shadow: none;
+            }
+
+            .input-group-append .input-group-text{
+                color: $input-inactive-color;
+                transition: $input-transition;
+            }
+        }
+
+        .input-danger{
+            border-color: $input-error-border-color;
+            .form-control,
+            .input-group-append .input-group-text{
+                background-color: $input-error-bg;
+            }
+        }
+
+        .input-success{
+            border-color: $input-success-border-color;
+        }
+    }
+}
+
 
 .feature-group{
     .feature{
@@ -281,6 +476,12 @@ body{
 
 
 
+.progress-bar-section {
+    position: sticky;
+}
+
+
+
 .progress-steps{
     margin: $grid-gutter-width 0 $grid-gutter-width*2 0 ;
     text-align: center;
@@ -295,9 +496,7 @@ body{
             width:10px;
             flex-grow: 1;
 
-
-            
-            &:before{
+            &:after{
                 content : "1";
                 background-color: white;
                 text-align: center;
@@ -311,22 +510,22 @@ body{
                 color:$primary;
                 font-weight: bold;
                 border-radius: 50%;
-                top:-($progress-height / 2); 
+                top:-($progress-height / 2);
+                margin-top: 15px;
             }
 
-
             &:nth-child(2){
-                &:before{
+                &:after{
                     content : "2";
                 }
             }
             &:nth-child(3){
-                &:before{
+                &:after{
                     content : "3";
                 }
             }
             &:nth-child(4){
-                &:before{
+                &:after{
                     content : "4";
                 }
             }
@@ -341,12 +540,13 @@ body{
                     background-position: center;
                 }
             }
-
-            
         }
     }
-}
 
+    .progress {
+        margin: 38px 13% 0 13%;
+    }    
+}
 
 .motivation{
     background-color: $gray-100;
@@ -372,6 +572,12 @@ body{
     margin-bottom: $halfGutter;
     .appointment-resume-text{
         padding-left:$halfGutter;
+
+        p {
+            @extend .text-primary;
+            margin: 0;
+            font-size: 13px;
+            font-weight: normal;
+        }
     }
 }
-

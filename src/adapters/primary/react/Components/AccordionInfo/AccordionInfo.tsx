@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../../hexagon/shared/utils/translate';
+
 import { Collapse } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';

@@ -4,6 +4,8 @@ import { FormGroup, Input, Label } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../../hexagon/shared/utils/translate';
+
 import { QuestionKey } from '../../../../../hexagon/interfaces';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { Encouragement } from './Encouragement';

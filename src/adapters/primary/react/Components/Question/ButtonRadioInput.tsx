@@ -2,6 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormGroup, Label, FormText, ButtonGroup, Button } from 'reactstrap';
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../../hexagon/shared/utils/translate';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';

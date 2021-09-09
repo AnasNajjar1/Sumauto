@@ -1,4 +1,6 @@
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../hexagon/shared/utils/translate';
+
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 import { Col, Row } from 'reactstrap';

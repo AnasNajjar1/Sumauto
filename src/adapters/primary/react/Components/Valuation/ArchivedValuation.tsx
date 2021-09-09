@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Col, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../../hexagon/shared/utils/translate';
 import { TRecord } from '../../../../../hexagon/interfaces';
 import { TextUtils } from '../../../../../hexagon/shared/utils/TextUtils';
 import { getClientSelector } from '../../../view-models-generators/clientSelector';

@@ -11,6 +11,8 @@ import {
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../hexagon/shared/utils/translate';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
 import { useHistory, useParams } from 'react-router-dom';
@@ -47,10 +49,10 @@ export const Confirmation = () => {
             <Container fluid>
                 <div className="d-flex ">
                     <div className="w-100">
-                        <h1>{t('confirmation.title')}</h1>
+                        <h1 className="text-center">{t('confirmation.title')}</h1>
                     </div>
                     <div
-                        className="align-self-center text-nowrap"
+                        className="align-self-start text-nowrap print-button"
                         role="button"
                         aria-hidden="true"
                         onClick={handlePrint}
@@ -61,42 +63,45 @@ export const Confirmation = () => {
                 </div>
                 {record.appointment && (
                     <>
-                        <AppointmentResume
-                            date={record.appointment.dateHour}
-                            placeName={record.appointment.place.name}
-                        />
-                        <Row>
-                            <Col>
-                                <h2>{t('your_point_of_sale')}</h2>
-                                <p>
-                                    {record.appointment.place.address}
-                                    <br />
-                                    {record.appointment.place.zipCode}{' '}
-                                    {record.appointment.place.city}
-                                    <br />
-                                    <a href="tel:{record.appointment.place.phone}">
-                                        {record.appointment.place.phone}
-                                    </a>
-                                </p>
+                        <Row className="container">
+                            <Col className="left-side">
+                                <AppointmentResume
+                                    date={record.appointment.dateHour}
+                                    placeName={record.appointment.place.name}
+                                />
+                                <Row className="location">
+                                    <Col>
+                                        <h2>{t('your_point_of_sale')}</h2>
+                                        <Row><b>{record.appointment.place.name}</b></Row>
+                                        <p>
+                                            {record.appointment.place.address}
+                                            <br />
+                                            {record.appointment.place.zipCode}{' '}
+                                            {record.appointment.place.city}
+                                            <br />
+                                            Tel. <a href="tel:{record.appointment.place.phone}">
+                                                {record.appointment.place.phone}
+                                            </a>
+                                        </p>
+                                    </Col>
+                                    <Col>
+                                        <Map coordinates={record.appointment.place.position} />
+                                    </Col>
+                                </Row>
+                                <Row className="button-row">
+                                    <Col className="button-col">
+                                        <Button block color="primary">
+                                            {t('postpone_appointment')}
+                                        </Button>
+                                    </Col>
+                                    <Col className="button-col">
+                                        <Button block color="secondary" onClick={toggleModalCancel}>
+                                            {t('cancel_appointment')}
+                                        </Button>
+                                    </Col>
+                                </Row>
                             </Col>
-                            <Col>
-                                <Map coordinates={record.appointment.place.position} />
-                            </Col>
-                        </Row>
-                        <Row className="my-4">
-                            <Col>
-                                <Button block color="primary">
-                                    {t('postpone_appointment')}
-                                </Button>
-                            </Col>
-                            <Col>
-                                <Button block color="secondary" onClick={toggleModalCancel}>
-                                    {t('cancel_appointment')}
-                                </Button>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
+                            <Col className="right-side">
                                 <h2>{t('documents_title')}</h2>
                                 {t('documents_text')}
                                 <hr />

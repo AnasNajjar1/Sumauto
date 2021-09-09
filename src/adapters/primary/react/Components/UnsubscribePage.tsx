@@ -1,4 +1,5 @@
 import { t } from 'autobiz-translate';
+
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
     Button,
@@ -18,6 +19,7 @@ import {
     faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
+// import { t } from '../../../../hexagon/shared/utils/translate';
 import { CtaBlock } from './CtaBlock';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
@@ -56,9 +58,9 @@ export const UnsubscribePage: FunctionComponent = () => {
     let emailInputClass = '';
     let phoneInputClass = '';
 
-    if (email) emailInputClass = emailValid === false ? 'border-danger' : 'border-success';
+    if (email) emailInputClass = emailValid === false ? 'input-danger' : 'input-success';
     else emailInputClass = '';
-    if (phone) phoneInputClass = phoneValid === false ? 'border-danger' : 'border-success';
+    if (phone) phoneInputClass = phoneValid === false ? 'input-danger' : 'input-success';
     else phoneInputClass = '';
 
     const handleSubmit = () => {
@@ -80,7 +82,7 @@ export const UnsubscribePage: FunctionComponent = () => {
                     <FormGroup>
                         <Label htmlFor="email">{t('email')}</Label>
                         <InputWithValidation>
-                            <InputGroup>
+                            <InputGroup className={emailInputClass}>
                                 <Input
                                     type="email"
                                     id="email"
@@ -90,13 +92,13 @@ export const UnsubscribePage: FunctionComponent = () => {
                                     onBlur={(e) => setEmail(e.currentTarget.value)}
                                     disabled={status === 'succeeded'}
                                 />
-                                {email === '' && (
-                                    <InputGroupAddon addonType="append">
-                                        <InputGroupText>
-                                            <FontAwesomeIcon icon={faEnvelope} />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                )}
+                                {/* {email === '' && ( */}
+                                <InputGroupAddon addonType="append">
+                                    <InputGroupText>
+                                        <FontAwesomeIcon icon={faEnvelope} />
+                                    </InputGroupText>
+                                </InputGroupAddon>
+                                {/* )} */}
                             </InputGroup>
                             <InputValidation valid={emailValid} />
                         </InputWithValidation>
@@ -105,7 +107,7 @@ export const UnsubscribePage: FunctionComponent = () => {
                     <FormGroup>
                         <Label htmlFor="phone">{t('phone')}</Label>
                         <InputWithValidation>
-                            <InputGroup>
+                            <InputGroup className={phoneInputClass}>
                                 <Input
                                     type="tel"
                                     id="phone"
@@ -115,13 +117,13 @@ export const UnsubscribePage: FunctionComponent = () => {
                                     onBlur={(e) => setPhone(e.currentTarget.value)}
                                     disabled={status === 'succeeded'}
                                 />
-                                {phone === '' && (
-                                    <InputGroupAddon addonType="append">
-                                        <InputGroupText>
-                                            <FontAwesomeIcon icon={faPhone} />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                )}
+                                {/* {phone === '' && ( */}
+                                <InputGroupAddon addonType="append">
+                                    <InputGroupText>
+                                        <FontAwesomeIcon icon={faPhone} />
+                                    </InputGroupText>
+                                </InputGroupAddon>
+                                {/* )} */}
                             </InputGroup>
                             <InputValidation valid={phoneValid} />
                         </InputWithValidation>

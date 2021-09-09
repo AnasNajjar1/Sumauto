@@ -1,5 +1,7 @@
 import React from 'react';
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../hexagon/shared/utils/translate';
+
 import { Col } from 'reactstrap';
 
 type TIcon = 'bulb' | 'check' | 'clock' | 'cockade' | 'like' | 'lock' | 'sun' | 'target' | 'user';

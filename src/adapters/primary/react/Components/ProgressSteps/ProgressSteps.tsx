@@ -1,5 +1,6 @@
 import React from 'react';
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../../hexagon/shared/utils/translate';
 import { Progress } from 'reactstrap';
 
 type TProgressStepsProps = {
@@ -25,6 +26,7 @@ export const ProgressSteps: React.FC<TProgressStepsProps> = ({
                 {withLabels && t('your_appointment')}
             </li>
         </ul>
+        <div>{currentStep}</div>
         <Progress value={progress} />
     </div>
 );

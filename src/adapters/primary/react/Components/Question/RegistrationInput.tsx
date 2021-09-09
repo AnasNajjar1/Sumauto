@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Spinner } from 'reactstrap';
 
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../../hexagon/shared/utils/translate';
+
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
 import { dislayErrorUseCase } from '../../../../../hexagon/usecases/displayError/displayError.useCase';
 import { getCarDetailsByRegistrationUseCase } from '../../../../../hexagon/usecases/getCarDetailsByRegistration/getCarDetailsByRegistration.useCase';

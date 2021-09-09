@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
 import { t } from 'autobiz-translate';
+// import { t } from '../../../../hexagon/shared/utils/translate';
 import './Themes/default/default.scss';
 import { useSelector } from 'react-redux';
 import { CtaBlock } from './CtaBlock';
