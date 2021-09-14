@@ -14,20 +14,29 @@ export const NoValuation: FunctionComponent<TRecord> = ({ vehicle }) => {
     return (
         <>
             <Row>
-                <Col>
-                    <h1>{t('no_valuation.title')}</h1>
-                </Col>
-            </Row>
-            <Row>
                 <Col sm={8}>
-                    <p>{t('no_valuation.message')}</p>
+                    <h1>{t('no_valuation_title')}</h1>
+
+                    <div className="d-block d-sm-none mb-4">
+                        <Picture background="searching" />
+                    </div>
+                    <p>{t('no_valuation_message')}</p>
+
+                    <div className="d-none d-lg-block">
+                        <VehicleInformations vehicle={vehicle} />
+                    </div>
                 </Col>
                 <Col sm={4} className="d-none d-sm-block">
-                    <Picture background="searching" />
+                    <div className="mt-lg-5">
+                        <Picture background="searching" />
+                    </div>
                 </Col>
             </Row>
+            <hr />
 
-            <VehicleInformations vehicle={vehicle} />
+            <div className="d-block d-lg-none">
+                <VehicleInformations vehicle={vehicle} />
+            </div>
 
             <CtaBlock>
                 <Button color="primary" onClick={() => history.push('/')}>

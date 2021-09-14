@@ -7,6 +7,11 @@ $modal-content-border-width:0;
 $line-height-base: 1.2; 
 $success:   #3DC952 ;
 $danger: #CB0C16;
+$input-box-shadow: none;   
+$input-focus-width: 0;
+$input-btn-focus-width:  0;
+$hr-border-color: #C3C9CD;
+
 
 
 @import '~bootstrap/scss/bootstrap';
@@ -427,6 +432,9 @@ body{
 
 .feature-group{
     .feature{
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
         background-repeat: no-repeat;
         background-position-x: center;
         background-position-y: top;
@@ -563,4 +571,9 @@ body{
             font-weight: normal;
         }
     }
+}
+
+
+.vehicle-informations{
+    line-height: 1.75em;
 }

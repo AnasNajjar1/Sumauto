@@ -24,10 +24,9 @@ export const VehicleInformations: React.FC<TVehicleProps> = ({ vehicle }: TVehic
     const { client } = useSelector(getClientSelector);
     const { locale } = client.config;
     return (
-        <>
+        <div className="vehicle-informations">
             <Row>
                 <Col>
-                    <hr />
                     <h2>{t('your_car')}</h2>
                 </Col>
             </Row>
@@ -44,7 +43,7 @@ export const VehicleInformations: React.FC<TVehicleProps> = ({ vehicle }: TVehic
                 <Col xs={12} sm={6}>
                     <VehiclePropLine label="gear" value={vehicle.gearName} />
                     <VehiclePropLine label="fuel" value={vehicle.fuelName} />
-                    <VehiclePropLine label="doors" value={vehicle.doors} />
+                    <VehiclePropLine label="door" value={vehicle.doors} />
                 </Col>
             </Row>
             <Row>
@@ -55,6 +54,6 @@ export const VehicleInformations: React.FC<TVehicleProps> = ({ vehicle }: TVehic
                     <strong>{vehicle.versionName}</strong>
                 </Col>
             </Row>
-        </>
+        </div>
     );
 };

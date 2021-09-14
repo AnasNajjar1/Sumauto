@@ -78,7 +78,6 @@ export const UnsubscribePage: FunctionComponent = () => {
     return (
         <div className="page page-unsubscribe">
             <Container fluid>
-                {touched ? 'touched' : 'nottouched'}
                 <h1>{t('unscubscribe_title')}</h1>
                 <p className="mb-4">{t('unscubscribe_description')}</p>
 
