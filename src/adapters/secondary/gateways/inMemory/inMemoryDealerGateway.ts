@@ -14,7 +14,7 @@ export class InMemoryDealerGateway extends BaseApi implements DealerGateway {
             const result = this.dealerList;
             return right(result);
         } catch (error) {
-            return left(error);
+            return left(error as string);
         }
     }
 
@@ -27,7 +27,7 @@ export class InMemoryDealerGateway extends BaseApi implements DealerGateway {
             const result = this.dealerSlotList;
             return right(result);
         } catch (error) {
-            return left(error);
+            return left(error as string);
         }
     }
 

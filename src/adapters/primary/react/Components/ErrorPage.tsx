@@ -14,12 +14,18 @@ export const ErrorPage: FunctionComponent = () => {
     return (
         <div className="page page-error">
             <Container fluid>
-                <h1>{t('error.title')}</h1>
-                <p>{t('error.description')}</p>
+                <h1>{t('error_title')}</h1>
+
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: t('error_description_html') || '',
+                    }}
+                />
+
                 {name && journeyType && (
                     <CtaBlock>
                         <Button color="primary" onClick={() => history.push('/')}>
-                            {t('error.cta')}
+                            {t('error_cta')}
                         </Button>
                     </CtaBlock>
                 )}

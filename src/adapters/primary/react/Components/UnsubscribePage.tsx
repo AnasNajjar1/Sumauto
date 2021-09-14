@@ -38,30 +38,28 @@ export const UnsubscribePage: FunctionComponent = () => {
     const [phoneValid, setPhoneValid] = useState<boolean | undefined>(undefined);
     const [emailValid, setEmailValid] = useState<boolean | undefined>(undefined);
     const [formValid, setFormValid] = useState<boolean>(false);
+    const [touched, setTouched] = useState<boolean>(false);
 
     const { status } = useSelector(getUnsubscribeSelector);
 
+    const checkForm = () => {
+        setPhoneValid(phone.search(new RegExp(client.config.phoneRegex)) === 0);
+        setEmailValid(TextUtils.isEmailValid(email));
+    };
+
     useEffect(() => {
-        if (phone) setPhoneValid(phone.search(new RegExp(client.config.phoneRegex)) === 0);
-        else setPhoneValid(undefined);
-        if (email) setEmailValid(TextUtils.isEmailValid(email));
-        else setEmailValid(undefined);
-    }, [dispatch, phone, email]);
+        if (touched) checkForm();
+    }, [dispatch, phone, email, touched]);
 
     useEffect(() => {
         setFormValid(phoneValid === true && emailValid === true);
     }, [dispatch, phoneValid, emailValid]);
 
-    let emailInputClass = '';
-    let phoneInputClass = '';
-
-    if (email) emailInputClass = emailValid === false ? 'input-danger' : 'input-success';
-    else emailInputClass = '';
-    if (phone) phoneInputClass = phoneValid === false ? 'input-danger' : 'input-success';
-    else phoneInputClass = '';
-
     const handleSubmit = () => {
-        dispatch(unsubscribeUseCase(email, phone));
+        if (formValid) {
+            dispatch(unsubscribeUseCase(email, phone));
+        }
+        setTouched(true);
     };
 
     useEffect(() => {
@@ -69,9 +67,18 @@ export const UnsubscribePage: FunctionComponent = () => {
         setEmail('');
     }, [dispatch]);
 
+    let emailInputClass = '';
+    let phoneInputClass = '';
+
+    if (touched) {
+        emailInputClass = emailValid === false ? 'input-danger' : 'input-success';
+        phoneInputClass = phoneValid === false ? 'input-danger' : 'input-success';
+    }
+
     return (
         <div className="page page-unsubscribe">
             <Container fluid>
+                {touched ? 'touched' : 'nottouched'}
                 <h1>{t('unscubscribe_title')}</h1>
                 <p className="mb-4">{t('unscubscribe_description')}</p>
 
@@ -98,7 +105,9 @@ export const UnsubscribePage: FunctionComponent = () => {
                             </InputGroup>
                             <InputValidation valid={emailValid} />
                         </InputWithValidation>
-                        {email && !emailValid && <p className="text-danger">{t('wrong_email')}</p>}
+                        {touched && !emailValid && (
+                            <p className="text-danger">{t('wrong_email')}</p>
+                        )}
                     </FormGroup>
                     <FormGroup>
                         <Label htmlFor="phone">{t('phone')}</Label>
@@ -122,7 +131,9 @@ export const UnsubscribePage: FunctionComponent = () => {
                             </InputGroup>
                             <InputValidation valid={phoneValid} />
                         </InputWithValidation>
-                        {phone && !phoneValid && <p className="text-danger">{t('wrong_phone')}</p>}
+                        {touched && !phoneValid && (
+                            <p className="text-danger">{t('wrong_phone')}</p>
+                        )}
                     </FormGroup>
                 </div>
 

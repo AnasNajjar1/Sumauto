@@ -103,3 +103,9 @@ h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
         @extend .text-primary;
     }
 }
+
+.page-unsubscribe{
+    h1{
+        @extend .text-primary;
+    }
+}

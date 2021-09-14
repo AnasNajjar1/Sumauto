@@ -305,22 +305,23 @@ body{
         }
     }
 
-    &.page-error{
-        h1{
-            @extend .text-primary;
-        }
-    }
+
 }
 
 .page-error {
+
     .cta-block button{
         width: 400px;
     }
 
-    @media all and (max-width: 480px){
-        .cta-block button{
+    .cta-block{
+        text-align: center;
+        button{
             width: 100%;
-        }
+            @include media-breakpoint-up(sm) {
+                    max-width: 400px;
+                }
+            }
     }
 }
 
@@ -415,10 +416,6 @@ body{
 
         .input-danger{
             border-color: $input-error-border-color;
-            // .form-control,
-            // .input-group-append .input-group-text{
-            //     background-color: $input-error-bg;
-            // }
         }
 
         .input-success{

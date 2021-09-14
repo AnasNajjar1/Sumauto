@@ -107,7 +107,7 @@ export const Confirmation = () => {
                                 <h2>{t('documents_title')}</h2>
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: t('documents_text') || '',
+                                        __html: t('documents_text_html') || '',
                                     }}
                                 />
 
@@ -116,7 +116,7 @@ export const Confirmation = () => {
 
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: t('other_informations_text') || '',
+                                        __html: t('other_informations_text_html') || '',
                                     }}
                                 />
                             </Col>
