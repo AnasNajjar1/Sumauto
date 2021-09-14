@@ -48,7 +48,7 @@ export const Confirmation = () => {
             <Container fluid>
                 <div className="d-flex ">
                     <div className="w-100">
-                        <h1 className="text-center">{t('confirmation.title')}</h1>
+                        <h1 className="text-center">{t('confirmation_title')}</h1>
                     </div>
                     <div
                         className="align-self-start text-nowrap print-button"
@@ -105,10 +105,20 @@ export const Confirmation = () => {
                             </Col>
                             <Col className="right-side">
                                 <h2>{t('documents_title')}</h2>
-                                {t('documents_text')}
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: t('documents_text') || '',
+                                    }}
+                                />
+
                                 <hr />
                                 <h2>{t('other_informations_title')}</h2>
-                                {t('other_informations_text')}
+
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: t('other_informations_text') || '',
+                                    }}
+                                />
                             </Col>
                         </Row>
                         <Modal isOpen={modalCancel} toggle={toggleModalCancel} centered>

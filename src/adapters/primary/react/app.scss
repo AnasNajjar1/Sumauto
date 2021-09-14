@@ -1,14 +1,20 @@
+
 $label-margin-bottom: 0rem;
+$body-color: #000;
 $progress-height:5px; 
 $progress-border-radius:0;
 $modal-content-border-width:0;
+$line-height-base: 1.2; 
+$success:   #3DC952 ;
+$danger: #CB0C16;
+
+
 @import '~bootstrap/scss/bootstrap';
 
 $primaryOpacity : rgba($primary, .1);
 $dangerOpacity : rgba($danger, .1);
 $halfGutter : $grid-gutter-width / 2;
 
-$btn-border-radius: 0;
 $input-border-radius: 0;
 
 $input-active-border-color:#333333;
@@ -24,6 +30,8 @@ $input-active-bg: #ffffff;
 $input-inactive-bg: #ffffff;
 $input-error-bg: #ffdddd;
 
+
+
 $input-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
 
 
@@ -31,6 +39,10 @@ body{
     padding-bottom: $halfGutter;
     min-width: 320px;
 }
+
+
+
+
 
 @include media-breakpoint-down(xs) {
     .label-year{
@@ -230,13 +242,8 @@ body{
 
 
 .page{
-    padding: 0 50px;
     padding-top: 30px;
 
-    @media all and (max-width: 720px) {
-        padding: 0 20px;
-        padding-top: 15px;
-    }
 
     &.page-confirmation{
         h1{
@@ -318,18 +325,17 @@ body{
 }
 
 .page-unsubscribe{
-    h1{
-        @extend .text-primary;
-    }
+
 
     .form-unsubscribe{
         max-width: 400px;
     }
 
     .unsubscribe-return{
-        @extend .p-2;
+        @extend .p-3;
         background-color: $primaryOpacity;
-        width: 50%;
+        max-width: 600px;
+        font-size: 13px;
         &.valid{
             .unsubscribe-return-icon{
                 @extend .text-success;
@@ -343,42 +349,23 @@ body{
             @extend .pl-2;
         }
     }
-
-    .cta-block {
-        width: 400px;
-
-        button{
-            width: 100%;
-            border-radius: $btn-border-radius;
-        }
-    }
-
-    @media all and (max-width:768px){
-        .unsubscribe-return,
         .cta-block{
-            width: 100%;
-
+            text-align: left;
             button{
-                width: 50%;
+                width: 100%;
+            @include media-breakpoint-up(sm) {
+                    max-width: 400px;
+                }
+                
             }
         }
-
-    }
-    @media all and (max-width: 480px){
-        h1{
-            font-size: 1.2rem;
-        }
-        .cta-block button{
-            width: 100%;
-        }
-    }
 }
 
 .form-group{
     label{
         font-size: $font-size-base;
-        line-height: $line-height-base;
-        color: $input-inactive-color;
+        font-weight: 700;
+        color: $body-color;
         transition: $input-transition;
     }
 
@@ -412,7 +399,6 @@ body{
 
             .form-control{
                 font-size: $font-size-base;
-                line-height: $line-height-base;
                 padding: 4px 12px;
             }
 
@@ -429,10 +415,10 @@ body{
 
         .input-danger{
             border-color: $input-error-border-color;
-            .form-control,
-            .input-group-append .input-group-text{
-                background-color: $input-error-bg;
-            }
+            // .form-control,
+            // .input-group-append .input-group-text{
+            //     background-color: $input-error-bg;
+            // }
         }
 
         .input-success{

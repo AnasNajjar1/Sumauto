@@ -15,14 +15,16 @@ export const ProgressSteps: React.FC<TProgressStepsProps> = ({
     <div className="progress-steps">
         <ul>
             <li className={currentStep > 1 ? 'completed' : ''}>
-                {withLabels && t('your_vehicle')}
+                {withLabels && t('basic_information')}
             </li>
             <li className={currentStep > 2 ? 'completed' : ''}>
-                {withLabels && t('your_profile')}
+                {withLabels && t('more_details')}
             </li>
-            <li className={currentStep > 3 ? 'completed' : ''}>{withLabels && t('estimation')}</li>
+            <li className={currentStep > 3 ? 'completed' : ''}>
+                {withLabels && t('additional_information')}
+            </li>
             <li className={currentStep > 4 ? 'completed' : ''}>
-                {withLabels && t('your_appointment')}
+                {withLabels && t('car_valuation')}
             </li>
         </ul>
         <div>{currentStep}</div>

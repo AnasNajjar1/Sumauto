@@ -274,7 +274,7 @@ const useVehicleForm = () => {
                 value: vehicle.year,
                 text: {
                     label: '',
-                    help: 'registratin_date_help',
+                    help: t('registration_date_help'),
                 },
                 list: lists.year,
                 error: validation.year,

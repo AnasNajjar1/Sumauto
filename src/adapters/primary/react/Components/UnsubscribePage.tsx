@@ -28,8 +28,6 @@ import { unsubscribeUseCase } from '../../../../hexagon/usecases/unsubscribe/uns
 import { getUnsubscribeSelector } from '../../view-models-generators/unsubscribeSelectors';
 import { Loader } from './Loader';
 
-type TUnsubsribed = 'success' | 'error';
-
 export const UnsubscribePage: FunctionComponent = () => {
     const dispatch = useDispatch();
     const { client } = useSelector(getClientSelector);
@@ -74,8 +72,8 @@ export const UnsubscribePage: FunctionComponent = () => {
     return (
         <div className="page page-unsubscribe">
             <Container fluid>
-                <h1>{t('unscubscribe.title')}</h1>
-                <p>{t('unscubscribe.description')}</p>
+                <h1>{t('unscubscribe_title')}</h1>
+                <p className="mb-4">{t('unscubscribe_description')}</p>
 
                 <div className="form-unsubscribe">
                     <FormGroup>
@@ -86,18 +84,17 @@ export const UnsubscribePage: FunctionComponent = () => {
                                     type="email"
                                     id="email"
                                     name="email"
+                                    placeholder={t('email_placeholder')}
                                     defaultValue={email}
                                     className={emailInputClass}
                                     onBlur={(e) => setEmail(e.currentTarget.value)}
                                     disabled={status === 'succeeded'}
                                 />
-                                {/* {email === '' && ( */}
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText>
                                         <FontAwesomeIcon icon={faEnvelope} />
                                     </InputGroupText>
                                 </InputGroupAddon>
-                                {/* )} */}
                             </InputGroup>
                             <InputValidation valid={emailValid} />
                         </InputWithValidation>
@@ -112,23 +109,23 @@ export const UnsubscribePage: FunctionComponent = () => {
                                     id="phone"
                                     name="phone"
                                     defaultValue={phone}
+                                    placeholder={t('phone_placeholder')}
                                     className={phoneInputClass}
                                     onBlur={(e) => setPhone(e.currentTarget.value)}
                                     disabled={status === 'succeeded'}
                                 />
-                                {/* {phone === '' && ( */}
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText>
                                         <FontAwesomeIcon icon={faPhone} />
                                     </InputGroupText>
                                 </InputGroupAddon>
-                                {/* )} */}
                             </InputGroup>
                             <InputValidation valid={phoneValid} />
                         </InputWithValidation>
                         {phone && !phoneValid && <p className="text-danger">{t('wrong_phone')}</p>}
                     </FormGroup>
                 </div>
+
                 <Loader status={status}>
                     {status === 'succeeded' && (
                         <div className="unsubscribe-return valid">
@@ -154,7 +151,7 @@ export const UnsubscribePage: FunctionComponent = () => {
 
                 {status !== 'succeeded' && (
                     <CtaBlock>
-                        <Button color="primary" onClick={handleSubmit} disabled={!formValid}>
+                        <Button color="primary" onClick={handleSubmit}>
                             {t('unscubscribe_button')}
                         </Button>
                     </CtaBlock>

@@ -1,4 +1,21 @@
+@font-face {
+	font-family: 'makeitsans';
+	font-weight: 400;
+	src: url(./fonts/make-it-sans-regular.v1.woff2) format("woff2"), url(./fonts/make-it-sans-regular.v1.ttf) format("truetype")
+}
+
+@font-face {
+	font-family: 'makeitsans';
+	font-weight: 700;
+	src: url(./fonts/make-it-sans-bold.v1.woff2) format("woff2"), url(./fonts/make-it-sans-bold.v1.ttf) format("truetype")
+}
+
+
 
 $primary: #F5F200 ;
 $secondary: #E65508 ;
+
+$font-family-base:"makeitsans";
 @import '../../../app.scss';
+h1{font-size: 22px; font-weight: 400; margin-bottom: 20px;}
+

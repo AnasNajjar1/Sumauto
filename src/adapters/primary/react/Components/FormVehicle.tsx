@@ -62,7 +62,7 @@ export const FormVehicle: FunctionComponent = () => {
                 </Col>
             </Row>
             <div className="page page-formvehicle">
-                <h1>{t('tell_us_about_your_car')}</h1>
+                <h1>{t('we_value_your_car_for_free_in_less_than_2_minutes')}</h1>
 
                 <Row>
                     <Col sm={8}>
