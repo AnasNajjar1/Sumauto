@@ -19,7 +19,6 @@ import {
     faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-// import { t } from '../../../../hexagon/shared/utils/translate';
 import { CtaBlock } from './CtaBlock';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';

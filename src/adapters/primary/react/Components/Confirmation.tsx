@@ -11,7 +11,6 @@ import {
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
-// import { t } from '../../../../hexagon/shared/utils/translate';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint } from '@fortawesome/free-solid-svg-icons';
@@ -72,14 +71,17 @@ export const Confirmation = () => {
                                 <Row className="location">
                                     <Col>
                                         <h2>{t('your_point_of_sale')}</h2>
-                                        <Row><b>{record.appointment.place.name}</b></Row>
+                                        <Row>
+                                            <b>{record.appointment.place.name}</b>
+                                        </Row>
                                         <p>
                                             {record.appointment.place.address}
                                             <br />
                                             {record.appointment.place.zipCode}{' '}
                                             {record.appointment.place.city}
                                             <br />
-                                            Tel. <a href="tel:{record.appointment.place.phone}">
+                                            Tel.{' '}
+                                            <a href="tel:{record.appointment.place.phone}">
                                                 {record.appointment.place.phone}
                                             </a>
                                         </p>

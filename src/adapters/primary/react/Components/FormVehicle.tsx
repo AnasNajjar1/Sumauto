@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
-// import { t } from '../../../../hexagon/shared/utils/translate';
 import { saveVehicleAndUserInformationsUseCase } from '../../../../hexagon/usecases/saveVehicleAndUserInformation/saveVehicleAndUserInformations.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';

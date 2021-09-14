@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { BrowserRouter, Switch, Route, useParams, useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-// import { TranslateProvider } from 'autobiz-translate';
+import { TranslateProvider } from 'autobiz-translate';
 import { iframeResizer } from 'iframe-resizer';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
@@ -30,7 +30,7 @@ const App: FunctionComponent = () => {
     }
 
     return (
-        // <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
+        <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
             <React.Suspense fallback={<></>}>
                 {themeSelector(clientSlug)}
                 <BrowserRouter basename={`/${clientSlug}/${journeyType}`}>
@@ -52,7 +52,7 @@ const App: FunctionComponent = () => {
                     </div>
                 </BrowserRouter>
             </React.Suspense>
-        // </TranslateProvider>
+        </TranslateProvider>
     );
 };
 

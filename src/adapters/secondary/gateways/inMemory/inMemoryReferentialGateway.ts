@@ -16,7 +16,7 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
         try {
             return right(this.inMemoryReferential.makes);
         } catch (error) {
-            return left(error);
+            return left(error as string);
         }
     }
 

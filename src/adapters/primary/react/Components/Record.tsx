@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useHistory, useParams } from 'react-router-dom';
 import { t } from 'autobiz-translate';
-// import { t } from '../../../../hexagon/shared/utils/translate';
 
 import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';

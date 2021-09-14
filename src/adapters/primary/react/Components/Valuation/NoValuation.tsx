@@ -2,7 +2,6 @@ import React, { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
-// import { t } from '../../../../../hexagon/shared/utils/translate';
 import { TRecord } from '../../../../../hexagon/interfaces';
 import { CtaBlock } from '../CtaBlock';
 import { Feature } from '../Feature';
