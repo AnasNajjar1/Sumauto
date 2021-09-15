@@ -101,7 +101,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
 
     return (
         <Container fluid>
-            <h2>1. {t('choose_your_point_of_sale')}</h2>
+            <h2>1. {t('choose_your_date')}</h2>
             <AccordionInfo
                 iconType="circle"
                 titleKey="professional_info"
@@ -145,12 +145,13 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                 </div>
 
                 <div
+                    className="toggle_show_dealers"
                     role="button"
                     aria-hidden="true"
                     onClick={() => setShowAllDealers(!showAllDealers)}
                 >
                     <FontAwesomeIcon icon={showAllDealers ? faMinusCircle : faPlusCircle} />{' '}
-                    {t(showAllDealers ? 'show_less_dealers' : 'show_more_dealers')}
+                    <span>{t(showAllDealers ? 'show_less_dealers' : 'show_more_dealers')}</span>
                 </div>
             </Loader>
             {dealerId && (
@@ -170,12 +171,13 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                     <AccordionInfo
                         iconType="circle"
                         titleKey="wainting_info"
-                        detailsKey="wainting_info_details"
+                        detailsKey="waiting_info_details"
                     />
 
                     <Loader status={dealerSlotStatus}>
                         <Row>
                             <Col>
+                                <Label htmlFor="name">{t('date')}</Label>
                                 <InputGroup>
                                     <Input
                                         type="select"
@@ -198,32 +200,35 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                             </Col>
                             <Col>
                                 {hourList && (
-                                    <InputGroup>
-                                        <Input
-                                            type="select"
-                                            onChange={(e) => setHour(e.currentTarget.value)}
-                                            value={hour}
-                                        >
-                                            <option value="">--</option>
-                                            {hourList.map((s) => (
-                                                <option
-                                                    value={s.id}
-                                                    key={s.id}
-                                                    disabled={s.status === 'closed'}
-                                                >
-                                                    {s.hour}{' '}
-                                                    {s.status === 'closed'
-                                                        ? `(${t('unavailable')})`
-                                                        : ''}
-                                                </option>
-                                            ))}
-                                        </Input>
-                                        <InputGroupAddon addonType="append">
-                                            <InputGroupText>
-                                                <FontAwesomeIcon icon={faClock} />
-                                            </InputGroupText>
-                                        </InputGroupAddon>
-                                    </InputGroup>
+                                    <>
+                                        <Label htmlFor="name">{t('hour')}</Label>
+                                        <InputGroup>
+                                            <Input
+                                                type="select"
+                                                onChange={(e) => setHour(e.currentTarget.value)}
+                                                value={hour}
+                                            >
+                                                <option value="">--</option>
+                                                {hourList.map((s) => (
+                                                    <option
+                                                        value={s.id}
+                                                        key={s.id}
+                                                        disabled={s.status === 'closed'}
+                                                    >
+                                                        {s.hour}{' '}
+                                                        {s.status === 'closed'
+                                                            ? `(${t('unavailable')})`
+                                                            : ''}
+                                                    </option>
+                                                ))}
+                                            </Input>
+                                            <InputGroupAddon addonType="append">
+                                                <InputGroupText>
+                                                    <FontAwesomeIcon icon={faClock} />
+                                                </InputGroupText>
+                                            </InputGroupAddon>
+                                        </InputGroup>
+                                    </>
                                 )}
                             </Col>
                         </Row>
@@ -305,9 +310,22 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
                 <Feature label="total_security" icon="lock" />
                 <Feature label="without_cumbersome_procedures" icon="check" />
             </FeatureGroup>
-            <div>
-                <small>{t('appoitment_note')}</small>
-            </div>
+            <Row>
+                <Col>
+                    <div className="feature-details">
+                        {t('immediate_sale_and_without_obligation_details')}
+                    </div>
+                </Col>
+                <Col>
+                    <div className="feature-details">{t('total_security_details')}</div>
+                </Col>
+                <Col>
+                    <div className="feature-details">
+                        {t('without_cumbersome_procedures_details')}
+                    </div>
+                </Col>
+            </Row>
+            <p className="footnote">{t('appoitment_note')}</p>
         </Container>
     );
 };

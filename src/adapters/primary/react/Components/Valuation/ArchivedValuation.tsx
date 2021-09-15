@@ -19,9 +19,9 @@ export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
         <>
             <Row>
                 <Col>
-                    <h1>{t('archived_valuation.title')}</h1>
+                    <h1>{t('archived_valuation_title')}</h1>
                     <p>
-                        {t('your_file_number')} <strong>{id}</strong>
+                        {t('your_file_number')}: <strong>{id}</strong>
                     </p>
                 </Col>
                 <Col>
@@ -32,17 +32,19 @@ export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
             <hr />
             <Row>
                 <Col>
-                    <h2>{t('your_information')}</h2>
-                    <p>
-                        <strong>{t('email')}</strong>
-                        <br />
-                        {customer.email}
-                    </p>
-                    <p>
-                        <strong>{t('zipCode')}</strong>
-                        <br />
-                        {customer.zipCode}
-                    </p>
+                    <div className="information-box">
+                        <h2>{t('your_information')}</h2>
+                        <p>
+                            <strong>{t('email')}</strong>
+                            <br />
+                            {customer.email}
+                        </p>
+                        <p>
+                            <strong>{t('zipCode')}</strong>
+                            <br />
+                            {customer.zipCode}
+                        </p>
+                    </div>
                 </Col>
                 <Col>
                     <div className="quotation-box">
@@ -59,6 +61,7 @@ export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
                     </div>
                 </Col>
             </Row>
+            <hr className="my-4" />
             <VehicleInformations vehicle={vehicle} />
 
             <CtaBlock>

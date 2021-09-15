@@ -40,8 +40,6 @@ h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
         &.feature-target{background-image: url('img/icon_target.svg');}
         &.feature-cockade{background-image: url('img/icon_cockade.svg');}
         &.feature-bulb{background-image: url('img/icon_bulb.svg');}
-
-
     }
 }
 
@@ -117,17 +115,41 @@ h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
             font-size: 1.4rem;
         }
     }
-
- 
-
-    
-
 }
 
-.vehicle-informations{
+h2{
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.vehicle-informations,
+.information-box,
+.quotation-box{
     h2{
         @extend .text-primary;
-        font-size: 1.4rem;
-        font-weight: 700;
+    }
+}
+
+
+.motivation-title{
+    @extend .text-primary;
+}
+.toggle_show_dealers{
+    @extend .text-primary;
+    span{
+        text-decoration: underline;
+    }
+}
+
+.quotation-value{
+    font-weight: 700;
+    font-size: 2.8em;
+    color: $secondary;
+}
+
+
+.feature-group{
+    .feature{
+        color:$primary;
     }
 }

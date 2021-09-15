@@ -300,14 +300,14 @@ body{
             }
         }
 
-        @media all and (max-width: 720px) {
-            .container {
-                flex-direction: column;
-            }
-            .left-side {
-                flex-grow: 1;
-            }
-        }
+        // @media all and (max-width: 720px) {
+        //     .container {
+        //         flex-direction: column;
+        //     }
+        //     .left-side {
+        //         flex-grow: 1;
+        //     }
+        // }
     }
 
 
@@ -366,14 +366,14 @@ body{
             }
         }
 }
-
+label{
+    font-size: $font-size-base;
+    font-weight: 700;
+    color: $body-color;
+    transition: $input-transition;
+}
 .form-group{
-    label{
-        font-size: $font-size-base;
-        font-weight: 700;
-        color: $body-color;
-        transition: $input-transition;
-    }
+
 
     .text-danger {
         margin: 5px 0;
@@ -441,27 +441,45 @@ body{
         padding-top: 50px;
         flex: 1;
         text-align: center;
-        color:$primary
+        max-width: 170px;
+        margin: auto;
     }
-}
 
+}
+.feature-details{
+    text-align: center;
+    margin:.5em auto;
+    font-size: .8em;
+
+    max-width: 200px;
+
+}
 .quotation-box{
     padding: $halfGutter;
     background-color: $primaryOpacity;
-    .quotation-value{
-        font-weight: 700;
-        font-size: 2em;
-        color: $secondary;
-    }
+}
+
+.quotation-description{
+    max-width: 300px;
+    margin-left:auto;
+    margin-right:auto;
+    font-size: .8em;
 }
 
 
 .accordion-info{
+    font-size: .8em;
+    padding:1em 0;
     .accordion-info-title{
+        margin-bottom: 0em;
         color: $primary;
         .accordion-info-title-text{
             text-decoration: underline;
         }
+    }
+    .accordion-info-details{
+        margin-top: 1em;
+
     }
 }
 
@@ -544,16 +562,17 @@ body{
     padding:1em;
     margin:1em 0em;
     .motivation-title{
-        font-weight: bold;
-        font-size: 21px;
-        color:$primary;
-        margin-bottom: 1em;
+        @extend .text-primary;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
 .alert-covid{
     background-color: $dangerOpacity;
-    padding:1em;
+    padding:0 1em;
+    margin-bottom: 1em;
 }
 
 .appointment-resume{
@@ -576,4 +595,10 @@ body{
 
 .vehicle-informations{
     line-height: 1.75em;
+}
+
+.footnote{
+    font-size: .8em;
+    margin-top:2em;
+    color:$gray-700;
 }
