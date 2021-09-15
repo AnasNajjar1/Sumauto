@@ -41,76 +41,114 @@ export const Record: FunctionComponent = () => {
     const displaySellChoice = journeyType === 'quotation' && !skip;
 
     return (
-        <Container fluid>
-            {(displaySellChoice && (
-                <Loader status={status}>
-                    <h1>
-                        {t('appraisal_of')} {record.vehicle?.makeName} {record.vehicle?.modelName}
-                    </h1>
-                    <Row>
-                        <Col className="text-center">
-                            <Button target="_parent" href={privateSellLink} block color="primary">
-                                {t('place_an_ad')}
-                            </Button>
-                            <Picture background="chat" />
+        <div className="page page-record">
+            <Container fluid>
+                {(displaySellChoice && (
+                    <Loader status={status}>
+                        <h1 className="text-center">
+                            {t('appraisal_of')} {record.vehicle?.makeName}{' '}
+                            {record.vehicle?.modelName}
+                        </h1>
+                        <Row>
+                            <Col sm={6} className="text-center">
+                                <div className="background-private-sell">
+                                    <Button
+                                        target="_parent"
+                                        href={privateSellLink}
+                                        block
+                                        className="d-none d-sm-block"
+                                    >
+                                        {t('place_an_ad')}
+                                    </Button>
+                                    <Picture background="chat" />
 
-                            <h3 color="secondary">{t('private_sell')}</h3>
+                                    <h3 color="secondary">{t('private_sell')}</h3>
 
-                            <div className="display-3 text-secondary">
-                                {TextUtils.formatPrice(locale, currency, record.valuation?.value)}
-                            </div>
+                                    <div className="valuation valuation-private">
+                                        {TextUtils.formatPrice(
+                                            locale,
+                                            currency,
+                                            record.valuation?.value,
+                                        )}
+                                    </div>
 
-                            {t('private_sell_description')}
+                                    <div
+                                        className="text-left"
+                                        dangerouslySetInnerHTML={{
+                                            __html: t('private_sell_description_html') || '',
+                                        }}
+                                    />
 
-                            <Button target="_parent" href={privateSellLink} block color="primary">
-                                {t('place_an_ad')}
-                            </Button>
-                        </Col>
-                        <Col className="text-center">
-                            <Button block color="primary" onClick={() => setSkip(true)}>
-                                {t('book_an_appointment')}
-                            </Button>
-                            <Picture background="meeting" />
-                            <h3 color="secondary">{t('direct_sell')}</h3>
+                                    <Button target="_parent" href={privateSellLink} block>
+                                        {t('place_an_ad')}
+                                    </Button>
+                                </div>
+                            </Col>
+                            <Col sm={6} className="text-center">
+                                <div className="background-direct-sell">
+                                    <Button
+                                        block
+                                        className="d-none d-sm-block"
+                                        onClick={() => setSkip(true)}
+                                    >
+                                        {t('book_an_appointment')}
+                                    </Button>
+                                    <Picture background="meeting" />
+                                    <h3>{t('direct_sell')}</h3>
 
-                            <div className="display-3 text-primary">
-                                {TextUtils.formatPrice(locale, currency, record.valuation?.value)}
-                            </div>
+                                    <div className="valuation valuation-direct">
+                                        {TextUtils.formatPrice(
+                                            locale,
+                                            currency,
+                                            record.valuation?.value,
+                                        )}
+                                    </div>
 
-                            {t('direct_sell_description')}
+                                    <div
+                                        className="text-left"
+                                        dangerouslySetInnerHTML={{
+                                            __html: t('direct_sell_description_html') || '',
+                                        }}
+                                    />
 
-                            <Button block color="primary" onClick={() => setSkip(true)}>
-                                {t('book_an_appointment')}
-                            </Button>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <h2>{t('appointment_explanation_title')}</h2>
-                            <p>{t('appointment_explanation_description')}</p>
+                                    <Button block onClick={() => setSkip(true)}>
+                                        {t('book_an_appointment')}
+                                    </Button>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <h2>{t('appointment_explanation_title')}</h2>
+                                <p>{t('appointment_explanation_description')}</p>
 
-                            <VehicleInformations vehicle={record?.vehicle} />
-
-                            <FeatureGroup>
-                                <Feature label="Result with precision" icon="target" />
-                                <Feature label="more_than_10_years_of_experience" icon="cockade" />
-                                <Feature label="advanced_technology" icon="bulb" />
-                            </FeatureGroup>
-                        </Col>
-                    </Row>
-                </Loader>
-            )) || (
-                <>
-                    {record?.valuation && (
-                        <Loader status={status}>
-                            <Valuation {...record} />
-                        </Loader>
-                    )}
-                    {canMakeAnAppointment && record.customer.zipCode && (
-                        <Appointment recordId={recordId} zipCode={record.customer.zipCode} />
-                    )}
-                </>
-            )}
-        </Container>
+                                <div className="vehicle-informations-container mb-4">
+                                    <VehicleInformations vehicle={record?.vehicle} />
+                                </div>
+                                <FeatureGroup>
+                                    <Feature label="result_with_precision" icon="target" />
+                                    <Feature
+                                        label="more_than_10_years_of_experience"
+                                        icon="cockade"
+                                    />
+                                    <Feature label="advanced_technology" icon="bulb" />
+                                </FeatureGroup>
+                            </Col>
+                        </Row>
+                    </Loader>
+                )) || (
+                    <>
+                        {record?.valuation && (
+                            <Loader status={status}>
+                                <Valuation {...record} />
+                            </Loader>
+                        )}
+                        {canMakeAnAppointment && record.customer.zipCode && (
+                            <Appointment recordId={recordId} zipCode={record.customer.zipCode} />
+                        )}
+                    </>
+                )}
+            </Container>
+        </div>
     );
 };

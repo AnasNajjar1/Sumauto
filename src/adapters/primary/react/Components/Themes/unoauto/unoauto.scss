@@ -46,6 +46,16 @@ h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
     }
 }
 
+.btn{
+
+	&.refresh-valuation{
+        @extend .btn-secondary;
+    }
+    
+	&.modify-valuation{
+        @extend .btn-primary;
+	}
+}
 
 
 .picture{
@@ -98,24 +108,53 @@ h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
     }
 }
 
-
+.page-quotation,
+.page-record,
 .page-unsubscribe{
-    h1{
-        @extend .text-primary;
-    }
-}
-
-.page-unsubscribe{
-    h1{
-        @extend .text-primary;
-    }
-}
-
-.page-quotation{
     h1{
         @extend .text-primary;
         @include media-breakpoint-down(sm) {
             font-size: 1.4rem;
+        }
+    }
+}
+.page-quotation{
+    h2{
+        @extend .text-primary;
+    }
+}
+
+.page-record{
+    h2{
+        @extend .text-primary;
+    }
+    h3{
+        font-size: 1.4rem; font-weight: 700;
+    }
+    .vehicle-informations-container{
+        background-color: $gray-200;
+        padding: 1em;
+    }
+
+    .valuation.valuation-private{
+        @extend .text-secondary;
+    }
+
+    .valuation.valuation-direct{
+        @extend .text-primary;
+    }
+
+    .background-private-sell{
+        background-color: $primaryOpacity;
+        .btn{
+            @extend .btn-primary;
+        }
+    }
+
+    .background-direct-sell{
+        background-color: $gray-200;
+        .btn{
+            @extend .btn-secondary;
         }
     }
 }

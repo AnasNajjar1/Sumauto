@@ -62,6 +62,8 @@ export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
                 </Col>
             </Row>
             <hr className="my-4" />
+
+            <h2>{t('your_car')}</h2>
             <VehicleInformations vehicle={vehicle} />
 
             <CtaBlock>

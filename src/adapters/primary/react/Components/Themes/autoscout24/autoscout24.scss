@@ -136,3 +136,26 @@ h2{
     font-weight: 700;
     font-size: 2.8em;
 }
+
+.page-record{
+
+    h3{
+        font-size: 1.4rem; font-weight: 700;
+    }
+
+    .vehicle-informations-container{
+        background-color: $gray-200;
+        padding: 1em;
+    }
+    .background-direct-sell,
+    .background-private-sell{
+        border: 1px solid #333333;
+        border-radius: 4px;
+        opacity: 1;
+    }
+
+    .btn{
+        @extend .btn-primary;
+    }
+
+}

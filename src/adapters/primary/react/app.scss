@@ -248,73 +248,87 @@ body{
 
 .page{
     padding-top: 30px;
+}
 
+.page-confirmation{
+    h1{
+        @extend .text-primary;
+        margin: 40px 0 60px 0;
+    }
+    .left-side {
+        flex-grow: 2;
 
-    &.page-confirmation{
-        h1{
+        h2{
             @extend .text-primary;
-            margin: 40px 0 60px 0;
+            font-size: 20px;
+            margin-bottom: 0;
         }
-        .left-side {
-            flex-grow: 2;
 
-            h2{
-                @extend .text-primary;
-                font-size: 20px;
-                margin-bottom: 0;
-            }
-
-            .location {
-                font-size: 13px;
-
-                b {
-                    padding: 0 15px;
-                    margin: 10px 0;
-                }
-            }
-
-            .button-row {
-                margin-top: 20px;
-                padding: 0 15px;
-
-                .button-col {
-                    padding: 0;
-                    width: 45%;
-                    flex-grow: unset;
-                    margin-right: 20px;
-                }
-            }
-        }
-        
-        .right-side {
+        .location {
             font-size: 13px;
-            width: 30%;
-            flex-grow: 1;
 
-            h2 {
-                font-size: 13px;
-            }
-
-            hr {
-                border-color: #00000000
+            b {
+                padding: 0 15px;
+                margin: 10px 0;
             }
         }
 
-        // @media all and (max-width: 720px) {
-        //     .container {
-        //         flex-direction: column;
-        //     }
-        //     .left-side {
-        //         flex-grow: 1;
-        //     }
-        // }
+        .button-row {
+            margin-top: 20px;
+            padding: 0 15px;
+
+            .button-col {
+                padding: 0;
+                width: 45%;
+                flex-grow: unset;
+                margin-right: 20px;
+            }
+        }
+    }
+    
+    .right-side {
+        font-size: 13px;
+        width: 30%;
+        flex-grow: 1;
+
+        h2 {
+            font-size: 13px;
+        }
+
+        hr {
+            border-color: #00000000
+        }
     }
 
 
 }
 
-.page-error {
+.page-record{
+    .valuation{
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
 
+    .picture{
+        margin: 2em 0 !important;
+    }
+
+    .btn{
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 400px;
+    }
+
+    .background-private-sell,
+    .background-direct-sell{
+        padding: $grid-gutter-width;
+        margin-bottom: $grid-gutter-width;
+    }
+    
+}
+
+.page-error {
     .cta-block button{
         width: 400px;
     }
@@ -465,6 +479,7 @@ label{
     margin-right:auto;
     font-size: .8em;
 }
+
 
 
 .accordion-info{

@@ -26,12 +26,6 @@ export const VehicleInformations: React.FC<TVehicleProps> = ({ vehicle }: TVehic
     return (
         <div className="vehicle-informations">
             <Row>
-                <Col>
-                    <h2>{t('your_car')}</h2>
-                </Col>
-            </Row>
-
-            <Row>
                 <Col xs={12} sm={6}>
                     <VehiclePropLine label="make" value={vehicle.makeName} />
                     <VehiclePropLine label="model" value={vehicle.modelName} />
