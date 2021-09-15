@@ -23,6 +23,9 @@ $primary: #2F5DC4 ;
 $secondary: #E65508 ;
 $btn-border-radius: 2px;
 $btn-font-weight:700;
+$input-border-radius: 10px;
+$hr-border-color: #C3C9CD;
+
 
 
 $font-family-base:"Lato";
@@ -123,13 +126,17 @@ h2{
 }
 
 .vehicle-informations,
-.information-box,
-.quotation-box{
+.information-box{
     h2{
         @extend .text-primary;
     }
 }
-
+.quotation-box{
+    background-color: $primaryOpacity;
+    h2{
+        @extend .text-primary;
+    }
+}
 
 .motivation-title{
     @extend .text-primary;
@@ -152,4 +159,8 @@ h2{
     .feature{
         color:$primary;
     }
+}
+
+.unsubscribe-return{
+	background-color:#E6F0FF;
 }

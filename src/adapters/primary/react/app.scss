@@ -10,7 +10,7 @@ $danger: #CB0C16;
 $input-box-shadow: none;   
 $input-focus-width: 0;
 $input-btn-focus-width:  0;
-$hr-border-color: #C3C9CD;
+
 
 
 
@@ -20,7 +20,7 @@ $primaryOpacity : rgba($primary, .1);
 $dangerOpacity : rgba($danger, .1);
 $halfGutter : $grid-gutter-width / 2;
 
-$input-border-radius: 0;
+
 
 $input-active-border-color:#333333;
 $input-inactive-border-color: #3333338c;
@@ -84,7 +84,7 @@ body{
 
 .encouragement{
     margin-top: $halfGutter;
-    background-color: $primaryOpacity;
+    //background-color: $primaryOpacity;
     color: $primary;
     padding:$halfGutter;
     font-size: .9em;
@@ -189,7 +189,7 @@ body{
         width: 30px;
         display: flex;
         justify-content: center;
-        font-size: 24px;
+        font-size: 14px;
         .fa-check{
             width: 16px;
             @extend .text-success;
@@ -226,7 +226,7 @@ body{
         }
         &.selected{
             border-color: $primary;
-            background-color: $primaryOpacity;
+            //background-color: $primaryOpacity;
         }
     }
 
@@ -339,7 +339,7 @@ body{
 
     .unsubscribe-return{
         @extend .p-3;
-        background-color: $primaryOpacity;
+        //background-color: $primaryOpacity;
         max-width: 600px;
         font-size: 13px;
         &.valid{
@@ -456,7 +456,7 @@ label{
 }
 .quotation-box{
     padding: $halfGutter;
-    background-color: $primaryOpacity;
+    //background-color: $primaryOpacity;
 }
 
 .quotation-description{
@@ -601,4 +601,8 @@ label{
     font-size: .8em;
     margin-top:2em;
     color:$gray-700;
+}
+
+.stick-background{
+    margin-top: -3px;
 }

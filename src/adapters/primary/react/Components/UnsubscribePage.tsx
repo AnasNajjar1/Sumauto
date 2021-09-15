@@ -105,7 +105,7 @@ export const UnsubscribePage: FunctionComponent = () => {
                             <InputValidation valid={emailValid} />
                         </InputWithValidation>
                         {touched && !emailValid && (
-                            <p className="text-danger">{t('wrong_email')}</p>
+                            <p className="text-danger small">{t('wrong_email')}</p>
                         )}
                     </FormGroup>
                     <FormGroup>
@@ -131,7 +131,7 @@ export const UnsubscribePage: FunctionComponent = () => {
                             <InputValidation valid={phoneValid} />
                         </InputWithValidation>
                         {touched && !phoneValid && (
-                            <p className="text-danger">{t('wrong_phone')}</p>
+                            <p className="text-danger small">{t('wrong_phone')}</p>
                         )}
                     </FormGroup>
                 </div>

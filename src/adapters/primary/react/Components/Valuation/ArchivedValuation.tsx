@@ -24,12 +24,12 @@ export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
                         {t('your_file_number')}: <strong>{id}</strong>
                     </p>
                 </Col>
-                <Col>
+                <Col className="d-none d-sm-block">
                     <Picture background="archive" />
                 </Col>
             </Row>
 
-            <hr />
+            <hr className="stick-background" />
             <Row>
                 <Col>
                     <div className="information-box">
@@ -67,12 +67,12 @@ export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
             <CtaBlock>
                 <Row>
                     <Col>
-                        <Button block color="secondary">
+                        <Button block className="refresh-valuation">
                             {t('refresh_valuation')}
                         </Button>
                     </Col>
                     <Col>
-                        <Button block color="primary">
+                        <Button block className="modify-valuation">
                             {t('modify_valuation')}
                         </Button>
                     </Col>
