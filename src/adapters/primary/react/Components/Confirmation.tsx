@@ -24,6 +24,7 @@ import { FeatureGroup } from './FeatureGroup';
 import { Feature } from './Feature';
 import { AppointmentResume } from './AppointmentResume';
 import { cancelAppointmentUseCase } from '../../../../hexagon/usecases/cancelAppoitment/cancelAppointment.useCase';
+import { Picture } from './Picture';
 
 export const Confirmation = () => {
     const dispatch = useDispatch();
@@ -46,74 +47,75 @@ export const Confirmation = () => {
     return (
         <div className="page page-confirmation">
             <Container fluid>
-                <div className="d-flex ">
-                    <div className="w-100">
-                        <h1 className="text-center">{t('confirmation_title')}</h1>
-                    </div>
-                    <div
-                        className="align-self-start text-nowrap print-button"
-                        role="button"
-                        aria-hidden="true"
-                        onClick={handlePrint}
-                    >
-                        <span className="px-2">{t('print')}</span>
-                        <FontAwesomeIcon icon={faPrint} />
-                    </div>
+                <div
+                    className="text-right text-nowrap print-button"
+                    role="button"
+                    aria-hidden="true"
+                    onClick={handlePrint}
+                >
+                    <span className="px-2 small">{t('print')}</span>
+                    <Picture background="icon-print" />
                 </div>
+
+                <h1 className="mb-4">{t('confirmation_title')}</h1>
                 {record.appointment && (
                     <>
-                        <Row className="container">
-                            <Col className="left-side">
+                        <Row>
+                            <Col md={6}>
                                 <AppointmentResume
                                     date={record.appointment.dateHour}
                                     placeName={record.appointment.place.name}
                                 />
-                                <Row className="location">
-                                    <Col>
+
+                                <Row>
+                                    <Col sm={6} md={12} lg={6}>
                                         <h2>{t('your_point_of_sale')}</h2>
-                                        <Row>
-                                            <b>{record.appointment.place.name}</b>
-                                        </Row>
+
+                                        <p>
+                                            <strong>{record.appointment.place.name}</strong>
+                                        </p>
                                         <p>
                                             {record.appointment.place.address}
                                             <br />
                                             {record.appointment.place.zipCode}{' '}
                                             {record.appointment.place.city}
                                             <br />
-                                            Tel.{' '}
+                                            {t('phone_short')}{' '}
                                             <a href="tel:{record.appointment.place.phone}">
                                                 {record.appointment.place.phone}
                                             </a>
                                         </p>
                                     </Col>
-                                    <Col>
+                                    <Col sm={6} md={12} lg={6}>
                                         <Map coordinates={record.appointment.place.position} />
                                     </Col>
                                 </Row>
-                                <Row className="button-row">
-                                    <Col className="button-col">
-                                        <Button block color="primary">
+                                <Row>
+                                    <Col sm={6} xl={5}>
+                                        <Button block className="postpone-appointment mb-2">
                                             {t('postpone_appointment')}
                                         </Button>
                                     </Col>
-                                    <Col className="button-col">
-                                        <Button block color="secondary" onClick={toggleModalCancel}>
+                                    <Col sm={6} xl={5}>
+                                        <Button
+                                            block
+                                            className="cancel-appointment mb-2"
+                                            onClick={toggleModalCancel}
+                                        >
                                             {t('cancel_appointment')}
                                         </Button>
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col className="right-side">
-                                <h2>{t('documents_title')}</h2>
+                            <Col md={6}>
+                                <h3>{t('documents_title')}</h3>
                                 <div
                                     dangerouslySetInnerHTML={{
                                         __html: t('documents_text_html') || '',
                                     }}
                                 />
-
                                 <hr />
-                                <h2>{t('other_informations_title')}</h2>
-
+                                <h3>{t('other_informations_title')}</h3>
                                 <div
                                     dangerouslySetInnerHTML={{
                                         __html: t('other_informations_text_html') || '',
@@ -121,14 +123,15 @@ export const Confirmation = () => {
                                 />
                             </Col>
                         </Row>
+
                         <Modal isOpen={modalCancel} toggle={toggleModalCancel} centered>
                             <ModalHeader toggle={toggleModalCancel}>
-                                {t('cancel_appointment.title')}
+                                {t('cancel_appointment_title')}
                             </ModalHeader>
-                            <ModalBody>{t('cancel_appointment.description')}</ModalBody>
+                            <ModalBody>{t('cancel_appointment_description')}</ModalBody>
                             <ModalFooter className="justify-content-center">
-                                <Button color="primary" onClick={() => handleSubmitForm()}>
-                                    {t('cancel_appointment.cta')}
+                                <Button block onClick={() => handleSubmitForm()}>
+                                    {t('cancel_appointment_cta')}
                                 </Button>
                             </ModalFooter>
                         </Modal>

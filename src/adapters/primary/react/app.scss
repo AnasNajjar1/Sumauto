@@ -11,16 +11,11 @@ $input-box-shadow: none;
 $input-focus-width: 0;
 $input-btn-focus-width:  0;
 
-
-
-
 @import '~bootstrap/scss/bootstrap';
 
 $primaryOpacity : rgba($primary, .1);
 $dangerOpacity : rgba($danger, .1);
 $halfGutter : $grid-gutter-width / 2;
-
-
 
 $input-active-border-color:#333333;
 $input-inactive-border-color: #3333338c;
@@ -35,19 +30,12 @@ $input-active-bg: #ffffff;
 $input-inactive-bg: #ffffff;
 $input-error-bg: #ffdddd;
 
-
-
 $input-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
-
 
 body{
     padding-bottom: $halfGutter;
     min-width: 320px;
 }
-
-
-
-
 
 @include media-breakpoint-down(xs) {
     .label-year{
@@ -84,11 +72,9 @@ body{
 
 .encouragement{
     margin-top: $halfGutter;
-    //background-color: $primaryOpacity;
     color: $primary;
     padding:$halfGutter;
     font-size: .9em;
-
     @include media-breakpoint-up(sm) {
         margin-top: 0;
         position:absolute;
@@ -165,7 +151,6 @@ body{
     }
 
     @include media-breakpoint-up(sm) {
-
         &.question-year{
             .form-text{
                 width: 200%;
@@ -174,9 +159,6 @@ body{
             }
         }
     }
-
-
-
 }
 
 .input-with-validation{
@@ -226,7 +208,6 @@ body{
         }
         &.selected{
             border-color: $primary;
-            //background-color: $primaryOpacity;
         }
     }
 
@@ -239,68 +220,51 @@ body{
 
 
 .google-map{
-    margin-left: auto;
-    max-width: 300px;
-    height: 200px;
+    width: 100%;
+    border: 1px solid $gray-500;
+    height: 175px;
+    margin-bottom: 1em;
 }
 
+ul,ol{
+    li{
+        padding-bottom:.5em;
+    }
+}
+
+
+
+ol {
+    list-style: none;
+    counter-reset: bold-counter;
+    li {
+        counter-increment: bold-counter;
+    }
+    li::before {
+        content: counter(bold-counter) ". ";
+        font-weight: 700;
+    }
+}
 
 
 .page{
-    padding-top: 30px;
+    padding: $grid-gutter-width 0;
 }
 
 .page-confirmation{
+
+    padding-top: 15px;
+
     h1{
-        @extend .text-primary;
-        margin: 40px 0 60px 0;
-    }
-    .left-side {
-        flex-grow: 2;
-
-        h2{
-            @extend .text-primary;
-            font-size: 20px;
-            margin-bottom: 0;
-        }
-
-        .location {
-            font-size: 13px;
-
-            b {
-                padding: 0 15px;
-                margin: 10px 0;
-            }
-        }
-
-        .button-row {
-            margin-top: 20px;
-            padding: 0 15px;
-
-            .button-col {
-                padding: 0;
-                width: 45%;
-                flex-grow: unset;
-                margin-right: 20px;
-            }
+        text-align: center;
+        @include media-breakpoint-down(sm) {
+            text-align: left;
         }
     }
-    
-    .right-side {
-        font-size: 13px;
-        width: 30%;
-        flex-grow: 1;
-
-        h2 {
-            font-size: 13px;
-        }
-
-        hr {
-            border-color: #00000000
-        }
+    h3{
+        font-size: 1rem;
+        font-weight: 700;
     }
-
-
 }
 
 .page-record{
@@ -346,14 +310,12 @@ body{
 
 .page-unsubscribe{
 
-
     .form-unsubscribe{
         max-width: 400px;
     }
 
     .unsubscribe-return{
         @extend .p-3;
-        //background-color: $primaryOpacity;
         max-width: 600px;
         font-size: 13px;
         &.valid{
@@ -376,7 +338,6 @@ body{
             @include media-breakpoint-up(sm) {
                     max-width: 400px;
                 }
-                
             }
         }
 }
@@ -387,7 +348,6 @@ label{
     transition: $input-transition;
 }
 .form-group{
-
 
     .text-danger {
         margin: 5px 0;
@@ -458,19 +418,16 @@ label{
         max-width: 170px;
         margin: auto;
     }
-
 }
+
 .feature-details{
     text-align: center;
     margin:.5em auto;
     font-size: .8em;
-
     max-width: 200px;
-
 }
 .quotation-box{
     padding: $halfGutter;
-    //background-color: $primaryOpacity;
 }
 
 .quotation-description{
@@ -479,8 +436,6 @@ label{
     margin-right:auto;
     font-size: .8em;
 }
-
-
 
 .accordion-info{
     font-size: .8em;
@@ -494,17 +449,12 @@ label{
     }
     .accordion-info-details{
         margin-top: 1em;
-
     }
 }
-
-
 
 .progress-bar-section {
     position: sticky;
 }
-
-
 
 .progress-steps{
     margin: $grid-gutter-width 0 $grid-gutter-width*2 0 ;
@@ -591,22 +541,18 @@ label{
 }
 
 .appointment-resume{
-    background-color: $primaryOpacity;
     padding: $halfGutter;
     display: flex;
     margin-bottom: $halfGutter;
     .appointment-resume-text{
         padding-left:$halfGutter;
-
         p {
-            @extend .text-primary;
             margin: 0;
             font-size: 13px;
             font-weight: normal;
         }
     }
 }
-
 
 .vehicle-informations{
     line-height: 1.75em;
@@ -620,4 +566,27 @@ label{
 
 .stick-background{
     margin-top: -3px;
+}
+
+
+.modal{
+    .modal-header button.close{
+        padding: 0;
+        margin: -8px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        opacity: 1;
+        font-family: arial;
+        span{
+            font-size: 18px;
+            line-height: 20px;
+            display: block;
+        }
+    }
+    .btn{
+        display: block;
+        width: 100%;
+        max-width: 260px;
+    }
 }

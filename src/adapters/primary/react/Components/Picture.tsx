@@ -5,6 +5,7 @@ type TBackground =
     | 'archive'
     | 'calendar'
     | 'icon-calendar'
+    | 'icon-print'
     | 'steps'
     | 'chat'
     | 'meeting';
