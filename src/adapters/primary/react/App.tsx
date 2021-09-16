@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, useParams, useHistory } from 'react-route
 import { useDispatch } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
 import { iframeResizer } from 'iframe-resizer';
+import { Spinner } from 'reactstrap';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
@@ -31,7 +32,13 @@ const App: FunctionComponent = () => {
 
     return (
         <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
-            <React.Suspense fallback={<></>}>
+            <React.Suspense
+                fallback={
+                    <div className="loading-page">
+                        <Spinner type="grow" color="primary" />
+                    </div>
+                }
+            >
                 {themeSelector(clientSlug)}
                 <BrowserRouter basename={`/${clientSlug}/${journeyType}`}>
                     <div className={`app-${clientSlug}`}>

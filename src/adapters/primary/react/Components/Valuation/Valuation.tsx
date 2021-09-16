@@ -8,7 +8,7 @@ import { NoValuation } from './NoValuation';
 export const Valuation: FunctionComponent<TRecord> = (props) => {
     const { valuation } = props;
     return (
-        <div className="page page-quotation">
+        <div className="section section-quotation">
             <Container fluid>
                 {valuation.status && (
                     <>
