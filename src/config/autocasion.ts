@@ -3,7 +3,7 @@ import { TClientConfig } from '../hexagon/interfaces';
 const config: TClientConfig = {
     locale: 'es-ES',
     currency: 'EUR',
-    identifier: 'autocasion1234',
+    identifier: 'autocasion',
     privateSellLink: 'https://www.autocasion.com/',
     displayRegistrationOption: true,
     registrationRegex:

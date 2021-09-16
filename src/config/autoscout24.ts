@@ -3,7 +3,7 @@ import { TClientConfig } from '../hexagon/interfaces';
 const config: TClientConfig = {
     locale: 'es-ES',
     currency: 'EUR',
-    identifier: 'autoscout1234',
+    identifier: 'autoscout24',
     privateSellLink: 'https://www.autoscout24.es/',
     displayRegistrationOption: true,
     registrationRegex:

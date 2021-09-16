@@ -8,62 +8,19 @@ import { ReferentialItem, CarDetails, VehicleFilters, Makes } from '../../../../
 
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { CarDetailsMapper } from './mappers/carDetails.mapper';
+import { MakesMapper } from './mappers/makes.mapper';
 
-const API_URL_PREFIX = 'https://apiv2.autobiz.com/referential/v1';
+const API_URL_PREFIX = 'https://api-c2b.autobiz.com/v1';
 export class HttpReferentialGateway extends BaseApi implements ReferentialGateway {
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {
         try {
-            const response = await this.get(`${API_URL_PREFIX}/makes`);
-
-            const faked = {
-                preferred: [
-                    {
-                        id: 92,
-                        name: 'VOLKSWAGEN',
-                    },
-                    {
-                        id: 76,
-                        name: 'MERCEDES',
-                    },
-                    {
-                        id: 57,
-                        name: 'BMW',
-                    },
-                    {
-                        id: 55,
-                        name: 'AUDI',
-                    },
-                    {
-                        id: 84,
-                        name: 'RENAULT',
-                    },
-                    {
-                        id: 82,
-                        name: 'PEUGEOT',
-                    },
-                    {
-                        id: 86,
-                        name: 'SEAT',
-                    },
-                    {
-                        id: 59,
-                        name: 'CITROEN',
-                    },
-                    {
-                        id: 64,
-                        name: 'FORD',
-                    },
-                    {
-                        id: 81,
-                        name: 'OPEL',
-                    },
-                ],
-                others: response.data,
-            };
-
-            return right(faked);
+            const response = await this.get(
+                `${API_URL_PREFIX}/referentials/makes?identifier=${identifier}`,
+            );
+            // return right(response.data);
+            return right(MakesMapper.toDto(response.data));
         } catch (error) {
-            return left(error);
+            return left(error as string);
         }
     }
 
@@ -126,7 +83,7 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
             const data = Array.isArray(response.data) ? response.data : [response.data];
             return right(data);
         } catch (error) {
-            return left(error);
+            return left(error as string);
         }
     }
 
@@ -138,7 +95,7 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
 
             return right(CarDetailsMapper.toDto(response.data));
         } catch (error) {
-            return left(error);
+            return left(error as string);
         }
     }
 

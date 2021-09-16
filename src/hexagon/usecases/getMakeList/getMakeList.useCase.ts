@@ -16,7 +16,7 @@ export const getMakeListUseCase =
         const result = await referentialGateway.requestAllMakes(config.identifier);
 
         if (isRight(result)) {
-            dispatch(actionCreators.Actions.makeListRetrieved(result.right.others));
+            dispatch(actionCreators.Actions.makeListRetrieved(result.right.all));
             dispatch(actionCreators.Actions.makeListSetPreferred(result.right.preferred));
         } else {
             dispatch(actionCreators.Actions.makeListFailed());

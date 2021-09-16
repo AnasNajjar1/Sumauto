@@ -11,6 +11,7 @@ export interface Make {
 export interface Makes {
     preferred: Make[];
     others: Make[];
+    all: Make[];
 }
 
 export type Dealer = {

@@ -14,6 +14,7 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
 
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {
         try {
+            console.log(this.inMemoryReferential.makes);
             return right(this.inMemoryReferential.makes);
         } catch (error) {
             return left(error as string);

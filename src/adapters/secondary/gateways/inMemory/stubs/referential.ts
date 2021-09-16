@@ -23,6 +23,12 @@ export const inMemoryReferential: InMemoryReferential = {
         ],
         others: [
             {
+                id: 84,
+                name: 'RENAULT',
+            },
+        ],
+        all: [
+            {
                 id: 82,
                 name: 'PEUGEOT',
             },

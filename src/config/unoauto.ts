@@ -3,7 +3,7 @@ import { TClientConfig } from '../hexagon/interfaces';
 const config: TClientConfig = {
     locale: 'fr-FR',
     currency: 'EUR',
-    identifier: 'unoauto1234',
+    identifier: 'unoauto',
     privateSellLink: 'https://www.unoauto.com/',
     displayRegistrationOption: true,
     registrationRegex:
