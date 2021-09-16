@@ -259,3 +259,42 @@ h2{
         @extend .btn-primary;
     }
 }
+
+.progress-steps{
+    .progress-step-content{
+        .step{
+            .label{
+                font-weight: 400;
+                color: $gray-300;
+                &.completed{
+                    font-weight: 700;
+                    color: $primary;
+                }
+                &.active{
+                    font-weight: 400;
+                    color: $primary;
+                }
+            }
+            .number{
+                border:1px solid $gray-300;
+                color:$gray-300;
+                background-color:white;
+                line-height: 20px;
+                font-weight: 700;
+                &.completed{
+                    color: white;
+                    border:1px solid $primary;
+                    background-color:$primary;
+                }
+                &.active{
+                    border:1px solid $primary;
+                    background-color:white;
+                    color:$primary;
+                }
+            }
+        }
+    }
+    .progress{ 
+        background-color: $gray-300;
+    }
+}

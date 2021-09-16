@@ -37,7 +37,7 @@ export const ActiveValuation: FunctionComponent<TRecord> = (props) => {
 
                 <div className="motivation">
                     <h2 className="motivation-title">{t('motivation_to_continue')}</h2>
-                    <ProgressSteps withLabels={false} currentStep={4} progress={75} />
+                    <ProgressSteps withLabels={false} progress={75} />
                     <Button color="primary">{t('book_an_appointment_for_free')}</Button>
                 </div>
             </div>

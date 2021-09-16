@@ -55,7 +55,7 @@ export const FormVehicle: FunctionComponent = () => {
         <Container fluid>
             <Row className="progress-bar-section">
                 <Col sm={9}>
-                    <ProgressSteps currentStep={1} progress={vehicleProgress()} withLabels />
+                    <ProgressSteps progress={vehicleProgress()} withLabels />
                 </Col>
                 <Col sm={3}>
                     <Picture background="steps" />
