@@ -17,7 +17,6 @@ type ReferentialInputProps = {
     list: any;
     value: string;
     error: any;
-    required: boolean;
     encouragement?: {
         title: string;
         body: string;

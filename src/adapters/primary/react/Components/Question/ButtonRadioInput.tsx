@@ -19,17 +19,10 @@ type ButtonRadioInputProps = {
         placeholder?: string;
         help?: string;
     };
-    grid?: {
-        xs?: number;
-        sm?: number;
-        md?: number;
-        lg?: number;
-    };
     id: ReferentialItem;
     data: Data[];
     value: string;
     error: any;
-    required: boolean;
     encouragement?: {
         title: string;
         body: string;

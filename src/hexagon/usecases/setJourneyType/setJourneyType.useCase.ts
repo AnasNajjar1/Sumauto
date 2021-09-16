@@ -1,5 +1,5 @@
 import { ThunkResult } from '../../../redux/configureStore';
-import { TClient, TJourney } from '../../interfaces';
+import { TJourney } from '../../interfaces';
 import * as actionCreators from './actionCreators';
 import { ClientConfigGateway } from '../../gateways/clientConfigGateway.interface';
 
