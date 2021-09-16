@@ -44,8 +44,8 @@ export type VehicleFilters = {
     mode?: 'full' | 'long' | 'short';
     makeId?: number;
     modelId?: number;
-    month?: number;
-    year?: number;
+    monthId?: number;
+    yearId?: number;
     fuelId?: number;
     bodyId?: number;
     gearId?: number;

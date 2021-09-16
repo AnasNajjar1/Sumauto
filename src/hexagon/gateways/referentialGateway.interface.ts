@@ -13,5 +13,8 @@ export interface ReferentialGateway {
         filters?: VehicleFilters,
     ): Promise<ApiResponse<VehicleElement[]>>;
 
-    requestCartDetailsByRegsitration(registration: string): Promise<ApiResponse<CarDetails>>;
+    requestCartDetailsByRegsitration(
+        identifier: string,
+        registration: string,
+    ): Promise<ApiResponse<CarDetails>>;
 }

@@ -14,8 +14,12 @@ export const getCarDetailsByRegistrationUseCase =
         { referentialGateway }: { referentialGateway: ReferentialGateway },
     ) => {
         dispatch(actionCreators.Actions.carDetailsLoading());
+        const { identifier } = getState().client.config;
 
-        const result = await referentialGateway.requestCartDetailsByRegsitration(registration);
+        const result = await referentialGateway.requestCartDetailsByRegsitration(
+            identifier,
+            registration,
+        );
 
         if (isRight(result)) {
             const {

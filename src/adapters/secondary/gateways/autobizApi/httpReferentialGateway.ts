@@ -35,50 +35,48 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
 
             switch (scope) {
                 case 'make':
-                    url += `/referentials/makes`;
+                    url += `/referentials/makes?identifier=${identifier}`;
                     break;
 
                 case 'model':
-                    url += `/referentials/make/${filters.makeId}/models`;
+                    url += `/referentials/make/${filters.makeId}/models?identifier=${identifier}`;
                     break;
 
                 case 'version':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/versions${queryString}`;
-                    break;
-
-                case 'year':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/years${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/versions${queryString}&identifier=${identifier}`;
                     break;
 
                 case 'month':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/months${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/months${queryString}&identifier=${identifier}`;
+                    break;
+
+                case 'year':
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/years${queryString}&identifier=${identifier}`;
                     break;
 
                 case 'fuel':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/fuels${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/fuels${queryString}&identifier=${identifier}`;
                     break;
 
                 case 'body':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/bodies${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/bodies${queryString}&identifier=${identifier}`;
                     break;
 
                 case 'door':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/doors${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/doors${queryString}&identifier=${identifier}`;
                     break;
 
                 case 'gear':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/gears${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/gears${queryString}&identifier=${identifier}`;
                     break;
 
                 case 'engine':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/engines${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/engines${queryString}&identifier=${identifier}`;
                     break;
 
                 default:
                     break;
             }
-
-            url += `?identifier=${identifier}`;
 
             const response = await this.get(url);
             const data = Array.isArray(response.data) ? response.data : [response.data];
@@ -88,10 +86,13 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
         }
     }
 
-    async requestCartDetailsByRegsitration(registration: string): Promise<ApiResponse<CarDetails>> {
+    async requestCartDetailsByRegsitration(
+        identifier: string,
+        registration: string,
+    ): Promise<ApiResponse<CarDetails>> {
         try {
             const response = await this.get(
-                `${API_URL_PREFIX}/car-details/registration/${registration}/fr`,
+                `${API_URL_PREFIX}/referentials/car-details/${registration}?identifier=${identifier}`,
             );
 
             return right(CarDetailsMapper.toDto(response.data));
@@ -106,7 +107,8 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
         const separator = format === '&' ? '=' : '/';
         for (const d in data) {
             if (data[d]) {
-                ret.push(encodeURIComponent(d) + separator + encodeURIComponent(data[d]));
+                if (d !== 'makeId' && d !== 'modelId')
+                    ret.push(encodeURIComponent(d) + separator + encodeURIComponent(data[d]));
             }
         }
         const prefix = format === '&' ? '?' : '';

@@ -5,16 +5,16 @@ import { CarDetails } from '../../../../../hexagon/interfaces';
 export class CarDetailsMapper implements Mapper<CarDetails> {
     static toDto(carDetailsDto: CarDetailsDto): CarDetails {
         return {
-            status: carDetailsDto.status,
-            makeId: carDetailsDto.makeId.toString(),
+            status: true,
+            makeId: carDetailsDto.brandId.toString(),
             modelId: carDetailsDto.modelId.toString(),
             bodyId: carDetailsDto.bodyId.toString(),
             fuelId: carDetailsDto.fuelId.toString(),
-            doors: carDetailsDto.doors.toString(),
-            gearboxId: carDetailsDto.gearboxId.toString(),
-            engine: carDetailsDto.engine.toString(),
-            month: Number(carDetailsDto.dateRelease.substring(5, 7)).toString(),
-            year: carDetailsDto.dateRelease.substring(0, 4),
+            doors: carDetailsDto.door.toString(),
+            gearboxId: carDetailsDto.gearId.toString(),
+            engine: carDetailsDto.ps.toString(),
+            month: Number(carDetailsDto.regDate.substring(5, 7)).toString(),
+            year: carDetailsDto.regDate.substring(0, 4),
         };
     }
 }
