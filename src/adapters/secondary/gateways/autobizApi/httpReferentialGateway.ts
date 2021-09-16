@@ -17,7 +17,6 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
             const response = await this.get(
                 `${API_URL_PREFIX}/referentials/makes?identifier=${identifier}`,
             );
-            // return right(response.data);
             return right(MakesMapper.toDto(response.data));
         } catch (error) {
             return left(error as string);
@@ -36,48 +35,50 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
 
             switch (scope) {
                 case 'make':
-                    url += `/makes`;
+                    url += `/referentials/makes`;
                     break;
 
                 case 'model':
-                    url += `/models?makeId=${filters.makeId}`;
+                    url += `/referentials/make/${filters.makeId}/models`;
                     break;
 
                 case 'version':
-                    url += `/make/${filters.makeId}/model/${filters.modelId}/versions${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/versions${queryString}`;
                     break;
 
                 case 'year':
-                    url += `/make/${filters.makeId}/model/${filters.modelId}/years${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/years${queryString}`;
                     break;
 
                 case 'month':
-                    url += `/make/${filters.makeId}/model/${filters.modelId}/months${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/months${queryString}`;
                     break;
 
                 case 'fuel':
-                    url += `/make/${filters.makeId}/model/${filters.modelId}/fuels${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/fuels${queryString}`;
                     break;
 
                 case 'body':
-                    url += `/make/${filters.makeId}/model/${filters.modelId}/bodies${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/bodies${queryString}`;
                     break;
 
                 case 'door':
-                    url += `/make/${filters.makeId}/model/${filters.modelId}/doors${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/doors${queryString}`;
                     break;
 
                 case 'gear':
-                    url += `/make/${filters.makeId}/model/${filters.modelId}/gears${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/gears${queryString}`;
                     break;
 
                 case 'engine':
-                    url += `/make/${filters.makeId}/model/${filters.modelId}/engines${queryString}`;
+                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/engines${queryString}`;
                     break;
 
                 default:
                     break;
             }
+
+            url += `?identifier=${identifier}`;
 
             const response = await this.get(url);
             const data = Array.isArray(response.data) ? response.data : [response.data];

@@ -15,6 +15,14 @@ type MakeLogoInputProps = {
     };
 };
 
+const getMakeLogoUrl = (name: string) => {
+    const brand_image = `https://b2b-pictures-prod.s3-eu-west-1.amazonaws.com/brandsLogos/${name.replace(
+        / /g,
+        '_',
+    )}.jpg`;
+    return brand_image;
+};
+
 export const MakeLogoInput: FunctionComponent<MakeLogoInputProps> = ({ id, value, list, text }) => {
     const dispatch = useDispatch();
 
@@ -38,10 +46,7 @@ export const MakeLogoInput: FunctionComponent<MakeLogoInputProps> = ({ id, value
                                 }
                                 className={value === f.id.toString() ? 'selected' : ''}
                             >
-                                <img
-                                    src={`https://b2b-pictures-prod.s3-eu-west-1.amazonaws.com/brandsLogos/${f.name}.jpg`}
-                                    alt={f.name}
-                                />
+                                <img src={getMakeLogoUrl(f.name)} alt={f.name} />
                             </div>
                             {f.name}
                         </div>
