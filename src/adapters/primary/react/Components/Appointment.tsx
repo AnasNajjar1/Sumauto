@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faUser,
-    faPhone,
     faCalendarAlt,
     faClock,
     faPlusCircle,
@@ -39,22 +38,24 @@ import { getDealerSlotListUseCase } from '../../../../hexagon/usecases/getDealer
 import { Hour } from '../../../../hexagon/interfaces';
 import { CtaBlock } from './CtaBlock';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
-import { AccordionInfo } from './AccordionInfo/AccordionInfo';
+import { AccordionInfo } from './AccordionInfo';
 import { FeatureGroup } from './FeatureGroup';
 import { Feature } from './Feature';
-import { Picture } from './Picture';
+import { NumberedTitle } from './NumberedTitle';
+import { PhoneInput } from './PhoneInput';
+import { InputWithValidation } from './InputWithValidation';
+import { InputValidation } from './InputValidation';
 
 type TAppointmentProps = {
-    zipCode: string;
     recordId: string;
 };
 
-export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zipCode }) => {
+export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { client } = useSelector(getClientSelector);
 
-    const [dealerId, setDealerId] = useState<number | undefined>(undefined);
+    const [dealerId, setDealerId] = useState<string | undefined>(undefined);
     const [showAllDealers, setShowAllDealers] = useState<boolean>(false);
     const [date, setDate] = useState<string>('');
     const [hour, setHour] = useState<string>('');
@@ -68,16 +69,16 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
         useSelector(getDealerSlotListSelector);
 
     useEffect(() => {
-        dispatch(getDealerListUseCase(zipCode));
-    }, [dispatch, zipCode]);
+        dispatch(getDealerListUseCase(recordId));
+    }, [dispatch, recordId]);
 
     useEffect(() => {
         if (dealerId) {
-            dispatch(getDealerSlotListUseCase(dealerId.toString()));
+            dispatch(getDealerSlotListUseCase(recordId, dealerId));
             setDate('');
             setHour('');
         }
-    }, [dispatch, dealerId]);
+    }, [dispatch, recordId, dealerId]);
 
     useEffect(() => {
         setPhoneValid(phone.search(new RegExp(client.config.phoneRegex)) === 0);
@@ -92,7 +93,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
         }
     }, [dispatch, date, dealerSlotList]);
 
-    const formValid = [hour, date, dealerId, name, phoneValid].every(Boolean);
+    const formValid = [hour, date, dealerId, name].every(Boolean);
 
     const submitAppointment = () => {
         // saving appointment
@@ -100,232 +101,242 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId, zi
     };
 
     return (
-        <Container fluid>
-            <h2>1. {t('choose_your_date')}</h2>
-            <AccordionInfo
-                iconType="circle"
-                titleKey="professional_info"
-                detailsKey="professional_info_details"
-            />
-            <AccordionInfo
-                iconType="circle"
-                titleKey="pay_service_info"
-                detailsKey="pay_service_info_details"
-            />
-            <AccordionInfo
-                iconType="circle"
-                titleKey="selling_service_info"
-                detailsKey="selling_service_info_details"
-            />
-            <Loader status={dealerStatus}>
-                <div className={`dealers-list ${showAllDealers ? 'show-all' : ''}`}>
-                    {dealerList.map((dealer, i) => (
-                        <div
-                            className={`button-dealer ${i >= 3 ? 'hidden-dealer' : ''} ${
-                                dealer.dealerId === dealerId ? 'selected' : ''
-                            }`}
-                            key={dealer.id}
-                            role="button"
-                            aria-hidden="true"
-                            onClick={() => setDealerId(dealer.dealerId)}
-                        >
-                            <div className="button-dealer-icon">
-                                <FontAwesomeIcon
-                                    icon={dealer.dealerId === dealerId ? farDotCircle : farCircle}
-                                />
-                            </div>
-                            <div>
-                                <div className="button-dealer-name">{dealer.name}</div>
+        <>
+            <Container fluid>
+                <NumberedTitle number={1} textKey="choose_your_point_of_sale" />
+                <AccordionInfo
+                    iconType="circle"
+                    titleKey="professional_info"
+                    detailsKey="professional_info_details"
+                />
+                <AccordionInfo
+                    iconType="circle"
+                    titleKey="pay_service_info"
+                    detailsKey="pay_service_info_details"
+                />
+                <AccordionInfo
+                    iconType="circle"
+                    titleKey="selling_service_info"
+                    detailsKey="selling_service_info_details"
+                />
+                <Loader status={dealerStatus}>
+                    <div className={`dealers-list ${showAllDealers ? 'show-all' : ''}`}>
+                        {dealerList.map((dealer, i) => (
+                            <div
+                                className={`button-dealer${i >= 3 ? ' hidden-dealer' : ''} ${
+                                    dealer.id === dealerId ? 'selected' : ''
+                                }`}
+                                key={dealer.id}
+                                role="button"
+                                aria-hidden="true"
+                                onClick={() => setDealerId(dealer.id)}
+                            >
+                                <div className="button-dealer-icon">
+                                    <FontAwesomeIcon
+                                        icon={dealer.id === dealerId ? farDotCircle : farCircle}
+                                    />
+                                </div>
                                 <div>
-                                    <FontAwesomeIcon icon={faMapMarkerAlt} /> {dealer.distance} Km
+                                    <div className="button-dealer-name">{dealer.name}</div>
+                                    <div>
+                                        <FontAwesomeIcon icon={faMapMarkerAlt} /> {dealer.city}{' '}
+                                        {dealer.distance} {t('km')}
+                                    </div>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+
+                    {dealerList.length > 3 && (
+                        <div
+                            className="toggle-show-dealers"
+                            role="button"
+                            aria-hidden="true"
+                            onClick={() => setShowAllDealers(!showAllDealers)}
+                        >
+                            <FontAwesomeIcon icon={showAllDealers ? faMinusCircle : faPlusCircle} />{' '}
+                            <span>
+                                {t(showAllDealers ? 'show_less_dealers' : 'show_more_dealers')}
+                            </span>
                         </div>
-                    ))}
-                </div>
-
-                <div
-                    className="toggle_show_dealers"
-                    role="button"
-                    aria-hidden="true"
-                    onClick={() => setShowAllDealers(!showAllDealers)}
-                >
-                    <FontAwesomeIcon icon={showAllDealers ? faMinusCircle : faPlusCircle} />{' '}
-                    <span>{t(showAllDealers ? 'show_less_dealers' : 'show_more_dealers')}</span>
-                </div>
-            </Loader>
+                    )}
+                </Loader>
+            </Container>
             {dealerId && (
-                <>
-                    <h2 className="mt-4">2. {t('choose_your_date')}</h2>
+                <div className="choose-date-background">
+                    <Container fluid>
+                        <NumberedTitle number={2} textKey="choose_your_date" />
 
-                    <AccordionInfo
-                        iconType="circle"
-                        titleKey="sell_requirement_info"
-                        detailsKey="sell_requirement_info_details"
-                    />
-                    <AccordionInfo
-                        iconType="circle"
-                        titleKey="appointment_info"
-                        detailsKey="appointment_info_details"
-                    />
-                    <AccordionInfo
-                        iconType="circle"
-                        titleKey="wainting_info"
-                        detailsKey="waiting_info_details"
-                    />
+                        <AccordionInfo
+                            iconType="circle"
+                            titleKey="sell_requirement_info"
+                            detailsKey="sell_requirement_info_details"
+                        />
+                        <AccordionInfo
+                            iconType="circle"
+                            titleKey="appointment_info"
+                            detailsKey="appointment_info_details"
+                        />
+                        <AccordionInfo
+                            iconType="circle"
+                            titleKey="wainting_info"
+                            detailsKey="waiting_info_details"
+                        />
 
-                    <Loader status={dealerSlotStatus}>
-                        <Row>
-                            <Col>
-                                <Label htmlFor="name">{t('date')}</Label>
-                                <InputGroup>
-                                    <Input
-                                        type="select"
-                                        onChange={(e) => setDate(e.currentTarget.value)}
-                                        value={date}
-                                    >
-                                        <option value="">--</option>
-                                        {dealerSlotList.map((s) => (
-                                            <option value={s.date} key={s.date}>
-                                                {s.date}
-                                            </option>
-                                        ))}
-                                    </Input>
-                                    <InputGroupAddon addonType="append">
-                                        <InputGroupText>
-                                            <FontAwesomeIcon icon={faCalendarAlt} />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                            </Col>
-                            <Col>
-                                {hourList && (
-                                    <>
-                                        <Label htmlFor="name">{t('hour')}</Label>
+                        <Loader status={dealerSlotStatus}>
+                            <Row>
+                                <Col>
+                                    <Label htmlFor="name">{t('date')}</Label>
+                                    <InputWithValidation>
                                         <InputGroup>
                                             <Input
                                                 type="select"
-                                                onChange={(e) => setHour(e.currentTarget.value)}
-                                                value={hour}
+                                                onChange={(e) => setDate(e.currentTarget.value)}
+                                                value={date}
                                             >
                                                 <option value="">--</option>
-                                                {hourList.map((s) => (
-                                                    <option
-                                                        value={s.id}
-                                                        key={s.id}
-                                                        disabled={s.status === 'closed'}
-                                                    >
-                                                        {s.hour}{' '}
-                                                        {s.status === 'closed'
-                                                            ? `(${t('unavailable')})`
-                                                            : ''}
+                                                {dealerSlotList.map((s) => (
+                                                    <option value={s.date} key={s.date}>
+                                                        {s.date}
                                                     </option>
                                                 ))}
                                             </Input>
                                             <InputGroupAddon addonType="append">
                                                 <InputGroupText>
-                                                    <FontAwesomeIcon icon={faClock} />
+                                                    <FontAwesomeIcon icon={faCalendarAlt} />
                                                 </InputGroupText>
                                             </InputGroupAddon>
                                         </InputGroup>
-                                    </>
-                                )}
+                                        <InputValidation valid={!!date} />
+                                    </InputWithValidation>
+                                </Col>
+                                <Col>
+                                    {hourList && (
+                                        <>
+                                            <Label htmlFor="name">{t('hour')}</Label>
+                                            <InputWithValidation>
+                                                <InputGroup>
+                                                    <Input
+                                                        type="select"
+                                                        onChange={(e) =>
+                                                            setHour(e.currentTarget.value)
+                                                        }
+                                                        value={hour}
+                                                    >
+                                                        <option value="">--</option>
+                                                        {hourList.map((s) => (
+                                                            <option
+                                                                value={s.id}
+                                                                key={s.id}
+                                                                disabled={s.status === 'closed'}
+                                                            >
+                                                                {s.hour}{' '}
+                                                                {s.status === 'closed'
+                                                                    ? `(${t('unavailable')})`
+                                                                    : ''}
+                                                            </option>
+                                                        ))}
+                                                    </Input>
+                                                    <InputGroupAddon addonType="append">
+                                                        <InputGroupText>
+                                                            <FontAwesomeIcon icon={faClock} />
+                                                        </InputGroupText>
+                                                    </InputGroupAddon>
+                                                </InputGroup>
+                                                <InputValidation valid={!!hour} />
+                                            </InputWithValidation>
+                                        </>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Loader>
+                    </Container>
+                    <Container fluid className="mt-4">
+                        <NumberedTitle number={3} textKey="your_contact" />
+                        <AccordionInfo
+                            iconType="circle"
+                            titleKey="contact_info"
+                            detailsKey="contact_info_details"
+                        />
+                        <Row>
+                            <Col xs={12} sm={6}>
+                                <FormGroup>
+                                    <Label htmlFor="name">{t('name')} *</Label>
+                                    <InputWithValidation>
+                                        <InputGroup>
+                                            <Input
+                                                type="text"
+                                                name="name"
+                                                id="name"
+                                                value={name}
+                                                onChange={(e) => setName(e.currentTarget.value)}
+                                            />
+                                            <InputGroupAddon addonType="append">
+                                                <InputGroupText>
+                                                    <FontAwesomeIcon icon={faUser} />
+                                                </InputGroupText>
+                                            </InputGroupAddon>
+                                        </InputGroup>
+                                        <InputValidation valid={!!name} />
+                                    </InputWithValidation>
+                                </FormGroup>
+                            </Col>
+
+                            <Col xs={12} sm={6}>
+                                <PhoneInput />
                             </Col>
                         </Row>
-                    </Loader>
-
-                    <h2 className="mt-4">3. {t('your_contact')}</h2>
-                    <AccordionInfo
-                        iconType="circle"
-                        titleKey="contact_info"
-                        detailsKey="contact_info_details"
-                    />
-                    <Row>
-                        <Col xs={12} sm={6}>
-                            <FormGroup>
-                                <Label htmlFor="name">{t('name')} *</Label>
-                                <InputGroup>
-                                    <Input
-                                        type="text"
-                                        name="name"
-                                        id="name"
-                                        value={name}
-                                        onChange={(e) => setName(e.currentTarget.value)}
-                                    />
-                                    <InputGroupAddon addonType="append">
-                                        <InputGroupText>
-                                            <FontAwesomeIcon icon={faUser} />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                            </FormGroup>
-                        </Col>
-
-                        <Col xs={12} sm={6}>
-                            <FormGroup>
-                                <Label htmlFor="phone">{t('phone_number')}</Label>
-                                <InputGroup>
-                                    <Input
-                                        type="tel"
-                                        name="phone"
-                                        id="phone"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.currentTarget.value)}
-                                    />
-                                    <InputGroupAddon addonType="append">
-                                        <InputGroupText>
-                                            <FontAwesomeIcon icon={faPhone} />
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                </InputGroup>
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                </>
+                    </Container>
+                </div>
             )}
 
-            {formValid && (
-                <>
-                    <h2 className="mt-4">{t('appointment_resume')}</h2>
-                    <Row>
-                        <Col>{/* <AppointmentResume date={date} hour={hour} /> */}</Col>
-                        <Col>
-                            <Picture background="calendar" />
-                        </Col>
-                    </Row>
-                </>
-            )}
-            <CtaBlock>
-                <Button
-                    color="primary"
-                    disabled={!formValid}
-                    className="mt-3"
-                    onClick={submitAppointment}
-                >
-                    {t('book_an_appointment_now')}
-                </Button>
-            </CtaBlock>
-            <FeatureGroup>
-                <Feature label="immediate_sale_and_without_obligation" icon="clock" />
-                <Feature label="total_security" icon="lock" />
-                <Feature label="without_cumbersome_procedures" icon="check" />
-            </FeatureGroup>
-            <Row>
-                <Col>
-                    <div className="feature-details">
-                        {t('immediate_sale_and_without_obligation_details')}
-                    </div>
-                </Col>
-                <Col>
-                    <div className="feature-details">{t('total_security_details')}</div>
-                </Col>
-                <Col>
-                    <div className="feature-details">
-                        {t('without_cumbersome_procedures_details')}
-                    </div>
-                </Col>
-            </Row>
-            <p className="footnote">{t('appoitment_note')}</p>
-        </Container>
+            <Container fluid>
+                {/*
+                {formValid && (
+                    <>
+                        <h2 className="mt-4">{t('appointment_resume')}</h2>
+
+                        <Row>
+                            <Col> <AppointmentResume date={date} hour={hour} /> </Col>
+                            <Col>
+                                <Picture background="calendar" />
+                            </Col>
+                        </Row>
+                    </>
+                )}
+                */}
+                <CtaBlock>
+                    <Button
+                        color="primary"
+                        disabled={!formValid}
+                        className="mt-3"
+                        onClick={submitAppointment}
+                    >
+                        {t('book_an_appointment_now')}
+                    </Button>
+                </CtaBlock>
+                <FeatureGroup>
+                    <Feature label="immediate_sale_and_without_obligation" icon="clock" />
+                    <Feature label="total_security" icon="lock" />
+                    <Feature label="without_cumbersome_procedures" icon="check" />
+                </FeatureGroup>
+                <Row>
+                    <Col>
+                        <div className="feature-details">
+                            {t('immediate_sale_and_without_obligation_details')}
+                        </div>
+                    </Col>
+                    <Col>
+                        <div className="feature-details">{t('total_security_details')}</div>
+                    </Col>
+                    <Col>
+                        <div className="feature-details">
+                            {t('without_cumbersome_procedures_details')}
+                        </div>
+                    </Col>
+                </Row>
+                <p className="footnote">{t('appoitment_note')}</p>
+            </Container>
+        </>
     );
 };

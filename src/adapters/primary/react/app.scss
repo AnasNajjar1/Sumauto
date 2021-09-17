@@ -19,24 +19,21 @@ $dangerOpacity : rgba($danger, .1);
 $halfGutter : $grid-gutter-width / 2;
 
 $input-active-border-color:#333333;
-$input-inactive-border-color: #3333338c;
+$input-inactive-border-color: #E3E3E3;
 $input-error-border-color:#d91a2a;
 $input-success-border-color:#3cc850;
 
-$input-active-color:#333333;
-$input-inactive-color:#3333338c;
-$input-error-color:#333333;
 
-$input-active-bg: #ffffff;
-$input-inactive-bg: #ffffff;
-$input-error-bg: #ffdddd;
 
 $input-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
 
 body{
     padding-bottom: $halfGutter;
     min-width: 320px;
-    padding: 0 10px;
+}
+
+.container-fluid{
+    padding: 0 20px;
 }
 
 @include media-breakpoint-down(xs) {
@@ -53,119 +50,52 @@ body{
     }
 }
 
-.questions-group{
-    @include make-row();
-}
-.registration-or-make-logo{
-    width: 100%;
-    text-align: center;
-    border-bottom: 1px solid $primary;
-    font-size: 2em;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: $primary;
-    line-height: 0.1em;
-    margin: 10px 0 20px;
-    span{
-        background:$body-bg;
-        padding:0 10px;
+.makes-logo{
+    margin-bottom: 2rem;
+    .make-logo-button-container{
+        text-align: center;
+        font-size: 10px;
+        div{
+            border:1px solid #ccc;
+            border-radius: 2px;
+            display: block;
+            margin-bottom: .5rem;
+            &.selected{
+                border:1px solid $primary;
+            }
+            img{width: 100%; padding: 5px;}
+        }
     }
 }
 
-.encouragement{
-    margin-bottom: $halfGutter;
-
+.message{
+    margin-bottom: $grid-gutter-width;
     padding:$grid-gutter-width;
-    font-size: .8em;
+    font-size: .8rem;
+    display: none;
 
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.5s linear;
+    &.sm-absolute{
+        @include media-breakpoint-up(sm) {
+            position: absolute;
+        }
+    }
 
     &.visible{
-        visibility: visible;
-        opacity: 1;
+        display: block;
     }
 
-    .encouragement-title{
+    .message-title{
         display: flex;
-        margin-bottom: .5em;
         font-weight: 700;
-        .encouragement-title-icon{
+        .message-title-icon{
             margin-right: 5px;
         }
     }
 
     p{
-        margin: 0;
+        margin: .5rem 0 0 .5rem;
     }
 }
-
-// .question{
-//     @include make-col-ready();
-//     @include media-breakpoint-up(sm) {
-//         @include make-col(6);
-//     }
-//     @include media-breakpoint-up(lg) {
-//         @include make-col(6);
-//     }
-//     &.question-registration{
-//         @include make-col(12);
-//         @include media-breakpoint-up(sm) {
-//             .form-group{
-//                 max-width: 300px;
-//             }
-//         }
-//     }
-
-//     &.question-version,
-//     &.question-mileage,
-//     &.question-imported,
-//     &.question-history,
-//     &.question-running,
-//     &.question-sellProject{
-//         @include make-col(12);
-//     }
-
-//     &.question-email{
-//         @include make-col(6);
-//     }
-
-
-//     &.question-makelogo{
-//         @include make-col(12);
-//         .row{
-//             margin: -$halfGutter / 2;
-//         }
-//         margin-bottom: $halfGutter;
-//         display: flex;
-//         .logo-button-container{
-//             width: calc(100% / 5);
-//             font-size: .7em;
-//             text-align: center;
-//             div{
-//                 margin: 5px $halfGutter / 2;
-//                 border:1px solid #ccc;
-//                 display: block;
-//                 &.selected{
-//                     border:2px solid $primary;
-//                 }
-//                 img{width: 100%; padding: 5px;}
-//             }
-//         }
-//     }
-
-//     @include media-breakpoint-up(sm) {
-//         &.question-year{
-//             .form-text{
-//                 width: 200%;
-//                 left: calc(-100% - 30px);
-//                 position: relative;
-//             }
-//         }
-//     }
-// }
-
 
 .form-group-year label{
     display: none;
@@ -178,7 +108,7 @@ body{
 .form-help{
     color:$gray-700;
     margin-top: -5px;
-    font-size: .8em;;
+    font-size: .8rem;
 }
 
 .input-with-validation{
@@ -205,17 +135,18 @@ body{
 
 
 .cta-block{
-    margin: 2em 0;
+    margin: 2rem 0;
     text-align: center;
 }
 
 .dealers-list{
-
+    max-width: map-get($grid-breakpoints, "md");
     .button-dealer{
         display: flex;
         border:1px solid $gray-300;
-        padding: .5em;
-        margin-bottom: .5em;
+        padding: 1rem;
+        margin-bottom: .5rem;
+        line-height: 1.5; 
         .button-dealer-name{
             font-weight: bold;
         }
@@ -243,12 +174,12 @@ body{
     width: 100%;
     border: 1px solid $gray-500;
     height: 175px;
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
 }
 
 ul,ol{
     li{
-        padding-bottom:.5em;
+        padding-bottom:.5rem;
     }
 }
 
@@ -295,19 +226,19 @@ ol {
     }
 
     .picture{
-        margin: 2em 0 !important;
+        margin: 2rem 0 !important;
     }
 
     .btn{
         margin-left: auto;
         margin-right: auto;
-        max-width: 400px;
+        max-width: map-get($grid-breakpoints, "sm");
     }
 
     .background-private-sell,
     .background-direct-sell{
         padding: $grid-gutter-width;
-        margin-bottom: $grid-gutter-width;
+        margin-bottom: 2rem;
     }
     
 }
@@ -322,7 +253,8 @@ ol {
         button{
             width: 100%;
             @include media-breakpoint-up(sm) {
-                    max-width: 400px;
+                    
+                    max-width: map-get($grid-breakpoints, "sm");
                 }
             }
     }
@@ -331,12 +263,14 @@ ol {
 .page-unsubscribe{
 
     .form-unsubscribe{
-        max-width: 400px;
+        
+        max-width: map-get($grid-breakpoints, "sm");
     }
 
     .unsubscribe-return{
         @extend .p-3;
-        max-width: 600px;
+        
+        max-width: map-get($grid-breakpoints, "md");
         font-size: 13px;
         &.valid{
             .unsubscribe-return-icon{
@@ -356,7 +290,8 @@ ol {
             button{
                 width: 100%;
             @include media-breakpoint-up(sm) {
-                    max-width: 400px;
+                    
+                    max-width: map-get($grid-breakpoints, "sm");
                 }
             }
         }
@@ -366,9 +301,16 @@ label{
     font-weight: 700;
     color: $body-color;
     transition: $input-transition;
-    margin-bottom: .3em;
+    margin-bottom: .5rem;
+
 }
+
+
+
+
 .form-group{
+
+
 
     .text-danger {
         margin: 5px 0;
@@ -379,50 +321,47 @@ label{
             color: $input-active-color;
         }
         .input-with-validation{
-            .input-group{
-                border-color: $input-active-border-color;
-                .input-group-append .input-group-text{
-                    color: $input-active-color;
-                }
-            }
+  
+            // .input-group{
+            //     border-color: red;
+
+            // }
         }
     }
 
     .input-with-validation{
-        .input-group{
-            border: 1px solid $input-inactive-border-color;
 
-            .form-control,
-            .input-group-append .input-group-text{
-                border: none;
-                background-color: $input-inactive-bg;
-            }
+        // .input-group{
+        //     border: 1px solid $input-inactive-border-color;
 
-            .form-control{
-                font-size: $font-size-base;
-                padding: 4px 12px;
-            }
 
-            .form-control:focus{
-                outline: none;
-                box-shadow: none;
-            }
 
-            .input-group-append .input-group-text{
-                color: $input-inactive-color;
-                transition: $input-transition;
-            }
-        }
+        //     .form-control{
+        //         font-size: $font-size-base;
+        //         padding: 4px 12px;
+        //     }
 
-        .input-danger{
-            border-color: $input-error-border-color;
-        }
+        //     .form-control:focus{
+        //         outline: none;
+        //         box-shadow: none;
+        //     }
 
-        .input-success{
-            border-color: $input-success-border-color;
-        }
+        //     .input-group-append .input-group-text{
+        //         color: $input-inactive-color;
+        //         transition: $input-transition;
+        //     }
+        // }
+
+        // .input-danger{
+        //     border-color: $input-error-border-color;
+        // }
+
+        // .input-success{
+        //     border-color: $input-success-border-color;
+        // }
     }
 }
+
 
 
 .feature-group{
@@ -443,33 +382,32 @@ label{
 
 .feature-details{
     text-align: center;
-    margin:.5em auto;
-    font-size: .8em;
+    margin:.5rem auto;
+    font-size: .8rem;
     max-width: 200px;
 }
-.quotation-box{
+.valuation-box{
     padding: $halfGutter;
 }
 
-.quotation-description{
+.valuation-description{
     max-width: 300px;
     margin-left:auto;
     margin-right:auto;
-    font-size: .8em;
+    font-size: .8rem;
 }
 
 .accordion-info{
-    font-size: .8em;
-    padding:1em 0;
+    font-size: .8rem;
+    padding:0 0 .8rem 0;
     .accordion-info-title{
-        margin-bottom: 0em;
-        color: $primary;
+        margin-bottom: 0;
         .accordion-info-title-text{
             text-decoration: underline;
         }
     }
     .accordion-info-details{
-        margin-top: 1em;
+        margin-top: $halfGutter;
     }
 }
 
@@ -489,7 +427,7 @@ label{
             text-align: center;
 
             .label{
-                font-size: .8em;
+                font-size: .8rem;
                 width: 80px;
                 margin-left: auto;
                 margin-right: auto;
@@ -497,7 +435,7 @@ label{
                 color: black;
             }
             .number{
-                font-size: .8em;
+                font-size: .8rem;
                 border-radius: 100%;
                 border:1px solid black;
                 color:black;
@@ -528,20 +466,29 @@ label{
 
 .motivation{
     background-color: $gray-100;
-    padding:1em;
-    margin:1em 0em;
+    padding:1.5rem 1rem;
+    margin:1rem 0rem;
+    border-bottom: 1px solid $gray-500;
     .motivation-title{
-        @extend .text-primary;
-        max-width: 400px;
+   
+        max-width: 440px;
+        
         margin-left: auto;
         margin-right: auto;
+    }
+    .progress-steps{
+        max-width: 700px;
+        position: relative;
+        z-index: 1;
+        margin: 2rem auto 2.5rem auto;
     }
 }
 
 .alert-covid{
     background-color: $dangerOpacity;
-    padding:0 1em;
-    margin-bottom: 1em;
+    padding:.8rem .8rem 0 .8rem;
+    margin-bottom: 1rem;
+    max-width: map-get($grid-breakpoints, "md");
 }
 
 .appointment-resume{
@@ -559,12 +506,12 @@ label{
 }
 
 .vehicle-informations{
-    line-height: 1.75em;
+    line-height: 1.75rem;
 }
 
 .footnote{
-    font-size: .8em;
-    margin-top:2em;
+    font-size: .8rem;
+    margin-top:2rem;
     color:$gray-700;
 }
 
@@ -605,9 +552,126 @@ label{
 
 .form-section-title{
     color: #363636;
-    font-size: .8em;
+    font-size: .8rem;
     border-bottom: 1px solid #363636;
     padding-bottom: 6px;
-    margin: 1em 0;
+    margin: 1rem 0;
     text-transform: uppercase;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.form-group-mileage{
+    .input-group-text{
+        font-weight: 700;
+        color:$body-color !important;
+    }
+}
+
+.btn-group{
+    .btn{
+        font-weight: 400;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+.custom-checkbox{
+    .custom-control-input{
+        margin-top: 0rem;
+    }
+    label{
+        padding-top: 4px;
+        font-weight: 400;
+        font-size: .8rem;
+        
+    }
+}
+
+
+.numbered-title{
+    @extend h2;
+    margin-bottom: 1.5rem;
+}
+
+.choose-date-background{
+
+    margin:30px 0;
+    padding:20px 0;
+    background-color: #F1F1F1;
+}
+
+.form-group-registration .input-group{
+    max-width: 300px;
+    @include media-breakpoint-up(lg) {
+        margin-top: 50px;
+    }
+
+}
+
+.registration-or-make-logo{
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    span{
+        background:$body-bg;
+        padding:0 10px;
+    }
+
+    @include media-breakpoint-up(lg) {
+            border:0;
+            display: flex;
+            align-items: center;
+            height: 100%;
+            position: relative;
+            width: 50px;
+            border-bottom: 0 !important;
+
+            span{
+                text-align: center;
+                display: block;
+                background-color: $body-bg;
+                width: 50px;
+                height: 40px;
+                line-height: 40px;
+            }
+            span:before {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                bottom: 0;
+                left: 25px;
+                
+                border-left-width: 1px;
+                border-left-style: solid;
+                transform: translate(-50%);
+              }
+              
+    }
+
+}
+
+.form-group-mileage{
+    .form-control{
+        border-right: 0;
+    }
+    .input-group-text{
+        background-color: transparent;
+        border:0;
+    }
 }

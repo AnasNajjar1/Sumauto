@@ -1,20 +1,35 @@
+import moment from 'moment';
+import 'moment/locale/es';
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
-import { CarDetailsDto } from '../dtos/carDetailsDto';
+import { AutobizCarDetailsDto } from '../dtos/carDetailsDto';
 import { CarDetails } from '../../../../../hexagon/interfaces';
 
 export class CarDetailsMapper implements Mapper<CarDetails> {
-    static toDto(carDetailsDto: CarDetailsDto): CarDetails {
+    static toApp(carDetailsDto: AutobizCarDetailsDto): CarDetails {
+        const year = moment(carDetailsDto.regDate, 'YYYY-MM-DD').toDate().getFullYear().toString();
+        const month = moment(carDetailsDto.regDate, 'YYYY-MM-DD').toDate().getMonth().toString();
+        const monthName = moment(carDetailsDto.regDate, 'YYYY-MM-DD')
+            .locale('es')
+            .format('MMMM')
+            .toString()
+            .toUpperCase();
+
         return {
-            status: true,
-            makeId: carDetailsDto.brandId.toString(),
-            modelId: carDetailsDto.modelId.toString(),
-            bodyId: carDetailsDto.bodyId.toString(),
-            fuelId: carDetailsDto.fuelId.toString(),
-            doors: carDetailsDto.door.toString(),
-            gearboxId: carDetailsDto.gearId.toString(),
+            make: carDetailsDto.brandId.toString(),
+            makeName: carDetailsDto.brandLabel,
+            model: carDetailsDto.modelId.toString(),
+            modelName: carDetailsDto.modelLabel,
+            body: carDetailsDto.bodyId.toString(),
+            bodyName: carDetailsDto.bodyLabel,
+            fuel: carDetailsDto.fuelId.toString(),
+            fuelName: carDetailsDto.fuelLabel,
+            door: carDetailsDto.door.toString(),
+            gear: carDetailsDto.gearId.toString(),
+            gearName: carDetailsDto.gearLabel,
             engine: carDetailsDto.ps.toString(),
-            month: Number(carDetailsDto.regDate.substring(5, 7)).toString(),
-            year: carDetailsDto.regDate.substring(0, 4),
+            month,
+            monthName,
+            year,
         };
     }
 }

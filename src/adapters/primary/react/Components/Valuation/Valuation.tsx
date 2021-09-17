@@ -7,10 +7,11 @@ import { NoValuation } from './NoValuation';
 
 export const Valuation: FunctionComponent<TRecord> = (props) => {
     const { valuation } = props;
+
     return (
-        <div className="section section-quotation">
+        <div className="section section-valuation">
             <Container fluid>
-                {valuation.status && (
+                {valuation?.status && (
                     <>
                         {valuation.archived ? (
                             <ArchivedValuation {...props} />

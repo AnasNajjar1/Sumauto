@@ -23,6 +23,7 @@ export interface RecordGateway {
 
     saveVehicleStateInformation(
         identifier: string,
+        recordId: number,
         vehicleStateInformation: VehicleStateInformation,
     ): Promise<ApiResponse<RecordIds>>;
 
@@ -34,6 +35,7 @@ export interface RecordGateway {
 
     saveUserInformation(
         identifier: string,
+        recordId: number,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<RecordIds>>;
 

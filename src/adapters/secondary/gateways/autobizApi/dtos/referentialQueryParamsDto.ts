@@ -1,4 +1,4 @@
-export type ReferentialQueryParamsDto = {
+export type AutobizReferentialQueryParamsDto = {
     make?: number;
     model?: number;
     monthId?: number;

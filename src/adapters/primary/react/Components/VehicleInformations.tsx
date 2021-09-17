@@ -37,7 +37,7 @@ export const VehicleInformations: React.FC<TVehicleProps> = ({ vehicle }: TVehic
                 <Col xs={12} sm={6}>
                     <VehiclePropLine label="gear" value={vehicle.gearName} />
                     <VehiclePropLine label="fuel" value={vehicle.fuelName} />
-                    <VehiclePropLine label="door" value={vehicle.doors} />
+                    {vehicle.doors && <VehiclePropLine label="door" value={vehicle.doors} />}
                 </Col>
             </Row>
             <Row>

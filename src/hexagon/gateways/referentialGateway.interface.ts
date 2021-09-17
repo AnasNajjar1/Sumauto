@@ -1,23 +1,23 @@
 import {
     CarDetails,
     Makes,
-    ReferentialItem,
-    VehicleElement,
+    TReferentialItem,
+    TRefrentialElement,
     VehicleFormFilters,
 } from '../interfaces';
 
 import { ApiResponse } from '../infra/ApiResponse';
 
-export type Scope = VehicleElement;
+export type Scope = TRefrentialElement;
 
 export interface ReferentialGateway {
     requestAllMakes(identifier: string, makeId?: number): Promise<ApiResponse<Makes>>;
 
     requestList(
         identifier: string,
-        scope: ReferentialItem,
+        scope: TReferentialItem,
         filters?: VehicleFormFilters,
-    ): Promise<ApiResponse<VehicleElement[]>>;
+    ): Promise<ApiResponse<TRefrentialElement[]>>;
 
     requestCartDetailsByRegsitration(
         identifier: string,

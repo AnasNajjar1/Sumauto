@@ -11,9 +11,12 @@ import {
     aRecordIds,
     somesRecords,
 } from '../adapters/secondary/gateways/inMemory/stubs/someRecords';
+import { HttpRecordGateway } from '../adapters/secondary/gateways/autobizApi/httpRecordGateway';
+
 import { InMemoryClientConfigGateway } from '../adapters/secondary/gateways/inMemory/inMemoryClientConfigGateway';
 import { InMemoryDealerGateway } from '../adapters/secondary/gateways/inMemory/inMemoryDealerGateway';
 import { InMemoryTrackerGateway } from '../adapters/secondary/gateways/inMemory/inMemoryTrackerGateway';
+import { HttpDealerGateway } from '../adapters/secondary/gateways/autobizApi/httpDealerGateway';
 
 let referentialGateway;
 let dealerGateway;
@@ -43,13 +46,10 @@ switch (process.env.REACT_APP_SOURCE) {
     default:
         referentialGateway = new HttpReferentialGateway();
 
-        dealerGateway = new InMemoryDealerGateway();
-        dealerGateway.feedDealerListWith(someDealers);
+        dealerGateway = new HttpDealerGateway();
         dealerGateway.feedDealerSlotListWith(someDealerSlots);
 
-        recordGateway = new InMemoryRecordGateway();
-        recordGateway.feedRecordIdsWith(aRecordIds);
-        recordGateway.feedRecordsWith(somesRecords);
+        recordGateway = new HttpRecordGateway();
 
         trackerGateway = new InMemoryTrackerGateway();
         trackerGateway.feedUnsubcribeWith(true);

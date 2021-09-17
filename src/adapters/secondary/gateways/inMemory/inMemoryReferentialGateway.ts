@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { left, right } from 'fp-ts/Either';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import {
@@ -5,7 +6,7 @@ import {
     ReferentialGateway,
 } from '../../../../hexagon/gateways/referentialGateway.interface';
 import {
-    ReferentialItem,
+    TReferentialItem,
     CarDetails,
     Makes,
     VehicleFormFilters,
@@ -19,7 +20,6 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
 
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {
         try {
-            console.log(this.inMemoryReferential.makes);
             return right(this.inMemoryReferential.makes);
         } catch (error) {
             return left(error as string);
@@ -28,10 +28,13 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
 
     async requestList(
         identifier: string,
-        scope: ReferentialItem,
+        scope: TReferentialItem,
         filters?: VehicleFormFilters,
     ): Promise<ApiResponse<Scope[]>> {
         switch (scope) {
+            case 'make':
+                return right(this.inMemoryReferential.makes);
+
             case 'model':
                 return right(this.inMemoryReferential.models);
 
@@ -67,16 +70,21 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
     async requestCartDetailsByRegsitration(registration: string): Promise<ApiResponse<CarDetails>> {
         if (registration) {
             const result: CarDetails = {
-                status: true,
-                makeId: this.inMemoryReferential.makes.others[0].id.toString(),
-                modelId: this.inMemoryReferential.models[0].id.toString(),
-                bodyId: this.inMemoryReferential.bodies[0].id.toString(),
-                doors: this.inMemoryReferential.doors[0].id.toString(),
+                make: this.inMemoryReferential.makes.others[0].id.toString(),
+                makeName: this.inMemoryReferential.makes.others[0].name,
+                model: this.inMemoryReferential.models[0].id.toString(),
+                modelName: this.inMemoryReferential.models[0].name,
+                body: this.inMemoryReferential.bodies[0].id.toString(),
+                bodyName: this.inMemoryReferential.bodies[0].name,
+                door: this.inMemoryReferential.doors[0].id.toString(),
                 engine: this.inMemoryReferential.engines[0].id.toString(),
-                gearboxId: this.inMemoryReferential.gears[0].id.toString(),
+                gear: this.inMemoryReferential.gears[0].id.toString(),
+                gearName: this.inMemoryReferential.gears[0].name,
                 year: this.inMemoryReferential.years[0].id.toString(),
                 month: this.inMemoryReferential.months[0].id.toString().toString(),
-                fuelId: this.inMemoryReferential.fuels[0].id.toString(),
+                monthName: 'septiembre',
+                fuel: this.inMemoryReferential.fuels[0].id.toString(),
+                fuelName: this.inMemoryReferential.fuels[0].name,
             };
 
             return right(result);

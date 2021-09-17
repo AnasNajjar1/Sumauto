@@ -13,4 +13,4 @@ export const getClientConfig = (client: TClient): TClientConfig => {
 
 export const clients: TClient[] = ['unoauto', 'autocasion', 'autoscout24'];
 
-export const journeys: TJourney[] = ['sell', 'quotation'];
+export const journeys: TJourney[] = ['sell', 'valuation'];

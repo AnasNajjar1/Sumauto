@@ -2,8 +2,12 @@ import { ApiResponse } from '../infra/ApiResponse';
 import { Dealer, Slot } from '../interfaces';
 
 export interface DealerGateway {
-    requestDealerList(zipcode: string): Promise<ApiResponse<Dealer[]>>;
-    requestDealerSlotList(dealerId: string): Promise<ApiResponse<Slot[]>>;
+    requestDealerList(identifier: string, recordId: string): Promise<ApiResponse<Dealer[]>>;
+    requestDealerSlotList(
+        identifier: string,
+        recordId: string,
+        dealerId: string,
+    ): Promise<ApiResponse<Slot[]>>;
     // saveAppointment(
     //     recordId: number,
     //     dealerId: number,

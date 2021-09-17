@@ -1,11 +1,13 @@
 import { ActionsUnion, createAction } from '../../../redux/customActions';
-import { VehicleElement } from '../../interfaces';
+import { TRefrentialElement } from '../../interfaces';
 
 export const Actions = {
     makeListFetching: () => createAction('make/PENDING'),
     makeListFailed: () => createAction('make/FAILED'),
-    makeListRetrieved: (makeList: VehicleElement[]) => createAction('make/SUCCESS', { makeList }),
-    makeListSetPreferred: (preferredList: VehicleElement[]) =>
+    makeListRetrieved: (makeList: TRefrentialElement[]) =>
+        createAction('make/SUCCESS', { makeList }),
+    // ??
+    makeListSetPreferred: (preferredList: TRefrentialElement[]) =>
         createAction('make/SET_PREFERRED', { preferredList }),
 };
 

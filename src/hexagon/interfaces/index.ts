@@ -1,37 +1,5 @@
-export type VehicleElement = {
-    id: number;
-    name: string;
-};
-
-export type TRefrentialElement = {
-    id: number;
-    name: string;
-};
-export type TReferentialItem =
-    | 'make'
-    | 'model'
-    | 'version'
-    | 'year'
-    | 'month'
-    | 'fuel'
-    | 'body'
-    | 'door'
-    | 'gear'
-    | 'engine';
-export interface Make {
-    id: number;
-    name: string;
-}
-
-export interface Makes {
-    preferred: Make[];
-    others: Make[];
-    all: Make[];
-}
-
 export type Dealer = {
-    id: number;
-    dealerId: number;
+    id: string;
     name: string;
     city: string;
     address: string;
@@ -68,60 +36,47 @@ export type VehicleFormFilters = {
     identifier: string;
 };
 
-export type QuestionKey =
-    | 'registration'
-    | 'makeLogo'
+export type FormValue = {
+    [key: string]: string;
+};
+
+export type TReferentialItem =
     | 'make'
     | 'model'
-    | 'month'
+    | 'version'
     | 'year'
+    | 'month'
     | 'fuel'
     | 'body'
     | 'door'
     | 'gear'
     | 'engine'
-    | 'version'
-    | 'mileage'
-    | 'imported'
-    | 'running'
-    | 'history'
-    | 'sellProject'
-    | 'email'
-    | 'emailConfirmation'
-    | 'zipCode'
-    | 'phone'
-    | 'privacy';
+    | 'mileage';
 
-export type ReferentialItem =
-    | 'make'
-    | 'model'
-    | 'version'
-    | 'year'
-    | 'month'
-    | 'fuel'
-    | 'body'
-    | 'door'
-    | 'gear'
-    | 'engine';
+export type TVehicleStateItem = 'imported' | 'history' | 'running' | 'sellProject';
+export type TParticularItem = 'zipCode' | 'email' | 'phone' | 'optin';
 
-export type FormValue = {
-    [key: string]: string;
-};
+export type QuestionKey = TReferentialItem | TVehicleStateItem | TParticularItem;
 
 export type FormVehicle = {
     [key in QuestionKey]: string;
 };
 
 export type CarDetails = {
-    status: boolean;
-    makeId: string;
-    modelId: string;
+    make: string;
+    makeName: string;
+    model: string;
+    modelName: string;
     month: string;
+    monthName: string;
     year: string;
-    bodyId: string;
-    fuelId: string;
-    gearboxId: string;
-    doors: string;
+    body: string;
+    bodyName: string;
+    fuel: string;
+    fuelName: string;
+    gear: string;
+    gearName: string;
+    door: string;
     engine: string;
 };
 
@@ -131,11 +86,9 @@ export type TClientConfig = {
     identifier: string;
     privateSellLink: string;
     displayRegistrationOption: boolean;
-    cascadeOrder: ReferentialItem[];
-    questionsGroup: { title: string; questions: QuestionKey[] }[];
-    required: QuestionKey[];
     zipCodeRegex: string;
     phoneRegex: string;
+    emailConfirmation: boolean;
     mileageMin: number;
     mileageMax: number;
     registrationRegex: string;
@@ -151,27 +104,23 @@ export type RecordIds = {
 };
 
 export type TVehicle = {
-    makeId: number;
-    modelId: number;
-    month: number;
-    year: number;
-    fuelId: number;
-    bodyId: number;
-    doors: number;
-    gearId: number;
-    engine: number;
-    versionId: number;
-    mileage: number;
+    make: string;
+    model: string;
+    month: string;
+    year: string;
+    fuel: string;
+    body: string;
+    door: string;
+    gear: string;
+    engine: string;
+    version: string;
+    mileage: string;
 };
 
 export type VehicleStateInformation = {
-    imported?: boolean;
-    service_history?: boolean;
-    interior?: boolean;
-    mechanical?: boolean;
-    damaged?: boolean;
-    defaults?: boolean;
-    running?: boolean;
+    imported: string;
+    running: string;
+    history: string;
 };
 
 export type TValuation = {
@@ -182,15 +131,11 @@ export type TValuation = {
 };
 
 export type TCustomer = {
-    email?: string;
-    phone?: string;
+    email: string;
+    phone: string;
+    zipCode: string;
     lastName?: string;
     firstName?: string;
-    zipCode?: string;
-    ip?: string;
-    civility?: string;
-    dealerId?: number;
-    unsubscribed?: number;
 };
 
 export type TVehicleNames = {
@@ -205,7 +150,7 @@ export type TVehicleNames = {
     mileage: number;
     import: boolean;
     versionName: string;
-    doors: string;
+    doors?: string;
 };
 
 export type TCoordinates = {
@@ -228,12 +173,13 @@ export type TAppointment = {
 };
 
 export type TRecord = {
-    id: number;
-    status: string;
+    id: string;
+    status: 'created' | '???';
+    offerNumber: string;
     customer: TCustomer;
     vehicle: TVehicleNames;
     valuation: TValuation;
-    appointment: TAppointment;
+    appointment?: TAppointment;
 };
 
 export type UpdateStatus = {
@@ -241,7 +187,7 @@ export type UpdateStatus = {
 };
 
 export type TClient = 'autocasion' | 'autoscout24' | 'unoauto';
-export type TJourney = 'sell' | 'quotation';
+export type TJourney = 'sell' | 'valuation';
 export type RouteParams = {
     clientSlug: TClient;
     journeyType: TJourney;
@@ -252,3 +198,13 @@ export type TSubscription = {
     email: string;
     phone?: string;
 };
+export type TRefrentialElement = {
+    id: number;
+    name: string;
+};
+
+export interface Makes {
+    preferred: TRefrentialElement[];
+    others: TRefrentialElement[];
+    all: TRefrentialElement[];
+}

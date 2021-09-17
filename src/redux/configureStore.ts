@@ -4,23 +4,23 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { AppState } from './appState';
 import { Dependencies } from './dependencies.interface';
-import { referentialReducer } from './reducers/referentialReducer';
-import { dealerReducer } from './reducers/dealerReducer';
 import { formReducer } from './reducers/formReducer';
+import { dealerReducer } from './reducers/dealerReducer';
 import { errorReducer } from './reducers/errorReducer';
 import { clientReducer } from './reducers/clientReducer';
 import { recordReducer } from './reducers/recordReducer';
 import { unsubscribeReducer } from './reducers/unsubscribeReducer';
 import { cancelAppointmentReducer } from './reducers/cancelAppointmentReducer';
+import { carDetailsReducer } from './reducers/carDetailsReducer';
 
 export const configureStore = (dependencies?: Partial<Dependencies>) =>
     createStore(
         combineReducers({
             client: clientReducer,
-            referential: referentialReducer,
+            carDetails: carDetailsReducer,
+            form: formReducer,
             dealer: dealerReducer,
             record: recordReducer,
-            form: formReducer,
             error: errorReducer,
             unsubscribe: unsubscribeReducer,
             cancelAppointment: cancelAppointmentReducer,

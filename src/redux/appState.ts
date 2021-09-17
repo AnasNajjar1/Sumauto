@@ -1,14 +1,12 @@
 import {
+    CarDetails,
     Dealer,
     Error,
-    FormVehicle,
-    Make,
-    Makes,
     Slot,
     TClientConfig,
     TRecord,
     TReferentialItem,
-    VehicleElement,
+    TRefrentialElement,
 } from '../hexagon/interfaces';
 
 export type TActionStatus = 'idle' | 'pending' | 'succeeded' | 'failed';
@@ -30,41 +28,49 @@ export interface AppState {
         status: TActionStatus;
         data: TRecord;
     };
-    referential: {
-        filter: any;
-        cascade: TReferentialItem[];
-        make: {
-            status: TActionStatus;
-            data: Make[];
-        };
-        model: {
-            status: TActionStatus;
-            data: Make[];
-        };
-        version: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        body: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        fuel: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        year: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        month: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
+    carDetails: {
+        status: TActionStatus;
+        data: CarDetails; // TODO type this
     };
     form: {
-        vehicle: FormVehicle;
+        vehicle: any; // TODO type this
+        vehicleName: any; // TODO type this
+        vehicleState: any; // TODO type this
+        particular: any; // TODO type this
+        cascade: TReferentialItem[];
+
+        referential: {
+            make: {
+                status: TActionStatus;
+                data: TRefrentialElement[];
+            };
+            model: {
+                status: TActionStatus;
+                data: TRefrentialElement[];
+            };
+            version: {
+                status: TActionStatus;
+                data: TRefrentialElement[];
+            };
+            body: {
+                status: TActionStatus;
+                data: TRefrentialElement[];
+            };
+            fuel: {
+                status: TActionStatus;
+                data: TRefrentialElement[];
+            };
+            year: {
+                status: TActionStatus;
+                data: TRefrentialElement[];
+            };
+            month: {
+                status: TActionStatus;
+                data: TRefrentialElement[];
+            };
+        };
     };
+
     dealer: {
         dealerList: {
             status: TActionStatus;

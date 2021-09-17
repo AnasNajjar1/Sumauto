@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BrowserRouter, Switch, Route, useParams, useHistory } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
@@ -8,27 +8,25 @@ import { Spinner } from 'reactstrap';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
-import { themeSelector } from './Components/Themes';
+import { themeSelector } from './Themes';
 import { ErrorPage } from './Components/ErrorPage';
 import { clients, journeys } from '../../../config';
 import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName.useCase';
-import { Record } from './Components/Record';
+import { RecordPage } from './Components/RecordPage';
 import { UnsubscribePage } from './Components/UnsubscribePage';
 import { Confirmation } from './Components/Confirmation';
 import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
 
 const App: FunctionComponent = () => {
-    const history = useHistory();
     const { clientSlug, journeyType } = useParams<RouteParams>();
     const iframeInstance = iframeResizer;
 
     const dispatch = useDispatch();
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
-        history.push('/error/404');
-    } else {
-        dispatch(setClientNameUseCase(clientSlug));
-        dispatch(setJourneyTypeUseCase(journeyType));
+        return <ErrorPage />;
     }
+    dispatch(setClientNameUseCase(clientSlug));
+    dispatch(setJourneyTypeUseCase(journeyType));
 
     return (
         <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
@@ -51,7 +49,7 @@ const App: FunctionComponent = () => {
                                     path="/record/confirmation/:recordId"
                                     component={Confirmation}
                                 />
-                                <Route path="/record/:recordId" component={Record} />
+                                <Route path="/record/:recordId" component={RecordPage} />
                                 <Route path="/error/:errorCode" component={ErrorPage} />
                             </Switch>
                         </main>

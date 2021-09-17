@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { left, right } from 'fp-ts/Either';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import { Dealer, Slot } from '../../../../hexagon/interfaces';
@@ -9,7 +10,7 @@ export class InMemoryDealerGateway extends BaseApi implements DealerGateway {
 
     private dealerSlotList = [] as Slot[];
 
-    async requestDealerList(zipcode: string): Promise<ApiResponse<Dealer[]>> {
+    async requestDealerList(identifier: string, recordId: string): Promise<ApiResponse<Dealer[]>> {
         try {
             const result = this.dealerList;
             return right(result);

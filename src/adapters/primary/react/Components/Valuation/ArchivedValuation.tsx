@@ -31,7 +31,7 @@ export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
 
             <hr className="stick-background" />
             <Row>
-                <Col>
+                {/* <Col>
                     <div className="information-box">
                         <h2>{t('your_information')}</h2>
                         <p>
@@ -45,21 +45,21 @@ export const ArchivedValuation: FunctionComponent<TRecord> = (props) => {
                             {customer.zipCode}
                         </p>
                     </div>
-                </Col>
-                <Col>
-                    <div className="quotation-box">
-                        <h2>{t('your_quotation')}</h2>
-                        <div className="quotation-value">
+                </Col> */}
+                {/* <Col>
+                    <div className="valuation-box">
+                        <h2>{t('your_valuation')}</h2>
+                        <div className="valuation-value">
                             {TextUtils.formatPrice(locale, currency, valuation.value)}
                         </div>
                         <p>
                             <small>
-                                {t('quotation_date')}{' '}
+                                {t('valuation_date')}{' '}
                                 {TextUtils.formatDateNumeric(locale, valuation.date)}
                             </small>
                         </p>
                     </div>
-                </Col>
+                </Col> */}
             </Row>
             <hr className="my-4" />
 

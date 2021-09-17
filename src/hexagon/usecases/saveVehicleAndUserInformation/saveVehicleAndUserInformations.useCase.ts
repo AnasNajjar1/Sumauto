@@ -1,14 +1,21 @@
-import { isRight } from 'fp-ts/lib/Either';
+import { isLeft, isRight } from 'fp-ts/lib/Either';
 import { ThunkResult } from '../../../redux/configureStore';
 import { RecordGateway } from '../../gateways/recordGateway.interface';
+import { dislayErrorUseCase } from '../displayError/displayError.useCase';
 import * as actionCreators from './actionCreators';
 
 export const saveVehicleAndUserInformationsUseCase =
     (): ThunkResult<void> =>
     async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
         dispatch(actionCreators.Actions.saveVehicleAndUserInformationsSaving());
+
         const { config } = getState().client;
-        const {
+
+        const { make, model, month, year, fuel, body, door, gear, engine, version, mileage } =
+            getState().form.vehicle;
+
+        // Saving Record
+        const resultVehicle = await recordGateway.saveVehicleInformation(config.identifier, {
             make,
             model,
             month,
@@ -20,45 +27,51 @@ export const saveVehicleAndUserInformationsUseCase =
             engine,
             version,
             mileage,
-            phone,
-            email,
-            zipCode,
-            imported,
-            history,
-            running,
-        } = getState().form.vehicle;
-
-        const resultUser = await recordGateway.saveUserInformation(config.identifier, {
-            phone,
-            email,
-            zipCode,
-        });
-        const resultVehicle = await recordGateway.saveVehicleInformation(config.identifier, {
-            makeId: Number(make),
-            modelId: Number(model),
-            month: Number(month),
-            year: Number(year),
-            fuelId: Number(fuel),
-            bodyId: Number(body),
-            doors: Number(door),
-            gearId: Number(gear),
-            engine: Number(engine),
-            versionId: Number(version),
-            mileage: Number(mileage),
         });
 
-        const resultVehicleState = await recordGateway.saveVehicleStateInformation(
+        let recordId;
+        if (isRight(resultVehicle)) {
+            recordId = resultVehicle.right.id;
+        } else {
+            dispatch(dislayErrorUseCase('create_record_failed'));
+            dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
+            return;
+        }
+
+        // Saving State
+        const { history, imported, running } = getState().form.vehicleState;
+
+        const resultState = await recordGateway.saveVehicleStateInformation(
             config.identifier,
+            recordId,
             {
-                imported: imported === 'Y',
-                service_history: history === 'Y',
-                running: running === 'Y',
+                history,
+                imported,
+                running,
             },
         );
 
-        if (isRight(resultUser) && isRight(resultVehicle) && isRight(resultVehicleState)) {
-            dispatch(actionCreators.Actions.saveVehicleAndUserInformationsSaved(resultUser.right));
-        } else {
+        if (isLeft(resultState)) {
+            dispatch(dislayErrorUseCase('create_state_failed'));
             dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
         }
+
+        const { email, phone, zipCode } = getState().form.particular;
+
+        const resultUser = await recordGateway.saveUserInformation(config.identifier, recordId, {
+            phone,
+            email,
+            zipCode,
+        });
+
+        if (isRight(resultUser)) {
+            dispatch(
+                actionCreators.Actions.saveVehicleAndUserInformationsSaved(resultVehicle.right),
+            );
+        } else {
+            dispatch(dislayErrorUseCase('create_particular_failed'));
+            dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
+        }
+
+        // Updating purchase project
     };

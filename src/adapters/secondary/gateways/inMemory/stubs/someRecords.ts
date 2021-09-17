@@ -7,8 +7,9 @@ export const aRecordIds: RecordIds = {
 
 export const somesRecords: TRecord[] = [
     {
-        id: 100,
+        id: '100',
         status: 'created',
+        offerNumber: 'AZERTY',
         vehicle: {
             makeName: 'Peugeot',
             modelName: '2008',
@@ -55,8 +56,9 @@ export const somesRecords: TRecord[] = [
         },
     },
     {
-        id: 200,
+        id: '200',
         status: 'created',
+        offerNumber: 'AZERTY',
         vehicle: {
             makeName: 'Fiat',
             modelName: 'Panda',
@@ -103,8 +105,9 @@ export const somesRecords: TRecord[] = [
         },
     },
     {
-        id: 300,
+        id: '300',
         status: 'created',
+        offerNumber: 'AZERTY',
         vehicle: {
             makeName: 'Renault',
             modelName: 'Clio',
@@ -150,8 +153,9 @@ export const somesRecords: TRecord[] = [
         },
     },
     {
-        id: 400,
+        id: '400',
         status: 'created',
+        offerNumber: 'AZERTY',
         vehicle: {
             makeName: 'Peugeot',
             modelName: '2008',

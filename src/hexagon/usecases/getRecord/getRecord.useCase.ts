@@ -9,6 +9,7 @@ export const getRecordUseCase =
         dispatch(actionCreators.Actions.recordFetching());
         const { config } = getState().client;
         const result = await recordGateway.getRecord(config.identifier, recordId);
+
         if (isRight(result)) {
             dispatch(actionCreators.Actions.recordRetrieved(result.right));
         } else {

@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { left, right } from 'fp-ts/Either';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import {
@@ -41,6 +42,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async saveVehicleStateInformation(
         identifier: string,
+        recordId: number,
         vehicleStateInformation: VehicleStateInformation,
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
@@ -64,6 +66,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async saveUserInformation(
         identifier: string,
+        recordId: number,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
@@ -86,7 +89,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     }
 
     async getRecord(identifier: string, recordId: string): Promise<ApiResponse<TRecord>> {
-        const found = this.records.find((e) => e.id === Number(recordId));
+        const found = this.records.find((e) => e.id === recordId);
 
         if (found) {
             return right(found);

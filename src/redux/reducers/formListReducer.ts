@@ -1,13 +1,13 @@
 import { AnyAction, combineReducers } from 'redux';
-import { VehicleElement } from '../../hexagon/interfaces';
+import { TRefrentialElement } from '../../hexagon/interfaces';
 import { TActionStatus } from '../appState';
 
 function createDataWithNamedType(dataName: string) {
-    return function data(state: VehicleElement[] = [], action: AnyAction) {
+    return function data(state: TRefrentialElement[] = [], action: AnyAction) {
         if (action.type === `${dataName}/SUCCESS`) {
-            if (dataName === 'make') {
-                return action.payload.list[0].others;
-            }
+            // if (dataName === 'make') {
+            //     return action.payload.list[0].others;
+            // }
 
             return action.payload.list;
         }

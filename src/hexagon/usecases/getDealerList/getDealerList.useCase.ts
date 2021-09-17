@@ -4,11 +4,11 @@ import { DealerGateway } from '../../gateways/dealerGateway.interface';
 import * as actionCreators from './actionCreators';
 
 export const getDealerListUseCase =
-    (zipcode: string): ThunkResult<void> =>
+    (recordId: string): ThunkResult<void> =>
     async (dispatch, getState, { dealerGateway }: { dealerGateway: DealerGateway }) => {
         dispatch(actionCreators.Actions.dealerListFetching());
-
-        const result = await dealerGateway.requestDealerList(zipcode);
+        const { config } = getState().client;
+        const result = await dealerGateway.requestDealerList(config.identifier, recordId);
 
         if (isRight(result)) {
             dispatch(actionCreators.Actions.dealerListRetrieved(result.right));

@@ -1,43 +1,45 @@
-import { Makes, VehicleElement } from '../../../../../hexagon/interfaces';
+import { TRefrentialElement } from '../../../../../hexagon/interfaces';
 
 export type InMemoryReferential = {
-    makes: Makes;
-    models: VehicleElement[];
-    versions: VehicleElement[];
-    years: VehicleElement[];
-    months: VehicleElement[];
-    fuels: VehicleElement[];
-    bodies: VehicleElement[];
-    gears: VehicleElement[];
-    engines: VehicleElement[];
-    doors: VehicleElement[];
+    makes: any;
+    models: TRefrentialElement[];
+    versions: TRefrentialElement[];
+    years: TRefrentialElement[];
+    months: TRefrentialElement[];
+    fuels: TRefrentialElement[];
+    bodies: TRefrentialElement[];
+    gears: TRefrentialElement[];
+    engines: TRefrentialElement[];
+    doors: TRefrentialElement[];
 };
 
 export const inMemoryReferential: InMemoryReferential = {
-    makes: {
-        preferred: [
-            {
-                id: 82,
-                name: 'PEUGEOT',
-            },
-        ],
-        others: [
-            {
-                id: 84,
-                name: 'RENAULT',
-            },
-        ],
-        all: [
-            {
-                id: 82,
-                name: 'PEUGEOT',
-            },
-            {
-                id: 84,
-                name: 'RENAULT',
-            },
-        ],
-    },
+    makes: [
+        {
+            preferred: [
+                {
+                    id: 82,
+                    name: 'PEUGEOT',
+                },
+            ],
+            others: [
+                {
+                    id: 84,
+                    name: 'RENAULT',
+                },
+            ],
+            all: [
+                {
+                    id: 82,
+                    name: 'PEUGEOT',
+                },
+                {
+                    id: 84,
+                    name: 'RENAULT',
+                },
+            ],
+        },
+    ],
     models: [
         {
             id: 10,

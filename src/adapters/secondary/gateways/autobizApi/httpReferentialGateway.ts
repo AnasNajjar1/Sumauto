@@ -1,12 +1,11 @@
 import { left, right } from 'fp-ts/Either';
-import { filter } from 'lodash';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import {
     ReferentialGateway,
     Scope,
 } from '../../../../hexagon/gateways/referentialGateway.interface';
 import {
-    ReferentialItem,
+    TReferentialItem,
     CarDetails,
     Makes,
     VehicleFormFilters,
@@ -21,7 +20,7 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {
         try {
             const response = await this.get(`/referentials/makes?identifier=${identifier}`);
-            return right(MakesMapper.toDto(response.data));
+            return right(MakesMapper.toApp(response.data));
         } catch (error) {
             return left(error as string);
         }
@@ -29,12 +28,12 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
 
     async requestList(
         identifier: string,
-        scope: ReferentialItem,
+        scope: TReferentialItem,
         filters: VehicleFormFilters,
     ): Promise<ApiResponse<Scope[]>> {
         try {
             const queryString = this.encodeQueryData(
-                ReferentialQueryParamsMapper.toDto({ ...filters, ...{ identifier } }),
+                ReferentialQueryParamsMapper.toAutobiz({ ...filters, ...{ identifier } }),
             );
 
             let url = '/referentials/';
@@ -87,10 +86,13 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
             url += `?${queryString}`;
 
             const response = await this.get(url);
+
             const data = Array.isArray(response.data) ? response.data : [response.data];
             if (data.length === 0) {
                 return left('no_result');
             }
+
+            // TODO Mapper.toApp
             return right(data);
         } catch (error) {
             return left(error as string);
@@ -106,7 +108,7 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
                 `/referentials/car-details/${registration}?identifier=${identifier}`,
             );
 
-            return right(CarDetailsMapper.toDto(response.data));
+            return right(CarDetailsMapper.toApp(response.data));
         } catch (error) {
             return left(error as string);
         }

@@ -2,8 +2,7 @@ import { isRight } from 'fp-ts/lib/Either';
 
 import { ThunkResult } from '../../../redux/configureStore';
 import { ReferentialGateway } from '../../gateways/referentialGateway.interface';
-import { QuestionKey } from '../../interfaces';
-// import { setVehicleValueCascade } from '../setVehicleValue/setVehicleValue.useCase';
+import { requestListUseCase } from '../setVehicleValue/setVehicleValue.useCase';
 import * as actionCreators from './actionCreators';
 
 export const getCarDetailsByRegistrationUseCase =
@@ -23,49 +22,53 @@ export const getCarDetailsByRegistrationUseCase =
 
         if (isRight(result)) {
             const {
-                status,
-                makeId,
-                modelId,
-                fuelId,
-                bodyId,
-                doors,
-                gearboxId,
-                engine,
-                month,
+                make,
+                makeName,
+                model,
+                modelName,
                 year,
+                month,
+                monthName,
+                fuel,
+                fuelName,
+                body,
+                bodyName,
+                door,
+                gear,
+                gearName,
+                engine,
             } = result.right;
 
-            const displayQuestion = (question: QuestionKey) => {
-                const q = getState().client.config.questionsGroup.reduce((a: any, b) => {
-                    a.push(b.questions);
-                    return a;
-                }, []);
-                return q.flat().includes(question);
-            };
+            dispatch(
+                actionCreators.Actions.setVehicleAll({
+                    make,
+                    model,
+                    year,
+                    month,
+                    door,
+                    fuel,
+                    body,
+                    engine,
+                    gear,
+                }),
+            );
+            dispatch(
+                actionCreators.Actions.setVehicleNames({
+                    make: makeName,
+                    model: modelName,
+                    year,
+                    month: monthName,
+                    fuel: fuelName,
+                    body: bodyName,
+                    door,
+                    gear: gearName,
+                    engine,
+                }),
+            );
 
-            // if (status) {
-            //     if (displayQuestion('make'))
-            //         await dispatch(setVehicleValueCascade('make', makeId.toString()));
-            //     if (displayQuestion('model'))
-            //         await dispatch(setVehicleValueCascade('model', modelId.toString()));
-            //     if (displayQuestion('month'))
-            //         await dispatch(setVehicleValueCascade('month', month.toString()));
-            //     if (displayQuestion('year'))
-            //         await dispatch(setVehicleValueCascade('year', year.toString()));
-            //     if (displayQuestion('fuel'))
-            //         await dispatch(setVehicleValueCascade('fuel', fuelId.toString()));
-            //     if (displayQuestion('body'))
-            //         await dispatch(setVehicleValueCascade('body', bodyId.toString()));
-            //     if (displayQuestion('door'))
-            //         await dispatch(setVehicleValueCascade('door', doors.toString()));
-            //     if (displayQuestion('gear'))
-            //         await dispatch(setVehicleValueCascade('gear', gearboxId.toString()));
-            //     if (displayQuestion('engine'))
-            //         await dispatch(setVehicleValueCascade('engine', engine.toString()));
-            //     dispatch(actionCreators.Actions.carDetailsRetrieved());
-            // } else {
-            //     dispatch(actionCreators.Actions.carDetailsFailed());
-            // }
+            dispatch(requestListUseCase('version'));
+
+            dispatch(actionCreators.Actions.carDetailsRetrieved());
         } else {
             dispatch(actionCreators.Actions.carDetailsFailed());
         }

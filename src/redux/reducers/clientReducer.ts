@@ -1,6 +1,5 @@
 import { AnyAction, combineReducers } from 'redux';
 import { TClientConfig } from '../../hexagon/interfaces';
-import { TActionStatus } from '../appState';
 
 export const name = (state = '', action: AnyAction) => {
     if (action.type === 'client/SET_NAME') {

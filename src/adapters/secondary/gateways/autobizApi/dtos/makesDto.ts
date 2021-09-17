@@ -1,9 +1,9 @@
-export interface Make {
+export interface AutobizMake {
     id: number;
     name: string;
 }
-export interface MakesDto {
-    preferred: Make[];
-    others: Make[];
-    all: Make[];
+export interface AutobizMakesDto {
+    preferred: AutobizMake[];
+    others: AutobizMake[];
+    all: AutobizMake[];
 }

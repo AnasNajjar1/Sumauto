@@ -1,3 +1,4 @@
+/*eslint-disable */
 import { left, right } from 'fp-ts/Either';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import { TSubscription } from '../../../../hexagon/interfaces';

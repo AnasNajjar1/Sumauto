@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Container,
     Row,
@@ -12,14 +12,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPrint } from '@fortawesome/free-solid-svg-icons';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Map } from './Map';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord.useCase';
-import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { FeatureGroup } from './FeatureGroup';
 import { Feature } from './Feature';
 import { AppointmentResume } from './AppointmentResume';

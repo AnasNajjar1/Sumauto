@@ -1,10 +1,10 @@
-export interface VehicleType {
+export interface AutobizVehicleType {
     id: number;
     code: string;
     name: string;
 }
 
-export interface Version {
+export interface AutobizVersion {
     id: number;
     name: string;
     finish: string;
@@ -16,7 +16,7 @@ export interface Version {
     preferred: boolean;
 }
 
-export interface CarDetailsDto {
+export interface AutobizCarDetailsDto {
     registration: string;
     vin: string;
     brandId: number;
