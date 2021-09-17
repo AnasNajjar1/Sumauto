@@ -10,13 +10,10 @@ import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { CarDetailsMapper } from './mappers/carDetails.mapper';
 import { MakesMapper } from './mappers/makes.mapper';
 
-const API_URL_PREFIX = 'https://api-c2b.autobiz.com/v1';
 export class HttpReferentialGateway extends BaseApi implements ReferentialGateway {
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {
         try {
-            const response = await this.get(
-                `${API_URL_PREFIX}/referentials/makes?identifier=${identifier}`,
-            );
+            const response = await this.get(`/referentials/makes?identifier=${identifier}`);
             return right(MakesMapper.toDto(response.data));
         } catch (error) {
             return left(error as string);
@@ -31,7 +28,7 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
         try {
             const queryString = this.encodeQueryData(filters, '&');
 
-            let url = API_URL_PREFIX;
+            let url = '';
 
             switch (scope) {
                 case 'make':
@@ -92,7 +89,7 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
     ): Promise<ApiResponse<CarDetails>> {
         try {
             const response = await this.get(
-                `${API_URL_PREFIX}/referentials/car-details/${registration}?identifier=${identifier}`,
+                `/referentials/car-details/${registration}?identifier=${identifier}`,
             );
 
             return right(CarDetailsMapper.toDto(response.data));

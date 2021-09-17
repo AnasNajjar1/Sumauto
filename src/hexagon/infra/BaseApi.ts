@@ -11,8 +11,8 @@ export abstract class BaseApi {
 
     private axiosInstance: AxiosInstance | any = null;
 
-    constructor(baseUrl?: string) {
-        this.baseUrl = baseUrl;
+    constructor() {
+        this.baseUrl = process.env.REACT_APP_AUTOBIZ_API_URL;
         this.bearerToken = process.env.REACT_APP_AUTOBIZ_API_TOKEN;
         this.responseType = 'json';
         this.headersAccept = 'application/json';
