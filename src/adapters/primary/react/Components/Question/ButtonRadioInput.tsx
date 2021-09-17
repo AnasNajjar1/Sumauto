@@ -65,7 +65,7 @@ export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({
                 {value && error?.validation && <p className="text-danger">{error.message}</p>}
                 {text.help && <FormText color="muted">{text.help}</FormText>}
                 {encouragement && (
-                    <Encouragement id={id} title={encouragement.title} body={encouragement.body} />
+                    <Encouragement display title={encouragement.title} body={encouragement.body} />
                 )}
             </FormGroup>
         </div>

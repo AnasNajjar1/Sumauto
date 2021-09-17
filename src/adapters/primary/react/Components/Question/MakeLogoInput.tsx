@@ -4,7 +4,6 @@ import { Col, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
 
 import { QuestionKey } from '../../../../../hexagon/interfaces';
-import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 
 type MakeLogoInputProps = {
     id: QuestionKey;
@@ -41,9 +40,6 @@ export const MakeLogoInput: FunctionComponent<MakeLogoInputProps> = ({ id, value
                             <div
                                 role="button"
                                 aria-hidden
-                                onClick={() =>
-                                    dispatch(setVehicleValueCascade('make', f.id.toString()))
-                                }
                                 className={value === f.id.toString() ? 'selected' : ''}
                             >
                                 <img src={getMakeLogoUrl(f.name)} alt={f.name} />

@@ -1,14 +1,21 @@
 import { left, right } from 'fp-ts/Either';
+import { filter } from 'lodash';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import {
     ReferentialGateway,
     Scope,
 } from '../../../../hexagon/gateways/referentialGateway.interface';
-import { ReferentialItem, CarDetails, VehicleFilters, Makes } from '../../../../hexagon/interfaces';
+import {
+    ReferentialItem,
+    CarDetails,
+    Makes,
+    VehicleFormFilters,
+} from '../../../../hexagon/interfaces';
 
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { CarDetailsMapper } from './mappers/carDetails.mapper';
 import { MakesMapper } from './mappers/makes.mapper';
+import { ReferentialQueryParamsMapper } from './mappers/referentialQueryParams.mapper';
 
 export class HttpReferentialGateway extends BaseApi implements ReferentialGateway {
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {
@@ -23,60 +30,67 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
     async requestList(
         identifier: string,
         scope: ReferentialItem,
-        filters: VehicleFilters,
+        filters: VehicleFormFilters,
     ): Promise<ApiResponse<Scope[]>> {
         try {
-            const queryString = this.encodeQueryData(filters, '&');
+            const queryString = this.encodeQueryData(
+                ReferentialQueryParamsMapper.toDto({ ...filters, ...{ identifier } }),
+            );
 
-            let url = '';
+            let url = '/referentials/';
 
             switch (scope) {
                 case 'make':
-                    url += `/referentials/makes?identifier=${identifier}`;
+                    url += `makes`;
                     break;
 
                 case 'model':
-                    url += `/referentials/make/${filters.makeId}/models?identifier=${identifier}`;
+                    url += `make/${filters.make}/models`;
                     break;
 
                 case 'version':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/versions${queryString}&identifier=${identifier}`;
+                    url += `make/${filters.make}/model/${filters.model}/versions`;
                     break;
 
                 case 'month':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/months${queryString}&identifier=${identifier}`;
+                    url += `make/${filters.make}/model/${filters.model}/months`;
                     break;
 
                 case 'year':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/years${queryString}&identifier=${identifier}`;
+                    url += `make/${filters.make}/model/${filters.model}/years`;
                     break;
 
                 case 'fuel':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/fuels${queryString}&identifier=${identifier}`;
+                    url += `make/${filters.make}/model/${filters.model}/fuels`;
                     break;
 
                 case 'body':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/bodies${queryString}&identifier=${identifier}`;
+                    url += `make/${filters.make}/model/${filters.model}/bodies`;
                     break;
 
                 case 'door':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/doors${queryString}&identifier=${identifier}`;
+                    url += `make/${filters.make}/model/${filters.model}/doors`;
                     break;
 
                 case 'gear':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/gears${queryString}&identifier=${identifier}`;
+                    url += `make/${filters.make}/model/${filters.model}/gears`;
                     break;
 
                 case 'engine':
-                    url += `/referentials/make/${filters.makeId}/model/${filters.modelId}/engines${queryString}&identifier=${identifier}`;
+                    url += `make/${filters.make}/model/${filters.model}/engines`;
                     break;
 
                 default:
                     break;
             }
 
+            url += `?${queryString}`;
+
             const response = await this.get(url);
             const data = Array.isArray(response.data) ? response.data : [response.data];
+            if (data.length === 0) {
+                return left('no_result');
+            }
             return right(data);
         } catch (error) {
             return left(error as string);
@@ -98,17 +112,15 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
         }
     }
 
-    private encodeQueryData(data: any, format: '&' | '/') {
+    private encodeQueryData(data: any) {
         const ret = [];
 
-        const separator = format === '&' ? '=' : '/';
         for (const d in data) {
             if (data[d]) {
-                if (d !== 'makeId' && d !== 'modelId')
-                    ret.push(encodeURIComponent(d) + separator + encodeURIComponent(data[d]));
+                ret.push(`${encodeURIComponent(d)}=${encodeURIComponent(data[d])}`);
             }
         }
-        const prefix = format === '&' ? '?' : '';
-        return prefix + ret.join(format);
+
+        return ret.join('&');
     }
 }

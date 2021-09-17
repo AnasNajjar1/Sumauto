@@ -1,4 +1,10 @@
-import { CarDetails, Makes, ReferentialItem, VehicleElement, VehicleFilters } from '../interfaces';
+import {
+    CarDetails,
+    Makes,
+    ReferentialItem,
+    VehicleElement,
+    VehicleFormFilters,
+} from '../interfaces';
 
 import { ApiResponse } from '../infra/ApiResponse';
 
@@ -10,7 +16,7 @@ export interface ReferentialGateway {
     requestList(
         identifier: string,
         scope: ReferentialItem,
-        filters?: VehicleFilters,
+        filters?: VehicleFormFilters,
     ): Promise<ApiResponse<VehicleElement[]>>;
 
     requestCartDetailsByRegsitration(

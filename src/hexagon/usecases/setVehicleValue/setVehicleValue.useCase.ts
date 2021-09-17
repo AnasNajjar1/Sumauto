@@ -1,69 +1,58 @@
 import { isRight } from 'fp-ts/lib/Either';
-import { ReferentialMapper } from '../../../adapters/secondary/gateways/autobizApi/mappers/vehicleFilter.mapper';
 import { ThunkResult } from '../../../redux/configureStore';
 import { ReferentialGateway } from '../../gateways/referentialGateway.interface';
-import { QuestionKey, ReferentialItem } from '../../interfaces';
+import { TReferentialItem } from '../../interfaces';
 import * as actionCreators from './actionCreators';
 
 const { Actions } = actionCreators;
 
-export const setVehicleValueCascade =
-    (key: ReferentialItem, value: string): ThunkResult<void> =>
+export const setVehicleValue =
+    (key: TReferentialItem, value: string): ThunkResult<void> =>
     async (
         dispatch,
         getState,
         { referentialGateway }: { referentialGateway: ReferentialGateway },
     ) => {
-        dispatch(Actions.vehicleValueSet({ key, value }));
+        dispatch(Actions.setFilter({ key, value }));
 
-        const { cascadeOrder } = getState().client.config;
+        const { cascade, filter } = getState().referential;
 
-        const i = cascadeOrder.findIndex((s) => s === key);
+        const { config } = getState().client;
 
-        let nextKey: ReferentialItem | undefined;
-        if (cascadeOrder[i + 1]) {
-            nextKey = cascadeOrder[i + 1];
+        const i = cascade.findIndex((s) => s === key);
+        let nextKey: TReferentialItem | undefined;
+
+        if (cascade[i + 1]) {
+            nextKey = cascade[i + 1];
         }
 
         let reset = false;
-        cascadeOrder.forEach((element) => {
+        cascade.forEach((element) => {
             if (reset) {
-                dispatch(
-                    Actions.vehicleValueSet({
-                        key: element,
-                        value: '',
-                    }),
-                );
-                dispatch(Actions.listReset(element));
+                dispatch(actionCreators.Actions.setFilter({ key: element, value: '' }));
+                dispatch(actionCreators.Actions.listReset(element));
             }
             if (!reset && element === key) reset = true;
         });
 
-        if (value && nextKey) {
-            dispatch(Actions.listFetching(nextKey));
+        if (nextKey) {
+            const result = await referentialGateway.requestList(config.identifier, nextKey, filter);
 
-            const { identifier } = getState().client.config;
-            const result = await referentialGateway.requestList(
-                identifier,
-                nextKey,
-                ReferentialMapper.toFilters(getState().form.vehicle),
-            );
-
+            // TODO: mapper here ?
             if (isRight(result)) {
-                dispatch(Actions.listRetrieved(nextKey, result.right));
-                if (result.right.length === 1 && nextKey) {
-                    dispatch(setVehicleValueCascade(nextKey, result.right[0].id.toString()));
+                dispatch(actionCreators.Actions.listRetrieved(nextKey, result.right));
+
+                if (result.right.length === 1) {
+                    dispatch(setVehicleValue(nextKey, result.right[0].id.toString()));
                 }
             } else {
-                dispatch(Actions.listFailed(nextKey));
+                dispatch(actionCreators.Actions.listFailed(nextKey));
             }
-        } else {
-            dispatch(Actions.listReset(nextKey));
         }
     };
 
-export const setVehicleValue =
-    (key: QuestionKey, value: string): ThunkResult<void> =>
+export const setCascade =
+    (cascade: TReferentialItem[]): ThunkResult<void> =>
     async (dispatch) => {
-        dispatch(Actions.vehicleValueSet({ key, value }));
+        dispatch(Actions.setCascade(cascade));
     };

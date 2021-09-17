@@ -10,7 +10,7 @@ import { dislayErrorUseCase } from '../../../../../hexagon/usecases/displayError
 import { getCarDetailsByRegistrationUseCase } from '../../../../../hexagon/usecases/getCarDetailsByRegistration/getCarDetailsByRegistration.useCase';
 import { setVehicleValue } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { getClientSelector } from '../../../view-models-generators/clientSelector';
-import { getRegistrationSelector } from '../../../view-models-generators/registrationSelector';
+// import { getRegistrationSelector } from '../../../view-models-generators/registrationSelector';
 
 type RegistrationInputProps = {
     id: ReferentialItem;
@@ -33,14 +33,14 @@ export const RegistrationInput: FunctionComponent<RegistrationInputProps> = ({
 
     const [registration, setRegistration] = useState(value || '');
 
-    const { status } = useSelector(getRegistrationSelector);
+    // const { status } = useSelector(getRegistrationSelector);
 
     const { client } = useSelector(getClientSelector);
     const { registrationRegex } = client.config;
 
     const submitingRegistration = () => {
         if (registration.search(new RegExp(registrationRegex)) === 0) {
-            dispatch(setVehicleValue('registration', registration));
+            // dispatch(setVehicleValue('registration', registration));
             dispatch(getCarDetailsByRegistrationUseCase(registration));
         } else {
             dispatch(dislayErrorUseCase(`<p>${t('the_registration_number_is_invalid')}</p>`));
@@ -58,7 +58,7 @@ export const RegistrationInput: FunctionComponent<RegistrationInputProps> = ({
 
     return (
         <>
-            <div className={`question question-${id}`}>
+            {/* <div className={`question question-${id}`}>
                 <FormGroup>
                     <Label>
                         {text.label} {required && '*'}
@@ -85,7 +85,7 @@ export const RegistrationInput: FunctionComponent<RegistrationInputProps> = ({
                     </InputGroup>
                 </FormGroup>
             </div>
-            <hr />
+            <hr /> */}
         </>
     );
 };

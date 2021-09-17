@@ -3,6 +3,21 @@ export type VehicleElement = {
     name: string;
 };
 
+export type TRefrentialElement = {
+    id: number;
+    name: string;
+};
+export type TReferentialItem =
+    | 'make'
+    | 'model'
+    | 'version'
+    | 'year'
+    | 'month'
+    | 'fuel'
+    | 'body'
+    | 'door'
+    | 'gear'
+    | 'engine';
 export interface Make {
     id: number;
     name: string;
@@ -40,17 +55,17 @@ export type Slot = {
     hours: Hour[];
 };
 
-export type VehicleFilters = {
-    mode?: 'full' | 'long' | 'short';
-    makeId?: number;
-    modelId?: number;
-    monthId?: number;
-    yearId?: number;
-    fuelId?: number;
-    bodyId?: number;
-    gearId?: number;
-    doors?: number;
-    versionId?: number;
+export type VehicleFormFilters = {
+    make?: string;
+    model?: string;
+    month?: string;
+    year?: string;
+    fuel?: string;
+    body?: string;
+    gear?: string;
+    door?: string;
+    version?: string;
+    identifier: string;
 };
 
 export type QuestionKey =

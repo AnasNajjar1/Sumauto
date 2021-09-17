@@ -50,7 +50,7 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
                         key={id}
                         id={id}
                         defaultValue={value}
-                        onBlur={(e) => dispatch(setVehicleValue(id, e.target.value))}
+                        // onBlur={(e) => dispatch(setVehicleValue(id, e.target.value))}
                     />
                     <div className="input-validation">
                         {error?.validation === false && value && <FontAwesomeIcon icon={faCheck} />}
@@ -59,7 +59,7 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
                 </div>
                 {error?.validation && <p className="text-danger">{error.message}</p>}
                 {encouragement && (
-                    <Encouragement id={id} title={encouragement.title} body={encouragement.body} />
+                    <Encouragement display title={encouragement.title} body={encouragement.body} />
                 )}
             </FormGroup>
         </div>

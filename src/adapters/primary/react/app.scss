@@ -10,6 +10,7 @@ $danger: #CB0C16;
 $input-box-shadow: none;   
 $input-focus-width: 0;
 $input-btn-focus-width:  0;
+$grid-gutter-width: 15px;
 
 @import '~bootstrap/scss/bootstrap';
 
@@ -35,6 +36,7 @@ $input-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, c
 body{
     padding-bottom: $halfGutter;
     min-width: 320px;
+    padding: 0 10px;
 }
 
 @include media-breakpoint-down(xs) {
@@ -71,16 +73,18 @@ body{
 }
 
 .encouragement{
-    margin-top: $halfGutter;
-    color: $primary;
-    padding:$halfGutter;
-    font-size: .9em;
-    @include media-breakpoint-up(sm) {
-        margin-top: 0;
-        position:absolute;
-        top:0;
-        width: 30vw;
-        right: -31vw;
+    margin-bottom: $halfGutter;
+
+    padding:$grid-gutter-width;
+    font-size: .8em;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+
+    &.visible{
+        visibility: visible;
+        opacity: 1;
     }
 
     .encouragement-title{
@@ -96,69 +100,85 @@ body{
         margin: 0;
     }
 }
-.question{
-    @include make-col-ready();
+
+// .question{
+//     @include make-col-ready();
+//     @include media-breakpoint-up(sm) {
+//         @include make-col(6);
+//     }
+//     @include media-breakpoint-up(lg) {
+//         @include make-col(6);
+//     }
+//     &.question-registration{
+//         @include make-col(12);
+//         @include media-breakpoint-up(sm) {
+//             .form-group{
+//                 max-width: 300px;
+//             }
+//         }
+//     }
+
+//     &.question-version,
+//     &.question-mileage,
+//     &.question-imported,
+//     &.question-history,
+//     &.question-running,
+//     &.question-sellProject{
+//         @include make-col(12);
+//     }
+
+//     &.question-email{
+//         @include make-col(6);
+//     }
+
+
+//     &.question-makelogo{
+//         @include make-col(12);
+//         .row{
+//             margin: -$halfGutter / 2;
+//         }
+//         margin-bottom: $halfGutter;
+//         display: flex;
+//         .logo-button-container{
+//             width: calc(100% / 5);
+//             font-size: .7em;
+//             text-align: center;
+//             div{
+//                 margin: 5px $halfGutter / 2;
+//                 border:1px solid #ccc;
+//                 display: block;
+//                 &.selected{
+//                     border:2px solid $primary;
+//                 }
+//                 img{width: 100%; padding: 5px;}
+//             }
+//         }
+//     }
+
+//     @include media-breakpoint-up(sm) {
+//         &.question-year{
+//             .form-text{
+//                 width: 200%;
+//                 left: calc(-100% - 30px);
+//                 position: relative;
+//             }
+//         }
+//     }
+// }
+
+
+.form-group-year label{
+    display: none;
     @include media-breakpoint-up(sm) {
-        @include make-col(6);
-    }
-    @include media-breakpoint-up(lg) {
-        @include make-col(6);
-    }
-    &.question-registration{
-        @include make-col(12);
-        @include media-breakpoint-up(sm) {
-            .form-group{
-                max-width: 300px;
-            }
-        }
+        display: inline-block; 
     }
 
-    &.question-version,
-    &.question-mileage,
-    &.question-imported,
-    &.question-history,
-    &.question-running,
-    &.question-sellProject{
-        @include make-col(12);
-    }
+}
 
-    &.question-email{
-        @include make-col(6);
-    }
-
-
-    &.question-makelogo{
-        @include make-col(12);
-        .row{
-            margin: -$halfGutter / 2;
-        }
-        margin-bottom: $halfGutter;
-        display: flex;
-        .logo-button-container{
-            width: calc(100% / 5);
-            font-size: .7em;
-            text-align: center;
-            div{
-                margin: 5px $halfGutter / 2;
-                border:1px solid #ccc;
-                display: block;
-                &.selected{
-                    border:2px solid $primary;
-                }
-                img{width: 100%; padding: 5px;}
-            }
-        }
-    }
-
-    @include media-breakpoint-up(sm) {
-        &.question-year{
-            .form-text{
-                width: 200%;
-                left: calc(-100% - 30px);
-                position: relative;
-            }
-        }
-    }
+.form-help{
+    color:$gray-700;
+    margin-top: -5px;
+    font-size: .8em;;
 }
 
 .input-with-validation{
@@ -168,12 +188,12 @@ body{
         flex:1;
     }
     .input-validation{
-        width: 30px;
+        width: 20px;
         display: flex;
-        justify-content: center;
+        justify-content: right;
         font-size: 14px;
         .fa-check{
-            width: 16px;
+            width: 10px;
             @extend .text-success;
         }
         .fa-times{
@@ -346,6 +366,7 @@ label{
     font-weight: 700;
     color: $body-color;
     transition: $input-transition;
+    margin-bottom: .3em;
 }
 .form-group{
 
@@ -580,4 +601,13 @@ label{
     align-items: center;
     justify-content: center;
     height: 500px;
+}
+
+.form-section-title{
+    color: #363636;
+    font-size: .8em;
+    border-bottom: 1px solid #363636;
+    padding-bottom: 6px;
+    margin: 1em 0;
+    text-transform: uppercase;
 }

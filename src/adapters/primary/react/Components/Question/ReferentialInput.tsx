@@ -4,7 +4,7 @@ import { FormGroup, Label, Input, FormText, Spinner } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ReferentialItem } from '../../../../../hexagon/interfaces';
-import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
+// import { setVehicleValueCascade } from '../../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { Encouragement } from './Encouragement';
 
 type ReferentialInputProps = {
@@ -35,7 +35,7 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
     const inputRef = useRef(null);
 
     const handleChange = (e: ReferentialItem, name: string) => {
-        dispatch(setVehicleValueCascade(e, name));
+        // dispatch(setVehicleValueCascade(e, name));
     };
 
     return (
@@ -81,7 +81,7 @@ export const ReferentialInput: FunctionComponent<ReferentialInputProps> = ({
                     {text.help && <FormText color="muted">{text.help}</FormText>}
                     {encouragement && (
                         <Encouragement
-                            id={id}
+                            display
                             title={encouragement.title}
                             body={encouragement.body}
                         />

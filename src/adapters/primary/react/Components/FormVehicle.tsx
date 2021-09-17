@@ -2,66 +2,168 @@ import React, { FunctionComponent, Fragment, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, Col, Container, Row } from 'reactstrap';
+import { Button, Col, Container, FormGroup, Input, Label, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
 import { saveVehicleAndUserInformationsUseCase } from '../../../../hexagon/usecases/saveVehicleAndUserInformation/saveVehicleAndUserInformations.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
-import useVehicleForm from '../hooks/useVehicleForm';
 import { CtaBlock } from './CtaBlock';
 import { ProgressSteps } from './ProgressSteps/ProgressSteps';
 import { Picture } from './Picture';
-import { getFormVehicleValue } from '../../view-models-generators/referentialSelectors';
+import useReferential from '../hooks/useReferential';
+import { ReferentialSelect } from './ReferentialSelect';
+import { TReferentialItem } from '../../../../hexagon/interfaces';
+import {
+    setCascade,
+    setVehicleValue,
+} from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
+import { getReferentialList } from '../../../../hexagon/usecases/getReferentialList/getReferentialList';
+import { Encouragement } from './Question/Encouragement';
+import { getFilter } from '../../view-models-generators/referentialSelectors';
+import { InputWithValidation } from './InputWithValidation';
+import { InputValidation } from './InputValidation';
 
 export const FormVehicle: FunctionComponent = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
-    const { inputComponents, shouldDisplayQuestionsGroup, canQuote, vehicleProgress } =
-        useVehicleForm();
-    const { client } = useSelector(getClientSelector);
+    const { filter } = useSelector(getFilter);
 
-    const { id: recordId } = useSelector(getRecordSelector);
+    let displayEncouragementVersion = false;
+    let displaySectionMoreDetails = false;
+    const displaySectionAdditionalInformation = false;
 
-    const { vehicle } = useSelector(getFormVehicleValue);
+    if (filter.engine) displayEncouragementVersion = true;
+    if (filter.body) displaySectionMoreDetails = true;
 
-    const handleSubmitForm = () => {
-        dispatch(saveVehicleAndUserInformationsUseCase());
-    };
+    let progress = 0;
+    if (filter.make) progress = 6;
+    if (filter.model) progress = 11;
+    if (filter.month) progress = 17;
+    if (filter.year) progress = 22;
+    if (filter.fuel) progress = 28;
+    if (filter.body) progress = 34;
 
-    useEffect(() => {
-        const encouragementVersion = document.getElementById('encouragement_version');
-        const encouragementEmail = document.getElementById('encouragement_emailConfirmation');
-        if (encouragementVersion) {
-            if (vehicle.engine) {
-                encouragementVersion.classList.remove('d-none');
-            } else {
-                encouragementVersion.classList.add('d-none');
-            }
-        }
+    if (filter.door) progress = 40;
+    if (filter.gear) progress = 46;
+    if (filter.engine) progress = 52;
+    if (filter.version) progress = 58;
 
-        if (encouragementEmail) {
-            if (vehicle.running) {
-                encouragementEmail.classList.remove('d-none');
-            } else {
-                encouragementEmail.classList.add('d-none');
-            }
-        }
-    }, [dispatch, vehicle]);
-    useEffect(() => {
-        if (recordId > 0) history.push(`./record/${recordId}`);
-    }, [dispatch, recordId]);
+    useReferential();
 
     return (
         <Container fluid>
             <Row className="progress-bar-section">
-                <Col sm={9}>
-                    <ProgressSteps progress={vehicleProgress()} withLabels />
+                <Col xs={12} sm={9}>
+                    <ProgressSteps progress={progress} withLabels />
                 </Col>
-                <Col sm={3}>
+                <Col sm={3} className="d-none d-sm-block">
                     <Picture background="steps" />
                 </Col>
             </Row>
-            <div className="page page-formvehicle">
+            {/* ------------ */}
+            <Row>
+                <Col xs={12} sm={4} xl={3}>
+                    <FormGroup className={`form-group-${'mileage'}`}>
+                        <Label for="mileage">{'mileage' && t('mileage')}</Label>
+                        <InputWithValidation>
+                            <Input
+                                type="number"
+                                min="0"
+                                className="form-control"
+                                name="mileage"
+                                key="mileage"
+                                id="mileage"
+                                defaultValue=""
+                                // onBlur={(e) =>
+                                //     dispatch(setVehicleValue('mileage', e.target.value))
+                                // }
+                            />
+                            <InputValidation valid />
+                        </InputWithValidation>
+                    </FormGroup>
+                </Col>
+            </Row>
+            {/* ------------ */}
+
+            <div className="form-section">
+                <div className="form-section-title">{t('basic_information')}</div>
+                <Row>
+                    <Col xs={12} sm={4} xl={3}>
+                        <ReferentialSelect label="other_makes" scope="make" />
+                    </Col>
+
+                    <Col xs={12} sm={4} xl={3}>
+                        <ReferentialSelect label="model" scope="model" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12} sm={4} xl={3}>
+                        <ReferentialSelect label="registration_date" scope="month" />
+                    </Col>
+
+                    <Col xs={12} sm={4} xl={3}>
+                        <ReferentialSelect label="" scope="year" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12} sm={8}>
+                        <p className="form-help">{t('registration_date_help')}</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12} sm={4} xl={3}>
+                        <ReferentialSelect label="fuel" scope="fuel" />
+                    </Col>
+
+                    <Col xs={12} sm={4} xl={3}>
+                        <ReferentialSelect label="body" scope="body" />
+                    </Col>
+                </Row>
+            </div>
+            {displaySectionMoreDetails && (
+                <div className="form-section">
+                    <div className="form-section-title">{t('more_details')}</div>
+                    <Row>
+                        <Col xs={12} sm={4} xl={3}>
+                            <ReferentialSelect label="door" scope="door" />
+                        </Col>
+
+                        <Col xs={12} sm={4} xl={3}>
+                            <ReferentialSelect label="gear" scope="gear" />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={12} sm={4} xl={3}>
+                            <ReferentialSelect label="engine" scope="engine" />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={8}>
+                            <p className="form-help">{t('engine_help')}</p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs={12} sm={8} xl={6}>
+                            <ReferentialSelect label="version" scope="version" />
+                            <p className="form-help">{t('version_help')}</p>
+                        </Col>
+                        <Col sm={4} xl={{ size: 3, offset: 2 }}>
+                            <Encouragement
+                                display={displayEncouragementVersion}
+                                title={t('encouragement_version_title') || ''}
+                                body={t('encouragement_version_body') || ''}
+                            />
+                        </Col>
+                    </Row>
+                </div>
+            )}
+
+            {displaySectionAdditionalInformation && (
+                <div className="form-section">
+                    <div className="form-section-title">{t('additional_information')}</div>
+                </div>
+            )}
+
+            {/* <div className="page page-formvehicle">
                 <h1>{t('we_value_your_car_for_free_in_less_than_2_minutes')}</h1>
 
                 <Row>
@@ -98,7 +200,7 @@ export const FormVehicle: FunctionComponent = () => {
                         {t('value_your_car_now')}
                     </Button>
                 </CtaBlock>
-            </div>
+            </div> */}
         </Container>
     );
 };

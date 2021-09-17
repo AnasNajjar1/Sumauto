@@ -2,10 +2,12 @@ import {
     Dealer,
     Error,
     FormVehicle,
+    Make,
     Makes,
     Slot,
     TClientConfig,
     TRecord,
+    TReferentialItem,
     VehicleElement,
 } from '../hexagon/interfaces';
 
@@ -29,19 +31,25 @@ export interface AppState {
         data: TRecord;
     };
     referential: {
-        carDetails: {
-            status: TActionStatus;
-        };
+        filter: any;
+        cascade: TReferentialItem[];
         make: {
             status: TActionStatus;
-            data: VehicleElement[];
-            preferred: VehicleElement[];
+            data: Make[];
         };
         model: {
             status: TActionStatus;
-            data: VehicleElement[];
+            data: Make[];
         };
         version: {
+            status: TActionStatus;
+            data: VehicleElement[];
+        };
+        body: {
+            status: TActionStatus;
+            data: VehicleElement[];
+        };
+        fuel: {
             status: TActionStatus;
             data: VehicleElement[];
         };
@@ -50,26 +58,6 @@ export interface AppState {
             data: VehicleElement[];
         };
         month: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        fuel: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        body: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        door: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        gear: {
-            status: TActionStatus;
-            data: VehicleElement[];
-        };
-        engine: {
             status: TActionStatus;
             data: VehicleElement[];
         };

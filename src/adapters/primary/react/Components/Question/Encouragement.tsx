@@ -1,18 +1,19 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { boolean } from 'fp-ts';
 
 type TEncouragementProps = {
-    id: string;
+    display: boolean;
     title: string;
     body: string;
 };
 export const Encouragement: React.FC<TEncouragementProps> = ({
-    id,
     title,
     body,
+    display,
 }: TEncouragementProps) => (
-    <div className="encouragement d-none" id={`encouragement_${id}`}>
+    <div className={`encouragement ${display ? 'visible' : ''}`}>
         <div className="encouragement-title">
             <div className="encouragement-title-icon">
                 <FontAwesomeIcon icon={faThumbsUp} />

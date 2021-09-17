@@ -4,7 +4,12 @@ import {
     Scope,
     ReferentialGateway,
 } from '../../../../hexagon/gateways/referentialGateway.interface';
-import { ReferentialItem, CarDetails, VehicleFilters, Makes } from '../../../../hexagon/interfaces';
+import {
+    ReferentialItem,
+    CarDetails,
+    Makes,
+    VehicleFormFilters,
+} from '../../../../hexagon/interfaces';
 
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { InMemoryReferential } from './stubs/referential';
@@ -24,7 +29,7 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
     async requestList(
         identifier: string,
         scope: ReferentialItem,
-        filters?: VehicleFilters,
+        filters?: VehicleFormFilters,
     ): Promise<ApiResponse<Scope[]>> {
         switch (scope) {
             case 'model':

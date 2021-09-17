@@ -7,38 +7,45 @@ export interface ListVm<T> {
     status: TActionStatus;
 }
 
-export interface MakeListVm<T> {
-    data: T[];
-    preferred: T[];
-    status: TActionStatus;
-}
-
-export type Selectors = {
-    make: MakeListVm<VehicleElement>;
-    model: ListVm<VehicleElement>;
-    version: ListVm<VehicleElement>;
-    year: ListVm<VehicleElement>;
-    month: ListVm<VehicleElement>;
-    fuel: ListVm<VehicleElement>;
-    body: ListVm<VehicleElement>;
-    door: ListVm<VehicleElement>;
-    gear: ListVm<VehicleElement>;
-    engine: ListVm<VehicleElement>;
-};
-
-export const getFormVehicleValue = (state: AppState): any => ({
-    vehicle: state.form.vehicle,
+export const getMakeListSelector = (state: AppState): ListVm<VehicleElement> => ({
+    status: state.referential.make.status,
+    data: state.referential.make.data,
 });
 
-export const getFormListSelector = (state: AppState): Selectors => ({
-    make: state.referential.make,
-    model: state.referential.model,
-    version: state.referential.version,
-    year: state.referential.year,
-    month: state.referential.month,
-    fuel: state.referential.fuel,
-    body: state.referential.body,
-    door: state.referential.door,
-    gear: state.referential.gear,
-    engine: state.referential.engine,
+export const getModelListSelector = (state: AppState): ListVm<VehicleElement> => ({
+    status: state.referential.model.status,
+    data: state.referential.model.data,
+});
+
+export const getBodyListSelector = (state: AppState): ListVm<VehicleElement> => ({
+    status: state.referential.body.status,
+    data: state.referential.body.data,
+});
+
+export const getFuelListSelector = (state: AppState): ListVm<VehicleElement> => ({
+    status: state.referential.fuel.status,
+    data: state.referential.fuel.data,
+});
+
+export const getYearListSelector = (state: AppState): ListVm<VehicleElement> => ({
+    status: state.referential.year.status,
+    data: state.referential.year.data,
+});
+
+export const getMonthListSelector = (state: AppState): ListVm<VehicleElement> => ({
+    status: state.referential.month.status,
+    data: state.referential.month.data,
+});
+
+export const getVersionListSelector = (state: AppState): ListVm<VehicleElement> => ({
+    status: state.referential.version.status,
+    data: state.referential.version.data,
+});
+
+export const getReferentialSelector = (state: AppState): any => ({
+    referential: state.referential,
+});
+
+export const getFilter = (state: AppState): any => ({
+    filter: state.referential.filter,
 });

@@ -10,7 +10,7 @@ export const Privacy: FunctionComponent = () => {
     const [checked, setChecked] = React.useState(false);
 
     const handleChange = () => {
-        dispatch(setVehicleValue('privacy', checked ? '' : 'Y'));
+        // dispatch(setVehicleValue('privacy', checked ? '' : 'Y'));
         setChecked(!checked);
     };
 
