@@ -73,4 +73,17 @@ export abstract class BaseApi {
             },
         });
     }
+
+    protected async put(url: string, data?: any, params?: any): Promise<any> {
+        return this.axiosInstance({
+            method: 'PUT',
+            url,
+            data: data || null,
+            params: params || null,
+            headers: {
+                Accept: this.headersAccept,
+                Authorization: this.bearerToken ? `Bearer ${this.bearerToken}` : '',
+            },
+        });
+    }
 }

@@ -123,6 +123,7 @@ export type VehicleStateInformation = {
 };
 
 export type TValuation = {
+    privateValue: number;
     value: number;
     status: boolean;
     archived: boolean;
@@ -133,8 +134,7 @@ export type TCustomer = {
     email: string;
     phone: string;
     zipCode: string;
-    lastName?: string;
-    firstName?: string;
+    name?: string;
 };
 
 export type TVehicleNames = {

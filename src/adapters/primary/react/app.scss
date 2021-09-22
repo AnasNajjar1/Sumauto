@@ -30,10 +30,11 @@ $input-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, c
 body{
     padding-bottom: $halfGutter;
     min-width: 320px;
+    padding: 0 10px;
 }
 
 .container-fluid{
-    padding: 0 20px;
+//    padding: 0 20px;
 }
 
 @include media-breakpoint-down(xs) {

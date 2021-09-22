@@ -45,9 +45,8 @@ export const RecordPage: React.FC = () => {
     }
 
     // const displaySellChoice = journeyType === 'valuation' && !skip;
-    console.log(status);
     // Record has no valuation
-    if (record.valuation) {
+    if (record.valuation?.value) {
         if (record.appointment) {
             return (
                 <Loader status={status}>

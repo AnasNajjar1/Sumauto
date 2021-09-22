@@ -27,8 +27,7 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
-            lastName: 'doe',
-            firstName: 'john',
+            name: 'john',
             zipCode: '12345',
         },
         // valuation: {
@@ -59,11 +58,11 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
-            lastName: 'doe',
-            firstName: 'john',
+            name: 'john',
             zipCode: '12345',
         },
         valuation: {
+            privateValue: 5000,
             value: 6000,
             status: true,
             archived: false,
@@ -108,11 +107,11 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
-            lastName: 'doe',
-            firstName: 'john',
+            name: 'john',
             zipCode: '12345',
         },
         valuation: {
+            privateValue: 17000,
             value: 18000,
             status: true,
             archived: true,
@@ -140,8 +139,7 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
-            lastName: 'doe',
-            firstName: 'john',
+            name: 'john',
             zipCode: '12345',
         },
     },
@@ -166,12 +164,12 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
-            lastName: 'doe',
-            firstName: 'john',
+            name: 'john',
             zipCode: '12345',
         },
         valuation: {
-            value: 17500,
+            value: 16500,
+            privateValue: 17500,
             status: false,
             archived: false,
             date: new Date('2020-08-20'),

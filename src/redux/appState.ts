@@ -30,7 +30,7 @@ export interface AppState {
     };
     carDetails: {
         status: TActionStatus;
-        data: CarDetails;
+        // data: CarDetails;
     };
     form: {
         vehicle: any; // TODO type this

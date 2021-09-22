@@ -68,13 +68,31 @@ export const saveVehicleAndUserInformationsUseCase =
 
         if (isRight(resultUser)) {
             dispatch(getRecordUseCase(recordId.toString()));
-            dispatch(
-                actionCreators.Actions.saveVehicleAndUserInformationsSaved(resultVehicle.right),
-            );
         } else {
             dispatch(dislayErrorUseCase('create_particular_failed'));
             dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
         }
 
+        const resultQuotation = await recordGateway.createQuotation(config.identifier, recordId);
+
+        if (isRight(resultQuotation)) {
+            dispatch(
+                actionCreators.Actions.saveVehicleAndUserInformationsSaved(resultVehicle.right),
+            );
+        } else {
+            dispatch(dislayErrorUseCase('create_quotation_failed'));
+            dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
+        }
+
         // Updating purchase project
+
+        // const { sellProject } = getState().form.vehicleState;
+
+        // const resultSellProject = await recordGateway.updateSellProject(
+        //     config.identifier,
+        //     recordId,
+        //     sellProject,
+        // );
+
+        // console.log(resultSellProject);
     };

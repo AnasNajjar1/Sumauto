@@ -4,38 +4,40 @@ import { AutobizRecordDetailsDto } from '../dtos/recordDetailsDto';
 
 export class RecordMapper implements Mapper<TRecord> {
     static toApp(dto: AutobizRecordDetailsDto): TRecord {
-        const { record, vehicle, vehicleState } = dto;
+        const { record, vehicle, vehicleState, customer, valuation } = dto;
+
+        console.log(valuation);
         return {
-            id: record.rf_id,
+            id: record.RfId,
             expired: false,
-            offerNumber: record.offre,
+            offerNumber: record.HexaRfId,
             vehicle: {
-                makeName: vehicle.brand_label,
-                modelName: vehicle.model_label,
-                yearName: vehicle.registration_date,
-                monthName: vehicle.registration_date,
-                fuelName: vehicle.fuel_label,
-                bodyName: vehicle.body_label,
-                engineName: vehicle.gearbox_label,
-                gearName: vehicle.gearbox_label,
+                makeName: vehicle.brandLabel,
+                modelName: vehicle.modelLabel,
+                yearName: vehicle.registrationDate,
+                monthName: vehicle.registrationDate,
+                fuelName: vehicle.fuelLabel,
+                bodyName: vehicle.bodyLabel,
+                engineName: vehicle.gearboxLabel,
+                gearName: vehicle.gearboxLabel,
                 mileage: Number(vehicle.mileage),
                 import: vehicleState.imported === '1',
-                versionName: vehicle.version_label,
+                versionName: vehicle.versionLabel,
             },
 
             // TODO Fix this
             valuation: {
-                value: 10000,
+                privateValue: Number(valuation.particular),
+                value: Number(valuation.boostedPrice),
                 status: true,
                 archived: false,
                 date: new Date(),
             },
             customer: {
-                email: 'm.azzopardi@autobiz.com',
-                phone: '912345678',
-                zipCode: '13001',
-                lastName: 'Azzopardi',
-                firstName: 'Marceau',
+                email: customer.email,
+                zipCode: customer.zipCode,
+                phone: customer.phone,
+                name: `${customer.firstName} ${customer.lastName}`,
             },
         };
     }

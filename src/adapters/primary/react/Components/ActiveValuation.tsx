@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
-import { Button, Container } from 'reactstrap';
+import { Button, Col, Container, Row } from 'reactstrap';
 import { TRecord } from '../../../../hexagon/interfaces';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
@@ -53,7 +53,11 @@ export const ActiveValuation: React.FC<TRecord> = (props) => {
                     />
                 </div>
 
-                <Appointment recordId={id} />
+                <Row>
+                    <Col>
+                        <Appointment recordId={id} />
+                    </Col>
+                </Row>
             </Container>
         </div>
     );

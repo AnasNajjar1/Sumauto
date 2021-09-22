@@ -16,7 +16,6 @@ import { ZipCodeInput } from './ZipCodeInput';
 import { PhoneInput } from './PhoneInput';
 import { EmailInput } from './EmailInput';
 import { MakeLogoInput } from './MakeLogoInput';
-import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { saveVehicleAndUserInformationsUseCase } from '../../../../hexagon/usecases/saveVehicleAndUserInformation/saveVehicleAndUserInformations.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import { getReferentialList } from '../../../../hexagon/usecases/getReferentialList/getReferentialList';
@@ -30,22 +29,13 @@ export const FormVehicle: React.FC = () => {
     const { vehicle, vehicleState, particular } = useSelector(getFormSelector);
     const { config } = useSelector(getClientSelector);
 
-    const { id: recordId } = useSelector(getRecordSelector);
+    const { id: recordId, status: recordStatus } = useSelector(getRecordSelector);
 
     const [canQuote, setCanQuote] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
-    const [submit, setSubmit] = useState<boolean>(false);
     const [displaySectionMoreDetails, setDisplaySectionMoreDetails] = useState<boolean>(false);
     const [displaySectionAdditionalInformation, setDisplaySectionAdditionalInformation] =
         useState<boolean>(false);
-
-    // const handleChangeCondition = () => {
-    //     let optin;
-    //     if (particular.optin === '1') optin = '';
-    //     else optin = '1';
-
-    //     dispatch(setParticularValue('optin', optin));
-    // };
 
     let displayEncouragementVersion = false;
     let displayEncouragementEmail = false;
@@ -55,7 +45,6 @@ export const FormVehicle: React.FC = () => {
 
     const handleSubmitForm = () => {
         dispatch(saveVehicleAndUserInformationsUseCase());
-        setSubmit(true);
     };
 
     useEffect(() => {
@@ -123,8 +112,8 @@ export const FormVehicle: React.FC = () => {
     }, [dispatch, vehicle, vehicleState, particular]);
 
     useEffect(() => {
-        if (recordId > 0 && submit) history.push(`./record/${recordId}`);
-    }, [dispatch, recordId, submit]);
+        if (recordId > 0 && recordStatus === 'succeeded') history.push(`./record/${recordId}`);
+    }, [dispatch, recordId, recordStatus]);
 
     return (
         <div className="page page-index">
@@ -318,12 +307,12 @@ export const FormVehicle: React.FC = () => {
                                 />
                             </Col>
                         </Row>
-                        <Col xs={12}>
+                        <p className="small">
                             {t('i_have_read_the')}{' '}
                             <a href={config.pdfPrivacyLink} target="_blank" rel="noreferrer">
                                 {t('policy_of_privacy')}
                             </a>
-                        </Col>
+                        </p>
                     </div>
                 )}
 

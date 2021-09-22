@@ -15,6 +15,7 @@ import { RecordVehicleMapper } from './mappers/recordVehicle.mapper';
 import { RecordUserMapper } from './mappers/recordUser.mapper';
 import { RecordVehicleStateMapper } from './mappers/recordVehicleState.mapper';
 import { RecordMapper } from './mappers/record.mapper';
+import { PurchaseProjectMapper } from './mappers/purchaseProjectVehicle.mapper';
 
 export class HttpRecordGateway extends BaseApi implements RecordGateway {
     private recordIds = {} as RecordIds;
@@ -116,8 +117,21 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
     }
 
     // TODO: connect to API
-    async createQuotation(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
-        return right(true);
+    async createQuotation(identifier: string, recordId: number): Promise<ApiResponse<boolean>> {
+        try {
+            const response = await this.post(`/records/${recordId}/quotation`, {
+                identifier,
+                recordId,
+            });
+
+            if (response.data.status) {
+                return right(response.data.status);
+            }
+        } catch (error) {
+            return left(error as string);
+        }
+
+        return left('quotation failed');
     }
 
     // TODO: connect to API
@@ -128,9 +142,11 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
     // TODO: connect to API
     async updateSellProject(
         identifier: string,
-        recordId: string,
+        recordId: number,
         delay: string,
     ): Promise<ApiResponse<boolean>> {
+        const data = PurchaseProjectMapper.toAutobiz(identifier, delay);
+
         return right(true);
     }
 

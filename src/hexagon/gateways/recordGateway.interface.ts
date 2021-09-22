@@ -35,6 +35,8 @@ export interface RecordGateway {
 
     getRecord(identifier: string, recordId: string): Promise<ApiResponse<TRecord>>;
 
+    createQuotation(identifier: string, recordId: number): Promise<ApiResponse<boolean>>;
+
     duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>>;
 
     checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>>;
@@ -52,4 +54,10 @@ export interface RecordGateway {
     //     recordId: string,
     //     resadId: string,
     // ): Promise<ApiResponse<boolean>>;
+
+    updateSellProject(
+        identifier: string,
+        recordId: number,
+        delay: string,
+    ): Promise<ApiResponse<boolean>>;
 }

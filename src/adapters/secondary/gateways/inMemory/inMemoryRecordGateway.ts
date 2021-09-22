@@ -115,8 +115,34 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         
     }
 
+    async createQuotation(identifier: string, recordId: number): Promise<ApiResponse<boolean>> {
+        // try {
+        //     const response = await this.post(`/records/{recordId}/quotation`, {
+        //         identifier,
+        //         recordId,
+        //     });
+
+        //     if (response.data.status) {
+        //         return right(response.data.status);
+        //     }
+        // } catch (error) {
+        //     return left(error as string);
+        // }
+
+        return left('quotation failed');
+    }
+
     async duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>> {
         return right("400");
+    }
+
+    async updateSellProject(
+        identifier: string,
+        recordId: number,
+        delay: string,
+    ): Promise<ApiResponse<boolean>> {
+
+        return right(true);
     }
 
     
