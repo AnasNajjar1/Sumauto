@@ -16,6 +16,7 @@ import { RecordPage } from './Components/RecordPage';
 import { UnsubscribePage } from './Components/UnsubscribePage';
 import { Confirmation } from './Components/Confirmation';
 import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
+import { ValuationSwitch } from './Components/ValuationSwitchPage';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
@@ -44,11 +45,7 @@ const App: React.FC = () => {
                             <Switch>
                                 <Route exact path="/" component={FormVehicle} />
                                 <Route path="/unsubscribe" component={UnsubscribePage} />
-
-                                {/* <Route
-                                    path="/record/confirmation/:recordId"
-                                    component={Confirmation}
-                                /> */}
+                                <Route path="/switch/:recordId" component={ValuationSwitch} />
                                 <Route path="/record/:recordId" component={RecordPage} />
                                 <Route component={ErrorPage} />
                             </Switch>

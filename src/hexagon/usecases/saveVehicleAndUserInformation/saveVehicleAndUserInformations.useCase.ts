@@ -93,6 +93,4 @@ export const saveVehicleAndUserInformationsUseCase =
         //     recordId,
         //     sellProject,
         // );
-
-        // console.log(resultSellProject);
     };

@@ -27,7 +27,7 @@ export const FormVehicle: React.FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { vehicle, vehicleState, particular } = useSelector(getFormSelector);
-    const { config } = useSelector(getClientSelector);
+    const { journeyType, config } = useSelector(getClientSelector).client;
 
     const { id: recordId, status: recordStatus } = useSelector(getRecordSelector);
 
@@ -112,7 +112,10 @@ export const FormVehicle: React.FC = () => {
     }, [dispatch, vehicle, vehicleState, particular]);
 
     useEffect(() => {
-        if (recordId > 0 && recordStatus === 'succeeded') history.push(`./record/${recordId}`);
+        if (recordId > 0 && recordStatus === 'succeeded') {
+            if (journeyType === 'valuation') history.push(`./switch/${recordId}`);
+            else history.push(`./record/${recordId}`);
+        }
     }, [dispatch, recordId, recordStatus]);
 
     return (

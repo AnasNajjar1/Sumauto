@@ -6,7 +6,6 @@ export class RecordMapper implements Mapper<TRecord> {
     static toApp(dto: AutobizRecordDetailsDto): TRecord {
         const { record, vehicle, vehicleState, customer, valuation } = dto;
 
-        console.log(valuation);
         return {
             id: record.RfId,
             expired: false,
