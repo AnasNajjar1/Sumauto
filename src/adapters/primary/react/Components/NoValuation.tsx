@@ -24,7 +24,7 @@ export const NoValuation: React.FC<TRecord> = ({ vehicle }) => {
                         <p>{t('no_valuation_message')}</p>
 
                         <div className="d-none d-lg-block">
-                            <VehicleInformations vehicle={vehicle} />
+                            {/* <VehicleInformations vehicle={vehicle} /> */}
                         </div>
                     </Col>
                     <Col sm={4} className="d-none d-sm-block">
@@ -36,7 +36,7 @@ export const NoValuation: React.FC<TRecord> = ({ vehicle }) => {
                 <hr />
 
                 <div className="d-block d-lg-none">
-                    <VehicleInformations vehicle={vehicle} />
+                    {/* <VehicleInformations vehicle={vehicle} /> */}
                 </div>
 
                 <CtaBlock>

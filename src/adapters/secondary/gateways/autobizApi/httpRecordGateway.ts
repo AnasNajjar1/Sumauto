@@ -19,17 +19,13 @@ import { RecordMapper } from './mappers/record.mapper';
 export class HttpRecordGateway extends BaseApi implements RecordGateway {
     private recordIds = {} as RecordIds;
 
-    private records = [] as TRecord[];
-
     async saveVehicleInformation(
         identifier: string,
         vehicleInformation: TVehicle,
     ): Promise<ApiResponse<RecordIds>> {
         try {
             const data = RecordVehicleMapper.toAutobiz(identifier, vehicleInformation);
-
             const response = await this.post(`/records`, data);
-
             if (response) {
                 return right(response.data);
             }
@@ -39,29 +35,11 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         return left('not-saving_record');
     }
 
-    async updateVehicleInformation(
-        identifier: string,
-        recordId: number,
-        vehicleInformation: TVehicle,
-    ): Promise<ApiResponse<UpdateStatus>> {
-        if (this.recordIds) {
-            return right({ status: true });
-        }
-
-        return left('unknown record');
-    }
-
     async saveVehicleStateInformation(
         identifier: string,
         recordId: number,
         vehicleStateInformation: VehicleStateInformation,
     ): Promise<ApiResponse<RecordIds>> {
-        // if (this.recordIds) {
-        //     return right(this.recordIds);
-        // }
-
-        // return left('unknown record');
-
         try {
             const data = RecordVehicleStateMapper.toAutobiz(
                 identifier,
@@ -78,18 +56,6 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
             return left(error as string);
         }
         return left('not_saving_record');
-    }
-
-    async updateVehicleStateInformation(
-        identifier: string,
-        recordId: number,
-        vehicleStateInformation: VehicleStateInformation,
-    ): Promise<ApiResponse<UpdateStatus>> {
-        if (this.recordIds) {
-            return right({ status: true });
-        }
-
-        return left('unknown record');
     }
 
     async saveUserInformation(
@@ -111,6 +77,7 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         return left('not_saving_record');
     }
 
+    // TODO: connect to API
     async updateUserInformation(
         identifier: string,
         recordId: number,
@@ -143,41 +110,32 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         return left('unknown record');
     }
 
+    // TODO: connect to API
     async cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
-        // Do something
-
         return right(true);
     }
 
+    // TODO: connect to API
     async createQuotation(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
-        // Do something
-
         return right(true);
     }
 
+    // TODO: connect to API
     async duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>> {
         return right('400');
     }
 
+    // TODO: connect to API
     async updateSellProject(
         identifier: string,
         recordId: string,
         delay: string,
     ): Promise<ApiResponse<boolean>> {
-        // Do something
-
         return right(true);
     }
 
+    // TODO: connect to API
     async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>> {
         return right(true);
-    }
-
-    feedRecordIdsWith(recordIds: RecordIds) {
-        this.recordIds = recordIds;
-    }
-
-    feedRecordsWith(records: TRecord[]) {
-        this.records = records;
     }
 }

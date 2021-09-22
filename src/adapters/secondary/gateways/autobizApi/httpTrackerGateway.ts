@@ -8,6 +8,7 @@ import { TrackerGateway } from '../../../../hexagon/gateways/trackerGateway.inte
 export class HttpTrackerGateway extends BaseApi implements TrackerGateway {
     private inMemoryUnsubcribeSuccess = true;
 
+    // TODO: connect to API
     async requestUnsubscribe(subscription: TSubscription): Promise<ApiResponse<boolean>> {
         return left('error');
     }

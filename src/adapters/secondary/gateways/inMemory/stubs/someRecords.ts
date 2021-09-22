@@ -31,12 +31,12 @@ export const somesRecords: TRecord[] = [
             firstName: 'john',
             zipCode: '12345',
         },
-        valuation: {
-            value: 10000,
-            status: true,
-            archived: false,
-            date: new Date('2020-08-20'),
-        },
+        // valuation: {
+        //     value: 10000,
+        //     status: true,
+        //     archived: false,
+        //     date: new Date('2020-08-20'),
+        // },
     },
     {
         id: '200',

@@ -21,6 +21,7 @@ export class HttpDealerGateway extends BaseApi implements DealerGateway {
         }
     }
 
+    // TODO: connect to API
     async requestDealerSlotList(
         identifier: string,
         recordId: string,

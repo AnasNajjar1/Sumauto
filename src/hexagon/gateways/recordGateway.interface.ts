@@ -15,23 +15,11 @@ export interface RecordGateway {
         vehicleInformation: TVehicle,
     ): Promise<ApiResponse<RecordIds>>;
 
-    updateVehicleInformation(
-        identifier: string,
-        recordId: number,
-        vehicleInformation: TVehicle,
-    ): Promise<ApiResponse<UpdateStatus>>;
-
     saveVehicleStateInformation(
         identifier: string,
         recordId: number,
         vehicleStateInformation: VehicleStateInformation,
     ): Promise<ApiResponse<RecordIds>>;
-
-    updateVehicleStateInformation(
-        identifier: string,
-        recordId: number,
-        vehicleStateInformation: VehicleStateInformation,
-    ): Promise<ApiResponse<UpdateStatus>>;
 
     saveUserInformation(
         identifier: string,
@@ -52,6 +40,7 @@ export interface RecordGateway {
     checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>>;
 
     cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>>;
+
     // createAppointment(
     //     identifier: string,
     //     recordId: string,

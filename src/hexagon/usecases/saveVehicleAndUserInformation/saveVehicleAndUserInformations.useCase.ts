@@ -15,7 +15,7 @@ export const saveVehicleAndUserInformationsUseCase =
         const { make, model, month, year, fuel, body, door, gear, engine, version, mileage } =
             getState().form.vehicle;
 
-        // Saving Record
+        // Saving vehicle and create record
         const resultVehicle = await recordGateway.saveVehicleInformation(config.identifier, {
             make,
             model,
@@ -57,6 +57,7 @@ export const saveVehicleAndUserInformationsUseCase =
             dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
         }
 
+        // saving user information
         const { email, phone, zipCode } = getState().form.particular;
 
         const resultUser = await recordGateway.saveUserInformation(config.identifier, recordId, {
