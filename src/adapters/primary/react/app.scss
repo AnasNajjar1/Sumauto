@@ -387,7 +387,7 @@ label{
     max-width: 200px;
 }
 .valuation-box{
-    padding: $halfGutter;
+    padding: $grid-gutter-width;
 }
 
 .valuation-description{
@@ -492,14 +492,13 @@ label{
 }
 
 .appointment-resume{
-    padding: $halfGutter;
+    padding: $grid-gutter-width;
     display: flex;
-    margin-bottom: $halfGutter;
+    margin-bottom: $grid-gutter-width;
     .appointment-resume-text{
-        padding-left:$halfGutter;
+        padding-left:$grid-gutter-width;
         p {
             margin: 0;
-            font-size: 13px;
             font-weight: normal;
         }
     }
@@ -569,12 +568,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.form-group-mileage{
-    .input-group-text{
-        font-weight: 700;
-        color:$body-color !important;
-    }
-}
+
 
 .btn-group{
     .btn{
@@ -671,7 +665,7 @@ input[type=number] {
         border-right: 0;
     }
     .input-group-text{
+        font-weight: 700;
         background-color: transparent;
-        border:0;
     }
 }

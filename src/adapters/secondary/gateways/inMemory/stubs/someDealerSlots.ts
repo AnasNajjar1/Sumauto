@@ -3,10 +3,6 @@ import { Slot } from '../../../../../hexagon/interfaces';
 export const someDealerSlots: Slot[] = [
     {
         date: '2021-07-05',
-        startHour: '0900',
-        endHour: '1800',
-        startBreak: '1200',
-        endBreak: '1300',
         hours: [
             { id: 1, hour: '0900', status: 'open' },
             { id: 2, hour: '0930', status: 'closed' },
@@ -16,10 +12,6 @@ export const someDealerSlots: Slot[] = [
     },
     {
         date: '2021-07-06',
-        startHour: '0900',
-        endHour: '1800',
-        startBreak: '1200',
-        endBreak: '1300',
         hours: [
             { id: 1, hour: '0900', status: 'closed' },
             { id: 2, hour: '0930', status: 'open' },

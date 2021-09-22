@@ -1,13 +1,13 @@
 import { t } from 'autobiz-translate';
 
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { TVehicleNames } from '../../../../hexagon/interfaces';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 
-const VehiclePropLine: FunctionComponent<{ label: string; value: string }> = ({ label, value }) => (
+const VehiclePropLine: React.FC<{ label: string; value: string }> = ({ label, value }) => (
     <Row>
         <Col>{t(label)}</Col>
         <Col>

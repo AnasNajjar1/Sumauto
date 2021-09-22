@@ -149,6 +149,30 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         return right(true);
     }
 
+    async createQuotation(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
+        // Do something
+
+        return right(true);
+    }
+
+    async duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>> {
+        return right('400');
+    }
+
+    async updateSellProject(
+        identifier: string,
+        recordId: string,
+        delay: string,
+    ): Promise<ApiResponse<boolean>> {
+        // Do something
+
+        return right(true);
+    }
+
+    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>> {
+        return right(true);
+    }
+
     feedRecordIdsWith(recordIds: RecordIds) {
         this.recordIds = recordIds;
     }

@@ -7,7 +7,7 @@ export class RecordMapper implements Mapper<TRecord> {
         const { record, vehicle, vehicleState } = dto;
         return {
             id: record.rf_id,
-            status: record.status === '1' ? 'created' : '???',
+            expired: false,
             offerNumber: record.offre,
             vehicle: {
                 makeName: vehicle.brand_label,

@@ -14,13 +14,13 @@ export type Hour = {
     status: HourStatus;
 };
 
+export type Slots = {
+    slots: Slot[];
+};
+
 export type Slot = {
     date: string;
-    startHour: string;
-    endHour: string;
-    startBreak: string;
-    endBreak: string;
-    hours: Hour[];
+    hours?: Hour[];
 };
 
 export type VehicleFormFilters = {
@@ -54,7 +54,7 @@ export type TReferentialItem =
     | 'mileage';
 
 export type TVehicleStateItem = 'imported' | 'history' | 'running' | 'sellProject';
-export type TParticularItem = 'zipCode' | 'email' | 'phone' | 'optin';
+export type TParticularItem = 'zipCode' | 'email' | 'phone';
 
 export type QuestionKey = TReferentialItem | TVehicleStateItem | TParticularItem;
 
@@ -89,9 +89,8 @@ export type TClientConfig = {
     zipCodeRegex: string;
     phoneRegex: string;
     emailConfirmation: boolean;
-    mileageMin: number;
-    mileageMax: number;
     registrationRegex: string;
+    pdfPrivacyLink: string;
 };
 
 export interface Error {
@@ -160,7 +159,7 @@ export type TCoordinates = {
 
 export type TAppointment = {
     status: boolean;
-    dateHour: Date;
+    dateHour: string;
     place: {
         sellerName: string;
         name: string;
@@ -174,11 +173,11 @@ export type TAppointment = {
 
 export type TRecord = {
     id: string;
-    status: 'created' | '???';
+    expired: boolean;
     offerNumber: string;
     customer: TCustomer;
     vehicle: TVehicleNames;
-    valuation: TValuation;
+    valuation?: TValuation;
     appointment?: TAppointment;
 };
 
@@ -187,7 +186,7 @@ export type UpdateStatus = {
 };
 
 export type TClient = 'autocasion' | 'autoscout24' | 'unoauto';
-export type TJourney = 'sell' | 'valuation';
+export type TJourney = 'sale' | 'valuation';
 export type RouteParams = {
     clientSlug: TClient;
     journeyType: TJourney;

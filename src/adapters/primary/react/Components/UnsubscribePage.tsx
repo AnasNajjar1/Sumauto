@@ -1,6 +1,6 @@
 import { t } from 'autobiz-translate';
 
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Button,
     Container,
@@ -28,7 +28,7 @@ import { unsubscribeUseCase } from '../../../../hexagon/usecases/unsubscribe/uns
 import { getUnsubscribeSelector } from '../../view-models-generators/unsubscribeSelectors';
 import { Loader } from './Loader';
 
-export const UnsubscribePage: FunctionComponent = () => {
+export const UnsubscribePage: React.FC = () => {
     const dispatch = useDispatch();
     const { client } = useSelector(getClientSelector);
 

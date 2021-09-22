@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, ButtonGroup, Button } from 'reactstrap';
 import { t } from 'autobiz-translate';
@@ -19,7 +19,7 @@ type ButtonRadioInputProps = {
     data: Data[];
 };
 
-export const ButtonRadioInput: FunctionComponent<ButtonRadioInputProps> = ({ label, id, data }) => {
+export const ButtonRadioInput: React.FC<ButtonRadioInputProps> = ({ label, id, data }) => {
     const dispatch = useDispatch();
     const { vehicleState } = useSelector(getFormSelector);
 

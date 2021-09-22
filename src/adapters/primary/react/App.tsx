@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
@@ -17,7 +17,7 @@ import { UnsubscribePage } from './Components/UnsubscribePage';
 import { Confirmation } from './Components/Confirmation';
 import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
 
-const App: FunctionComponent = () => {
+const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
     const iframeInstance = iframeResizer;
 
@@ -45,12 +45,12 @@ const App: FunctionComponent = () => {
                                 <Route exact path="/" component={FormVehicle} />
                                 <Route path="/unsubscribe" component={UnsubscribePage} />
 
-                                <Route
+                                {/* <Route
                                     path="/record/confirmation/:recordId"
                                     component={Confirmation}
-                                />
+                                /> */}
                                 <Route path="/record/:recordId" component={RecordPage} />
-                                <Route path="/error/:errorCode" component={ErrorPage} />
+                                <Route component={ErrorPage} />
                             </Switch>
                         </main>
                         <ErrorModal />
@@ -61,7 +61,7 @@ const App: FunctionComponent = () => {
     );
 };
 
-const ClientHandler: FunctionComponent = () => (
+const ClientHandler: React.FC = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/error/:errorCode" component={ErrorPage} />

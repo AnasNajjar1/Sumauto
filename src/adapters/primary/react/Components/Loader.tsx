@@ -9,8 +9,10 @@ type TLoaderProps = {
 
 export const Loader: React.FC<TLoaderProps> = ({ status, children }: TLoaderProps) => {
     switch (status) {
+        default:
         case 'idle':
             return <></>;
+
         case 'pending':
             return (
                 <div className="m-3 text-center">
@@ -18,7 +20,7 @@ export const Loader: React.FC<TLoaderProps> = ({ status, children }: TLoaderProp
                 </div>
             );
 
-        default:
+        case 'succeeded':
             return <>{children}</>;
     }
 };

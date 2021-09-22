@@ -2,6 +2,7 @@ import { isLeft, isRight } from 'fp-ts/lib/Either';
 import { ThunkResult } from '../../../redux/configureStore';
 import { RecordGateway } from '../../gateways/recordGateway.interface';
 import { dislayErrorUseCase } from '../displayError/displayError.useCase';
+import { getRecordUseCase } from '../getRecord/getRecord.useCase';
 import * as actionCreators from './actionCreators';
 
 export const saveVehicleAndUserInformationsUseCase =
@@ -65,6 +66,7 @@ export const saveVehicleAndUserInformationsUseCase =
         });
 
         if (isRight(resultUser)) {
+            dispatch(getRecordUseCase(recordId.toString()));
             dispatch(
                 actionCreators.Actions.saveVehicleAndUserInformationsSaved(resultVehicle.right),
             );

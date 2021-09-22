@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Col,
     FormGroup,
@@ -20,7 +20,7 @@ import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 
-export const EmailInput: FunctionComponent = () => {
+export const EmailInput: React.FC = () => {
     const dispatch = useDispatch();
 
     const [email, setEmail] = useState<string>('');
@@ -95,7 +95,7 @@ export const EmailInput: FunctionComponent = () => {
                     <InputWithValidation>
                         <InputGroup>
                             <Input
-                                type="tel"
+                                type="email"
                                 id="email"
                                 value={email}
                                 onChange={(e) => handleChange(e.target.value)}
@@ -119,7 +119,7 @@ export const EmailInput: FunctionComponent = () => {
                         <InputWithValidation>
                             <InputGroup>
                                 <Input
-                                    type="tel"
+                                    type="email"
                                     id="emailConfirmation"
                                     value={emailConfirmation}
                                     onChange={(e) => handleChangeConfirmation(e.target.value)}

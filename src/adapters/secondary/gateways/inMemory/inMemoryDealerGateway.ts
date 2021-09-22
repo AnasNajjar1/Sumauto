@@ -26,6 +26,7 @@ export class InMemoryDealerGateway extends BaseApi implements DealerGateway {
     async requestDealerSlotList(dealerId: string): Promise<ApiResponse<Slot[]>> {
         try {
             const result = this.dealerSlotList;
+            
             return right(result);
         } catch (error) {
             return left(error as string);

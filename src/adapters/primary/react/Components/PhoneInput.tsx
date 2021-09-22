@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
@@ -10,7 +10,7 @@ import { setParticularValue } from '../../../../hexagon/usecases/setParticularVa
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 
-export const PhoneInput: FunctionComponent = () => {
+export const PhoneInput: React.FC = () => {
     const dispatch = useDispatch();
     const { particular } = useSelector(getFormSelector);
     const { config } = useSelector(getClientSelector);

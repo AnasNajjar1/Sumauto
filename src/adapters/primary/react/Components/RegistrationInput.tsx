@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Spinner } from 'reactstrap';
@@ -9,13 +9,13 @@ import { dislayErrorUseCase } from '../../../../hexagon/usecases/displayError/di
 import { getCarDetailsByRegistrationUseCase } from '../../../../hexagon/usecases/getCarDetailsByRegistration/getCarDetailsByRegistration.useCase';
 import { getRegistrationSelector } from '../../view-models-generators/registrationSelector';
 
-export const RegistrationInput: FunctionComponent = () => {
+export const RegistrationInput: React.FC = () => {
     const dispatch = useDispatch();
 
     const { config } = useSelector(getClientSelector);
     const { status } = useSelector(getRegistrationSelector);
 
-    const [registration, setRegistration] = useState('5380FTL'); //
+    const [registration, setRegistration] = useState(''); // 5380FTL
 
     const submitingRegistration = () => {
         if (registration.search(new RegExp(config.registrationRegex)) === 0) {
@@ -39,6 +39,7 @@ export const RegistrationInput: FunctionComponent = () => {
             <FormGroup className="form-group-registration">
                 <Label>
                     {t('registration')} {status === 'pending' && <Spinner size="sm" />}
+                    test : 5380FTL
                 </Label>
                 <InputGroup>
                     <Input

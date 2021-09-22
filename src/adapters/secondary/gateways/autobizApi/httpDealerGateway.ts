@@ -32,6 +32,8 @@ export class HttpDealerGateway extends BaseApi implements DealerGateway {
             );
 
             const result = this.dealerSlotList;
+            // const slots = response.data.map((p: AutobizDealerDto) => DealerMapper.toApp(p));
+
             return right(result);
         } catch (error) {
             return left(error as string);

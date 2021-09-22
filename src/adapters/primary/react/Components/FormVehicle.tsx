@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Button, CustomInput } from 'reactstrap';
@@ -24,7 +24,7 @@ import { RegistrationInput } from './RegistrationInput';
 import { setCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 
-export const FormVehicle: FunctionComponent = () => {
+export const FormVehicle: React.FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { vehicle, vehicleState, particular } = useSelector(getFormSelector);
@@ -34,17 +34,18 @@ export const FormVehicle: FunctionComponent = () => {
 
     const [canQuote, setCanQuote] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
+    const [submit, setSubmit] = useState<boolean>(false);
     const [displaySectionMoreDetails, setDisplaySectionMoreDetails] = useState<boolean>(false);
     const [displaySectionAdditionalInformation, setDisplaySectionAdditionalInformation] =
         useState<boolean>(false);
 
-    const handleChangeCondition = () => {
-        let optin;
-        if (particular.optin === '1') optin = '';
-        else optin = '1';
+    // const handleChangeCondition = () => {
+    //     let optin;
+    //     if (particular.optin === '1') optin = '';
+    //     else optin = '1';
 
-        dispatch(setParticularValue('optin', optin));
-    };
+    //     dispatch(setParticularValue('optin', optin));
+    // };
 
     let displayEncouragementVersion = false;
     let displayEncouragementEmail = false;
@@ -54,6 +55,7 @@ export const FormVehicle: FunctionComponent = () => {
 
     const handleSubmitForm = () => {
         dispatch(saveVehicleAndUserInformationsUseCase());
+        setSubmit(true);
     };
 
     useEffect(() => {
@@ -101,7 +103,6 @@ export const FormVehicle: FunctionComponent = () => {
             particular.email,
             particular.zipCode,
             particular.phone,
-            particular.optin,
         ];
 
         setDisplaySectionMoreDetails(basicInformations.every(Boolean));
@@ -122,8 +123,8 @@ export const FormVehicle: FunctionComponent = () => {
     }, [dispatch, vehicle, vehicleState, particular]);
 
     useEffect(() => {
-        if (recordId > 0) history.push(`./record/${recordId}`);
-    }, [dispatch, recordId]);
+        if (recordId > 0 && submit) history.push(`./record/${recordId}`);
+    }, [dispatch, recordId, submit]);
 
     return (
         <div className="page page-index">
@@ -318,13 +319,10 @@ export const FormVehicle: FunctionComponent = () => {
                             </Col>
                         </Row>
                         <Col xs={12}>
-                            <CustomInput
-                                type="checkbox"
-                                id="condition"
-                                value={particular.optin}
-                                onChange={() => handleChangeCondition()}
-                                label={t('i_have_read_the_policy_of_privacy')}
-                            />
+                            {t('i_have_read_the')}{' '}
+                            <a href={config.pdfPrivacyLink} target="_blank" rel="noreferrer">
+                                {t('policy_of_privacy')}
+                            </a>
                         </Col>
                     </div>
                 )}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,7 +8,6 @@ import { t } from 'autobiz-translate';
 import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import { Loader } from './Loader';
-import { Valuation } from './Valuation/Valuation';
 import { Appointment } from './Appointment';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { Picture } from './Picture';
@@ -17,8 +16,12 @@ import { VehicleInformations } from './VehicleInformations';
 import { FeatureGroup } from './FeatureGroup';
 import { Feature } from './Feature';
 import { ErrorPage } from './ErrorPage';
+import { ArchivedValuation } from './ArchivedValuation';
+import { ActiveValuation } from './ActiveValuation';
+import { NoValuation } from './NoValuation';
+import { Confirmation } from './Confirmation';
 
-export const RecordPage: FunctionComponent = () => {
+export const RecordPage: React.FC = () => {
     const dispatch = useDispatch();
 
     const { journeyType, config } = useSelector(getClientSelector).client;
@@ -41,12 +44,42 @@ export const RecordPage: FunctionComponent = () => {
         return <ErrorPage />;
     }
 
-    const displaySellChoice = journeyType === 'valuation' && !skip;
+    // const displaySellChoice = journeyType === 'valuation' && !skip;
+    console.log(status);
+    // Record has no valuation
+    if (record.valuation) {
+        if (record.appointment) {
+            return (
+                <Loader status={status}>
+                    <Confirmation {...record} />
+                </Loader>
+            );
+        }
+
+        if (record.expired) {
+            return (
+                <Loader status={status}>
+                    <ArchivedValuation {...record} />
+                </Loader>
+            );
+        }
+
+        return (
+            <Loader status={status}>
+                <ActiveValuation {...record} />
+            </Loader>
+        );
+    }
 
     return (
-        <div className="page page-record">
-            <Container fluid>
-                {(displaySellChoice && vehicle && (
+        <Loader status={status}>
+            <NoValuation {...record} />
+        </Loader>
+    );
+
+    return (
+        <>
+            {/* {(displaySellChoice && vehicle && (
                     <Loader status={status}>
                         <h1 className="text-center">
                             {t('appraisal_of')} {vehicle.makeName} {vehicle.modelName}
@@ -137,17 +170,14 @@ export const RecordPage: FunctionComponent = () => {
                             </Col>
                         </Row>
                     </Loader>
-                )) || (
-                    <>
-                        {record.valuation && (
-                            <Loader status={status}>
-                                <Valuation {...record} />
-                            </Loader>
-                        )}
-                        {canMakeAnAppointment && <Appointment recordId={recordId} />}
-                    </>
-                )}
-            </Container>
-        </div>
+                )) || ( */}
+            <>
+                {/* <Loader status={status}>
+                    <Valuation {...record} />
+                </Loader>
+                {canMakeAnAppointment && <Appointment recordId={recordId} />} */}
+            </>
+            {/* )} */}
+        </>
     );
 };

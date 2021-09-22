@@ -8,8 +8,8 @@ export const aRecordIds: RecordIds = {
 export const somesRecords: TRecord[] = [
     {
         id: '100',
-        status: 'created',
-        offerNumber: 'AZERTY',
+        expired: false,
+        offerNumber: 'WITHOUT_APPOINTMENT',
         vehicle: {
             makeName: 'Peugeot',
             modelName: '2008',
@@ -37,28 +37,11 @@ export const somesRecords: TRecord[] = [
             archived: false,
             date: new Date('2020-08-20'),
         },
-        appointment: {
-            status: false,
-            dateHour: new Date('2020-09-20 10:00:00'),
-
-            place: {
-                sellerName: 'Juan',
-                name: 'Centro de compra de Madrid',
-                address: 'Calle Alcala 234',
-                zipCode: '2812',
-                city: 'Madrid',
-                phone: '+34951345529',
-                position: {
-                    lat: -3.745,
-                    lng: -38.523,
-                },
-            },
-        },
     },
     {
         id: '200',
-        status: 'created',
-        offerNumber: 'AZERTY',
+        expired: false,
+        offerNumber: 'WITH_APPOINTMENT',
         vehicle: {
             makeName: 'Fiat',
             modelName: 'Panda',
@@ -88,7 +71,7 @@ export const somesRecords: TRecord[] = [
         },
         appointment: {
             status: true,
-            dateHour: new Date('2020-08-20 10:00:00'),
+            dateHour: '2020-08-20 10:00:00',
 
             place: {
                 sellerName: 'Juan',
@@ -106,8 +89,8 @@ export const somesRecords: TRecord[] = [
     },
     {
         id: '300',
-        status: 'created',
-        offerNumber: 'AZERTY',
+        expired: true,
+        offerNumber: 'EXPIRED',
         vehicle: {
             makeName: 'Renault',
             modelName: 'Clio',
@@ -135,27 +118,37 @@ export const somesRecords: TRecord[] = [
             archived: true,
             date: new Date('2020-01-01'),
         },
-        appointment: {
-            status: true,
-            dateHour: new Date('2020-08-20 10:00:00'),
-            place: {
-                sellerName: 'Juan',
-                name: 'Centro de compra de Madrid',
-                address: 'Calle Alcala 234',
-                zipCode: '2812',
-                city: 'Madrid',
-                phone: '+34951345529',
-                position: {
-                    lat: -3.745,
-                    lng: -38.523,
-                },
-            },
+    },
+    {
+        id: '500',
+        expired: false,
+        offerNumber: 'NOT_QUOTABLE',
+        vehicle: {
+            makeName: 'Peugeot',
+            modelName: '2008',
+            yearName: '2020',
+            monthName: 'Enero',
+            bodyName: 'Sedan',
+            fuelName: 'Gasolina',
+            engineName: '92CH',
+            gearName: 'automatica',
+            versionName: '1.6 bluehdi 75 active',
+            import: true,
+            mileage: 90000,
+            doors: '5',
+        },
+        customer: {
+            email: 'john@doe.fr',
+            phone: '912341234',
+            lastName: 'doe',
+            firstName: 'john',
+            zipCode: '12345',
         },
     },
     {
         id: '400',
-        status: 'created',
-        offerNumber: 'AZERTY',
+        expired: false,
+        offerNumber: 'REFRESHED',
         vehicle: {
             makeName: 'Peugeot',
             modelName: '2008',
@@ -178,26 +171,10 @@ export const somesRecords: TRecord[] = [
             zipCode: '12345',
         },
         valuation: {
-            value: 0,
+            value: 17500,
             status: false,
             archived: false,
             date: new Date('2020-08-20'),
-        },
-        appointment: {
-            status: false,
-            dateHour: new Date('2020-08-20 10:00:00'),
-            place: {
-                sellerName: 'Juan',
-                name: 'Centro de compra de Madrid',
-                address: 'Calle Alcala 234',
-                zipCode: '2812',
-                city: 'Madrid',
-                phone: '+34951345529',
-                position: {
-                    lat: -3.745,
-                    lng: -38.523,
-                },
-            },
         },
     },
 ];

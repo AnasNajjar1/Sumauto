@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { TCoordinates } from '../../../../hexagon/interfaces';
 
@@ -10,7 +10,7 @@ const containerStyle = {
 type TMapProps = {
     coordinates: TCoordinates;
 };
-export const Map: FunctionComponent<TMapProps> = ({ coordinates }) => (
+export const Map: React.FC<TMapProps> = ({ coordinates }) => (
     <div className="google-map">
         <LoadScript googleMapsApiKey="AIzaSyCw0JQtBgCRLyvmD61wZZaU__THOJxu8fg">
             <GoogleMap

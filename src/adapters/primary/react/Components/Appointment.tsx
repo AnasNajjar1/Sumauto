@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Row,
     Col,
@@ -45,17 +45,20 @@ import { NumberedTitle } from './NumberedTitle';
 import { PhoneInput } from './PhoneInput';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
+import { Picture } from './Picture';
+import { AppointmentResume } from './AppointmentResume';
 
 type TAppointmentProps = {
     recordId: string;
 };
 
-export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId }) => {
+export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const { client } = useSelector(getClientSelector);
 
-    const [dealerId, setDealerId] = useState<string | undefined>(undefined);
+    // const [dealerId, setDealerId] = useState<string | undefined>(undefined);
+    const [dealer, setDealer] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [showAllDealers, setShowAllDealers] = useState<boolean>(false);
     const [date, setDate] = useState<string>('');
     const [hour, setHour] = useState<string>('');
@@ -73,12 +76,12 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId }) 
     }, [dispatch, recordId]);
 
     useEffect(() => {
-        if (dealerId) {
-            dispatch(getDealerSlotListUseCase(recordId, dealerId));
+        if (dealer?.id) {
+            dispatch(getDealerSlotListUseCase(recordId, dealer.id));
             setDate('');
             setHour('');
         }
-    }, [dispatch, recordId, dealerId]);
+    }, [dispatch, recordId, dealer]);
 
     useEffect(() => {
         setPhoneValid(phone.search(new RegExp(client.config.phoneRegex)) === 0);
@@ -93,11 +96,12 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId }) 
         }
     }, [dispatch, date, dealerSlotList]);
 
-    const formValid = [hour, date, dealerId, name].every(Boolean);
+    const formValid = [hour, date, dealer?.id, name].every(Boolean);
 
     const submitAppointment = () => {
-        // saving appointment
-        history.push(`./confirmation/${recordId}`);
+        // TODO:saving appointment
+        // TODO:update particular
+        // history.push(`./confirmation/${recordId}`);
     };
 
     return (
@@ -121,26 +125,28 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId }) 
                 />
                 <Loader status={dealerStatus}>
                     <div className={`dealers-list ${showAllDealers ? 'show-all' : ''}`}>
-                        {dealerList.map((dealer, i) => (
+                        {dealerList.map((d, i) => (
                             <div
                                 className={`button-dealer${i >= 3 ? ' hidden-dealer' : ''} ${
-                                    dealer.id === dealerId ? 'selected' : ''
+                                    d.id === dealer.id ? 'selected' : ''
                                 }`}
-                                key={dealer.id}
+                                key={d.id}
                                 role="button"
                                 aria-hidden="true"
-                                onClick={() => setDealerId(dealer.id)}
+                                onClick={() => setDealer({ id: d.id, name: d.name })}
                             >
                                 <div className="button-dealer-icon">
                                     <FontAwesomeIcon
-                                        icon={dealer.id === dealerId ? farDotCircle : farCircle}
+                                        icon={d.id === dealer.id ? farDotCircle : farCircle}
                                     />
                                 </div>
                                 <div>
-                                    <div className="button-dealer-name">{dealer.name}</div>
+                                    <div className="button-dealer-name">
+                                        {d.name}({d.id})
+                                    </div>
                                     <div>
-                                        <FontAwesomeIcon icon={faMapMarkerAlt} /> {dealer.city}{' '}
-                                        {dealer.distance} {t('km')}
+                                        <FontAwesomeIcon icon={faMapMarkerAlt} /> {d.city}{' '}
+                                        {d.distance} {t('km')}
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +168,7 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId }) 
                     )}
                 </Loader>
             </Container>
-            {dealerId && (
+            {dealer.id && (
                 <div className="choose-date-background">
                     <Container fluid>
                         <NumberedTitle number={2} textKey="choose_your_date" />
@@ -291,20 +297,25 @@ export const Appointment: FunctionComponent<TAppointmentProps> = ({ recordId }) 
             )}
 
             <Container fluid>
-                {/*
                 {formValid && (
                     <>
                         <h2 className="mt-4">{t('appointment_resume')}</h2>
 
                         <Row>
-                            <Col> <AppointmentResume date={date} hour={hour} /> </Col>
+                            <Col>
+                                <AppointmentResume
+                                    placeName={dealer.name}
+                                    date={date}
+                                    hour={hour}
+                                />
+                            </Col>
                             <Col>
                                 <Picture background="calendar" />
                             </Col>
                         </Row>
                     </>
                 )}
-                */}
+
                 <CtaBlock>
                     <Button
                         color="primary"

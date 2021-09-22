@@ -38,16 +38,7 @@ export const vehicleState = (state: FormValue = {}, action: AnyAction) => {
     return state;
 };
 
-// ToDo : remove this
-
-const sampleParticlure = {
-    // phone: '911111111',
-    // email: 'm.azzopardi@gmail.com',
-    // mileage: '40000',
-    // zipCode: '13001',
-};
-
-export const particular = (state: FormValue = sampleParticlure, action: AnyAction) => {
+export const particular = (state: FormValue = {}, action: AnyAction) => {
     if (action.type === 'particular/SET') {
         const { key, value } = action.payload.formValue;
         const nextState = produce(state, (draft) => {
@@ -61,6 +52,16 @@ export const particular = (state: FormValue = sampleParticlure, action: AnyActio
 export const cascade = (state: TReferentialItem[] = [], action: AnyAction) => {
     if (action.type === 'cascade/SET') {
         return action.payload.cascade;
+    }
+    return state;
+};
+
+export const checkZipCode = (state = false, action: AnyAction) => {
+    if (action.type === 'checkZipCode/FAILED') {
+        return false;
+    }
+    if (action.type === 'checkZipCode/SUCCESS') {
+        return true;
     }
     return state;
 };
@@ -85,4 +86,5 @@ export const formReducer = combineReducers({
     vehicleState,
     particular,
     cascade,
+    checkZipCode,
 });

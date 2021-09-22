@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FormGroup, Input, Label, Spinner } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
@@ -13,7 +13,7 @@ type ReferentialInputProps = {
     label: string;
 };
 
-export const ReferentialSelect: FunctionComponent<ReferentialInputProps> = ({ label, scope }) => {
+export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scope }) => {
     const { referential, vehicle, vehicleName } = useSelector(getFormSelector);
     const dispatch = useDispatch();
 

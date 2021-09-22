@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Label, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
@@ -11,7 +11,7 @@ const getMakeLogoUrl = (name: string) =>
         '_',
     )}.jpg`;
 
-export const MakeLogoInput: FunctionComponent = () => {
+export const MakeLogoInput: React.FC = () => {
     const dispatch = useDispatch();
 
     const { referential, vehicle, vehicleName } = useSelector(getFormSelector);

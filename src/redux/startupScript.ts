@@ -17,6 +17,7 @@ import { InMemoryClientConfigGateway } from '../adapters/secondary/gateways/inMe
 import { InMemoryDealerGateway } from '../adapters/secondary/gateways/inMemory/inMemoryDealerGateway';
 import { InMemoryTrackerGateway } from '../adapters/secondary/gateways/inMemory/inMemoryTrackerGateway';
 import { HttpDealerGateway } from '../adapters/secondary/gateways/autobizApi/httpDealerGateway';
+import { HttpTrackerGateway } from '../adapters/secondary/gateways/autobizApi/httpTrackerGateway';
 
 let referentialGateway;
 let dealerGateway;
@@ -41,6 +42,7 @@ switch (process.env.REACT_APP_SOURCE) {
 
         trackerGateway = new InMemoryTrackerGateway();
         trackerGateway.feedUnsubcribeWith(true);
+
         break;
 
     default:
@@ -50,10 +52,9 @@ switch (process.env.REACT_APP_SOURCE) {
         dealerGateway.feedDealerSlotListWith(someDealerSlots);
 
         recordGateway = new HttpRecordGateway();
+        trackerGateway = new HttpTrackerGateway();
 
-        trackerGateway = new InMemoryTrackerGateway();
-        trackerGateway.feedUnsubcribeWith(true);
-
+        // configuration file, could be used has a api response in the future
         clientConfigGateway = new InMemoryClientConfigGateway();
         break;
 }

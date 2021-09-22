@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
@@ -9,37 +9,32 @@ import { InputValidation } from './InputValidation';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
+import { checkZipcodeUseCase } from '../../../../hexagon/usecases/checkZipCode/checkZipcode.useCase';
+import { getCheckZipCodeSelector } from '../../view-models-generators/checkZipCodeSelector';
 
-export const ZipCodeInput: FunctionComponent = () => {
+export const ZipCodeInput: React.FC = () => {
     const dispatch = useDispatch();
 
     const { particular } = useSelector(getFormSelector);
-
     const [zipCode, setZipCode] = useState<string>('');
-    const [valid, setValid] = useState<boolean>();
+    const [touched, setTouched] = useState<boolean>(false);
 
     useEffect(() => {
         setZipCode(particular.zipCode);
     }, [dispatch]);
 
-    const { config } = useSelector(getClientSelector);
+    const { checkZipCode } = useSelector(getCheckZipCodeSelector);
 
-    const handleChange = (value: string) => {
-        if (value.search(new RegExp(config.zipCodeRegex)) === 0) {
-            setValid(true);
-        } else {
-            setValid(false);
-        }
+    const handleBlur = (value: string) => {
         setZipCode(value);
+        setTouched(true);
+        dispatch(checkZipcodeUseCase(value));
     };
 
-    const handleBlur = () => {
-        if (valid) {
-            dispatch(setParticularValue('zipCode', zipCode));
-        } else {
-            dispatch(setParticularValue('zipCode', ''));
-        }
-    };
+    useEffect(() => {
+        if (checkZipCode) dispatch(setParticularValue('zipCode', zipCode));
+        else dispatch(setParticularValue('zipCode', ''));
+    }, [dispatch, checkZipCode, zipCode]);
 
     return (
         <>
@@ -48,11 +43,10 @@ export const ZipCodeInput: FunctionComponent = () => {
                 <InputWithValidation>
                     <InputGroup>
                         <Input
-                            type="text"
+                            type="tel"
                             id="zipCode"
-                            value={zipCode}
-                            onChange={(e) => handleChange(e.target.value)}
-                            onBlur={() => handleBlur()}
+                            defaultvalue={zipCode}
+                            onBlur={(e) => handleBlur(e.target.value)}
                         />
                         <InputGroupAddon addonType="append">
                             <InputGroupText>
@@ -60,7 +54,9 @@ export const ZipCodeInput: FunctionComponent = () => {
                             </InputGroupText>
                         </InputGroupAddon>
                     </InputGroup>
-                    <InputValidation valid={valid} />
+                    {(touched && <InputValidation valid={checkZipCode} />) || (
+                        <InputValidation valid={undefined} />
+                    )}
                 </InputWithValidation>
             </FormGroup>
         </>

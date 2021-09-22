@@ -20,7 +20,7 @@ export interface AppState {
     unsubscribe: {
         status: TActionStatus;
     };
-    cancelAppoitment: {
+    cancelAppointment: {
         status: TActionStatus;
     };
     record: {
@@ -38,6 +38,7 @@ export interface AppState {
         vehicleState: any; // TODO type this
         particular: any; // TODO type this
         cascade: TReferentialItem[];
+        checkZipCode: boolean;
 
         referential: {
             make: {

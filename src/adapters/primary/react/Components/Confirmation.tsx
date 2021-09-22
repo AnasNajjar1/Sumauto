@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Container,
     Row,
@@ -9,43 +9,43 @@ import {
     ModalBody,
     ModalFooter,
 } from 'reactstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { t } from 'autobiz-translate';
 
 import { useParams } from 'react-router-dom';
 
 import { Map } from './Map';
-import { getRecordSelector } from '../../view-models-generators/recordSelectors';
-import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord.useCase';
 import { FeatureGroup } from './FeatureGroup';
 import { Feature } from './Feature';
 import { AppointmentResume } from './AppointmentResume';
-import { cancelAppointmentUseCase } from '../../../../hexagon/usecases/cancelAppoitment/cancelAppointment.useCase';
+import { cancelAppointmentUseCase } from '../../../../hexagon/usecases/cancelAppointment/cancelAppointment.useCase';
 import { Picture } from './Picture';
+import { TRecord } from '../../../../hexagon/interfaces';
 
-export const Confirmation = () => {
+export const Confirmation: React.FC<TRecord> = (props) => {
     const dispatch = useDispatch();
-    const { recordId } = useParams<{ recordId: string }>();
-    const { data: record } = useSelector(getRecordSelector);
+
+    const record = props;
+
     const [modalCancel, setModalCancel] = useState(false);
     const toggleModalCancel = () => setModalCancel(!modalCancel);
     const handlePrint = () => {
         window.print();
     };
 
-    useEffect(() => {
-        dispatch(getRecordUseCase(recordId));
-    }, [dispatch, recordId]);
+    const handleSubmitCancel = () => {
+        dispatch(cancelAppointmentUseCase(record.id));
+    };
 
-    const handleSubmitForm = () => {
-        dispatch(cancelAppointmentUseCase(recordId));
+    const handleSubmitPostpone = () => {
+        dispatch(cancelAppointmentUseCase(record.id));
     };
 
     return (
         <div className="page page-confirmation">
             <Container fluid>
                 <div
-                    className="text-right text-nowrap print-button"
+                    className="text-right text-nowrap print-button d-print-none"
                     role="button"
                     aria-hidden="true"
                     onClick={handlePrint}
@@ -61,9 +61,10 @@ export const Confirmation = () => {
                             <Col md={6}>
                                 <AppointmentResume
                                     date={record.appointment.dateHour}
+                                    hour={record.appointment.dateHour}
                                     placeName={record.appointment.place.name}
                                 />
-
+                                {record.offerNumber}
                                 <Row>
                                     <Col sm={6} md={12} lg={6}>
                                         <h2>{t('your_point_of_sale')}</h2>
@@ -78,7 +79,7 @@ export const Confirmation = () => {
                                             {record.appointment.place.city}
                                             <br />
                                             {t('phone_short')}{' '}
-                                            <a href="tel:{record.appointment.place.phone}">
+                                            <a href={`tel:${record.appointment.place.phone}`}>
                                                 {record.appointment.place.phone}
                                             </a>
                                         </p>
@@ -87,9 +88,13 @@ export const Confirmation = () => {
                                         <Map coordinates={record.appointment.place.position} />
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row className="d-print-none">
                                     <Col sm={6} xl={5}>
-                                        <Button block className="postpone-appointment mb-2">
+                                        <Button
+                                            block
+                                            onClick={() => handleSubmitPostpone()}
+                                            className="postpone-appointment mb-2"
+                                        >
                                             {t('postpone_appointment')}
                                         </Button>
                                     </Col>
@@ -127,7 +132,7 @@ export const Confirmation = () => {
                             </ModalHeader>
                             <ModalBody>{t('cancel_appointment_description')}</ModalBody>
                             <ModalFooter className="justify-content-center">
-                                <Button block onClick={() => handleSubmitForm()}>
+                                <Button block onClick={() => handleSubmitCancel()}>
                                     {t('cancel_appointment_cta')}
                                 </Button>
                             </ModalFooter>

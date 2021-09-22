@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Col,
     FormGroup,
@@ -17,7 +17,7 @@ import { InputValidation } from './InputValidation';
 import { Message } from './Message';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 
-export const MileageInput: FunctionComponent = () => {
+export const MileageInput: React.FC = () => {
     const dispatch = useDispatch();
     const { vehicle } = useSelector(getFormSelector);
 
@@ -27,7 +27,7 @@ export const MileageInput: FunctionComponent = () => {
     const [valid, setValid] = useState<boolean>();
 
     useEffect(() => {
-        setMileage(vehicle.mileage);
+        setMileage('');
     }, [dispatch]);
 
     const isMileageInconsistent = (year: number, month: number, kilometers: string) => {
@@ -81,7 +81,6 @@ export const MileageInput: FunctionComponent = () => {
             setValid(false);
         }
 
-        // Mileage should not cascade
         dispatch(setVehicleValueCascade('mileage', mileage));
     }, [dispatch, mileage, touched]);
 
