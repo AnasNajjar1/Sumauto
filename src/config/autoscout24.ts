@@ -4,7 +4,7 @@ const config: TClientConfig = {
     locale: 'es-ES',
     currency: 'EUR',
     identifier: 'autoscout24',
-    privateSellLink: 'https://www.autoscout24.es/',
+    privateSellLink: 'https://www.autoscout24.es/vender-coche/',
     displayRegistrationOption: true,
     registrationRegex: '^[0-9]{4}[a-zA-Z]{3}$|^[a-zA-Z]{1,2}[0-9]{4}-?[a-zA-Z]{2}$',
     zipCodeRegex: '^[0-9]{5}$|^(AD)[0-9]{3}$',

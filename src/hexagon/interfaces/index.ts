@@ -84,7 +84,7 @@ export type TClientConfig = {
     locale: string;
     currency: string;
     identifier: string;
-    privateSellLink: string;
+    privateSellLink?: string;
     displayRegistrationOption: boolean;
     zipCodeRegex: string;
     phoneRegex: string;
