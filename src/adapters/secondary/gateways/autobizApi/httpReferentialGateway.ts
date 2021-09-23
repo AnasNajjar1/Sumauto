@@ -15,6 +15,7 @@ import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { CarDetailsMapper } from './mappers/carDetails.mapper';
 import { MakesMapper } from './mappers/makes.mapper';
 import { ReferentialQueryParamsMapper } from './mappers/referentialQueryParams.mapper';
+import { ReferentialMapper } from './mappers/vehicleFilter.mapper';
 
 export class HttpReferentialGateway extends BaseApi implements ReferentialGateway {
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {
@@ -124,5 +125,15 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
         }
 
         return ret.join('&');
+    }
+
+    // TODO: connect to API
+    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>> {
+        try {
+            await this.get(`/referentials/zip-code/${zipCode}?identifier=${identifier}`);
+            return right(true);
+        } catch (error) {
+            return left(error as string);
+        }
     }
 }

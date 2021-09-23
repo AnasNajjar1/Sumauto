@@ -15,6 +15,7 @@ import { getCheckZipCodeSelector } from '../../view-models-generators/checkZipCo
 export const ZipCodeInput: React.FC = () => {
     const dispatch = useDispatch();
 
+    const { config } = useSelector(getClientSelector);
     const { particular } = useSelector(getFormSelector);
     const [zipCode, setZipCode] = useState<string>('');
     const [touched, setTouched] = useState<boolean>(false);
@@ -28,7 +29,7 @@ export const ZipCodeInput: React.FC = () => {
     const handleBlur = (value: string) => {
         setZipCode(value);
         setTouched(true);
-        dispatch(checkZipcodeUseCase(value));
+        if (new RegExp(config.zipCodeRegex).test(value)) dispatch(checkZipcodeUseCase(value));
     };
 
     useEffect(() => {

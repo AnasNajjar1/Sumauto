@@ -23,4 +23,6 @@ export interface ReferentialGateway {
         identifier: string,
         registration: string,
     ): Promise<ApiResponse<CarDetails>>;
+
+    checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>>;
 }

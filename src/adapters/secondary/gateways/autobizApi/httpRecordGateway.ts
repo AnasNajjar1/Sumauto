@@ -149,9 +149,4 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
 
         return right(true);
     }
-
-    // TODO: connect to API
-    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>> {
-        return right(true);
-    }
 }

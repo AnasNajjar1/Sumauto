@@ -98,13 +98,6 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return left('unknown record');
     }
 
-    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>>{
-        if(Number(zipCode) > 50000)
-        return right(true); 
-        else
-        return left("unknown_zipcode");
-    }
-
     async cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
         const found = this.records.find((e) => e.id === recordId);
         delete found?.appointment;

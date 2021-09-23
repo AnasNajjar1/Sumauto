@@ -95,4 +95,9 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
     feedWith(inMemoryReferential: InMemoryReferential) {
         this.inMemoryReferential = inMemoryReferential;
     }
+
+    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>> {
+        if (Number(zipCode) > 50000) return right(true);
+        else return left('unknown_zipcode');
+    }
 }

@@ -39,8 +39,6 @@ export interface RecordGateway {
 
     duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>>;
 
-    checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>>;
-
     cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>>;
 
     // createAppointment(
