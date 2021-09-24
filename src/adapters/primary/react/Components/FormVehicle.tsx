@@ -22,6 +22,7 @@ import { getReferentialList } from '../../../../hexagon/usecases/getReferentialL
 import { RegistrationInput } from './RegistrationInput';
 import { setCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
+import { sellDelay } from '../../../../config';
 
 export const FormVehicle: React.FC = () => {
     const dispatch = useDispatch();
@@ -275,11 +276,7 @@ export const FormVehicle: React.FC = () => {
                                         <ButtonRadioInput
                                             label="sellProject"
                                             id="sellProject"
-                                            data={[
-                                                { name: '1-3_weeks', value: '1' },
-                                                { name: '1_month', value: '2' },
-                                                { name: '3_months', value: '3' },
-                                            ]}
+                                            data={sellDelay}
                                         />
                                     </Col>
                                 </Row>

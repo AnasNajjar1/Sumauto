@@ -101,11 +101,10 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     async cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
         const found = this.records.find((e) => e.id === recordId);
         delete found?.appointment;
-        
+
         return right(true);
 
-        return left("error_delete_appointment");
-        
+        return left('error_delete_appointment');
     }
 
     async createQuotation(identifier: string, recordId: number): Promise<ApiResponse<boolean>> {
@@ -126,19 +125,16 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     }
 
     async duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>> {
-        return right("400");
+        return right('400');
     }
 
     async updateSellProject(
         identifier: string,
         recordId: number,
         delay: string,
-    ): Promise<ApiResponse<boolean>> {
-
-        return right(true);
+    ): Promise<ApiResponse<UpdateStatus>> {
+        return right({ status: true });
     }
-
-    
 
     feedRecordIdsWith(recordIds: RecordIds) {
         this.recordIds = recordIds;

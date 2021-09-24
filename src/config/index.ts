@@ -1,4 +1,4 @@
-import { TClientConfig, TClient, TJourney } from '../hexagon/interfaces';
+import { TClientConfig, TClient, TJourney, TSellDelay } from '../hexagon/interfaces';
 
 import autocasion from './autocasion';
 import autoscout24 from './autoscout24';
@@ -14,3 +14,9 @@ export const getClientConfig = (client: TClient): TClientConfig => {
 export const clients: TClient[] = ['unoauto', 'autocasion', 'autoscout24'];
 
 export const journeys: TJourney[] = ['sale', 'valuation'];
+
+export const sellDelay: TSellDelay[] = [
+    { name: '1-3_weeks', value: '1' },
+    { name: '1_month', value: '2' },
+    { name: '3_months', value: '3' },
+];

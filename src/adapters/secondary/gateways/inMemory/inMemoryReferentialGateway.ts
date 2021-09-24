@@ -10,6 +10,7 @@ import {
     CarDetails,
     Makes,
     VehicleFormFilters,
+    UpdateStatus,
 } from '../../../../hexagon/interfaces';
 
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
@@ -96,8 +97,8 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
         this.inMemoryReferential = inMemoryReferential;
     }
 
-    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>> {
-        if (Number(zipCode) > 50000) return right(true);
+    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<UpdateStatus>> {
+        if (Number(zipCode) > 50000) return right({ status: true });
         else return left('unknown_zipcode');
     }
 }

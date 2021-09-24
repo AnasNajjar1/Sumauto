@@ -9,6 +9,7 @@ import {
     CarDetails,
     Makes,
     VehicleFormFilters,
+    UpdateStatus,
 } from '../../../../hexagon/interfaces';
 
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
@@ -127,11 +128,12 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
         return ret.join('&');
     }
 
-    // TODO: connect to API
-    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>> {
+    async checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<UpdateStatus>> {
         try {
-            await this.get(`/referentials/zip-code/${zipCode}?identifier=${identifier}`);
-            return right(true);
+            const response = await this.get(
+                `/referentials/zip-code/${zipCode}?identifier=${identifier}`,
+            );
+            return right(response.data);
         } catch (error) {
             return left(error as string);
         }

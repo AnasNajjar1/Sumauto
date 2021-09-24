@@ -77,6 +77,7 @@ export abstract class BaseApi {
     protected async put(url: string, data?: any, params?: any): Promise<any> {
         return this.axiosInstance({
             method: 'PUT',
+            baseURL: this.baseUrl,
             url,
             data: data || null,
             params: params || null,

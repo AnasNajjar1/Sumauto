@@ -3,6 +3,7 @@ import {
     Makes,
     TReferentialItem,
     TRefrentialElement,
+    UpdateStatus,
     VehicleFormFilters,
 } from '../interfaces';
 
@@ -24,5 +25,5 @@ export interface ReferentialGateway {
         registration: string,
     ): Promise<ApiResponse<CarDetails>>;
 
-    checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<boolean>>;
+    checkZipCode(identifier: string, zipCode: string): Promise<ApiResponse<UpdateStatus>>;
 }

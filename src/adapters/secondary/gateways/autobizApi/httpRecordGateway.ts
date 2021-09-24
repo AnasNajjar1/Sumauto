@@ -139,14 +139,23 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         return right('400');
     }
 
-    // TODO: connect to API
     async updateSellProject(
         identifier: string,
         recordId: number,
         delay: string,
-    ): Promise<ApiResponse<boolean>> {
-        const data = PurchaseProjectMapper.toAutobiz(identifier, delay);
+    ): Promise<ApiResponse<UpdateStatus>> {
+        try {
+            const params = PurchaseProjectMapper.toAutobiz(identifier, delay);
 
-        return right(true);
+            const response = await this.put(
+                `/records/${recordId}/particular/purchase-project`,
+                null,
+                params,
+            );
+
+            return right(response.data);
+        } catch (error) {
+            return left(error as string);
+        }
     }
 }

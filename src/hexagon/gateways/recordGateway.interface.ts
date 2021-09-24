@@ -57,5 +57,5 @@ export interface RecordGateway {
         identifier: string,
         recordId: number,
         delay: string,
-    ): Promise<ApiResponse<boolean>>;
+    ): Promise<ApiResponse<UpdateStatus>>;
 }
