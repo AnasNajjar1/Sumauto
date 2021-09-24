@@ -1,13 +1,354 @@
 
 $primary: #F44336 ;
-$secondary: #E65508 ;
+$secondary: #28549E ;
 $input-active-color:#333333;
 $input-inactive-color:#E3E3E3;
 $input-error-color:#333333;
-
+$btn-font-weight:700;
+$info: #BABABA;
+$hr-border-color: #393939;
 $input-active-bg: #ffffff;
 $input-inactive-bg: #ffffff;
 $input-error-bg: #ffdddd;
+
+$input-border-color: #BABABA;
+$input-focus-border-color: #BABABA;
+
 @import '../../app.scss'; 
 
+h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
+h2{
+    font-size: 1.4rem;
+    font-weight: 700;
+}
 
+.btn{
+
+	&.refresh-valuation{
+		@extend .btn-primary;
+	}
+
+	&.modify-valuation{
+		@extend .btn-light;
+		@extend .btn-outline-primary;
+	}
+}
+.page-record{
+    h1{
+        @include media-breakpoint-down(sm) {
+            font-size: 1.4rem;
+        }
+    }
+}
+.section-valuation,
+.page-unsubscribe{
+    h1{
+        color: $primary;
+        @include media-breakpoint-down(sm) {
+            font-size: 1.4rem;
+        }
+    }
+    h2{
+        @extend h1;
+        @include media-breakpoint-down(sm) {
+            font-size: 1.4rem;
+        }
+    }
+}
+.section-valuation{
+    h2{
+        color: $primary;
+    }
+}
+.page-valuation{
+    .motivation-title{
+        font-weight: 700;
+    }
+}
+
+.alert-covid{
+    background-color: rgba(40, 84, 158,0.2);
+}
+
+
+.page-record{
+    h2.valuation-title{
+        color: $body-color;
+    }
+
+    h3{
+        font-size: 1.4rem; font-weight: 700;
+    }
+
+    .background-direct-sell,
+    .background-private-sell{
+        border: 1px solid #393939;
+        border-radius: 4px;
+        opacity: 1;
+        .valuation{
+            color:$primary;
+        }
+    }
+
+    .background-private-sell{
+        background-color: $gray-200;
+        .btn{
+            @extend .btn-primary;
+        }
+    }
+
+    .background-direct-sell{
+  
+        .btn{
+            @extend .btn-primary;
+        }
+    }
+
+}
+
+.page-confirmation{
+    .print-button{
+        color: $secondary;
+    }
+    .appointment-resume{
+        background-color: $gray-200;
+    }
+
+    a{
+        color:$secondary;
+        text-decoration: none;
+    }
+
+    .cancel-appointment{
+		@extend .btn-light;
+		@extend .btn-outline-dark;
+    }
+
+    .postpone-appointment{
+		@extend .btn-light;
+		@extend .btn-outline-dark;
+    }
+}
+
+
+.valuation-box{
+    background-color: $primaryOpacity;
+    h2{
+        font-weight: 400;
+    }
+
+}
+
+.valuation-value{
+    font-weight: 700;
+    font-size: 2.8rem;
+    color: $primary;
+}
+
+
+.accordion-info{
+    .accordion-info-title{
+        color: $secondary;
+        .accordion-info-title-text{
+            text-decoration: none;
+        }
+    }
+}
+
+.numbered-title{
+    font-weight: 400;
+    .number{
+        font-weight: 700;
+    }
+}
+
+.feature-group{
+    .feature{
+        &.feature-like{background-image: url('img/icon_like.svg');}
+        &.feature-user{background-image: url('img/icon_user.svg');}
+        &.feature-sun{background-image: url('img/icon_sun.svg');}
+        &.feature-clock{background-image: url('img/icon_clock.svg');}
+        &.feature-lock{background-image: url('img/icon_lock.svg');}
+        &.feature-check{background-image: url('img/icon_check.svg');}
+        &.feature-target{background-image: url('img/icon_target.svg');}
+        &.feature-cockade{background-image: url('img/icon_cockade.svg');}
+        &.feature-bulb{background-image: url('img/icon_bulb.svg');}
+    }
+}
+
+
+.picture{
+    background-repeat: no-repeat;
+    &.picture-searching{
+        background-image: url('img/bg_no_valuation.svg');
+        background-position: top center;
+        height: 180px;
+    } 
+    &.picture-archive{
+        background-image: url('img/bg_season_change.svg');
+        background-position: top center;
+        height: 130px;
+        margin-top: 15px; 
+    }
+    &.picture-calendar{
+        background-image: url('img/bg_calendar.svg');
+        background-position: top center;
+        height: 160px;
+        margin-top: 15px; 
+    }
+
+    &.picture-steps{
+        background-image: url('img/bg_steps.svg');
+        background-position: top center;
+        height: 100px;
+        margin-top: 15px; 
+    }
+
+    &.picture-chat{
+        background-image: url('img/bg_chat.svg');
+        background-position: top center;
+        height: 165px;
+        margin-top: 15px; 
+    }
+
+    &.picture-meeting{
+        background-image: url('img/bg_meeting.svg');
+        background-position: top center;
+        height: 165px;
+        margin-top: 15px; 
+    }
+
+    &.picture-icon-calendar{
+        background-image: url('img/icon_calendar.svg');
+        background-position: top left;
+        background-repeat: no-repeat;
+        height: 26px;
+        width: 28px;
+    }
+
+    &.picture-icon-print{
+        background-image: url('img/icon_print.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 17px;
+        width: 17px;
+        display: inline-block;
+        vertical-align: bottom;
+    }
+}
+
+
+
+.progress-steps{
+    .progress-step-content{
+        .step{
+            .label{
+                font-weight: 400;
+                color: $gray-300;
+                &.completed{
+                    font-weight: 700;
+                    color: $body-color;
+                }
+                &.active{
+                    font-weight: 400;
+                    color: $body-color;
+                }
+            }
+            .number{
+                border:1px solid $gray-400;
+                color:$gray-400;
+                background-color:white;
+                line-height: 20px;
+                font-weight: 700;
+                &.completed{
+                    color: white;
+                    border:1px solid $primary;
+                    background-color:$primary;
+                }
+                &.active{
+                    border:1px solid $primary;
+                    background-color:$primary;
+                    color: white;
+                }
+            }
+        }
+    }
+    .progress{ 
+        background-color: $gray-300;
+    }
+}
+
+.message{
+    &.info{
+        color: $body-color;
+        background-color: $primaryOpacity;
+    }
+
+    &.warning{
+        .message-title-text{font-weight: 400 !important;}
+        color: #F44336;
+        background-color: $primaryOpacity;
+    }
+}
+
+.form-section-title{
+    color: $gray-500;
+    border-bottom: 1px solid $gray-500;
+}
+
+.page-index {
+
+    .cta-block .btn{
+        @extend .btn-primary;
+    }
+
+    .btn.btn-light{
+        font-weight: 700;
+        &.non-selected{
+            @extend .btn-outline-info;
+            background-color: white;
+            color: $body-color;
+        }
+        &.selected{
+            @extend .btn-info;
+        }
+    }
+}
+
+.modal{
+    .modal-header button.close{
+        border: 2px solid $primary;
+        span{
+            color:$primary;
+            font-weight: 700;
+        }
+    }
+
+    .btn{
+        @extend .btn-primary;
+    }
+}
+
+
+.toggle-show-dealers{
+    color: $secondary;
+
+}
+
+.dealers-list{
+    .button-dealer{
+        border-radius: 2px;
+        &.selected{
+            background-color: $gray-200;
+        }
+    }
+}
+
+
+.unsubscribe-return.valid{
+	background-color:$gray-200;
+}
+
+.unsubscribe-return.error{
+	background-color: rgba(244, 67, 54, .2) ;
+}

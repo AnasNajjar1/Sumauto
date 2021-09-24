@@ -109,7 +109,7 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                                     </Col>
                                 </Row>
                             </Col>
-                            <Col md={6}>
+                            <Col md={6} className="mt-4">
                                 <h3>{t('documents_title')}</h3>
                                 <div
                                     dangerouslySetInnerHTML={{

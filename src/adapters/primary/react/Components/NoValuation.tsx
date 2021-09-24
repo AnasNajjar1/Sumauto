@@ -36,7 +36,7 @@ export const NoValuation: React.FC<TRecord> = ({ vehicle }) => {
                 <hr />
 
                 <div className="d-block d-lg-none">
-                    {/* <VehicleInformations vehicle={vehicle} /> */}
+                    <VehicleInformations vehicle={vehicle} />
                 </div>
 
                 <CtaBlock>

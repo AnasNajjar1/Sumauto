@@ -15,7 +15,7 @@ export const ActiveValuation: React.FC<TRecord> = (props) => {
     const { vehicle, valuation, id, offerNumber } = props;
 
     return (
-        <div className="page page-archive">
+        <div className="page page-valuation">
             <Container fluid>
                 <div className="text-center">
                     <h2 className="valuation-title">

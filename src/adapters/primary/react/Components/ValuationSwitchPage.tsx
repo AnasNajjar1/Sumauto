@@ -31,8 +31,8 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
         dispatch(getRecordUseCase(recordId));
     }, [dispatch, recordId]);
 
-    if (journeyType !== 'valuation') history.push(`/record/${recordId}`);
-    if (!privateSellLink) history.push(`/record/${recordId}`);
+    // if (journeyType !== 'valuation') history.push(`/record/${recordId}`);
+    // if (!privateSellLink) history.push(`/record/${recordId}`);
 
     if (!record.valuation) {
         return <></>;
