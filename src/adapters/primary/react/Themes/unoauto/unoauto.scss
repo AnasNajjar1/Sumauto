@@ -38,7 +38,8 @@ $input-border-color: #E3E3E3;
 $input-focus-border-color: #E3E3E3;
 
 @import '../../app.scss'; 
-h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
+ h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
+
 .feature-group{
     .feature{
         &.feature-like{background-image: url('img/icon_like.svg');}
@@ -182,7 +183,7 @@ h1{font-size: 32px; font-weight: 700; margin-bottom: 20px;}
     .background-direct-sell{
         background-color: $gray-200;
         .btn{
-            @extend .btn-secondary;
+            @extend .btn-primary;
         }
     }
 }
@@ -235,10 +236,11 @@ h2{
 
 
 .dealers-list{
-
     .button-dealer{
+        border-radius: 2px;
         &.selected{
             background-color: $primaryOpacity;
+            border-color: $primary;
         }
     }
 }
@@ -301,7 +303,6 @@ h2{
         span{
             color:$primary;
         }
-
     }
 
     .btn{
@@ -382,8 +383,13 @@ h2{
 .accordion-info{
     .accordion-info-title{
         color: $primary;
+        .accordion-info-title-text{
+            text-decoration: underline;
+        }
     }
 }
+
+
 
 
 .registration-or-make-logo{
@@ -396,4 +402,9 @@ h2{
 .appointment-resume{
     background-color: $primaryOpacity;
     color: $primary;
+}
+
+.form-section-title{
+    color: $gray-800;
+    border-bottom: 1px solid $gray-800;
 }

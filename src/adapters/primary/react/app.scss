@@ -11,6 +11,7 @@ $input-box-shadow: none;
 $input-focus-width: 0;
 $input-btn-focus-width:  0;
 $grid-gutter-width: 15px;
+$label-margin-bottom: 5px;
 
 @import '~bootstrap/scss/bootstrap';
 
@@ -158,9 +159,7 @@ body{
         &.hidden-dealer{
             display: none;
         }
-        &.selected{
-            border-color: $primary;
-        }
+
     }
 
     &.show-all{
@@ -203,6 +202,24 @@ ol {
     padding: $grid-gutter-width 0;
 }
 
+.page-index{
+    .cta-block{
+        @include media-breakpoint-up(lg) {
+            text-align: left;
+
+        }
+
+        .btn{
+            width: 100%;
+            @include media-breakpoint-up(sm) {
+                width: auto;
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+        }
+    }
+}
+
 .page-confirmation{
 
     padding-top: 15px;
@@ -216,6 +233,13 @@ ol {
     h3{
         font-size: 1rem;
         font-weight: 700;
+    }
+
+    ul{
+        padding-left: 15px;
+    }
+    ol{
+        padding-left: 0;
     }
 }
 
@@ -240,6 +264,7 @@ ol {
     .background-direct-sell{
         padding: $grid-gutter-width;
         margin-bottom: 2rem;
+        
     }
     
 }
@@ -302,16 +327,20 @@ label{
     font-weight: 700;
     color: $body-color;
     transition: $input-transition;
-    margin-bottom: .5rem;
-
 }
 
 
 
+.input-group-append,.input-group-text{
+    background-color: white;
+    color: $gray-500;
+}
+// .input-group{
+//     select,input{border-right:0}
+    
+// }
 
 .form-group{
-
-
 
     .text-danger {
         margin: 5px 0;
@@ -321,49 +350,8 @@ label{
         label {
             color: $input-active-color;
         }
-        .input-with-validation{
-  
-            // .input-group{
-            //     border-color: red;
-
-            // }
-        }
-    }
-
-    .input-with-validation{
-
-        // .input-group{
-        //     border: 1px solid $input-inactive-border-color;
-
-
-
-        //     .form-control{
-        //         font-size: $font-size-base;
-        //         padding: 4px 12px;
-        //     }
-
-        //     .form-control:focus{
-        //         outline: none;
-        //         box-shadow: none;
-        //     }
-
-        //     .input-group-append .input-group-text{
-        //         color: $input-inactive-color;
-        //         transition: $input-transition;
-        //     }
-        // }
-
-        // .input-danger{
-        //     border-color: $input-error-border-color;
-        // }
-
-        // .input-success{
-        //     border-color: $input-success-border-color;
-        // }
     }
 }
-
-
 
 .feature-group{
     .feature{
@@ -403,9 +391,6 @@ label{
     padding:0 0 .8rem 0;
     .accordion-info-title{
         margin-bottom: 0;
-        .accordion-info-title-text{
-            text-decoration: underline;
-        }
     }
     .accordion-info-details{
         margin-top: $halfGutter;
@@ -451,7 +436,9 @@ label{
                     background-color: black;
                     svg{
                         width: 10px;
-                    height: 10px;
+                        height: 10px;
+                        position: relative;
+                        top: -1px;
                     }
      
                 }
@@ -472,7 +459,7 @@ label{
     border-bottom: 1px solid $gray-500;
     .motivation-title{
    
-        max-width: 440px;
+        max-width: 500px;
         
         margin-left: auto;
         margin-right: auto;
@@ -530,6 +517,7 @@ label{
         opacity: 1;
         font-family: arial;
         span{
+            width: 19px;
             font-size: 18px;
             line-height: 20px;
             display: block;
@@ -551,9 +539,9 @@ label{
 }
 
 .form-section-title{
-    color: #363636;
+    
     font-size: .8rem;
-    border-bottom: 1px solid #363636;
+    
     padding-bottom: 6px;
     margin: 1rem 0;
     text-transform: uppercase;
@@ -609,7 +597,10 @@ input[type=number] {
     @include media-breakpoint-up(lg) {
         margin-top: 50px;
     }
-
+    .btn{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }
 
 .registration-or-make-logo{
@@ -668,5 +659,12 @@ input[type=number] {
     .input-group-text{
         font-weight: 700;
         background-color: transparent;
+    }
+}
+
+.page-valuation,
+.page-unsubscribe{
+    .input-group {
+        select,input{border-right:0}
     }
 }

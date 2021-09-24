@@ -101,8 +101,6 @@ $input-active-bg: #ffffff;
 $input-inactive-bg: #ffffff;
 $input-error-bg: #ffdddd;
 
-$input-border-color: #333333;
-$input-focus-border-color: #333333;
 
 $font-family-base:"makeitsans";
 @import '../../app.scss'; 
@@ -110,6 +108,13 @@ h1{font-size: 1.4rem; font-weight: 400; margin-bottom: 20px;}
 h2{
     font-size: 1.4rem;
     font-weight: 700; 
+}
+
+.form-group-registration .input-group{
+    .btn,.btn.disabled{ 
+        opacity: 1;
+        border:1px solid $input-border-color;
+    }
 }
 
 .btn{
@@ -132,21 +137,7 @@ h2{
 }
 
 
-.input-group{
-    border: 1px solid $input-border-color;
-    border-radius: $input-border-radius;
-    .form-control{
-        border-left: 0;
-        border-top: 0;
-        border-bottom: 0;
-        border-right: 1px solid $input-border-color;
-    }
-    .input-group-append{
-        box-shadow: none;
-        border-left:1px solid $input-border-color;
-    }
-	
-}
+
 
 .unsubscribe-return{
 	background-color:$gray-100;
@@ -164,6 +155,12 @@ h2{
     font-weight: 700;
     font-size: 2.8rem;
 }
+
+.page-index
+    .cta-block  .btn{
+        @extend .btn-primary;
+    }
+
 
 .page-record{
 
@@ -280,12 +277,18 @@ h2{
     }
 }
 
-
+.dealers-list{
+    .button-dealer{
+        border-radius: 4px;
+        &.selected{
+            border:1px solid $body-color;
+        }
+    }
+}
 .toggle-show-dealers{
 
     span{
         color: $secondary;
-        text-decoration: underline;
     }
 }
 
@@ -321,4 +324,9 @@ h2{
     &.selected{
         @extend .btn-dark;
     }
+}
+
+.form-section-title{
+    color: $gray-800;
+    border-bottom: 1px solid $gray-800;
 }

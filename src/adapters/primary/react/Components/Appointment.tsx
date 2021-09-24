@@ -172,23 +172,23 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
                 <div className="choose-date-background">
                     <Container fluid>
                         <NumberedTitle number={2} textKey="choose_your_date" />
-
-                        <AccordionInfo
-                            iconType="circle"
-                            titleKey="sell_requirement_info"
-                            detailsKey="sell_requirement_info_details"
-                        />
-                        <AccordionInfo
-                            iconType="circle"
-                            titleKey="appointment_info"
-                            detailsKey="appointment_info_details"
-                        />
-                        <AccordionInfo
-                            iconType="circle"
-                            titleKey="wainting_info"
-                            detailsKey="waiting_info_details"
-                        />
-
+                        <div className="mb-3">
+                            <AccordionInfo
+                                iconType="circle"
+                                titleKey="sell_requirement_info"
+                                detailsKey="sell_requirement_info_details"
+                            />
+                            <AccordionInfo
+                                iconType="circle"
+                                titleKey="appointment_info"
+                                detailsKey="appointment_info_details"
+                            />
+                            <AccordionInfo
+                                iconType="circle"
+                                titleKey="wainting_info"
+                                detailsKey="waiting_info_details"
+                            />
+                        </div>
                         <Loader status={dealerSlotStatus}>
                             <Row>
                                 <Col>
