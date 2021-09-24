@@ -207,3 +207,8 @@ export interface Makes {
     others: TRefrentialElement[];
     all: TRefrentialElement[];
 }
+
+export type TSellDelay = {
+    name: string;
+    value: string;
+};

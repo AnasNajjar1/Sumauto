@@ -30,14 +30,13 @@ export const saveVehicleAndUserInformationsUseCase =
             mileage,
         });
 
-        let recordId;
-        if (isRight(resultVehicle)) {
-            recordId = resultVehicle.right.id;
-        } else {
+        if (isLeft(resultVehicle)) {
             dispatch(dislayErrorUseCase('create_record_failed'));
-            dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
-            return;
+            return dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
         }
+
+        const recordId = resultVehicle.right.id;
+        dispatch(getRecordUseCase(recordId.toString()));
 
         // Saving State
         const { history, imported, running } = getState().form.vehicleState;
@@ -53,8 +52,7 @@ export const saveVehicleAndUserInformationsUseCase =
         );
 
         if (isLeft(resultState)) {
-            dispatch(dislayErrorUseCase('create_state_failed'));
-            dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
+            return dispatch(dislayErrorUseCase('create_state_failed'));
         }
 
         // saving user information
@@ -66,31 +64,31 @@ export const saveVehicleAndUserInformationsUseCase =
             zipCode,
         });
 
-        if (isRight(resultUser)) {
-            dispatch(getRecordUseCase(recordId.toString()));
-        } else {
-            dispatch(dislayErrorUseCase('create_particular_failed'));
-            dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
-        }
-
-        const resultQuotation = await recordGateway.createQuotation(config.identifier, recordId);
-
-        if (isRight(resultQuotation)) {
-            dispatch(
-                actionCreators.Actions.saveVehicleAndUserInformationsSaved(resultVehicle.right),
-            );
-        } else {
-            dispatch(dislayErrorUseCase('create_quotation_failed'));
-            dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
+        if (isLeft(resultUser)) {
+            return dispatch(dislayErrorUseCase('create_particular_failed'));
         }
 
         // Updating purchase project
+        const { sellProject } = getState().form.vehicleState;
 
-        // const { sellProject } = getState().form.vehicleState;
+        const resultSellProject = await recordGateway.updateSellProject(
+            config.identifier,
+            recordId,
+            sellProject,
+        );
 
-        // const resultSellProject = await recordGateway.updateSellProject(
-        //     config.identifier,
-        //     recordId,
-        //     sellProject,
-        // );
+        if (isLeft(resultSellProject)) {
+            return dispatch(dislayErrorUseCase('update_sell_project_failed'));
+        }
+
+        // create quotation
+        const resultQuotation = await recordGateway.createQuotation(config.identifier, recordId);
+
+        if (isLeft(resultQuotation)) {
+            return dispatch(dislayErrorUseCase('create_quotation_failed'));
+        }
+
+        return dispatch(
+            actionCreators.Actions.saveVehicleAndUserInformationsSaved(resultVehicle.right),
+        );
     };
