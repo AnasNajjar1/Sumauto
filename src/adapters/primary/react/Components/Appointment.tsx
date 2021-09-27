@@ -89,6 +89,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
 
     useEffect(() => {
         if (date && dealerSlotList) {
+            setHour('');
             const found = dealerSlotList.find((s) => s.date === date)?.hours;
             if (found) {
                 setHourList(found);
@@ -233,7 +234,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
                                                         {hourList.map((s) => (
                                                             <option
                                                                 value={s.id}
-                                                                key={s.id}
+                                                                key={s.hour}
                                                                 disabled={s.status === 'closed'}
                                                             >
                                                                 {s.hour}{' '}

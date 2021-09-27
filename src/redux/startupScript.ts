@@ -49,7 +49,6 @@ switch (process.env.REACT_APP_SOURCE) {
         referentialGateway = new HttpReferentialGateway();
 
         dealerGateway = new HttpDealerGateway();
-        dealerGateway.feedDealerSlotListWith(someDealerSlots);
 
         recordGateway = new HttpRecordGateway();
         trackerGateway = new HttpTrackerGateway();
