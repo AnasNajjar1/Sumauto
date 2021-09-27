@@ -1,9 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
-import { iframeResizer } from 'iframe-resizer';
 import { Spinner } from 'reactstrap';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
@@ -20,7 +18,6 @@ import { ValuationSwitch } from './Components/ValuationSwitchPage';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
-    const iframeInstance = iframeResizer;
 
     const dispatch = useDispatch();
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
@@ -28,6 +25,12 @@ const App: React.FC = () => {
     }
     dispatch(setClientNameUseCase(clientSlug));
     dispatch(setJourneyTypeUseCase(journeyType));
+
+    const sendToParent = () => {
+        // @ts-ignore-start
+        scrollParent(100);
+        // @ts-ignore-end
+    };
 
     return (
         <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
@@ -40,6 +43,9 @@ const App: React.FC = () => {
             >
                 {themeSelector(clientSlug)}
                 <BrowserRouter basename={`/${clientSlug}/${journeyType}`}>
+                    <button type="button" onClick={() => sendToParent()}>
+                        HELLO
+                    </button>
                     <div className={`app-${clientSlug}`}>
                         <main>
                             <Switch>

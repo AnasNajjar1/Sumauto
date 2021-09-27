@@ -37,6 +37,8 @@ module.exports = {
         'react/no-danger': "off", 
         'react-hooks/exhaustive-deps':"warn",
         "react/prop-types": "off",
-        "react/require-default-props": "off"
+        "react/require-default-props": "off",
+        "@typescript-eslint/ban-ts-comment": "off"
     },
 };
+ 
