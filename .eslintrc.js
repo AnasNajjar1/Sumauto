@@ -40,5 +40,6 @@ module.exports = {
         "react/require-default-props": "off",
         "@typescript-eslint/ban-ts-comment": "off"
     },
+    ignorePatterns: ['.eslintrc.js']
 };
  
