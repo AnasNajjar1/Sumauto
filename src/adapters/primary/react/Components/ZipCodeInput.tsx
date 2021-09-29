@@ -47,6 +47,7 @@ export const ZipCodeInput: React.FC = () => {
                             type="tel"
                             id="zipCode"
                             defaultvalue={zipCode}
+                            placeholder={t('zipCode_placeholder')}
                             onBlur={(e) => handleBlur(e.target.value)}
                         />
                         <InputGroupAddon addonType="append">

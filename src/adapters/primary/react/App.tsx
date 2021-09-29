@@ -26,12 +26,6 @@ const App: React.FC = () => {
     dispatch(setClientNameUseCase(clientSlug));
     dispatch(setJourneyTypeUseCase(journeyType));
 
-    const sendToParent = () => {
-        // @ts-ignore-start
-        scrollParent(100);
-        // @ts-ignore-end
-    };
-
     return (
         <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
             <React.Suspense
@@ -43,9 +37,6 @@ const App: React.FC = () => {
             >
                 {themeSelector(clientSlug)}
                 <BrowserRouter basename={`/${clientSlug}/${journeyType}`}>
-                    <button type="button" onClick={() => sendToParent()}>
-                        HELLO
-                    </button>
                     <div className={`app-${clientSlug}`}>
                         <main>
                             <Switch>

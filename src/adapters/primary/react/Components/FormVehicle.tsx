@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Button, CustomInput } from 'reactstrap';
 import { t } from 'autobiz-translate';
@@ -96,6 +95,7 @@ export const FormVehicle: React.FC = () => {
         ];
 
         setDisplaySectionMoreDetails(basicInformations.every(Boolean));
+
         setDisplaySectionAdditionalInformation(
             [displaySectionMoreDetails, ...moreDetails].every(Boolean),
         );
@@ -118,6 +118,14 @@ export const FormVehicle: React.FC = () => {
             else history.push(`./record/${recordId}`);
         }
     }, [dispatch, recordId, recordStatus]);
+
+    useEffect(() => {
+        if (displaySectionMoreDetails) {
+            // @ts-ignore-start
+            parentScrollToId('more_details');
+            // @ts-ignore-end
+        }
+    }, [dispatch, displaySectionMoreDetails]);
 
     return (
         <div className="page page-index">
@@ -163,7 +171,11 @@ export const FormVehicle: React.FC = () => {
                             </Row>
                             <Row>
                                 <Col xs={12} sm={6} lg={4}>
-                                    <ReferentialSelect label="registration_date" scope="month" />
+                                    <ReferentialSelect
+                                        label="registration_date"
+                                        scope="month"
+                                        tooltip
+                                    />
                                 </Col>
 
                                 <Col xs={12} sm={6} lg={4}>
@@ -184,7 +196,7 @@ export const FormVehicle: React.FC = () => {
                     </Row>
                 </div>
                 {displaySectionMoreDetails && (
-                    <div className="form-section">
+                    <div className="form-section" id="more_details">
                         <div className="form-section-title">{t('more_details')}</div>
                         <Row>
                             <Col xs={12} sm={8} lg={9}>
@@ -198,7 +210,7 @@ export const FormVehicle: React.FC = () => {
                                     </Col>
 
                                     <Col xs={12} sm={6} lg={4}>
-                                        <ReferentialSelect label="engine" scope="engine" />
+                                        <ReferentialSelect label="engine" scope="engine" tooltip />
                                     </Col>
                                 </Row>
 
@@ -208,7 +220,7 @@ export const FormVehicle: React.FC = () => {
 
                         <Row>
                             <Col xs={12} sm={8} lg={6}>
-                                <ReferentialSelect label="version" scope="version" />
+                                <ReferentialSelect label="version" scope="version" tooltip />
                                 <p className="form-help">{t('version_help')}</p>
                             </Col>
                             <Col xs={12} sm={4} lg={{ size: 3, offset: 3 }}>
@@ -230,6 +242,7 @@ export const FormVehicle: React.FC = () => {
                                         <ButtonRadioInput
                                             label="imported"
                                             id="imported"
+                                            tooltip
                                             data={[
                                                 { name: 'yes', value: '1' },
                                                 { name: 'no', value: '2' },
@@ -247,7 +260,7 @@ export const FormVehicle: React.FC = () => {
                     </div>
                 )}
                 {displaySectionAdditionalInformation && (
-                    <div className="form-section">
+                    <div className="form-section" id="additional_information">
                         <div className="form-section-title">{t('additional_information')}</div>
                         <Row>
                             <Col xs={12} sm={8} lg={9}>

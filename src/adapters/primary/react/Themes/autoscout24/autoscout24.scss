@@ -104,7 +104,7 @@ $input-error-bg: #ffdddd;
 
 $font-family-base:"makeitsans";
 @import '../../app.scss'; 
-h1{font-size: 1.4rem; font-weight: 400; margin-bottom: 20px;}
+h1{font-size: 1.4rem; font-weight: 400; margin-bottom: 24px;}
 h2{
     font-size: 1.4rem;
     font-weight: 700; 
@@ -212,6 +212,7 @@ h2{
 		@extend .btn-outline-dark;
     }
 }
+
 
 .modal{
     .modal-header button.close{
