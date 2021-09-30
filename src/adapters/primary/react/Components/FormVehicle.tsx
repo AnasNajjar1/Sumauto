@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Button, CustomInput } from 'reactstrap';
 import { t } from 'autobiz-translate';
@@ -23,10 +22,12 @@ import { RegistrationInput } from './RegistrationInput';
 import { setCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { sellDelay } from '../../../../config';
+import useScroll from '../hooks/useScroll';
 
 export const FormVehicle: React.FC = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const historyHook = useHistory();
+    const { scrollToElement } = useScroll();
     const { vehicle, vehicleState, particular } = useSelector(getFormSelector);
     const { journeyType, config } = useSelector(getClientSelector).client;
 
@@ -92,10 +93,11 @@ export const FormVehicle: React.FC = () => {
             vehicleState.sellProject,
             particular.email,
             particular.zipCode,
-            particular.phone,
+            // particular.phone,
         ];
 
         setDisplaySectionMoreDetails(basicInformations.every(Boolean));
+
         setDisplaySectionAdditionalInformation(
             [displaySectionMoreDetails, ...moreDetails].every(Boolean),
         );
@@ -114,10 +116,46 @@ export const FormVehicle: React.FC = () => {
 
     useEffect(() => {
         if (recordId > 0 && recordStatus === 'succeeded') {
-            if (journeyType === 'valuation') history.push(`./switch/${recordId}`);
-            else history.push(`./record/${recordId}`);
+            if (journeyType === 'valuation') historyHook.push(`./switch/${recordId}`);
+            else historyHook.push(`./record/${recordId}`);
         }
     }, [dispatch, recordId, recordStatus]);
+
+    useEffect(() => {
+        const { make, model, month, year, fuel, body, door, gear, engine, version, mileage } =
+            vehicle;
+        const { imported, history, running, sellProject } = vehicleState;
+        const order = {
+            make,
+            model,
+            month,
+            year,
+            fuel,
+            body,
+            door,
+            gear,
+            engine,
+            version,
+            mileage,
+            imported,
+            history,
+            running,
+            sellProject,
+        };
+
+        let found = false;
+        let idName = '';
+
+        Object.entries(order).forEach(([key, value]) => {
+            if (!value && !found) {
+                if (key === 'year') idName = `form_group_month`;
+                else if (key === 'mileage') idName = `form_group_mileage`;
+                else idName = `form_group_${key}`;
+                scrollToElement(idName, 15);
+                found = true;
+            }
+        });
+    }, [dispatch, vehicle, vehicleState]);
 
     return (
         <div className="page page-index">
@@ -130,7 +168,6 @@ export const FormVehicle: React.FC = () => {
                         <Picture background="steps" />
                     </Col>
                 </Row>
-
                 <div className="form-section">
                     <div className="form-section-title">{t('basic_information')}</div>
                     <Row>
@@ -146,7 +183,7 @@ export const FormVehicle: React.FC = () => {
                                 </Col>
                             </>
                         )}
-                        <Col xs={12} sm={6} xl={5}>
+                        <Col xs={12} sm={8} lg={6} xl={6}>
                             <MakeLogoInput />
                         </Col>
                     </Row>
@@ -163,7 +200,11 @@ export const FormVehicle: React.FC = () => {
                             </Row>
                             <Row>
                                 <Col xs={12} sm={6} lg={4}>
-                                    <ReferentialSelect label="registration_date" scope="month" />
+                                    <ReferentialSelect
+                                        label="registration_date"
+                                        scope="month"
+                                        tooltip
+                                    />
                                 </Col>
 
                                 <Col xs={12} sm={6} lg={4}>
@@ -184,7 +225,7 @@ export const FormVehicle: React.FC = () => {
                     </Row>
                 </div>
                 {displaySectionMoreDetails && (
-                    <div className="form-section">
+                    <div className="form-section" id="more_details">
                         <div className="form-section-title">{t('more_details')}</div>
                         <Row>
                             <Col xs={12} sm={8} lg={9}>
@@ -198,7 +239,7 @@ export const FormVehicle: React.FC = () => {
                                     </Col>
 
                                     <Col xs={12} sm={6} lg={4}>
-                                        <ReferentialSelect label="engine" scope="engine" />
+                                        <ReferentialSelect label="engine" scope="engine" tooltip />
                                     </Col>
                                 </Row>
 
@@ -208,7 +249,7 @@ export const FormVehicle: React.FC = () => {
 
                         <Row>
                             <Col xs={12} sm={8} lg={6}>
-                                <ReferentialSelect label="version" scope="version" />
+                                <ReferentialSelect label="version" scope="version" tooltip />
                                 <p className="form-help">{t('version_help')}</p>
                             </Col>
                             <Col xs={12} sm={4} lg={{ size: 3, offset: 3 }}>
@@ -230,6 +271,7 @@ export const FormVehicle: React.FC = () => {
                                         <ButtonRadioInput
                                             label="imported"
                                             id="imported"
+                                            tooltip
                                             data={[
                                                 { name: 'yes', value: '1' },
                                                 { name: 'no', value: '2' },
@@ -247,7 +289,7 @@ export const FormVehicle: React.FC = () => {
                     </div>
                 )}
                 {displaySectionAdditionalInformation && (
-                    <div className="form-section">
+                    <div className="form-section" id="additional_information">
                         <div className="form-section-title">{t('additional_information')}</div>
                         <Row>
                             <Col xs={12} sm={8} lg={9}>
@@ -315,12 +357,12 @@ export const FormVehicle: React.FC = () => {
                         </p>
                     </div>
                 )}
-
                 <CtaBlock>
                     <Button disabled={!canQuote} onClick={handleSubmitForm}>
                         {t('value_your_car_now')}
                     </Button>
                 </CtaBlock>
+                <p className="footnote">{t('form_vehicle_footnote')}</p>
             </Container>
         </div>
     );

@@ -2,14 +2,17 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 import { Button, Col, Container, Row } from 'reactstrap';
+
 import { TRecord } from '../../../../hexagon/interfaces';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { AccordionInfo } from './AccordionInfo';
 import { ProgressSteps } from './ProgressSteps';
 import { Appointment } from './Appointment';
+import useScroll from '../hooks/useScroll';
 
 export const ActiveValuation: React.FC<TRecord> = (props) => {
+    const { scrollToElement } = useScroll();
     const { client } = useSelector(getClientSelector);
     const { locale, currency } = client.config;
     const { vehicle, valuation, id, offerNumber } = props;
@@ -42,7 +45,12 @@ export const ActiveValuation: React.FC<TRecord> = (props) => {
                     <div className="motivation">
                         <h3 className="motivation-title">{t('motivation_to_continue')}</h3>
                         <ProgressSteps withLabels={false} progress={80} />
-                        <Button color="primary">{t('book_an_appointment_for_free')}</Button>
+                        <Button
+                            color="primary"
+                            onClick={() => scrollToElement('appointment_container')}
+                        >
+                            {t('book_an_appointment_for_free')}
+                        </Button>
                     </div>
                 </div>
                 <div className="alert-covid">
@@ -53,11 +61,13 @@ export const ActiveValuation: React.FC<TRecord> = (props) => {
                     />
                 </div>
 
-                <Row>
-                    <Col>
-                        <Appointment recordId={id} />
-                    </Col>
-                </Row>
+                <div id="appointment_container">
+                    <Row>
+                        <Col>
+                            <Appointment recordId={id} />
+                        </Col>
+                    </Row>
+                </div>
             </Container>
         </div>
     );

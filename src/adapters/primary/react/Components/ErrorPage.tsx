@@ -19,7 +19,7 @@ export const ErrorPage: React.FC<TErrorPageProps> = ({ title, description }) => 
     return (
         <div className="page page-error">
             <Container fluid>
-                <h1>{t(title || 'error_title')}</h1>
+                <h1>{t('error_title')}</h1>
 
                 <div
                     dangerouslySetInnerHTML={{

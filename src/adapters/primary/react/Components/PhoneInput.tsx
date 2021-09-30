@@ -50,6 +50,7 @@ export const PhoneInput: React.FC = () => {
                             id="phone"
                             value={phone}
                             onChange={(e) => handleChange(e.target.value)}
+                            placeholder={t('phone_placeholder')}
                             onBlur={() => handleBlur()}
                         />
                         <InputGroupAddon addonType="append">

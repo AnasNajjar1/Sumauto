@@ -1,9 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
-
 import { useDispatch } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
-import { iframeResizer } from 'iframe-resizer';
 import { Spinner } from 'reactstrap';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
@@ -14,13 +12,11 @@ import { clients, journeys } from '../../../config';
 import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName.useCase';
 import { RecordPage } from './Components/RecordPage';
 import { UnsubscribePage } from './Components/UnsubscribePage';
-import { Confirmation } from './Components/Confirmation';
 import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
 import { ValuationSwitch } from './Components/ValuationSwitchPage';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
-    const iframeInstance = iframeResizer;
 
     const dispatch = useDispatch();
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {

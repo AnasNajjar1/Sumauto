@@ -98,6 +98,7 @@ export const EmailInput: React.FC = () => {
                                 type="email"
                                 id="email"
                                 value={email}
+                                placeholder={t('email_placeholder')}
                                 onChange={(e) => handleChange(e.target.value)}
                                 onBlur={() => handleBlur()}
                             />
@@ -122,6 +123,7 @@ export const EmailInput: React.FC = () => {
                                     type="email"
                                     id="emailConfirmation"
                                     value={emailConfirmation}
+                                    placeholder={t('email_placeholder')}
                                     onChange={(e) => handleChangeConfirmation(e.target.value)}
                                     onBlur={() => handleBlur()}
                                 />

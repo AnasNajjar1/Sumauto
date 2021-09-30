@@ -2,6 +2,8 @@ import React from 'react';
 import { FormGroup, Input, Label, Spinner } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { TReferentialItem } from '../../../../hexagon/interfaces';
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
@@ -11,9 +13,10 @@ import { InputValidation } from './InputValidation';
 type ReferentialInputProps = {
     scope: TReferentialItem;
     label: string;
+    tooltip?: boolean;
 };
 
-export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scope }) => {
+export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scope, tooltip }) => {
     const { referential, vehicle, vehicleName } = useSelector(getFormSelector);
     const dispatch = useDispatch();
 
@@ -38,9 +41,11 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scop
     if (value) valid = true;
     if (status === 'failed') valid = false;
     return (
-        <FormGroup className={`form-group-${scope}`}>
+        <FormGroup className={`form-group-${scope}`} id={`form_group_${scope}`}>
             <Label for={scope}>
-                {(label && t(label)) || '\u00A0'} {status === 'pending' && <Spinner size="sm" />}
+                {(label && t(label)) || '\u00A0'} {/* \u00A0 specific for empty labels */}
+                {tooltip && <FontAwesomeIcon icon={faQuestionCircle} />}
+                {status === 'pending' && <Spinner size="sm" />}
             </Label>
             <InputWithValidation>
                 {(name && <Input disabled value={name} />) || (
@@ -52,7 +57,7 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scop
                         onChange={(e) => handleChange(scope, e.target.value)}
                         disabled={status !== 'succeeded'}
                     >
-                        <option value="">--</option>
+                        <option value="">{t('choose')}</option>
                         {list.map((m: any) => (
                             <option key={m.id} value={m.id}>
                                 {m.name}

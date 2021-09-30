@@ -53,10 +53,17 @@ body{
 }
 
 .makes-logo{
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    .fivecol{
+        width: 20%;
+        position: relative;
+        padding-right: $halfGutter;
+        padding-left: $halfGutter;
+    }
     .make-logo-button-container{
         text-align: center;
         font-size: 10px;
+        margin-bottom: 10px;
         div{
             border:1px solid #ccc;
             border-radius: 2px;

@@ -29,29 +29,30 @@ export const MakeLogoInput: React.FC = () => {
 
     return (
         <div className="makes-logo">
-            {/* <Col>
-                <div className="registration-or-make-logo">
-                    <span>{t('or')}</span>
-                </div>
-            </Col> */}
-            <Label>{t('make')}</Label>
-            <Row>
-                {makes.map((f: any) => (
-                    <Col key={f.id} xs={3} lg={2}>
-                        <div className="make-logo-button-container">
-                            <div
-                                role={vehicleName.make ? 'none' : 'button'}
-                                aria-hidden="true"
-                                className={vehicle.make === f.id.toString() ? 'selected' : ''}
-                                onClick={() => handleClick(f.id.toString())}
-                            >
-                                <img src={getMakeLogoUrl(f.name)} alt={f.name} />
+            {makes.length > 0 && (
+                <>
+                    <Label>{t('make')}</Label>
+                    <Row>
+                        {makes.map((f: any) => (
+                            <div key={f.id} className="fivecol">
+                                <div className="make-logo-button-container">
+                                    <div
+                                        role={vehicleName.make ? 'none' : 'button'}
+                                        aria-hidden="true"
+                                        className={
+                                            vehicle.make === f.id.toString() ? 'selected' : ''
+                                        }
+                                        onClick={() => handleClick(f.id.toString())}
+                                    >
+                                        <img src={getMakeLogoUrl(f.name)} alt={f.name} />
+                                    </div>
+                                    {f.name}
+                                </div>
                             </div>
-                            {f.name}
-                        </div>
-                    </Col>
-                ))}
-            </Row>
+                        ))}
+                    </Row>
+                </>
+            )}
         </div>
     );
 };
