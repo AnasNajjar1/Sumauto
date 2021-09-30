@@ -43,8 +43,8 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async saveVehicleStateInformation(
         identifier: string,
-        recordId: number,
-        vehicleStateInformation: VehicleStateInformation,
+        recordUid: string,
+        vehicleStateInformation: VehicleStateInformation ,
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
             return right(this.recordIds);
@@ -55,7 +55,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async updateVehicleStateInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleStateInformation: VehicleStateInformation,
     ): Promise<ApiResponse<UpdateStatus>> {
         if (this.recordIds) {
@@ -67,7 +67,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async saveUserInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
@@ -79,7 +79,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async updateUserInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<UpdateStatus>> {
         if (this.recordIds) {
@@ -112,7 +112,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return left('error_delete_appointment');
     }
 
-    async createQuotation(identifier: string, recordId: number): Promise<ApiResponse<boolean>> {
+    async createQuotation(identifier: string, recordUid: string): Promise<ApiResponse<boolean>> {
         // try {
         //     const response = await this.post(`/records/{recordId}/quotation`, {
         //         identifier,
@@ -135,7 +135,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async updateSellProject(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         delay: string,
     ): Promise<ApiResponse<UpdateStatus>> {
         return right({ status: true });

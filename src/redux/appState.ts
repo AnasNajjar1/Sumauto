@@ -25,6 +25,7 @@ export interface AppState {
     };
     record: {
         id: number;
+        uid: string;
         status: TActionStatus;
         data: TRecord;
     };

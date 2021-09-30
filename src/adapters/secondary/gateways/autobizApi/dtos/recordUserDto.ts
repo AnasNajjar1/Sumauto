@@ -1,6 +1,6 @@
 export interface AutobizRecordUserDto {
     identifier: string;
-    recordId: number;
+    recordUid: string;
     mail: string;
     phone: string;
     zipCode: string;

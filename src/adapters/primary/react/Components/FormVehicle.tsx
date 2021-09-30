@@ -31,7 +31,9 @@ export const FormVehicle: React.FC = () => {
     const { vehicle, vehicleState, particular } = useSelector(getFormSelector);
     const { journeyType, config } = useSelector(getClientSelector).client;
 
-    const { id: recordId, status: recordStatus } = useSelector(getRecordSelector);
+    const { uid: recordUid, status: recordStatus } = useSelector(getRecordSelector);
+
+    const record = useSelector(getRecordSelector);
 
     const [canQuote, setCanQuote] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
@@ -115,11 +117,11 @@ export const FormVehicle: React.FC = () => {
     }, [dispatch, vehicle, vehicleState, particular]);
 
     useEffect(() => {
-        if (recordId > 0 && recordStatus === 'succeeded') {
-            if (journeyType === 'valuation') historyHook.push(`./switch/${recordId}`);
-            else historyHook.push(`./record/${recordId}`);
+        if (recordUid && recordStatus === 'succeeded') {
+            if (journeyType === 'valuation') historyHook.push(`./switch/${recordUid}`);
+            else historyHook.push(`./record/${recordUid}`);
         }
-    }, [dispatch, recordId, recordStatus]);
+    }, [dispatch, recordUid, recordStatus]);
 
     useEffect(() => {
         const { make, model, month, year, fuel, body, door, gear, engine, version, mileage } =

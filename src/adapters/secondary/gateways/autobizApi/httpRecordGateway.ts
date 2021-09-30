@@ -40,17 +40,17 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
 
     async saveVehicleStateInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleStateInformation: VehicleStateInformation,
     ): Promise<ApiResponse<RecordIds>> {
         try {
             const data = RecordVehicleStateMapper.toAutobiz(
                 identifier,
-                recordId,
+                recordUid,
                 vehicleStateInformation,
             );
 
-            const response = await this.post(`/records/${recordId}/state`, data);
+            const response = await this.post(`/record/${recordUid}/state`, data);
 
             if (response) {
                 return right(response.data);
@@ -63,13 +63,13 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
 
     async saveUserInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<RecordIds>> {
         try {
-            const data = RecordUserMapper.toAutobiz(identifier, recordId, vehicleUserInformation);
+            const data = RecordUserMapper.toAutobiz(identifier, recordUid, vehicleUserInformation);
 
-            const response = await this.post(`/records/${recordId}/particular`, data);
+            const response = await this.post(`/customers/${recordUid}`, data);
 
             if (response) {
                 return right(response.data);
@@ -80,16 +80,19 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         return left('not_saving_record');
     }
 
-    // TODO: connect to API
     async updateUserInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<UpdateStatus>> {
         try {
-            const params = RecordUserMapper.toAutobiz(identifier, recordId, vehicleUserInformation);
+            const params = RecordUserMapper.toAutobiz(
+                identifier,
+                recordUid,
+                vehicleUserInformation,
+            );
 
-            const response = await this.put(`/records/${recordId}/particular`, null, params);
+            const response = await this.put(`/customers/${recordUid}`, null, params);
 
             return right(response.data);
         } catch (error) {
@@ -99,11 +102,11 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
 
     async getRecord(
         identifier: string,
-        recordId: string,
+        recordUid: string,
         mode?: string,
     ): Promise<ApiResponse<TRecord>> {
         try {
-            const uri = `/records/${recordId}?identifier=${identifier}`;
+            const uri = `/records/${recordUid}?identifier=${identifier}`;
             const response = await this.get(mode ? `${uri}&mode=${mode}` : uri);
 
             if (response) {
@@ -123,16 +126,14 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
     }
 
     // TODO: connect to API
-    async cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
+    async cancelAppointment(identifier: string, recordUid: string): Promise<ApiResponse<boolean>> {
         return right(true);
     }
 
-    // TODO: connect to API
-    async createQuotation(identifier: string, recordId: number): Promise<ApiResponse<boolean>> {
+    async createQuotation(identifier: string, recordUid: string): Promise<ApiResponse<boolean>> {
         try {
-            const response = await this.post(`/records/${recordId}/quotation`, {
+            const response = await this.post(`/record/${recordUid}/quotation`, {
                 identifier,
-                recordId,
             });
 
             if (response.data.status) {
@@ -146,20 +147,20 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
     }
 
     // TODO: connect to API
-    async duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>> {
+    async duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<string>> {
         return right('400');
     }
 
     async updateSellProject(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         delay: string,
     ): Promise<ApiResponse<UpdateStatus>> {
         try {
             const params = PurchaseProjectMapper.toAutobiz(identifier, delay);
 
             const response = await this.put(
-                `/records/${recordId}/particular/purchase-project`,
+                `/customer/${recordUid}/purchase-project`,
                 null,
                 params,
             );

@@ -4,11 +4,11 @@ import { RecordGateway } from '../../gateways/recordGateway.interface';
 import * as actionCreators from './actionCreators';
 
 export const getRecordUseCase =
-    (recordId: string, mode?: string): ThunkResult<void> =>
+    (recordUid: string, mode?: string): ThunkResult<void> =>
     async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
         dispatch(actionCreators.Actions.recordFetching());
         const { config } = getState().client;
-        const result = await recordGateway.getRecord(config.identifier, recordId, mode);
+        const result = await recordGateway.getRecord(config.identifier, recordUid, mode);
 
         if (isRight(result)) {
             dispatch(actionCreators.Actions.recordRetrieved(result.right));

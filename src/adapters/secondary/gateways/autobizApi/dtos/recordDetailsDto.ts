@@ -1,17 +1,19 @@
 export interface AutobizRecordDetailsDto {
     record: {
         RfId: string;
+        uid: string;
         HexaRfId: string;
         createdAt: string;
         updatedAt: string;
         enabled: 'yes' | 'no';
-        expired: false;
+        expired: boolean;
         statusId: string;
         statusLabel: string;
         sourceId: string;
         sourceLabel: string;
         offerId: string;
         offerLabel: string;
+        spancol: string;
         duplicated: 'yes' | 'no';
     };
     customer: {
@@ -76,20 +78,38 @@ export interface AutobizRecordDetailsDto {
         servicingInvoice: string;
         comment: string;
     };
-    appointment: {
-        id: string;
-        createdAt: string;
-        updateAt: string;
-        status: string;
-        lastOne: 'yes' | 'no';
-        active: 'yes' | 'no';
-        appointmentDate: string;
-        startHour: string;
-        endHour: string;
-        expertId: string;
-        expertName: string;
-        networkId: string;
-        dealerId: string;
-        dealerName: string;
-    };
+    appointment?: TAutobizAppointment[];
+    // appointment: {
+    //     id: string;
+    //     createdAt: string;
+    //     updateAt: string;
+    //     status: string;
+    //     lastOne: 'yes' | 'no';
+    //     active: 'yes' | 'no';
+    //     appointmentDate: string;
+    //     startHour: string;
+    //     endHour: string;
+    //     expertId: string;
+    //     expertName: string;
+    //     networkId: string;
+    //     dealerId: string;
+    //     dealerName: string;
+    // };
 }
+
+type TAutobizAppointment = {
+    id: string;
+    createdAt: string;
+    updateAt: string;
+    status: string;
+    lastOne: 'yes' | 'no';
+    active: 'yes' | 'no';
+    appointmentDate: string;
+    startHour: string;
+    endHour: string;
+    expertId: string;
+    expertName: string;
+    networkId: string;
+    dealerId: string;
+    dealerName: string;
+};

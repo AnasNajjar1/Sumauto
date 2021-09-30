@@ -4,14 +4,14 @@ import { RecordGateway } from '../../gateways/recordGateway.interface';
 import * as actionCreators from './actionCreators';
 
 export const updateUserInformationsUseCase =
-    (recordId: string): ThunkResult<void> =>
+    (recordUid: string): ThunkResult<void> =>
     async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
         dispatch(actionCreators.Actions.UpdateUserInformationsPending());
         const { config } = getState().client;
         const { particular } = getState().form;
         const result = await recordGateway.updateUserInformation(
             config.identifier,
-            Number(recordId),
+            recordUid,
             particular,
         );
 

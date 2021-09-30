@@ -5,9 +5,9 @@ import { AutobizRecordDetailsDto } from '../dtos/recordDetailsDto';
 export class RecordMapper implements Mapper<TRecord> {
     static toApp(dto: AutobizRecordDetailsDto): TRecord {
         const { record, vehicle, vehicleState, customer, valuation, appointment } = dto;
-
         return {
             id: record.RfId,
+            uid: record.uid,
             expired: false,
             offerNumber: record.HexaRfId,
             vehicle: {
@@ -24,7 +24,6 @@ export class RecordMapper implements Mapper<TRecord> {
                 versionName: vehicle.versionLabel,
             },
 
-            // TODO Fix this
             valuation: {
                 privateValue: Number(valuation.particular),
                 value: Number(valuation.boostedPrice),
@@ -38,22 +37,24 @@ export class RecordMapper implements Mapper<TRecord> {
                 phone: customer.phone,
                 name: `${customer.firstName} ${customer.lastName}`,
             },
-            appointment: {
-                id: Number(appointment.id),
-                createdAt: appointment.createdAt,
-                updatedAt: appointment.updateAt,
-                status: Boolean(appointment.status),
-                lastOne: appointment.lastOne,
-                active: appointment.active,
-                appointmentDate: appointment.appointmentDate,
-                startHour: appointment.startHour,
-                endHour: appointment.endHour,
-                expertId: Number(appointment.expertId),
-                expertName: appointment.expertName,
-                networkId: Number(appointment.networkId),
-                dealerId: Number(appointment.dealerId),
-                dealerName: appointment.dealerName,
-            },
+            appointment: appointment
+                ? {
+                      id: Number(appointment[0].id),
+                      createdAt: appointment[0].createdAt,
+                      updatedAt: appointment[0].updateAt,
+                      status: Boolean(appointment[0].status),
+                      lastOne: appointment[0].lastOne,
+                      active: appointment[0].active,
+                      appointmentDate: appointment[0].appointmentDate,
+                      startHour: appointment[0].startHour,
+                      endHour: appointment[0].endHour,
+                      expertId: Number(appointment[0].expertId),
+                      expertName: appointment[0].expertName,
+                      networkId: Number(appointment[0].networkId),
+                      dealerId: Number(appointment[0].dealerId),
+                      dealerName: appointment[0].dealerName,
+                  }
+                : undefined,
         };
     }
 }

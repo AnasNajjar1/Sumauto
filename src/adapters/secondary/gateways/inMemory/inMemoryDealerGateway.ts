@@ -10,7 +10,7 @@ export class InMemoryDealerGateway extends BaseApi implements DealerGateway {
 
     private dealerSlotList = [] as Slot[];
 
-    async requestDealerList(identifier: string, recordId: string): Promise<ApiResponse<Dealer[]>> {
+    async requestDealerList(identifier: string, recordUid: string): Promise<ApiResponse<Dealer[]>> {
         try {
             const result = this.dealerList;
             return right(result);

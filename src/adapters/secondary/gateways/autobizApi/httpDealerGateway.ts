@@ -7,10 +7,10 @@ import { DealerMapper } from './mappers/dealer.mapper';
 import { AutobizDealerDto } from './dtos/dealerDto';
 
 export class HttpDealerGateway extends BaseApi implements DealerGateway {
-    async requestDealerList(identifier: string, recordId: string): Promise<ApiResponse<Dealer[]>> {
+    async requestDealerList(identifier: string, recordUid: string): Promise<ApiResponse<Dealer[]>> {
         try {
             const response = await this.get(
-                `/appointments/networks/${recordId}?identifier=${identifier}`,
+                `/record/${recordUid}/networks?identifier=${identifier}`,
             );
             const dealers = response.data.map((p: AutobizDealerDto) => DealerMapper.toApp(p));
             return right(dealers);
@@ -21,12 +21,12 @@ export class HttpDealerGateway extends BaseApi implements DealerGateway {
 
     async requestDealerSlotList(
         identifier: string,
-        recordId: string,
+        recordUid: string,
         dealerId: string,
     ): Promise<ApiResponse<Slot[]>> {
         try {
             const response = await this.get(
-                `/appointments/networks/${recordId}/${dealerId}/slots?identifier=${identifier}`,
+                `/record/${recordUid}/network/${dealerId}/slots?identifier=${identifier}`,
             );
             const { slots } = response.data;
             return right(slots);

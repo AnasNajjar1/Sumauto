@@ -15,7 +15,7 @@ export const ActiveValuation: React.FC<TRecord> = (props) => {
     const { scrollToElement } = useScroll();
     const { client } = useSelector(getClientSelector);
     const { locale, currency } = client.config;
-    const { vehicle, valuation, id, offerNumber } = props;
+    const { vehicle, valuation, id, uid, offerNumber } = props;
 
     return (
         <div className="page page-valuation">
@@ -64,7 +64,7 @@ export const ActiveValuation: React.FC<TRecord> = (props) => {
                 <div id="appointment_container">
                     <Row>
                         <Col>
-                            <Appointment recordId={id} />
+                            <Appointment recordUid={uid} />
                         </Col>
                     </Row>
                 </div>

@@ -18,29 +18,25 @@ export interface RecordGateway {
 
     saveVehicleStateInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleStateInformation: VehicleStateInformation,
     ): Promise<ApiResponse<RecordIds>>;
 
     saveUserInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<RecordIds>>;
 
     updateUserInformation(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<UpdateStatus>>;
 
-    getRecord(
-        identifier: string,
-        recordId: string,
-        mode?: string,
-    ): Promise<ApiResponse<TRecord>>;
+    getRecord(identifier: string, recordUid: string, mode?: string): Promise<ApiResponse<TRecord>>;
 
-    createQuotation(identifier: string, recordId: number): Promise<ApiResponse<boolean>>;
+    createQuotation(identifier: string, recordUid: string): Promise<ApiResponse<boolean>>;
 
     duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>>;
 
@@ -60,7 +56,7 @@ export interface RecordGateway {
 
     updateSellProject(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         delay: string,
     ): Promise<ApiResponse<UpdateStatus>>;
 }

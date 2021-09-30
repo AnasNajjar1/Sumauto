@@ -1,6 +1,6 @@
 export interface AutobizRecordVehicleStateDto {
     identifier: string;
-    recordId: number;
+    recordUid: string;
     imported?: boolean;
     service_history?: boolean;
     interior?: number;

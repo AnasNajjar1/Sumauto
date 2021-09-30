@@ -5,12 +5,12 @@ import { AutobizRecordVehicleStateDto } from '../dtos/recordVehicleStateDto';
 export class RecordVehicleStateMapper implements Mapper<VehicleStateInformation> {
     static toAutobiz(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         state: VehicleStateInformation,
     ): AutobizRecordVehicleStateDto {
         return {
             identifier,
-            recordId,
+            recordUid,
             imported: state.imported === '1',
             service_history: state.history === '1',
             running: Number(state.running),

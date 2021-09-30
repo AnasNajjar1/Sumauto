@@ -53,10 +53,10 @@ import { saveAppointmentUseCase } from '../../../../hexagon/usecases/saveAppoint
 import { updateUserInformationsUseCase } from '../../../../hexagon/usecases/updateUserInformation/updateUserInformations.useCase';
 
 type TAppointmentProps = {
-    recordId: string;
+    recordUid: string;
 };
 
-export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
+export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -73,16 +73,16 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
     const { particular } = useSelector(getFormSelector);
 
     useEffect(() => {
-        dispatch(getDealerListUseCase(recordId));
-    }, [dispatch, recordId]);
+        dispatch(getDealerListUseCase(recordUid));
+    }, [dispatch, recordUid]);
 
     useEffect(() => {
         if (dealer?.id) {
-            dispatch(getDealerSlotListUseCase(recordId, dealer.id));
+            dispatch(getDealerSlotListUseCase(recordUid, dealer.id));
             setDate('');
             setHour('');
         }
-    }, [dispatch, recordId, dealer]);
+    }, [dispatch, recordUid, dealer]);
 
     useEffect(() => {
         if (date && dealerSlotList) {
@@ -97,9 +97,9 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
     const formValid = [hour, date, dealer?.id, particular.name].every(Boolean);
 
     const submitAppointment = () => {
-        dispatch(saveAppointmentUseCase(recordId, hour));
-        dispatch(updateUserInformationsUseCase(recordId));
-        history.push(`/record/${recordId}`);
+        dispatch(saveAppointmentUseCase(recordUid, hour));
+        dispatch(updateUserInformationsUseCase(recordUid));
+        history.push(`/record/${recordUid}`);
     };
 
     return (

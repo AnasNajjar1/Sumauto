@@ -16,6 +16,14 @@ export const id = (state = 0, action: AnyAction) => {
     return state;
 };
 
+export const uid = (state = '', action: AnyAction) => {
+    if (action.type === 'record/fetching/SUCCESS') return action.payload.record.uid;
+    if (action.type === 'record/saving/SUCCESS') return action.payload.uid;
+    if (action.type === 'record/duplicating/SUCCESS') return action.payload.uid;
+    if (action.type === 'record/RESET') return '';
+    return state;
+};
+
 export const status = (state: TActionStatus = 'idle', action: AnyAction) => {
     if (action.type === 'record/fetching/PENDING') return 'pending';
     if (action.type === 'record/fetching/SUCCESS') return 'succeeded';
@@ -33,4 +41,5 @@ export const recordReducer = combineReducers({
     status,
     data,
     id,
+    uid,
 });

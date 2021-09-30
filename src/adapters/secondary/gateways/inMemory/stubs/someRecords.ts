@@ -2,12 +2,14 @@ import { RecordIds, TRecord } from '../../../../../hexagon/interfaces';
 
 export const aRecordIds: RecordIds = {
     id: 100,
+    uid: 'aaa43b49-5606-4cfc-974c-7bbafcd8c25f',
     reference: 'a145zdse58bc',
 };
 
 export const somesRecords: TRecord[] = [
     {
         id: '100',
+        uid: 'aaa',
         expired: false,
         offerNumber: 'WITHOUT_APPOINTMENT',
         vehicle: {
@@ -39,6 +41,7 @@ export const somesRecords: TRecord[] = [
     },
     {
         id: '200',
+        uid: 'bbb',
         expired: false,
         offerNumber: 'WITH_APPOINTMENT',
         vehicle: {
@@ -87,6 +90,7 @@ export const somesRecords: TRecord[] = [
     },
     {
         id: '300',
+        uid: 'ccc',
         expired: true,
         offerNumber: 'EXPIRED',
         vehicle: {
@@ -119,6 +123,7 @@ export const somesRecords: TRecord[] = [
     },
     {
         id: '500',
+        uid: 'eee',
         expired: false,
         offerNumber: 'NOT_QUOTABLE',
         vehicle: {
@@ -144,6 +149,7 @@ export const somesRecords: TRecord[] = [
     },
     {
         id: '400',
+        uid: 'ddd',
         expired: false,
         offerNumber: 'REFRESHED',
         vehicle: {

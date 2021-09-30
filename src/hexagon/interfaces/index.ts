@@ -99,6 +99,7 @@ export interface Error {
 
 export type RecordIds = {
     id: number;
+    uid: string;
     reference?: string;
 };
 
@@ -176,6 +177,7 @@ export type TAppointment = {
 
 export type TRecord = {
     id: string;
+    uid: string;
     expired: boolean;
     offerNumber: string;
     customer: TCustomer;

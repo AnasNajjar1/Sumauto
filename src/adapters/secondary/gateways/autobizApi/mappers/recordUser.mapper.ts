@@ -5,12 +5,12 @@ import { AutobizRecordUserDto } from '../dtos/recordUserDto';
 export class RecordUserMapper implements Mapper<TVehicle> {
     static toAutobiz(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         recordUser: TCustomer,
     ): AutobizRecordUserDto {
         return {
             identifier,
-            recordId,
+            recordUid,
             mail: recordUser.email,
             phone: recordUser.phone,
             zipCode: recordUser.zipCode,

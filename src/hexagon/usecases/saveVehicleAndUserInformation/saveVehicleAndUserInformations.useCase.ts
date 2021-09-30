@@ -34,16 +34,16 @@ export const saveVehicleAndUserInformationsUseCase =
             dispatch(dislayErrorUseCase('create_record_failed'));
             return dispatch(actionCreators.Actions.saveVehicleAndUserInformationsFailed());
         }
+        const recordUid = resultVehicle.right.uid;
 
-        const recordId = resultVehicle.right.id;
-        dispatch(getRecordUseCase(recordId.toString()));
+        dispatch(getRecordUseCase(recordUid));
 
         // Saving State
         const { history, imported, running } = getState().form.vehicleState;
 
         const resultState = await recordGateway.saveVehicleStateInformation(
             config.identifier,
-            recordId,
+            recordUid,
             {
                 history,
                 imported,
@@ -58,7 +58,7 @@ export const saveVehicleAndUserInformationsUseCase =
         // saving user information
         const { email, phone, zipCode } = getState().form.particular;
 
-        const resultUser = await recordGateway.saveUserInformation(config.identifier, recordId, {
+        const resultUser = await recordGateway.saveUserInformation(config.identifier, recordUid, {
             phone,
             email,
             zipCode,
@@ -73,7 +73,7 @@ export const saveVehicleAndUserInformationsUseCase =
 
         const resultSellProject = await recordGateway.updateSellProject(
             config.identifier,
-            recordId,
+            recordUid,
             sellProject,
         );
 
@@ -82,7 +82,7 @@ export const saveVehicleAndUserInformationsUseCase =
         }
 
         // create quotation
-        const resultQuotation = await recordGateway.createQuotation(config.identifier, recordId);
+        const resultQuotation = await recordGateway.createQuotation(config.identifier, recordUid);
 
         if (isLeft(resultQuotation)) {
             return dispatch(dislayErrorUseCase('create_quotation_failed'));
