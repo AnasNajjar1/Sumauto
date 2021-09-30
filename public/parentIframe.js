@@ -35,7 +35,7 @@ function launchIframe(iframeElementId,base,type){
 
   switch (urlParams['sif_page']) {
     case 'record':
-      url = url + "/record/" + urlParams['sif_recordId'];
+      url = url + "/record/" + urlParams['sif_recordUid'];
       break;
     case 'unsubscribe':
       url = url + "/unsubscribe";
