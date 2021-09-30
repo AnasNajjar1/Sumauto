@@ -1,5 +1,4 @@
 import {
-    CarDetails,
     Dealer,
     Error,
     Slot,
@@ -9,7 +8,7 @@ import {
     TRefrentialElement,
 } from '../hexagon/interfaces';
 
-export type TActionStatus = 'idle' | 'pending' | 'succeeded' | 'failed';
+export type TActionStatus = 'idle' | 'pending' | 'succeeded' | 'failed' | 'saved';
 
 export interface AppState {
     client: {

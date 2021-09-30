@@ -10,7 +10,7 @@ export const data = (state: TRecord = {} as TRecord, action: AnyAction) => {
 
 export const id = (state = 0, action: AnyAction) => {
     if (action.type === 'record/fetching/SUCCESS') return action.payload.record.id;
-    if (action.type === 'record/saving/SUCCESS') return action.payload.id;
+    if (action.type === 'record/saving/SAVED') return action.payload.id;
     if (action.type === 'record/duplicating/SUCCESS') return action.payload.id;
     if (action.type === 'record/RESET') return 0;
     return state;
@@ -18,7 +18,7 @@ export const id = (state = 0, action: AnyAction) => {
 
 export const uid = (state = '', action: AnyAction) => {
     if (action.type === 'record/fetching/SUCCESS') return action.payload.record.uid;
-    if (action.type === 'record/saving/SUCCESS') return action.payload.uid;
+    if (action.type === 'record/saving/SAVED') return action.payload.uid;
     if (action.type === 'record/duplicating/SUCCESS') return action.payload.uid;
     if (action.type === 'record/RESET') return '';
     return state;
@@ -30,7 +30,7 @@ export const status = (state: TActionStatus = 'idle', action: AnyAction) => {
     if (action.type === 'record/fetching/FAILED') return 'failed';
 
     if (action.type === 'record/saving/PENDING') return 'pending';
-    if (action.type === 'record/saving/SUCCESS') return 'succeeded';
+    if (action.type === 'record/saving/SAVED') return 'saved';
     if (action.type === 'record/saving/FAILED') return 'failed';
 
     if (action.type === 'record/RESET') return 'idle';

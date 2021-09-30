@@ -117,7 +117,7 @@ export const FormVehicle: React.FC = () => {
     }, [dispatch, vehicle, vehicleState, particular]);
 
     useEffect(() => {
-        if (recordUid && recordStatus === 'succeeded') {
+        if (recordUid && recordStatus === 'saved') {
             if (journeyType === 'valuation') historyHook.push(`./switch/${recordUid}`);
             else historyHook.push(`./record/${recordUid}`);
         }
@@ -157,7 +157,7 @@ export const FormVehicle: React.FC = () => {
                 found = true;
             }
         });
-    }, [dispatch, vehicle, vehicleState]);
+    }, [dispatch, vehicle, vehicleState, scrollToElement]);
 
     return (
         <div className="page page-index">
