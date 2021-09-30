@@ -22,10 +22,12 @@ import { RegistrationInput } from './RegistrationInput';
 import { setCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { sellDelay } from '../../../../config';
+import useScroll from '../hooks/useScroll';
 
 export const FormVehicle: React.FC = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
+    const historyHook = useHistory();
+    const { scrollToElement } = useScroll();
     const { vehicle, vehicleState, particular } = useSelector(getFormSelector);
     const { journeyType, config } = useSelector(getClientSelector).client;
 
@@ -91,7 +93,7 @@ export const FormVehicle: React.FC = () => {
             vehicleState.sellProject,
             particular.email,
             particular.zipCode,
-            particular.phone,
+            // particular.phone,
         ];
 
         setDisplaySectionMoreDetails(basicInformations.every(Boolean));
@@ -114,18 +116,46 @@ export const FormVehicle: React.FC = () => {
 
     useEffect(() => {
         if (recordId > 0 && recordStatus === 'succeeded') {
-            if (journeyType === 'valuation') history.push(`./switch/${recordId}`);
-            else history.push(`./record/${recordId}`);
+            if (journeyType === 'valuation') historyHook.push(`./switch/${recordId}`);
+            else historyHook.push(`./record/${recordId}`);
         }
     }, [dispatch, recordId, recordStatus]);
 
     useEffect(() => {
-        if (displaySectionMoreDetails) {
-            // @ts-ignore-start
-            parentScrollToId('more_details');
-            // @ts-ignore-end
-        }
-    }, [dispatch, displaySectionMoreDetails]);
+        const { make, model, month, year, fuel, body, door, gear, engine, version, mileage } =
+            vehicle;
+        const { imported, history, running, sellProject } = vehicleState;
+        const order = {
+            make,
+            model,
+            month,
+            year,
+            fuel,
+            body,
+            door,
+            gear,
+            engine,
+            version,
+            mileage,
+            imported,
+            history,
+            running,
+            sellProject,
+        };
+
+        let found = false;
+        let idName = '';
+
+        Object.entries(order).forEach(([key, value]) => {
+            if (!value && !found) {
+                if (key === 'year') idName = `form_group_month`;
+                else if (key === 'mileage') idName = `form_group_mileage`;
+                else idName = `form_group_${key}`;
+                scrollToElement(idName, 15);
+                found = true;
+            }
+        });
+    }, [dispatch, vehicle, vehicleState]);
 
     return (
         <div className="page page-index">
@@ -138,7 +168,6 @@ export const FormVehicle: React.FC = () => {
                         <Picture background="steps" />
                     </Col>
                 </Row>
-
                 <div className="form-section">
                     <div className="form-section-title">{t('basic_information')}</div>
                     <Row>
@@ -154,7 +183,7 @@ export const FormVehicle: React.FC = () => {
                                 </Col>
                             </>
                         )}
-                        <Col xs={12} sm={6} xl={5}>
+                        <Col xs={12} sm={8} lg={6} xl={6}>
                             <MakeLogoInput />
                         </Col>
                     </Row>
@@ -328,12 +357,12 @@ export const FormVehicle: React.FC = () => {
                         </p>
                     </div>
                 )}
-
                 <CtaBlock>
                     <Button disabled={!canQuote} onClick={handleSubmitForm}>
                         {t('value_your_car_now')}
                     </Button>
                 </CtaBlock>
+                <p className="footnote">{t('form_vehicle_footnote')}</p>
             </Container>
         </div>
     );

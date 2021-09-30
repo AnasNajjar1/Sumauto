@@ -12,7 +12,6 @@ import { clients, journeys } from '../../../config';
 import { setClientNameUseCase } from '../../../hexagon/usecases/setClientName/setClientName.useCase';
 import { RecordPage } from './Components/RecordPage';
 import { UnsubscribePage } from './Components/UnsubscribePage';
-import { Confirmation } from './Components/Confirmation';
 import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
 import { ValuationSwitch } from './Components/ValuationSwitchPage';
 

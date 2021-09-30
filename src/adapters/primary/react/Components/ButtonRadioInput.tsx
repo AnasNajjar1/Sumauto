@@ -25,7 +25,7 @@ export const ButtonRadioInput: React.FC<ButtonRadioInputProps> = ({ label, id, d
     const { vehicleState } = useSelector(getFormSelector);
 
     return (
-        <FormGroup className={`form-group-${id}`}>
+        <FormGroup className={`form-group-${id}`} id={`form_group_${id}`}>
             <Label className={`label-${id}`} htmlFor={id}>
                 {t(label)} {tooltip && <FontAwesomeIcon icon={faQuestionCircle} />}
             </Label>

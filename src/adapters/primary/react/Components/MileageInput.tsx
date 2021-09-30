@@ -26,10 +26,6 @@ export const MileageInput: React.FC = () => {
     const [displayWarning, setDisplayWarning] = useState<boolean>(false);
     const [valid, setValid] = useState<boolean>();
 
-    useEffect(() => {
-        setMileage('');
-    }, [dispatch]);
-
     const isMileageInconsistent = (year: number, month: number, kilometers: string) => {
         const mileageNumber = Number(kilometers);
         const registrationDate = new Date(year, Number(month), 1, 0, 0, 0);
@@ -57,18 +53,29 @@ export const MileageInput: React.FC = () => {
         return false;
     };
 
+    const warning = () => {
+        if (isMileageInconsistent(2017, 6, mileage)) setDisplayWarning(true);
+        else setDisplayWarning(false);
+    };
+
     const handleChange = (value: string) => {
         const re = /^[0-9\b]+$/;
+
         if (value === '' || re.test(value)) {
             setMileage(value);
         }
+
+        if (touched) warning();
+    };
+
+    const handleBlur = () => {
+        warning();
+
+        setTouched(true);
+        dispatch(setVehicleValueCascade('mileage', mileage));
     };
 
     useEffect(() => {
-        if (touched) {
-            if (isMileageInconsistent(2017, 7, mileage)) setDisplayWarning(true);
-            else setDisplayWarning(false);
-        }
         if (mileage === '') {
             setDisplayWarning(false);
         }
@@ -80,15 +87,13 @@ export const MileageInput: React.FC = () => {
         if (touched && mileage === '') {
             setValid(false);
         }
-
-        dispatch(setVehicleValueCascade('mileage', mileage));
     }, [dispatch, mileage, touched]);
 
     return (
         <>
             <Row>
                 <Col xs={12} sm={5} lg={3}>
-                    <FormGroup className="form-group-mileage">
+                    <FormGroup className="form-group-mileage" id="form_group_mileage">
                         <Label for="mileage">{t('mileage')}</Label>
                         <InputWithValidation>
                             <InputGroup>
@@ -97,7 +102,7 @@ export const MileageInput: React.FC = () => {
                                     id="mileage"
                                     value={mileage}
                                     onChange={(e) => handleChange(e.target.value)}
-                                    onBlur={() => setTouched(true)}
+                                    onBlur={() => handleBlur()}
                                 />
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText>Km</InputGroupText>

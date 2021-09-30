@@ -41,10 +41,11 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scop
     if (value) valid = true;
     if (status === 'failed') valid = false;
     return (
-        <FormGroup className={`form-group-${scope}`}>
+        <FormGroup className={`form-group-${scope}`} id={`form_group_${scope}`}>
             <Label for={scope}>
-                {(label && t(label)) || '\u00A0'} {status === 'pending' && <Spinner size="sm" />}
+                {(label && t(label)) || '\u00A0'} {/* \u00A0 specific for empty labels */}
                 {tooltip && <FontAwesomeIcon icon={faQuestionCircle} />}
+                {status === 'pending' && <Spinner size="sm" />}
             </Label>
             <InputWithValidation>
                 {(name && <Input disabled value={name} />) || (

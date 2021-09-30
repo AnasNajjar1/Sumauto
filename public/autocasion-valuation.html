@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="theme-color" content="#f44336"/>
+      <meta property="og:title" content="Coches de Ocasión, Coches de Segunda Mano y Vehículos Nuevos - Autocasion.com"/>
+      <meta property="og:description" content="En Autocasion disponemos de más de 110549 de coches de ocasión y segunda mano, además de  coches nuevos y toda la actualidad del sector motor."/>
+      <meta property="og:url" content="https://www.autocasion.com/"/>
+      <meta property="og:type" content="website"/>
+      <meta name="description" content="En Autocasion disponemos de más de 110549 de coches de ocasión y segunda mano, además de  coches nuevos y toda la actualidad del sector motor." />
+      <meta name="apple-itunes-app" content="app-id=580457760">
+      <meta name="google-play-app" content="app-id=com.vocento.autocasion">
+      <link rel="apple-touch-icon" href="https://assets0.autocasion.com/assets/vendor/autocasion-design/dist/img/android-chrome-192x192.png?860079ea43bd9ad462a58998be4e99ec0">
+      <link rel="android-touch-icon" href="https://assets0.autocasion.com/assets/vendor/autocasion-design/dist/img/android-chrome-192x192.png?860079ea43bd9ad462a58998be4e99ec0" />
+      <meta name="facebook-domain-verification" content="89iugou5h9pbajqvb6iijt3f2gk8z9" />
+      <title>Coches de Ocasión, Coches de Segunda Mano y Vehículos Nuevos - Autocasion.com</title>
+      <link type="image/x-icon" rel="icon" href="https://assets0.autocasion.com/favicon.ico"/>
+      <link type="text/css" rel="stylesheet" href="https://assets0.autocasion.com/assets/vendor/autocasion-design/dist/css/home.f46d04dd0e35117245c0.css" media="all"/>
+      <link rel="canonical" href='https://www.autocasion.com' />
+      <link type="text/css" rel="stylesheet" href="https://assets0.autocasion.com/assets/vendor/autocasion-design/dist/css/print.c5181a0d8ceacb9e7b1e.css" media="print"/>
+      <!-- Variable Analytic -->
+
+   </head>
+   <body data-ng-app="Autocasion" class="">
+
+      <nav class="navbar">
+         <div id="navbar-vue" class="navbar-vue">
+            <div class="container menu menu-movil">
+               <a :href="urlAdminBack" class="volver-admin" v-cloak v-if="urlAdminBack">Volver al Admin</a>
+               <a href="#" class="happy-meal"><span class="icon icon-menu"></span></a>
+               <a href="#" class="logo"><img src="https://assets0.autocasion.com/assets/vendor/autocasion-design/dist/img/logo.png?b5033d7ee613f77324f57b867f98a8180" alt="Autocasión" /></a>
+               <a href="/login" class="personal" v-cloak v-if="!isLogged || !isUser">
+               <span class="icon icon-usuario-masa"></span>
+               </a>
+               <a href="#" class="personal" :class="{ 'usuario-particular': isParticular, 'usuario-profesional': isProfessional }" v-cloak v-if="isParticular || isProfessional" @click="open()">
+               <span class="icon icon-usuario-masa"></span><span class="icon icon-flecha-abajo"></span>
+               </a>
+               <div class="favorite" v-cloak v-if="isParticular">
+                  <a href="/particular/area-privada/favoritos"><span class="icon icon-estrella-masa"></span><span class="numero">{[{ currentUser.nFavorites }]}</span></a>
+               </div>
+               <div class="favorite" v-cloak v-if="!isLogged || !isUser">
+                  <a href="/particular/area-privada/favoritos" v-if="!isLogged || !isUser"><span class="icon icon-estrella-masa"></span></a>
+               </div>
+               <a href="/superusuario/anunciantes" v-cloak v-if="isSuperUser" class="superusuario" title="Selección anunciantes"><span class="icon icon-superusuario"></span></a>
+            </div>
+            <div class="swipe happy-meal">
+               <div class="contenido">
+                  <div class="desplegar siempre">
+                     <span>Lo más buscado</span>
+                     <ul>
+                        <li><span>Coches</span></li>
+                        <li><a href="/coches-segunda-mano">Coches de segunda mano</a></li>
+                        <li><a href="/coches-nuevos">Coches nuevos</a></li>
+                     </ul>
+                  </div>
+                  <div class="desplegar comprar abierto">
+                     <a href="#">Otras búsquedas <span class="icon icon-flecha-abajo"></span></a>
+                     <ul>
+                        <li><span>Coches</span></li>
+                        <li><a href="/coches-km0">Coches km. 0 y demo </a></li>
+                        <li><a href="/coches-sin-carnet-segunda-mano">Coches sin carnet de segunda mano</a></li>
+                        <li><a href="/venta-coches-clasicos">Coches clásicos</a></li>
+                        <li><span>Más vehículos</span></li>
+                        <li><a href="/vehiculos-industriales-segunda-mano-furgonetas">Furgonetas de ocasión </a></li>
+                        <li><a href="/industriales">Vehículos industriales</a></li>
+                        <li><a href="/otros-segunda-mano-caravanas">Caravanas y remolques</a></li>
+                        <li><span>Otros</span></li>
+                        <li><a href="/accesorios-repuestos-segunda-mano">Accesorios y repuestos</a></li>
+                     </ul>
+                  </div>
+                  <a href="/vender-coche" class="pta" :class="{ 'vacio': !isLogged || !isUser }" v-if="!isLogged || !isUser || (isLogged && !isProfessional)">Vende tu coche</a>
+                  <div class="desplegar">
+                     <a href="#">Actualidad <span class="icon icon-flecha-abajo"></span></a>
+                     <ul>
+                        <li><a href="/actualidad">Toda la actualidad</a></li>
+                        <li><a href="/actualidad/pruebas">Pruebas y novedades</a></li>
+                        <li><a href="/actualidad/reportajes">Reportajes y consejos</a></li>
+                        <li><a href="/actualidad/noticias">Noticias del motor</a></li>
+                        <li><a href="/actualidad/video">Vídeos</a></li>
+                        <li><a href="/actualidad/microsites">Especiales</a></li>
+                     </ul>
+                  </div>
+                  <div class="desplegar">
+                     <a href="#">Servicios<span class="icon icon-flecha-abajo"></span></a>
+                     <ul>
+                        <li><a href="/ferias">Ferias</a></li>
+                        <li><a href="/comparador-coches">Comparar anuncios</a></li>
+                        <li><a href="/concesionarios">Directorio de concesionarios</a></li>
+                        <li><a href="/tasacion-de-coches">Tasa tu coche</a></li>
+                        <li><a href="/calcula-tu-seguro">Calcula tu seguro</a></li>
+                        <li><a href="/transmision-vehiculos">Trámites compra-venta</a></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="personal swipe" :class="{abierto: opened }" v-cloak v-if="isParticular">
+               <ul class="contenido">
+                  <li class="profesional">Hola, {[{ currentUser.advertiser.name }]} <span class="icon icon-cerrar" @click="close()"></span></li>
+                  <li><a rel="nofollow" :href="$appContext.particularRoutes.ads"><span class="icon icon-tus-anuncios"></span>Tus anuncios</a></li>
+                  <li><a rel="nofollow" :href="$appContext.particularRoutes.messages"><span class="icon icon-sobre-masa"></span>Tus mensajes</a></li>
+                  <li><a rel="nofollow" :href="$appContext.particularRoutes.alerts"><span class="icon icon-campana-masa"></span>Tus alertas</a></li>
+                  <li><a rel="nofollow" :href="$appContext.particularRoutes.favorites"><span class="icon icon-estrella-masa"></span>Tus favoritos</a></li>
+                  <li><a rel="nofollow" :href="$appContext.particularRoutes.subscriptions"><span class="icon icon-notificacion"></span>Notificaciones</a></li>
+                  <li><a rel="nofollow" :href="$appContext.particularRoutes.profile"><span class="icon icon-datos-contacto"></span>Tus datos</a></li>
+                  <li><a rel="nofollow" :href="$appContext.router.baseUrl + '/logout'" class="logout"><span class="icon icon-power"></span>Cerrar sesión</a></li>
+               </ul>
+            </div>
+            <div class="personal swipe" :class="{abierto: opened }" v-cloak v-else-if="isProfessional">
+               <ul class="contenido">
+                  <li class="profesional">Hola, {[{ currentUser.advertiser.name }]}
+                     <span class="icon icon-cerrar" @click="close"></span>
+                  </li>
+                  <li><a href="/profesional/area-privada"><span class="icon icon-candado-masa"></span>Area privada</a></li>
+                  <li>
+                     <a href="#">
+                     <span class="icon icon-salir"></span>
+                     Ir a autocasion.com
+                     </a>
+                  </li>
+                  <li>
+                     <a rel="nofollow" href="/logout" class="logout">
+                     <span class="icon icon-power"></span>
+                     Cerrar sesión
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <div class="container-fluid home">
+      </div>
+      <div data-ng-controller="SearchCtrl" data-ng-cloak>
+         <div class="container search">
+            <div class="buscador" data-ng-init="showHits = true; checkAggregations = false; numRequests= 2; setType('AdUsedCar'); init({'class_name': 'AdUsedCar'}, {}, true, true)">
+               <ul class="pestanas">
+                  <li class="vo active"><a href="#" data-ng-click="updateType('AdUsedCar')">Segunda mano</a></li>
+                  <li class="vn"><a href="#" data-ng-click="updateType('AdNewCar')">Nuevo</a></li>
+               </ul>
+               <div class="content-tab">
+                  <div class="vo active">
+                     <div class="filtro" data-filter-name="brand" data-ng-init="initSelectedFilter('brand', filterDefaultLabels['brand'])">
+                        <p data-ng-click="getAggregationSelect('brandsAggs', 'brand', false);">
+                           [[ selectedFilters['brand'].label ]]
+                        </p>
+                        <div class="filtro-contenido">
+                           <div class="titulo hidden-lg hidden-md hidden-sm">Filtrar por marca <a href="#"><span class="icon icon-cerrar"></span></a></div>
+                           <div class="buscar">
+                              <input
+                                 data-ng-select-nav
+                                 ng-model="textFilters.brand"
+                                 type="text"
+                                 placeholder="&#xe63f; Buscar por marca"
+                                 autocomplete="_"
+                                 />
+                              <span ng-show="textFilters['brand']" ng-click="clearTextFilter('brand')" class="icon icon-aspa"></span>
+                           </div>
+                           <ul>
+                              <li
+                                 data-ng-select-nav
+                                 ng-click="resetFilter('brand')">Todas</li>
+                              <li
+                                 data-ng-select-nav
+                                 data-ng-click="addFilter('brand', brand, 'brandsAggs');"
+                                 ng-repeat="brand in data.aggs.brandsAggs | filter:textFilters.brand:beginsWith as filterList">
+                                 [[brand.label]]
+                              </li>
+                              <li ng-if="!data.aggs.brandsAggs">Cargando...</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="filtro" data-filter-name="family" data-ng-class="{ 'disabled': !data.filtros['brand'] }">
+                        <p data-ng-init="initSelectedFilter('family', filterDefaultLabels['family'])" data-ng-click="data.filtros['brand'] && getAggregationSelect('familiesAggs', 'family', false); data.filtros['brand'];">
+                           [[ selectedFilters['family'].label ]]
+                        </p>
+                        <div class="filtro-contenido">
+                           <div class="titulo hidden-lg hidden-md hidden-sm">Filtrar por modelo <a href="#"><span class="icon icon-cerrar"></span></a></div>
+                           <div class="buscar">
+                              <input
+                                 data-ng-select-nav
+                                 ng-model="textFilters.family"
+                                 type="text"
+                                 placeholder="&#xe63f; Buscar por modelo"
+                                 autocomplete="_"
+                                 />
+                              <span ng-show="textFilters['family']" ng-click="clearTextFilter('family')" class="icon icon-aspa"></span>
+                           </div>
+                           <ul>
+                              <li
+                                 data-ng-select-nav
+                                 ng-click="resetFilter('family')">Todos</li>
+                              <li
+                                 data-ng-select-nav
+                                 data-ng-click="addFilter('family', family, 'familiesAggs');"
+                                 ng-repeat="family in data.aggs.familiesAggs | filter:textFilters.family:beginsWith as filterList">
+                                 [[family.label]]
+                              </li>
+                              <li ng-if="!data.aggs.familiesAggs">Cargando...</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="filtro" data-filter-name="province">
+                        <p data-ng-init="initSelectedFilter('province', filterDefaultLabels['province'])"
+                           data-ng-click="getAggregationSelect('provincesAggs', 'province', false);">
+                           [[selectedFilters['province'].label]]
+                        </p>
+                        <div class="filtro-contenido">
+                           <div class="titulo hidden-lg hidden-md hidden-sm">Filtrar por provincia <a href="#"><span class="icon icon-cerrar"></span></a></div>
+                           <div class="buscar">
+                              <input
+                                 data-ng-select-nav
+                                 ng-model="textFilters.province"
+                                 type="text" placeholder="&#xe63f; Buscar por provincia"
+                                 autocomplete="_"
+                                 />
+                              <span ng-show="textFilters['province']" ng-click="clearTextFilter('province')" class="icon icon-aspa"></span>
+                           </div>
+                           <ul>
+                              <li
+                                 data-ng-select-nav
+                                 ng-click="resetFilter('province')">Toda España</li>
+                              <li
+                                 data-ng-select-nav
+                                 data-ng-click="addFilter('province', province, 'provincesAggs');"
+                                 ng-repeat="province in data.aggs.provincesAggs  | filter:textFilters.province:beginsWith as filterList">
+                                 [[province.label]]
+                              </li>
+                              <li ng-if="!data.aggs.provincesAggs">Cargando...</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <button type="submit" data-ng-click="submit($event);" class="btn btn-gray">Buscar</button>
+                     <p class="avanzada"><a href="/buscador-coches">Búsqueda avanzada</a></p>
+                     <p class="lastFilters"></p>
+                  </div>
+                  <div class="vn">
+                     <div class="filtro" data-filter-name="brand" data-ng-init="initSelectedFilter('brand', filterDefaultLabels['brand'])">
+                        <p data-ng-click="getAggregationSelect('brandsAggs', 'brand', false);">
+                           [[ selectedFilters['brand'].label ]]
+                        </p>
+                        <div class="filtro-contenido">
+                           <div class="titulo hidden-lg hidden-md hidden-sm">Filtrar por marca <a href="#"><span class="icon icon-cerrar"></span></a></div>
+                           <div class="buscar">
+                              <input
+                                 data-ng-select-nav
+                                 ng-model="textFilters.brand"
+                                 type="text" placeholder="&#xe63f; Buscar por marca"
+                                 autocomplete="_"
+                                 />
+                              <span ng-show="textFilters['brand']" ng-click="clearTextFilter('brand')" class="icon icon-aspa"></span>
+                           </div>
+                           <ul>
+                              <li
+                                 data-ng-select-nav
+                                 ng-click="resetFilter('brand')">Todas</li>
+                              <li
+                                 data-ng-select-nav
+                                 data-ng-click="addFilter('brand', brand, 'brandsAggs');"
+                                 ng-repeat="brand in data.aggs.brandsAggs | filter:textFilters.brand:beginsWith as filterList">
+                                 [[brand.label]]
+                              </li>
+                              <li ng-if="!data.aggs.brandsAggs">Cargando...</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="filtro" data-filter-name="family" data-ng-class="{ 'disabled': !data.filtros['brand'] }">
+                        <p data-ng-init="initSelectedFilter('family', filterDefaultLabels['family'])" data-ng-click="getAggregationSelect('familiesAggs', 'family', false);">
+                           [[ selectedFilters['family'].label ]]
+                        </p>
+                        <div class="filtro-contenido">
+                           <div class="titulo hidden-lg hidden-md hidden-sm">Filtrar por modelo <a href="#"><span class="icon icon-cerrar"></span></a></div>
+                           <div class="buscar">
+                              <input
+                                 data-ng-select-nav
+                                 ng-model="textFilters.family"
+                                 type="text" placeholder="&#xe63f; Buscar por modelo"
+                                 autocomplete="_"
+                                 />
+                              <span ng-show="textFilters['family']" ng-click="clearTextFilter('family')" class="icon icon-aspa"></span>
+                           </div>
+                           <ul>
+                              <li
+                                 data-ng-select-nav
+                                 ng-click="resetFilter('family')">Todos</li>
+                              <li
+                                 data-ng-select-nav
+                                 data-ng-click="addFilter('family', family, 'familiesAggs');"
+                                 ng-repeat="family in data.aggs.familiesAggs | filter:textFilters.family:beginsWith as filterList">
+                                 [[family.label]]
+                              </li>
+                              <li ng-if="!data.aggs.familiesAggs">Cargando...</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="filtro" data-filter-name="bodywork">
+                        <p data-ng-init="initSelectedFilter('bodywork', filterDefaultLabels['bodywork'])" data-ng-click="getAggregationSelect('bodyworkAggs', 'bodywork', false);">
+                           [[ selectedFilters['bodywork'].label ]]
+                        </p>
+                        <div class="filtro-contenido">
+                           <div class="titulo hidden-lg hidden-md hidden-sm">Filtrar por modelo <a href="#"><span class="icon icon-cerrar"></span></a></div>
+                           <div class="buscar">
+                              <input
+                                 data-ng-select-nav
+                                 ng-model="textFilters.bodywork"
+                                 type="text" placeholder="&#xe63f; Buscar por carrocería"
+                                 autocomplete="_"
+                                 />
+                              <span ng-show="textFilters['bodywork']" ng-click="clearTextFilter('bodywork')" class="icon icon-aspa"></span>
+                           </div>
+                           <ul>
+                              <li
+                                 data-ng-select-nav
+                                 ng-click="resetFilter('bodywork')">Todos</li>
+                              <li
+                                 data-ng-select-nav
+                                 data-ng-click="addFilter('bodywork', bodywork, 'bodyworkAggs');"
+                                 ng-repeat="bodywork in data.aggs.bodyworkAggs | filter:textFilters.bodywork:beginsWith as filterList">
+                                 [[bodywork.label]]
+                              </li>
+                              <li ng-if="!data.aggs.bodyworkAggs">Cargando...</li>
+                           </ul>
+                        </div>
+                     </div>
+                     <button type="submit" data-ng-click="submit($event);" class="btn btn-gray">Buscar</button>
+                     <p class="avanzada"><a href="/buscador-coches/nuevos">Búsqueda avanzada</a></p>
+                     <p class="lastFilters"></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="container home">
+
+
+
+        <iframe id="sumauto_iframe" style="border:0 !important; margin: 30px 0;"></iframe>
+
+      </div>
+      
+      <footer class="footer">
+         <div class="container">
+            <ul>
+               <li>
+                  <span itemprop="name" content="Autocasion">Sobre Autocasión</span>
+                  <a href="/sobre-autocasion">Sobre nosotros</a>
+                  <a href="/contacto-sugerencias">Contacto y sugerencias</a>
+                  <a href="/aviso-legal" rel="nofollow">Aviso legal</a>
+                  <a href="/politica-privacidad" rel="nofollow">Política de privacidad</a>
+                  <a href="" onclick="event.preventDefatult;Voonto.cmp.show()" rel="nofollow">Política de cookies</a>
+                  <a href="/mapa-web">Mapa web</a>
+               </li>
+               <li>
+                  <span>Comprar</span>
+                  <a href="/coches-segunda-mano">Coches de segunda mano</a>
+                  <a href="/coches-nuevos">Coches nuevos</a>
+                  <a href="/actualidad">Actualidad <span class="hidden-sm">sobre coches</span></a>
+                  <a href="/coches-segunda-mano/particular">Coches de particulares</a>
+                  <a href="/concesionarios">Directorio de concesionarios</a>
+                  <a href="/combustible">Buscar por combustible</a>
+                  <a href="/ferias">Ferias</a>
+                  <a href="/comparador-coches">Comparar anuncios</a>
+                  <a href="/consejos-seguridad#buy">Comprar seguro</a>
+               </li>
+               <li>
+                  <span>Vender</span>
+                  <a href="/vender-coche">Anuncia tu coche</a>
+                  <a href="/tasacion-de-coches">Tasa tu coche</a>
+                  <a href="/consejos-seguridad#sell">Vender seguro</a>
+                  <a href="/marcas">Fichas técnicas y precios</a>
+               </li>
+               <li>
+                  <span>Síguenos</span>
+                  <a itemprop="sameAs" rel="nofollow" href="https://twitter.com/Autocasion" target="_blank"><span class="icon icon-twitter"></span>Twitter</a>
+                  <a itemprop="sameAs" rel="nofollow" href="https://www.facebook.com/autocasion" target="_blank"><span class="icon icon-facebook"></span>Facebook</a>
+                  <a itemprop="sameAs" rel="nofollow" href="https://www.youtube.com/user/autocasioncom" target="_blank"><span class="icon icon-youtube"></span>YouTube</a>
+               </li>
+               <li>
+                  <span>Nuestra App</span>
+                  <a href="https://itunes.apple.com/es/app/autocasion.com/id580457760?mt=8" target="_blank">
+                  <span class="icon icon-ios"></span> Descárgala en IOS
+                  </a>
+                  <a href="https://play.google.com/store/apps/details?id=com.vocento.autocasion&hl=es" target="_blank">
+                  <span class="icon icon-android"></span> Descárgala en Android
+                  </a>
+               </li>
+            </ul>
+            <div class="vocento">
+               <img src="https://assets0.autocasion.com/assets/vendor/autocasion-design/dist/img/logo_vocento.png?3dcfa6ee58bb69cb00060392fe1cc6110" width="91" height="14" alt="Vocento"/>
+               <p>
+                  <a href="http://www.abc.es/" target="_blank">abc.es</a>
+                  <a href="http://www.finanzas.com/" target="_blank">finanzas.com</a>
+                  <a href="http://www.mujerhoy.com/" target="_blank">mujerhoy.com</a>
+                  <a href="https://www.pisos.com/" target="_blank">pisos.com</a>
+                  <a href="http://www.motocasion.com/" target="_blank">motocasion.com</a>
+                  <a href="http://www.unoauto.com/" target="_blank">unoauto.com</a>
+               </p>
+               <p>&copy;2000-2021 Autocasion.com - Todos los derechos reservados.</p>
+            </div>
+         </div>
+      </footer>
+      <a class="subir-flecha hidden"><span class="icon icon-flecha-arriba"></span></a>
+
+
+
+      <script src="./parentIframe.js"></script></div>
+      <script>
+         launchIframe('sumauto_iframe','./autocasion','valuation');
+      </script>
+
+   </body>
+</html>

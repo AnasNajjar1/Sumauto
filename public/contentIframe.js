@@ -10,10 +10,11 @@
 //# sourceMappingURL=iframeResizer.contentWindow.map
 
 
-function parentScrollToId(id){
+function parentScrollToId(id,marginTop = 0){
     var el = document.getElementById(id)
+    
     if(el){
-        var offset = document.getElementById(id).offsetTop;
+        var offset = el.getBoundingClientRect().top - marginTop;
         if ('parentIFrame' in window) {
             window.parentIFrame.scrollToOffset(0,offset);
             return true;
@@ -22,4 +23,5 @@ function parentScrollToId(id){
             return false;
           }
     }
+
 }
