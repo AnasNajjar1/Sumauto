@@ -141,8 +141,9 @@ export type TCustomer = {
 export type TVehicleNames = {
     makeName: string;
     modelName: string;
-    yearName: string;
-    monthName: string;
+    year: string;
+    month: string;
+    registrationDate: Date;
     fuelName: string;
     bodyName: string;
     engineName: string;

@@ -5,6 +5,7 @@ import { AutobizRecordDetailsDto } from '../dtos/recordDetailsDto';
 export class RecordMapper implements Mapper<TRecord> {
     static toApp(dto: AutobizRecordDetailsDto): TRecord {
         const { record, vehicle, vehicleState, customer, valuation, appointment } = dto;
+
         return {
             id: record.RfId,
             uid: record.uid,
@@ -13,8 +14,9 @@ export class RecordMapper implements Mapper<TRecord> {
             vehicle: {
                 makeName: vehicle.brandLabel,
                 modelName: vehicle.modelLabel,
-                yearName: vehicle.registrationDate,
-                monthName: vehicle.registrationDate,
+                year: new Date(vehicle.registrationDate).getFullYear().toString(),
+                month: `0${new Date(vehicle.registrationDate).getMonth().toString()}`.slice(-2),
+                registrationDate: new Date(vehicle.registrationDate),
                 fuelName: vehicle.fuelLabel,
                 bodyName: vehicle.bodyLabel,
                 engineName: vehicle.gearboxLabel,

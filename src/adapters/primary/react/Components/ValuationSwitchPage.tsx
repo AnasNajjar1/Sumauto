@@ -37,6 +37,14 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
     if (!record.valuation) {
         return <></>;
     }
+
+    const replacedPrivateSellLink = privateSellLink
+        ?.replace('[make]', vehicle.makeName)
+        .replace('[year]', vehicle.year)
+        .replace('[month]', vehicle.month);
+
+    console.log(vehicle);
+
     return (
         <Loader status={status}>
             <Container fluid>
@@ -49,7 +57,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                             <div className="background-private-sell">
                                 <Button
                                     target="_parent"
-                                    href={privateSellLink}
+                                    href={replacedPrivateSellLink}
                                     block
                                     className="d-none d-sm-block"
                                 >
@@ -74,7 +82,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                     }}
                                 />
 
-                                <Button target="_parent" href={privateSellLink} block>
+                                <Button target="_parent" href={replacedPrivateSellLink} block>
                                     {t('place_an_ad')}
                                 </Button>
                             </div>
