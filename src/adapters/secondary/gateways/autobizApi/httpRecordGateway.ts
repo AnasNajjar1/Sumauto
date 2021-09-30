@@ -136,14 +136,10 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
                 identifier,
             });
 
-            if (response.data.status) {
-                return right(response.data.status);
-            }
+            return right(response.data.status);
         } catch (error) {
             return left(error as string);
         }
-
-        return left('quotation failed');
     }
 
     // TODO: connect to API
