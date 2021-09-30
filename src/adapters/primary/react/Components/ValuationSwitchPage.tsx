@@ -43,8 +43,6 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
         .replace('[year]', vehicle.year)
         .replace('[month]', vehicle.month);
 
-    console.log(vehicle);
-
     return (
         <Loader status={status}>
             <Container fluid>
