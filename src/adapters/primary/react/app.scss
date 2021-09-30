@@ -675,3 +675,9 @@ input[type=number] {
         select,input{border-right:0}
     }
 }
+
+@include media-breakpoint-up(sm) {
+.form-group-month label{
+    width: 200%;
+}
+}
