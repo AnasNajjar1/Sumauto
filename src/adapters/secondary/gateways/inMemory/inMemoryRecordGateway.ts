@@ -8,6 +8,7 @@ import {
     VehicleStateInformation,
     TCustomer,
     TRecord,
+    TAppointment,
 } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { RecordGateway } from '../../../../hexagon/gateways/recordGateway.interface';
@@ -88,7 +89,11 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return left('unknown record');
     }
 
-    async getRecord(identifier: string, recordId: string): Promise<ApiResponse<TRecord>> {
+    async getRecord(
+        identifier: string,
+        recordId: string,
+        mode?: string,
+    ): Promise<ApiResponse<TRecord>> {
         const found = this.records.find((e) => e.id === recordId);
 
         if (found) {
@@ -142,5 +147,18 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     feedRecordsWith(records: TRecord[]) {
         this.records = records;
+    }
+
+    async createAppointment(
+        identifier: string,
+        recordId: number,
+        resaId: number,
+    ): Promise<ApiResponse<TAppointment>> {
+        const found = this.records.find((e) => e.id === recordId.toString());
+        if (!found) {
+            return left('error_create_appointement');
+        }
+        found.appointment = <TAppointment>{ id: 1111 };
+        return right(found.appointment);
     }
 }

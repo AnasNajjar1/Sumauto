@@ -47,6 +47,10 @@ import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
 import { Picture } from './Picture';
 import { AppointmentResume } from './AppointmentResume';
+import { NameInput } from './NameInput';
+import { getFormSelector } from '../../view-models-generators/formSelectors';
+import { saveAppointmentUseCase } from '../../../../hexagon/usecases/saveAppointment/saveAppointment.useCase';
+import { updateUserInformationsUseCase } from '../../../../hexagon/usecases/updateUserInformation/updateUserInformations.useCase';
 
 type TAppointmentProps = {
     recordId: string;
@@ -55,21 +59,18 @@ type TAppointmentProps = {
 export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { client } = useSelector(getClientSelector);
 
     // const [dealerId, setDealerId] = useState<string | undefined>(undefined);
     const [dealer, setDealer] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [showAllDealers, setShowAllDealers] = useState<boolean>(false);
     const [date, setDate] = useState<string>('');
     const [hour, setHour] = useState<string>('');
-    const [name, setName] = useState<string>('');
-    const [phone, setPhone] = useState<string>('');
-    const [phoneValid, setPhoneValid] = useState<boolean>(false);
     const [hourList, setHourList] = useState<Hour[]>([]);
 
     const { data: dealerList, status: dealerStatus } = useSelector(getDealerListSelector);
     const { data: dealerSlotList, status: dealerSlotStatus } =
         useSelector(getDealerSlotListSelector);
+    const { particular } = useSelector(getFormSelector);
 
     useEffect(() => {
         dispatch(getDealerListUseCase(recordId));
@@ -84,10 +85,6 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
     }, [dispatch, recordId, dealer]);
 
     useEffect(() => {
-        setPhoneValid(phone.search(new RegExp(client.config.phoneRegex)) === 0);
-    }, [dispatch, phone]);
-
-    useEffect(() => {
         if (date && dealerSlotList) {
             setHour('');
             const found = dealerSlotList.find((s) => s.date === date)?.hours;
@@ -97,12 +94,12 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
         }
     }, [dispatch, date, dealerSlotList]);
 
-    const formValid = [hour, date, dealer?.id, name].every(Boolean);
+    const formValid = [hour, date, dealer?.id, particular.name].every(Boolean);
 
     const submitAppointment = () => {
-        // TODO:saving appointment
-        // TODO:update particular
-        // history.push(`./confirmation/${recordId}`);
+        dispatch(saveAppointmentUseCase(recordId, hour));
+        dispatch(updateUserInformationsUseCase(recordId));
+        history.push(`/record/${recordId}`);
     };
 
     return (
@@ -267,26 +264,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordId }) => {
                         />
                         <Row>
                             <Col xs={12} sm={6}>
-                                <FormGroup>
-                                    <Label htmlFor="name">{t('name')} *</Label>
-                                    <InputWithValidation>
-                                        <InputGroup>
-                                            <Input
-                                                type="text"
-                                                name="name"
-                                                id="name"
-                                                value={name}
-                                                onChange={(e) => setName(e.currentTarget.value)}
-                                            />
-                                            <InputGroupAddon addonType="append">
-                                                <InputGroupText>
-                                                    <FontAwesomeIcon icon={faUser} />
-                                                </InputGroupText>
-                                            </InputGroupAddon>
-                                        </InputGroup>
-                                        <InputValidation valid={!!name} />
-                                    </InputWithValidation>
-                                </FormGroup>
+                                <NameInput />
                             </Col>
 
                             <Col xs={12} sm={6}>

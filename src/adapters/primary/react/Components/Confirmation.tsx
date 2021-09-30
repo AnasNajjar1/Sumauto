@@ -60,9 +60,9 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                         <Row>
                             <Col md={6}>
                                 <AppointmentResume
-                                    date={record.appointment.dateHour}
-                                    hour={record.appointment.dateHour}
-                                    placeName={record.appointment.place.name}
+                                    date={record.appointment.appointmentDate}
+                                    hour={record.appointment.startHour}
+                                    placeName={record.appointment.dealerName}
                                 />
                                 {record.offerNumber}
                                 <Row>
@@ -70,9 +70,9 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                                         <h2>{t('your_point_of_sale')}</h2>
 
                                         <p>
-                                            <strong>{record.appointment.place.name}</strong>
+                                            <strong>{record.appointment.dealerName}</strong>
                                         </p>
-                                        <p>
+                                        {/* <p>
                                             {record.appointment.place.address}
                                             <br />
                                             {record.appointment.place.zipCode}{' '}
@@ -82,11 +82,11 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                                             <a href={`tel:${record.appointment.place.phone}`}>
                                                 {record.appointment.place.phone}
                                             </a>
-                                        </p>
+                                        </p> */}
                                     </Col>
-                                    <Col sm={6} md={12} lg={6}>
+                                    {/* <Col sm={6} md={12} lg={6}>
                                         <Map coordinates={record.appointment.place.position} />
-                                    </Col>
+                                    </Col> */}
                                 </Row>
                                 <Row className="d-print-none">
                                     <Col sm={6} xl={5}>

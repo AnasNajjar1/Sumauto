@@ -8,6 +8,7 @@ import {
     VehicleStateInformation,
     TCustomer,
     TRecord,
+    TAppointment,
 } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { RecordGateway } from '../../../../hexagon/gateways/recordGateway.interface';
@@ -16,6 +17,7 @@ import { RecordUserMapper } from './mappers/recordUser.mapper';
 import { RecordVehicleStateMapper } from './mappers/recordVehicleState.mapper';
 import { RecordMapper } from './mappers/record.mapper';
 import { PurchaseProjectMapper } from './mappers/purchaseProjectVehicle.mapper';
+import { AppointmentMapper } from './mappers/appointment.mapper';
 
 export class HttpRecordGateway extends BaseApi implements RecordGateway {
     private recordIds = {} as RecordIds;
@@ -84,16 +86,25 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         recordId: number,
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<UpdateStatus>> {
-        if (this.recordIds) {
-            return right({ status: true });
-        }
+        try {
+            const params = RecordUserMapper.toAutobiz(identifier, recordId, vehicleUserInformation);
 
-        return left('unknown record');
+            const response = await this.put(`/records/${recordId}/particular`, null, params);
+
+            return right(response.data);
+        } catch (error) {
+            return left(error as string);
+        }
     }
 
-    async getRecord(identifier: string, recordId: string): Promise<ApiResponse<TRecord>> {
+    async getRecord(
+        identifier: string,
+        recordId: string,
+        mode?: string,
+    ): Promise<ApiResponse<TRecord>> {
         try {
-            const response = await this.get(`/records/${recordId}?identifier=${identifier}`);
+            const uri = `/records/${recordId}?identifier=${identifier}`;
+            const response = await this.get(mode ? `${uri}&mode=${mode}` : uri);
 
             if (response) {
                 const dto = RecordMapper.toApp(response.data);
@@ -154,6 +165,24 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
             );
 
             return right(response.data);
+        } catch (error) {
+            return left(error as string);
+        }
+    }
+
+    async createAppointment(
+        identifier: string,
+        recordId: number,
+        resaId: number,
+    ): Promise<ApiResponse<TAppointment>> {
+        try {
+            const response = await this.post(`/records/${recordId}/appointment`, {
+                identifier,
+                resaId,
+            });
+
+            const appointment = AppointmentMapper.toApp(response.data);
+            return right(appointment);
         } catch (error) {
             return left(error as string);
         }

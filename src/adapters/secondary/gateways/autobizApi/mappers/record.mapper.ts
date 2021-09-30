@@ -4,7 +4,7 @@ import { AutobizRecordDetailsDto } from '../dtos/recordDetailsDto';
 
 export class RecordMapper implements Mapper<TRecord> {
     static toApp(dto: AutobizRecordDetailsDto): TRecord {
-        const { record, vehicle, vehicleState, customer, valuation } = dto;
+        const { record, vehicle, vehicleState, customer, valuation, appointment } = dto;
 
         return {
             id: record.RfId,
@@ -37,6 +37,22 @@ export class RecordMapper implements Mapper<TRecord> {
                 zipCode: customer.zipCode,
                 phone: customer.phone,
                 name: `${customer.firstName} ${customer.lastName}`,
+            },
+            appointment: {
+                id: Number(appointment.id),
+                createdAt: appointment.createdAt,
+                updatedAt: appointment.updateAt,
+                status: Boolean(appointment.status),
+                lastOne: appointment.lastOne,
+                active: appointment.active,
+                appointmentDate: appointment.appointmentDate,
+                startHour: appointment.startHour,
+                endHour: appointment.endHour,
+                expertId: Number(appointment.expertId),
+                expertName: appointment.expertName,
+                networkId: Number(appointment.networkId),
+                dealerId: Number(appointment.dealerId),
+                dealerName: appointment.dealerName,
             },
         };
     }

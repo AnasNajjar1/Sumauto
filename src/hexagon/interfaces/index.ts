@@ -54,7 +54,7 @@ export type TReferentialItem =
     | 'mileage';
 
 export type TVehicleStateItem = 'imported' | 'history' | 'running' | 'sellProject';
-export type TParticularItem = 'zipCode' | 'email' | 'phone';
+export type TParticularItem = 'zipCode' | 'email' | 'phone' | 'name';
 
 export type QuestionKey = TReferentialItem | TVehicleStateItem | TParticularItem;
 
@@ -158,17 +158,20 @@ export type TCoordinates = {
 };
 
 export type TAppointment = {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
     status: boolean;
-    dateHour: string;
-    place: {
-        sellerName: string;
-        name: string;
-        address: string;
-        zipCode: string;
-        city: string;
-        phone: string;
-        position: TCoordinates;
-    };
+    lastOne: string;
+    active: string;
+    appointmentDate: string;
+    startHour: string;
+    endHour: string;
+    expertId: number;
+    expertName: string;
+    networkId: number;
+    dealerId: number;
+    dealerName: string;
 };
 
 export type TRecord = {

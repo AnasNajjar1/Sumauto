@@ -5,7 +5,7 @@ export interface AutobizRecordUserDto {
     phone: string;
     zipCode: string;
     lastName?: string;
-    firstNale?: string;
+    firstName?: string;
     ip?: string;
     civility?: number;
     unsubscribed?: boolean;

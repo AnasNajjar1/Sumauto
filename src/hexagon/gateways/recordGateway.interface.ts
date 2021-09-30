@@ -5,6 +5,7 @@ import {
     VehicleStateInformation,
     TCustomer,
     TRecord,
+    TAppointment,
 } from '../interfaces';
 
 import { ApiResponse } from '../infra/ApiResponse';
@@ -33,7 +34,11 @@ export interface RecordGateway {
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<UpdateStatus>>;
 
-    getRecord(identifier: string, recordId: string): Promise<ApiResponse<TRecord>>;
+    getRecord(
+        identifier: string,
+        recordId: string,
+        mode?: string,
+    ): Promise<ApiResponse<TRecord>>;
 
     createQuotation(identifier: string, recordId: number): Promise<ApiResponse<boolean>>;
 
@@ -41,11 +46,11 @@ export interface RecordGateway {
 
     cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>>;
 
-    // createAppointment(
-    //     identifier: string,
-    //     recordId: string,
-    //     resadId: string,
-    // ): Promise<ApiResponse<boolean>>;
+    createAppointment(
+        identifier: string,
+        recordId: number,
+        resaId: number,
+    ): Promise<ApiResponse<TAppointment>>;
 
     // updateAppointment(
     //     identifier: string,
