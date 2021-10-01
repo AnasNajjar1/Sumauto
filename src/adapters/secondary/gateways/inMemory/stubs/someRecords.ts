@@ -2,7 +2,7 @@ import { RecordIds, TRecord } from '../../../../../hexagon/interfaces';
 
 export const aRecordIds: RecordIds = {
     id: 100,
-    uid: 'aaa43b49-5606-4cfc-974c-7bbafcd8c25f',
+    uid: 'bbb',
     reference: 'a145zdse58bc',
 };
 
