@@ -44,7 +44,7 @@ export interface RecordGateway {
 
     createAppointment(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         resaId: number,
     ): Promise<ApiResponse<TAppointment>>;
 

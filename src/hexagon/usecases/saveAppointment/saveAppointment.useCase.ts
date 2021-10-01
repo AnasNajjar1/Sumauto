@@ -5,13 +5,13 @@ import { dislayErrorUseCase } from '../displayError/displayError.useCase';
 import * as actionCreators from './actionCreators';
 
 export const saveAppointmentUseCase =
-    (recordId: string, hour: string): ThunkResult<void> =>
+    (recordUid: string, hour: string): ThunkResult<void> =>
     async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
         dispatch(actionCreators.Actions.SaveAppointmentPending());
         const { config } = getState().client;
         const result = await recordGateway.createAppointment(
             config.identifier,
-            Number(recordId),
+            recordUid,
             Number(hour),
         );
 

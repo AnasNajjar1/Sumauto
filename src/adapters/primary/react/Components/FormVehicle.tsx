@@ -23,12 +23,14 @@ import { setCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehi
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { sellDelay } from '../../../../config';
 import useScroll from '../hooks/useScroll';
+import { checkFormValidUseCase } from '../../../../hexagon/usecases/checkFormValid/checkFormValid.useCase';
 
 export const FormVehicle: React.FC = () => {
     const dispatch = useDispatch();
     const historyHook = useHistory();
     const { scrollToElement } = useScroll();
-    const { vehicle, vehicleState, particular } = useSelector(getFormSelector);
+    const { vehicle, vehicleState, particular, checkFormValid, checkZipCode } =
+        useSelector(getFormSelector);
     const { journeyType, config } = useSelector(getClientSelector).client;
 
     const { uid: recordUid, status: recordStatus } = useSelector(getRecordSelector);
@@ -103,8 +105,11 @@ export const FormVehicle: React.FC = () => {
         setDisplaySectionAdditionalInformation(
             [displaySectionMoreDetails, ...moreDetails].every(Boolean),
         );
+
         setCanQuote(
-            [displaySectionMoreDetails, ...moreDetails, ...additionalDetails].every(Boolean),
+            [displaySectionMoreDetails, ...moreDetails, ...additionalDetails].every(Boolean) &&
+                checkFormValid &&
+                checkZipCode,
         );
 
         setProgress(
@@ -114,7 +119,7 @@ export const FormVehicle: React.FC = () => {
                 (((additionalDetails.filter(Boolean).length / additionalDetails.length) * 1) / 3) *
                     100,
         );
-    }, [dispatch, vehicle, vehicleState, particular]);
+    }, [dispatch, vehicle, vehicleState, particular, checkZipCode, checkFormValid]);
 
     useEffect(() => {
         if (recordUid && recordStatus === 'succeeded') {
@@ -338,7 +343,7 @@ export const FormVehicle: React.FC = () => {
                                         <ZipCodeInput />
                                     </Col>
                                     <Col xs={12} md={6}>
-                                        <PhoneInput />
+                                        <PhoneInput required={false} />
                                     </Col>
                                 </Row>
                             </Col>

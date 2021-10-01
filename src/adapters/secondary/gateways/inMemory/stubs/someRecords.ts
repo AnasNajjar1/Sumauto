@@ -86,6 +86,12 @@ export const somesRecords: TRecord[] = [
             networkId: 5701,
             dealerId: 503546,
             dealerName: 'TEST PDV 2',
+            address: 'Paris, test, 70',
+            zipCode: 25633,
+            city: 'Paris',
+            phone: 123466,
+            latitude: 1.2,
+            longitude: 1.6,
         },
     },
     {

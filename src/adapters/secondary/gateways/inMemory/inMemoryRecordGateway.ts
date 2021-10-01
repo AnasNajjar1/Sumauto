@@ -151,10 +151,10 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async createAppointment(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         resaId: number,
     ): Promise<ApiResponse<TAppointment>> {
-        const found = this.records.find((e) => e.id === recordId.toString());
+        const found = this.records.find((e) => e.uid === recordUid);
         if (!found) {
             return left('error_create_appointement');
         }

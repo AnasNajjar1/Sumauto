@@ -70,7 +70,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const { data: dealerList, status: dealerStatus } = useSelector(getDealerListSelector);
     const { data: dealerSlotList, status: dealerSlotStatus } =
         useSelector(getDealerSlotListSelector);
-    const { particular } = useSelector(getFormSelector);
+    const { particular, checkFormValid } = useSelector(getFormSelector);
 
     useEffect(() => {
         dispatch(getDealerListUseCase(recordUid));
@@ -89,17 +89,24 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
             setHour('');
             const found = dealerSlotList.find((s) => s.date === date)?.hours;
             if (found) {
-                setHourList(found);
+                setHourList(found.filter((h) => h.id !== null));
             }
         }
     }, [dispatch, date, dealerSlotList]);
 
-    const formValid = [hour, date, dealer?.id, particular.name].every(Boolean);
+    const formValid = [
+        hour,
+        date,
+        dealer?.id,
+        particular.name,
+        particular.phone,
+        checkFormValid,
+    ].every(Boolean);
 
     const submitAppointment = () => {
         dispatch(saveAppointmentUseCase(recordUid, hour));
         dispatch(updateUserInformationsUseCase(recordUid));
-        history.push(`/record/${recordUid}`);
+        // history.push(`/record/${recordUid}`);
     };
 
     return (
@@ -268,7 +275,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                             </Col>
 
                             <Col xs={12} sm={6}>
-                                <PhoneInput />
+                                <PhoneInput required />
                             </Col>
                         </Row>
                     </Container>

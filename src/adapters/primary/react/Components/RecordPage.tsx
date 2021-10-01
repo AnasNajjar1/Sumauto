@@ -20,11 +20,11 @@ export const RecordPage: React.FC = () => {
 
     const { recordId } = useParams<{ recordId: string }>();
 
-    const { data: record, status } = useSelector(getRecordSelector);
-
     useEffect(() => {
-        dispatch(getRecordUseCase(recordId));
+        dispatch(getRecordUseCase(recordId, 'full'));
     }, [dispatch, recordId]);
+
+    const { data: record, status } = useSelector(getRecordSelector);
 
     if (status === 'failed') {
         return <ErrorPage />;

@@ -173,11 +173,11 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
 
     async createAppointment(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         resaId: number,
     ): Promise<ApiResponse<TAppointment>> {
         try {
-            const response = await this.post(`/records/${recordId}/appointment`, {
+            const response = await this.post(`/record/${recordUid}/appointments`, {
                 identifier,
                 resaId,
             });

@@ -40,6 +40,7 @@ export interface AppState {
         particular: any; // TODO type this
         cascade: TReferentialItem[];
         checkZipCode: boolean;
+        checkFormValid: boolean;
 
         referential: {
             make: {

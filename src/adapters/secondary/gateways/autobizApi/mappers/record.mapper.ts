@@ -1,11 +1,13 @@
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
 import { TCustomer, TRecord, TVehicle } from '../../../../../hexagon/interfaces';
 import { AutobizRecordDetailsDto } from '../dtos/recordDetailsDto';
+import { AppointmentMapper } from './appointment.mapper';
 
 export class RecordMapper implements Mapper<TRecord> {
     static toApp(dto: AutobizRecordDetailsDto): TRecord {
         const { record, vehicle, vehicleState, customer, valuation, appointment } = dto;
-        return {
+
+        const data: TRecord = {
             id: record.RfId,
             uid: record.uid,
             expired: false,
@@ -37,24 +39,9 @@ export class RecordMapper implements Mapper<TRecord> {
                 phone: customer.phone,
                 name: `${customer.firstName} ${customer.lastName}`,
             },
-            appointment: appointment
-                ? {
-                      id: Number(appointment[0].id),
-                      createdAt: appointment[0].createdAt,
-                      updatedAt: appointment[0].updateAt,
-                      status: Boolean(appointment[0].status),
-                      lastOne: appointment[0].lastOne,
-                      active: appointment[0].active,
-                      appointmentDate: appointment[0].appointmentDate,
-                      startHour: appointment[0].startHour,
-                      endHour: appointment[0].endHour,
-                      expertId: Number(appointment[0].expertId),
-                      expertName: appointment[0].expertName,
-                      networkId: Number(appointment[0].networkId),
-                      dealerId: Number(appointment[0].dealerId),
-                      dealerName: appointment[0].dealerName,
-                  }
-                : undefined,
         };
+        if (appointment && Object.keys(appointment).length > 0)
+            data.appointment = AppointmentMapper.toApp(appointment);
+        return data;
     }
 }

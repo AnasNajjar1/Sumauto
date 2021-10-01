@@ -173,6 +173,12 @@ export type TAppointment = {
     networkId: number;
     dealerId: number;
     dealerName: string;
+    address: string;
+    zipCode: number;
+    city: string;
+    phone: number;
+    latitude: number;
+    longitude: number;
 };
 
 export type TRecord = {
