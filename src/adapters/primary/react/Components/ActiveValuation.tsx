@@ -56,8 +56,8 @@ export const ActiveValuation: React.FC<TRecord> = (props) => {
                 <div className="alert-covid">
                     <AccordionInfo
                         iconType="triangle"
-                        titleKey="valuation_info"
-                        detailsKey="valuation_info_details"
+                        titleKey="covid_info"
+                        detailsKey="covid_info_details"
                     />
                 </div>
 

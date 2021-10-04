@@ -116,7 +116,7 @@ export const MileageInput: React.FC = () => {
                     <Message
                         className="warning"
                         display={displayWarning}
-                        title={`Me gustaría verificar el kilometraje. Tu coche tiene ${mileage} Km Si es correcto vaya al siguiente paso”.`}
+                        title={t('mileage_warning')?.replace('[MILEAGE]', mileage)}
                     />
                 </Col>
             </Row>

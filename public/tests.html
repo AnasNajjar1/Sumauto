@@ -12,6 +12,10 @@
                 <li><a href="autocasion-sale.html">Autocasion - home (Sale)</a></li>
                 <li><a href="autocasion-valuation.html">Autocasion - home (Valuation)</a></li>
                 <li><a href="autocasion-sale.html?sif_page=unsubscribe">Autocasion - unsubscribe</a></li>
+                <li><a id="autocasion_link">Autocasion - record</a>
+                    <input id="autocasion_uid" type="text" class="form-control" placeholder="uid" style="display: inline-block; width: auto;"  />
+                    <button class="btn btn-primary" onclick="setUrl('autocasion');">set</button>
+                </li>
             </ol>
             <hr />
 
@@ -21,6 +25,10 @@
                 <li><a href="autoscout24-sale.html">Autoscout24 - home  (Sale)</a></li>
                 <li><a href="autoscout24-valuation.html">Autoscout24 - home  (Valuation)</a></li>
                 <li><a href="autoscout24-sale.html?sif_page=unsubscribe">Autoscout24 - unsubscribe</a></li>
+                <li><a id="autoscout24_link">Autoscout24 - record</a>
+                    <input id="autoscout24_uid" type="text" class="form-control" placeholder="uid" style="display: inline-block; width: auto;"  />
+                    <button class="btn btn-primary" onclick="setUrl('autoscout24');">set</button>
+                </li>
             </ol>
             <hr />
 
@@ -28,8 +36,28 @@
             <ol>
                 <li><a href="unoauto.html">Unoauto - home</a></li>
                 <li><a href="unoauto.html?sif_page=unsubscribe">Unoauto - unsubscribe</a></li>
+                <li><a id="unoauto_link">Unoauto - record</a>
+                    <input id="unoauto_uid" type="text" class="form-control" placeholder="uid" style="display: inline-block; width: auto;"  />
+                    <button class="btn btn-primary" onclick="setUrl('unoauto');">set</button>
+                </li>
             </ol>
             <hr />
         </div>
+
+        <script>
+
+            function setUrl(target){
+                var input = document.getElementById(target + '_uid');
+                var uid = input.value
+                if(uid === ''){
+                    alert("uid is empty")
+                    link.href = target + '#';
+                }
+                else{
+                    var link = document.getElementById(target + '_link');
+                    link.href = target + '-sale.html?sif_page=record&sif_recordUid=' + uid;
+                }
+            }
+        </script>
     </body>
 </html>

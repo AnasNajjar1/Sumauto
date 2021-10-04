@@ -165,6 +165,7 @@ export const FormVehicle: React.FC = () => {
 
     return (
         <div className="page page-index">
+            <MileageInput />
             <Container fluid>
                 <Row className="progress-bar-section">
                     <Col xs={12} sm={9}>
