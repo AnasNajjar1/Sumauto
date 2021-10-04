@@ -1,4 +1,4 @@
-import { isLeft, isRight } from 'fp-ts/lib/Either';
+import { isLeft } from 'fp-ts/lib/Either';
 import { ThunkResult } from '../../../redux/configureStore';
 import { RecordGateway } from '../../gateways/recordGateway.interface';
 import { dislayErrorUseCase } from '../displayError/displayError.useCase';
@@ -58,11 +58,19 @@ export const saveVehicleAndUserInformationsUseCase =
         // saving user information
         const { email, phone, zipCode } = getState().form.particular;
 
-        const resultUser = await recordGateway.saveUserInformation(config.identifier, recordUid, {
+        const params = {
             phone,
             email,
             zipCode,
-        });
+        };
+
+        if (params.phone === '') delete params.phone;
+
+        const resultUser = await recordGateway.saveUserInformation(
+            config.identifier,
+            recordUid,
+            params,
+        );
 
         if (isLeft(resultUser)) {
             return dispatch(dislayErrorUseCase('create_particular_failed'));

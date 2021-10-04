@@ -2,12 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useParams } from 'react-router-dom';
-import { t } from 'autobiz-translate';
 
 import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getRecord.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import { Loader } from './Loader';
-import { getClientSelector } from '../../view-models-generators/clientSelector';
 
 import { ErrorPage } from './ErrorPage';
 import { ArchivedValuation } from './ArchivedValuation';
@@ -18,45 +16,43 @@ import { Confirmation } from './Confirmation';
 export const RecordPage: React.FC = () => {
     const dispatch = useDispatch();
 
-    const { recordId } = useParams<{ recordId: string }>();
-
-    const { data: record, status } = useSelector(getRecordSelector);
+    const { recordUid } = useParams<{ recordUid: string }>();
 
     useEffect(() => {
-        dispatch(getRecordUseCase(recordId));
-    }, [dispatch, recordId]);
+        dispatch(getRecordUseCase(recordUid, 'full'));
+    }, [dispatch, recordUid]);
+
+    const { data: record, status } = useSelector(getRecordSelector);
 
     if (status === 'failed') {
         return <ErrorPage />;
     }
 
-    if (record.valuation?.value) {
-        if (record.appointment) {
+    switch (record.offerStatus) {
+        default:
+        case 'UNQUOTABLE':
+            return (
+                <Loader status={status}>
+                    <NoValuation {...record} />
+                </Loader>
+            );
+        case 'CONFIRMED':
             return (
                 <Loader status={status}>
                     <Confirmation {...record} />
                 </Loader>
             );
-        }
-
-        if (record.expired) {
+        case 'EXPIRED':
             return (
                 <Loader status={status}>
                     <ArchivedValuation {...record} />
                 </Loader>
             );
-        }
-
-        return (
-            <Loader status={status}>
-                <ActiveValuation {...record} />
-            </Loader>
-        );
+        case 'NO_APPOINTMENT':
+            return (
+                <Loader status={status}>
+                    <ActiveValuation {...record} />
+                </Loader>
+            );
     }
-
-    return (
-        <Loader status={status}>
-            <NoValuation {...record} />
-        </Loader>
-    );
 };

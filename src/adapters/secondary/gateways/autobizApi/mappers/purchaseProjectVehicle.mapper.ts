@@ -1,7 +1,5 @@
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
-import { TVehicle } from '../../../../../hexagon/interfaces';
 import { AutobizPurchaseProjectDto } from '../dtos/purchaseProjectDto';
-import { AutobizRecordVehicleDto } from '../dtos/recordVehicleDto';
 
 type SellProject = string;
 

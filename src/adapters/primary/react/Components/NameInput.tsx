@@ -17,7 +17,7 @@ export const NameInput: React.FC = () => {
 
     useEffect(() => {
         setName(particular.name);
-    }, [dispatch]);
+    }, [dispatch, particular.name]);
 
     const handleChange = (value: string) => {
         setName(value);
@@ -36,7 +36,7 @@ export const NameInput: React.FC = () => {
                         type="text"
                         name="name"
                         id="name"
-                        value={name}
+                        defaultValue={name}
                         onChange={(e) => handleChange(e.currentTarget.value)}
                         onBlur={() => handleBlur()}
                     />

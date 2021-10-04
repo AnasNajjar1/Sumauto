@@ -1,6 +1,5 @@
 import React from 'react';
 
-import moment from 'moment';
 import { t } from 'autobiz-translate';
 import { Picture } from './Picture';
 
@@ -22,7 +21,8 @@ export const AppointmentResume: React.FC<TAppointmentResumeProps> = ({
             <p className="mb-2">
                 <strong>{placeName}</strong>
             </p>
-            <p>{moment(date).format('dddd l')}</p>
+            <p>{date}</p>
+            <p>{hour}</p>
             <p>{t('appointment_duration')}</p>
         </div>
     </div>

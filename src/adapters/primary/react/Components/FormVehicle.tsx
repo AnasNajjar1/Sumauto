@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Row, Col, Button, CustomInput } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import { t } from 'autobiz-translate';
 import { useHistory } from 'react-router';
 import { ProgressSteps } from './ProgressSteps';
@@ -28,12 +28,11 @@ export const FormVehicle: React.FC = () => {
     const dispatch = useDispatch();
     const historyHook = useHistory();
     const { scrollToElement } = useScroll();
-    const { vehicle, vehicleState, particular } = useSelector(getFormSelector);
+    const { vehicle, vehicleState, particular, checkFormValid, checkZipCode } =
+        useSelector(getFormSelector);
     const { journeyType, config } = useSelector(getClientSelector).client;
 
     const { uid: recordUid, status: recordStatus } = useSelector(getRecordSelector);
-
-    const record = useSelector(getRecordSelector);
 
     const [canQuote, setCanQuote] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
@@ -103,8 +102,11 @@ export const FormVehicle: React.FC = () => {
         setDisplaySectionAdditionalInformation(
             [displaySectionMoreDetails, ...moreDetails].every(Boolean),
         );
+
         setCanQuote(
-            [displaySectionMoreDetails, ...moreDetails, ...additionalDetails].every(Boolean),
+            [displaySectionMoreDetails, ...moreDetails, ...additionalDetails].every(Boolean) &&
+                checkFormValid &&
+                checkZipCode,
         );
 
         setProgress(
@@ -114,14 +116,14 @@ export const FormVehicle: React.FC = () => {
                 (((additionalDetails.filter(Boolean).length / additionalDetails.length) * 1) / 3) *
                     100,
         );
-    }, [dispatch, vehicle, vehicleState, particular]);
+    }, [dispatch, vehicle, vehicleState, particular, checkZipCode, checkFormValid]);
 
     useEffect(() => {
         if (recordUid && recordStatus === 'saved') {
             if (journeyType === 'valuation') historyHook.push(`./switch/${recordUid}`);
             else historyHook.push(`./record/${recordUid}`);
         }
-    }, [dispatch, recordUid, recordStatus]);
+    }, [dispatch, recordUid, recordStatus, journeyType, historyHook]);
 
     useEffect(() => {
         const { make, model, month, year, fuel, body, door, gear, engine, version, mileage } =
@@ -148,15 +150,17 @@ export const FormVehicle: React.FC = () => {
         let found = false;
         let idName = '';
 
-        Object.entries(order).forEach(([key, value]) => {
-            if (!value && !found) {
-                if (key === 'year') idName = `form_group_month`;
-                else if (key === 'mileage') idName = `form_group_mileage`;
-                else idName = `form_group_${key}`;
-                scrollToElement(idName, 15);
-                found = true;
-            }
-        });
+        if (order.make) {
+            Object.entries(order).forEach(([key, value]) => {
+                if (!value && !found) {
+                    if (key === 'year') idName = `form_group_month`;
+                    else if (key === 'mileage') idName = `form_group_mileage`;
+                    else idName = `form_group_${key}`;
+                    scrollToElement(idName, 15);
+                    found = true;
+                }
+            });
+        }
     }, [dispatch, vehicle, vehicleState, scrollToElement]);
 
     return (
@@ -338,7 +342,7 @@ export const FormVehicle: React.FC = () => {
                                         <ZipCodeInput />
                                     </Col>
                                     <Col xs={12} md={6}>
-                                        <PhoneInput />
+                                        <PhoneInput required={false} />
                                     </Col>
                                 </Row>
                             </Col>

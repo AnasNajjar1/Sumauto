@@ -66,6 +66,16 @@ export const checkZipCode = (state = false, action: AnyAction) => {
     return state;
 };
 
+export const checkFormValid = (state = false, action: AnyAction) => {
+    if (action.type === 'checkFormValid/FAILED') {
+        return false;
+    }
+    if (action.type === 'checkFormValid/SUCCESS') {
+        return true;
+    }
+    return state;
+};
+
 const referential = combineReducers({
     make: formListReducer('make'),
     model: formListReducer('model'),
@@ -87,4 +97,5 @@ export const formReducer = combineReducers({
     particular,
     cascade,
     checkZipCode,
+    checkFormValid,
 });

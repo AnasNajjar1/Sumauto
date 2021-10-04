@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Label, Row } from 'reactstrap';
+import { Label, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
+import { TRefrentialElement } from '../../../../hexagon/interfaces';
 
 const getMakeLogoUrl = (name: string) =>
     `https://b2b-pictures-prod.s3-eu-west-1.amazonaws.com/brandsLogos/${name.replace(
@@ -33,7 +34,7 @@ export const MakeLogoInput: React.FC = () => {
                 <>
                     <Label>{t('make')}</Label>
                     <Row>
-                        {makes.map((f: any) => (
+                        {makes.map((f: TRefrentialElement) => (
                             <div key={f.id} className="fivecol">
                                 <div className="make-logo-button-container">
                                     <div

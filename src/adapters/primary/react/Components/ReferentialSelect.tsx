@@ -5,7 +5,7 @@ import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
-import { TReferentialItem } from '../../../../hexagon/interfaces';
+import { TReferentialItem, TRefrentialElement } from '../../../../hexagon/interfaces';
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
@@ -58,7 +58,7 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scop
                         disabled={status !== 'succeeded'}
                     >
                         <option value="">{t('choose')}</option>
-                        {list.map((m: any) => (
+                        {list.map((m: TRefrentialElement) => (
                             <option key={m.id} value={m.id}>
                                 {m.name}
                             </option>

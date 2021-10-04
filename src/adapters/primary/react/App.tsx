@@ -41,8 +41,8 @@ const App: React.FC = () => {
                             <Switch>
                                 <Route exact path="/" component={FormVehicle} />
                                 <Route path="/unsubscribe" component={UnsubscribePage} />
-                                <Route path="/switch/:recordId" component={ValuationSwitch} />
-                                <Route path="/record/:recordId" component={RecordPage} />
+                                <Route path="/switch/:recordUid" component={ValuationSwitch} />
+                                <Route path="/record/:recordUid" component={RecordPage} />
                                 <Route component={ErrorPage} />
                             </Switch>
                         </main>

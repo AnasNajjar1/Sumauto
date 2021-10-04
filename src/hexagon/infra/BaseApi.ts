@@ -87,4 +87,17 @@ export abstract class BaseApi {
             },
         });
     }
+
+    protected async delete(url: string, data?: any): Promise<any> {
+        return this.axiosInstance({
+            method: 'DELETE',
+            baseURL: this.baseUrl,
+            url,
+            data: data || null,
+            headers: {
+                Accept: this.headersAccept,
+                Authorization: this.bearerToken ? `Bearer ${this.bearerToken}` : '',
+            },
+        });
+    }
 }

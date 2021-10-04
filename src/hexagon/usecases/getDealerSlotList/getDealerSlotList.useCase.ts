@@ -4,13 +4,13 @@ import { DealerGateway } from '../../gateways/dealerGateway.interface';
 import * as actionCreators from './actionCreators';
 
 export const getDealerSlotListUseCase =
-    (recordId: string, dealerId: string): ThunkResult<void> =>
+    (recordUid: string, dealerId: string): ThunkResult<void> =>
     async (dispatch, getState, { dealerGateway }: { dealerGateway: DealerGateway }) => {
         dispatch(actionCreators.Actions.dealerSlotListFetching());
         const { config } = getState().client;
         const result = await dealerGateway.requestDealerSlotList(
             config.identifier,
-            recordId,
+            recordUid,
             dealerId,
         );
 

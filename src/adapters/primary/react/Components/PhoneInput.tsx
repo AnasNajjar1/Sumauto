@@ -9,8 +9,13 @@ import { InputValidation } from './InputValidation';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
+import { checkFormValidUseCase } from '../../../../hexagon/usecases/checkFormValid/checkFormValid.useCase';
 
-export const PhoneInput: React.FC = () => {
+type TPhoneInputProps = {
+    required: boolean;
+};
+
+export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
     const dispatch = useDispatch();
     const { particular } = useSelector(getFormSelector);
     const { config } = useSelector(getClientSelector);
@@ -18,12 +23,21 @@ export const PhoneInput: React.FC = () => {
     const [phone, setPhone] = useState<string>('');
     const [valid, setValid] = useState<boolean>();
 
+    const isValidPhone = (value: string) =>
+        value.search(new RegExp(config.phoneRegex)) === 0 ||
+        (value.length === 0 && required === false);
+
     useEffect(() => {
         setPhone(particular.phone);
-    }, [dispatch]);
+
+        if (particular.phone) {
+            if (isValidPhone(particular.phone)) setValid(true);
+            else setValid(false);
+        }
+    }, [dispatch, particular.phone, isValidPhone]);
 
     const handleChange = (value: string) => {
-        if (value.search(new RegExp(config.phoneRegex)) === 0) {
+        if (isValidPhone(value)) {
             setValid(true);
         } else {
             setValid(false);
@@ -38,6 +52,12 @@ export const PhoneInput: React.FC = () => {
             dispatch(setParticularValue('phone', ''));
         }
     };
+
+    useEffect(() => {
+        if (!phone && required === false) dispatch(checkFormValidUseCase(true));
+        if (phone && valid === false) dispatch(checkFormValidUseCase(false));
+        if (phone && valid === true) dispatch(checkFormValidUseCase(true));
+    }, [phone, valid]);
 
     return (
         <>

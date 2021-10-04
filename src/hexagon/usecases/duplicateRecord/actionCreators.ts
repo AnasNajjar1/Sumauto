@@ -1,5 +1,4 @@
 import { ActionsUnion, createAction } from '../../../redux/customActions';
-import { TRecord } from '../../interfaces';
 
 export const Actions = {
     recordFetching: () => createAction('record/duplicating/PENDING'),

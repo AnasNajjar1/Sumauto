@@ -1,3 +1,5 @@
+import { AutobizAppointmentDto } from "./appointmentDto";
+
 export interface AutobizRecordDetailsDto {
     record: {
         RfId: string;
@@ -78,38 +80,5 @@ export interface AutobizRecordDetailsDto {
         servicingInvoice: string;
         comment: string;
     };
-    appointment?: TAutobizAppointment[];
-    // appointment: {
-    //     id: string;
-    //     createdAt: string;
-    //     updateAt: string;
-    //     status: string;
-    //     lastOne: 'yes' | 'no';
-    //     active: 'yes' | 'no';
-    //     appointmentDate: string;
-    //     startHour: string;
-    //     endHour: string;
-    //     expertId: string;
-    //     expertName: string;
-    //     networkId: string;
-    //     dealerId: string;
-    //     dealerName: string;
-    // };
+    appointment?: AutobizAppointmentDto;
 }
-
-type TAutobizAppointment = {
-    id: string;
-    createdAt: string;
-    updateAt: string;
-    status: string;
-    lastOne: 'yes' | 'no';
-    active: 'yes' | 'no';
-    appointmentDate: string;
-    startHour: string;
-    endHour: string;
-    expertId: string;
-    expertName: string;
-    networkId: string;
-    dealerId: string;
-    dealerName: string;
-};

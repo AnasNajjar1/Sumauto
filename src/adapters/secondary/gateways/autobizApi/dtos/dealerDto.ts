@@ -14,3 +14,14 @@ export interface AutobizDealerDto {
     distance: string;
     experts: Expert[];
 }
+
+export interface AutobizDealerSlotDto {
+    date: string;
+    hours: AutobizDealerSlotHourDto[];
+}
+
+export interface AutobizDealerSlotHourDto {
+    id: string | null;
+    hour: number;
+    status: 0 | 1;
+}

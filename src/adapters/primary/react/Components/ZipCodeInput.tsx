@@ -19,6 +19,7 @@ export const ZipCodeInput: React.FC = () => {
     const { particular } = useSelector(getFormSelector);
     const [zipCode, setZipCode] = useState<string>('');
     const [touched, setTouched] = useState<boolean>(false);
+    const [valid, setValid] = useState<boolean>();
 
     useEffect(() => {
         setZipCode(particular.zipCode);
@@ -26,15 +27,34 @@ export const ZipCodeInput: React.FC = () => {
 
     const { checkZipCode } = useSelector(getCheckZipCodeSelector);
 
-    const handleBlur = (value: string) => {
+    const handleChange = (value: string) => {
+        if (value.search(new RegExp(config.zipCodeRegex)) === 0) {
+            setValid(true);
+        } else {
+            setValid(false);
+        }
         setZipCode(value);
         setTouched(true);
-        if (new RegExp(config.zipCodeRegex).test(value)) dispatch(checkZipcodeUseCase(value));
+    };
+
+    const handleBlur = (value: string) => {
+        if (value.search(new RegExp(config.zipCodeRegex)) === 0) {
+            setValid(true);
+        } else {
+            setValid(false);
+        }
     };
 
     useEffect(() => {
-        if (checkZipCode) dispatch(setParticularValue('zipCode', zipCode));
-        else dispatch(setParticularValue('zipCode', ''));
+        if (valid) dispatch(checkZipcodeUseCase(zipCode));
+    }, [zipCode, valid]);
+
+    useEffect(() => {
+        if (checkZipCode) {
+            dispatch(setParticularValue('zipCode', zipCode));
+        } else {
+            dispatch(setParticularValue('zipCode', ''));
+        }
     }, [dispatch, checkZipCode, zipCode]);
 
     return (
@@ -48,6 +68,7 @@ export const ZipCodeInput: React.FC = () => {
                             id="zipCode"
                             defaultValue={zipCode}
                             placeholder={t('zipCode_placeholder')}
+                            onChange={(e) => handleChange(e.target.value)}
                             onBlur={(e) => handleBlur(e.target.value)}
                         />
                         <InputGroupAddon addonType="append">
@@ -56,7 +77,7 @@ export const ZipCodeInput: React.FC = () => {
                             </InputGroupText>
                         </InputGroupAddon>
                     </InputGroup>
-                    {(touched && <InputValidation valid={checkZipCode} />) || (
+                    {(touched && <InputValidation valid={valid && checkZipCode} />) || (
                         <InputValidation valid={undefined} />
                     )}
                 </InputWithValidation>

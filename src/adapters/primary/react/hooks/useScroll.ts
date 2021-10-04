@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 export default function useScroll() {
     const scrollToElement = (element: string, marginTop = 0) => {
         // @ts-ignore-start

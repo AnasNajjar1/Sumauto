@@ -1,5 +1,4 @@
 import { left, right } from 'fp-ts/Either';
-import { string } from 'fp-ts';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import {
     RecordIds,
@@ -20,8 +19,6 @@ import { PurchaseProjectMapper } from './mappers/purchaseProjectVehicle.mapper';
 import { AppointmentMapper } from './mappers/appointment.mapper';
 
 export class HttpRecordGateway extends BaseApi implements RecordGateway {
-    private recordIds = {} as RecordIds;
-
     async saveVehicleInformation(
         identifier: string,
         vehicleInformation: TVehicle,
@@ -125,9 +122,16 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         return left('unknown record');
     }
 
-    // TODO: connect to API
     async cancelAppointment(identifier: string, recordUid: string): Promise<ApiResponse<boolean>> {
-        return right(true);
+        try {
+            const response = await this.delete(`/record/${recordUid}/appointments`, {
+                identifier,
+            });
+
+            return right(response.data.status);
+        } catch (error) {
+            return left(error as string);
+        }
     }
 
     async createQuotation(identifier: string, recordUid: string): Promise<ApiResponse<boolean>> {
@@ -142,8 +146,8 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         }
     }
 
-    // TODO: connect to API
     async duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<string>> {
+        console.log(identifier, recordUid);
         return right('400');
     }
 
@@ -169,11 +173,11 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
 
     async createAppointment(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         resaId: number,
     ): Promise<ApiResponse<TAppointment>> {
         try {
-            const response = await this.post(`/records/${recordId}/appointment`, {
+            const response = await this.post(`/record/${recordUid}/appointments`, {
                 identifier,
                 resaId,
             });

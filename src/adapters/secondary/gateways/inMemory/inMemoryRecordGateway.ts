@@ -29,18 +29,6 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return left('unknown record');
     }
 
-    async updateVehicleInformation(
-        identifier: string,
-        recordId: number,
-        vehicleInformation: TVehicle,
-    ): Promise<ApiResponse<UpdateStatus>> {
-        if (this.recordIds) {
-            return right({ status: true });
-        }
-
-        return left('unknown record');
-    }
-
     async saveVehicleStateInformation(
         identifier: string,
         recordUid: string,
@@ -48,18 +36,6 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
             return right(this.recordIds);
-        }
-
-        return left('unknown record');
-    }
-
-    async updateVehicleStateInformation(
-        identifier: string,
-        recordUid: string,
-        vehicleStateInformation: VehicleStateInformation,
-    ): Promise<ApiResponse<UpdateStatus>> {
-        if (this.recordIds) {
-            return right({ status: true });
         }
 
         return left('unknown record');
@@ -91,10 +67,10 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async getRecord(
         identifier: string,
-        recordId: string,
+        recordUid: string,
         mode?: string,
     ): Promise<ApiResponse<TRecord>> {
-        const found = this.records.find((e) => e.uid === recordId);
+        const found = this.records.find((e) => e.uid === recordUid);
 
         if (found) {
             return right(found);
@@ -103,8 +79,8 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return left('unknown record');
     }
 
-    async cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>> {
-        const found = this.records.find((e) => e.id === recordId);
+    async cancelAppointment(identifier: string, recordUid: string): Promise<ApiResponse<boolean>> {
+        const found = this.records.find((e) => e.uid === recordUid);
         delete found?.appointment;
 
         return right(true);
@@ -116,7 +92,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return right(true);
     }
 
-    async duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>> {
+    async duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<string>> {
         return right('400');
     }
 
@@ -138,10 +114,10 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async createAppointment(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         resaId: number,
     ): Promise<ApiResponse<TAppointment>> {
-        const found = this.records.find((e) => e.id === recordId.toString());
+        const found = this.records.find((e) => e.uid === recordUid);
         if (!found) {
             return left('error_create_appointement');
         }

@@ -13,6 +13,7 @@ export class RecordUserMapper implements Mapper<TVehicle> {
             recordUid,
             mail: recordUser.email,
             phone: recordUser.phone,
+            lastName: recordUser.name,
             zipCode: recordUser.zipCode,
         };
     }

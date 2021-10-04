@@ -31,7 +31,7 @@ export const ArchivedValuation: React.FC<TRecord> = (props) => {
     useEffect(() => {
         if (duplicateRecordId.toString() !== id)
             history.push(`/record/${duplicateRecordId.toString()}`);
-    }, [dispatch, duplicateRecordId]);
+    }, [dispatch, duplicateRecordId, history, id]);
 
     const submitUpdateRecord = () => {
         dispatch(resetRecordUseCase());

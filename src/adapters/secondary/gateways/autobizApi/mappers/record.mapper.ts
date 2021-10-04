@@ -1,15 +1,30 @@
+import _ from 'lodash';
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
-import { TCustomer, TRecord, TVehicle } from '../../../../../hexagon/interfaces';
+import { TOfferStatus, TRecord } from '../../../../../hexagon/interfaces';
 import { AutobizRecordDetailsDto } from '../dtos/recordDetailsDto';
+import { AppointmentMapper } from './appointment.mapper';
 
 export class RecordMapper implements Mapper<TRecord> {
     static toApp(dto: AutobizRecordDetailsDto): TRecord {
         const { record, vehicle, vehicleState, customer, valuation, appointment } = dto;
 
-        return {
+        let status: TOfferStatus;
+        if (Number(dto.valuation?.price) > 0) {
+            if (dto.record.expired) {
+                status = 'EXPIRED';
+            } else if (!_.isEmpty(dto.appointment)) {
+                status = 'CONFIRMED';
+            } else {
+                status = 'NO_APPOINTMENT';
+            }
+        } else {
+            status = 'UNQUOTABLE';
+        }
+
+        const data: TRecord = {
             id: record.RfId,
             uid: record.uid,
-            expired: false,
+            offerStatus: status,
             offerNumber: record.HexaRfId,
             vehicle: {
                 makeName: vehicle.brandLabel,
@@ -24,39 +39,23 @@ export class RecordMapper implements Mapper<TRecord> {
                 mileage: Number(vehicle.mileage),
                 import: vehicleState.imported === '1',
                 versionName: vehicle.versionLabel,
+                doors: vehicle.doorsNumber,
             },
 
             valuation: {
                 privateValue: Number(valuation.particular),
                 value: Number(valuation.boostedPrice),
-                status: true,
-                archived: false,
-                date: new Date(),
+                date: new Date(valuation.createdAt),
             },
             customer: {
                 email: customer.email,
                 zipCode: customer.zipCode,
                 phone: customer.phone,
-                name: `${customer.firstName} ${customer.lastName}`,
+                name: customer.lastName,
             },
-            appointment: appointment
-                ? {
-                      id: Number(appointment[0].id),
-                      createdAt: appointment[0].createdAt,
-                      updatedAt: appointment[0].updateAt,
-                      status: Boolean(appointment[0].status),
-                      lastOne: appointment[0].lastOne,
-                      active: appointment[0].active,
-                      appointmentDate: appointment[0].appointmentDate,
-                      startHour: appointment[0].startHour,
-                      endHour: appointment[0].endHour,
-                      expertId: Number(appointment[0].expertId),
-                      expertName: appointment[0].expertName,
-                      networkId: Number(appointment[0].networkId),
-                      dealerId: Number(appointment[0].dealerId),
-                      dealerName: appointment[0].dealerName,
-                  }
-                : undefined,
         };
+        if (appointment && Object.keys(appointment).length > 0)
+            data.appointment = AppointmentMapper.toApp(appointment);
+        return data;
     }
 }

@@ -10,7 +10,7 @@ export const somesRecords: TRecord[] = [
     {
         id: '100',
         uid: 'aaa',
-        expired: false,
+        offerStatus: 'NO_APPOINTMENT',
         offerNumber: 'WITHOUT_APPOINTMENT',
         vehicle: {
             makeName: 'Peugeot',
@@ -35,15 +35,13 @@ export const somesRecords: TRecord[] = [
         },
         // valuation: {
         //     value: 10000,
-        //     status: true,
-        //     archived: false,
         //     date: new Date('2020-08-20'),
         // },
     },
     {
         id: '200',
         uid: 'bbb',
-        expired: false,
+        offerStatus: 'CONFIRMED',
         offerNumber: 'WITH_APPOINTMENT',
         vehicle: {
             makeName: 'Fiat',
@@ -69,8 +67,6 @@ export const somesRecords: TRecord[] = [
         valuation: {
             privateValue: 5000,
             value: 6000,
-            status: true,
-            archived: false,
             date: new Date('2020-08-20'),
         },
         appointment: {
@@ -88,12 +84,18 @@ export const somesRecords: TRecord[] = [
             networkId: 5701,
             dealerId: 503546,
             dealerName: 'TEST PDV 2',
+            address: 'Paris, test, 70',
+            zipCode: 25633,
+            city: 'Paris',
+            phone: '123466',
+            latitude: 1.2,
+            longitude: 1.6,
         },
     },
     {
         id: '300',
         uid: 'ccc',
-        expired: true,
+        offerStatus: 'EXPIRED',
         offerNumber: 'EXPIRED',
         vehicle: {
             makeName: 'Renault',
@@ -119,15 +121,13 @@ export const somesRecords: TRecord[] = [
         valuation: {
             privateValue: 17000,
             value: 18000,
-            status: true,
-            archived: true,
             date: new Date('2020-01-01'),
         },
     },
     {
         id: '500',
         uid: 'eee',
-        expired: false,
+        offerStatus: 'UNQUOTABLE',
         offerNumber: 'NOT_QUOTABLE',
         vehicle: {
             makeName: 'Peugeot',
@@ -154,7 +154,7 @@ export const somesRecords: TRecord[] = [
     {
         id: '400',
         uid: 'ddd',
-        expired: false,
+        offerStatus: 'CONFIRMED',
         offerNumber: 'REFRESHED',
         vehicle: {
             makeName: 'Peugeot',
@@ -180,8 +180,6 @@ export const somesRecords: TRecord[] = [
         valuation: {
             value: 16500,
             privateValue: 17500,
-            status: false,
-            archived: false,
             date: new Date('2020-08-20'),
         },
     },

@@ -15,7 +15,7 @@ export const ActiveValuation: React.FC<TRecord> = (props) => {
     const { scrollToElement } = useScroll();
     const { client } = useSelector(getClientSelector);
     const { locale, currency } = client.config;
-    const { vehicle, valuation, id, uid, offerNumber } = props;
+    const { vehicle, valuation, uid, offerNumber } = props;
 
     return (
         <div className="page page-valuation">

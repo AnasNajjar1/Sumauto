@@ -8,11 +8,4 @@ export interface DealerGateway {
         recordUid: string,
         dealerId: string,
     ): Promise<ApiResponse<Slot[]>>;
-    // saveAppointment(
-    //     recordId: number,
-    //     dealerId: number,
-    //     day: string,
-    //     hourStart: string,
-    //     hourEnd: string,
-    // ): Promise<ApiResponse<{ id: number }>>;
 }

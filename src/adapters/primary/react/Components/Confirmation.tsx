@@ -12,8 +12,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { t } from 'autobiz-translate';
 
-import { useParams } from 'react-router-dom';
-
 import { Map } from './Map';
 import { FeatureGroup } from './FeatureGroup';
 import { Feature } from './Feature';
@@ -34,11 +32,11 @@ export const Confirmation: React.FC<TRecord> = (props) => {
     };
 
     const handleSubmitCancel = () => {
-        dispatch(cancelAppointmentUseCase(record.id));
+        dispatch(cancelAppointmentUseCase(record.uid));
     };
 
     const handleSubmitPostpone = () => {
-        dispatch(cancelAppointmentUseCase(record.id));
+        dispatch(cancelAppointmentUseCase(record.uid));
     };
 
     return (
@@ -64,7 +62,7 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                                     hour={record.appointment.startHour}
                                     placeName={record.appointment.dealerName}
                                 />
-                                {record.offerNumber}
+
                                 <Row>
                                     <Col sm={6} md={12} lg={6}>
                                         <h2>{t('your_point_of_sale')}</h2>
@@ -72,21 +70,25 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                                         <p>
                                             <strong>{record.appointment.dealerName}</strong>
                                         </p>
-                                        {/* <p>
-                                            {record.appointment.place.address}
+                                        <p>
+                                            {record.appointment.address}
                                             <br />
-                                            {record.appointment.place.zipCode}{' '}
-                                            {record.appointment.place.city}
+                                            {record.appointment.zipCode} {record.appointment.city}
                                             <br />
                                             {t('phone_short')}{' '}
-                                            <a href={`tel:${record.appointment.place.phone}`}>
-                                                {record.appointment.place.phone}
+                                            <a href={`tel:${record.appointment.phone}`}>
+                                                {record.appointment.phone}
                                             </a>
-                                        </p> */}
+                                        </p>
                                     </Col>
-                                    {/* <Col sm={6} md={12} lg={6}>
-                                        <Map coordinates={record.appointment.place.position} />
-                                    </Col> */}
+                                    <Col sm={6} md={12} lg={6}>
+                                        <Map
+                                            coordinates={{
+                                                lat: record.appointment.latitude,
+                                                lng: record.appointment.longitude,
+                                            }}
+                                        />
+                                    </Col>
                                 </Row>
                                 <Row className="d-print-none">
                                     <Col sm={6} xl={5}>

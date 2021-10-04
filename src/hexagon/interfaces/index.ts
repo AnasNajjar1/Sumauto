@@ -9,14 +9,14 @@ export type Dealer = {
 type HourStatus = 'open' | 'closed';
 
 export type Hour = {
-    id: number;
+    id: string | null;
     hour: string;
     status: HourStatus;
 };
 
-export type Slots = {
-    slots: Slot[];
-};
+// export type Slots = {
+//     slots: Slot[];
+// };
 
 export type Slot = {
     date: string;
@@ -126,8 +126,6 @@ export type VehicleStateInformation = {
 export type TValuation = {
     privateValue: number;
     value: number;
-    status: boolean;
-    archived: boolean;
     date: Date;
 };
 
@@ -151,7 +149,7 @@ export type TVehicleNames = {
     mileage: number;
     import: boolean;
     versionName: string;
-    doors?: string;
+    doors: string;
 };
 
 export type TCoordinates = {
@@ -174,12 +172,19 @@ export type TAppointment = {
     networkId: number;
     dealerId: number;
     dealerName: string;
+    address: string;
+    zipCode: number;
+    city: string;
+    phone: string;
+    latitude: number;
+    longitude: number;
 };
+export type TOfferStatus = 'EXPIRED' | 'CONFIRMED' | 'NO_APPOINTMENT' | 'UNQUOTABLE';
 
 export type TRecord = {
     id: string;
     uid: string;
-    expired: boolean;
+    offerStatus: TOfferStatus;
     offerNumber: string;
     customer: TCustomer;
     vehicle: TVehicleNames;

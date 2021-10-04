@@ -5,7 +5,6 @@ import { Container, Button, Col, Row } from 'reactstrap';
 import { t } from 'autobiz-translate';
 import { useDispatch, useSelector } from 'react-redux';
 import { TRecord } from '../../../../hexagon/interfaces';
-import { CtaBlock } from './CtaBlock';
 import { Feature } from './Feature';
 import { FeatureGroup } from './FeatureGroup';
 import { Picture } from './Picture';
@@ -22,17 +21,19 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
     const { journeyType, config } = useSelector(getClientSelector).client;
     const { locale, currency, privateSellLink } = config;
 
-    const { recordId } = useParams<{ recordId: string }>();
+    const { recordUid } = useParams<{ recordUid: string }>();
     const { data: record, status } = useSelector(getRecordSelector);
 
     const { vehicle } = record;
 
     useEffect(() => {
-        dispatch(getRecordUseCase(recordId));
-    }, [dispatch, recordId]);
+        dispatch(getRecordUseCase(recordUid));
+    }, [dispatch, recordUid]);
 
-    if (journeyType !== 'valuation') history.push(`/record/${recordId}`);
-    if (!privateSellLink) history.push(`/record/${recordId}`);
+    if (journeyType !== 'valuation') history.push(`/record/${recordUid}`);
+    if (!privateSellLink) history.push(`/record/${recordUid}`);
+
+    if (record.offerStatus === 'UNQUOTABLE') history.push(`/record/${recordUid}`);
 
     if (!record.valuation) {
         return <></>;
@@ -87,9 +88,14 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                         </Col>
                         <Col sm={6} className="text-center">
                             <div className="background-direct-sell">
-                                <Button block className="d-none d-sm-block">
+                                <Button
+                                    block
+                                    className="d-none d-sm-block"
+                                    onClick={() => history.push(`/record/${recordUid}`)}
+                                >
                                     {t('book_an_appointment')}
                                 </Button>
+
                                 <Picture background="meeting" />
                                 <h3>{t('direct_sell')}</h3>
                                 <div className="valuation valuation-direct">
@@ -107,7 +113,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                     }}
                                 />
 
-                                <Button block onClick={() => history.push(`/record/${recordId}`)}>
+                                <Button block onClick={() => history.push(`/record/${recordUid}`)}>
                                     {t('book_an_appointment')}
                                 </Button>
                             </div>

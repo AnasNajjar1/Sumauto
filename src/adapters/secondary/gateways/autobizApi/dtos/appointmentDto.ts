@@ -13,4 +13,10 @@ export interface AutobizAppointmentDto {
     networkId: string;
     dealerId: string;
     dealerName: string;
+    address: string;
+    zipCode: string;
+    city: string;
+    phone: string;
+    latitude: string;
+    longitude: string;
 }

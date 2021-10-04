@@ -5,14 +5,15 @@ import { getRecordUseCase } from '../getRecord/getRecord.useCase';
 import * as actionCreators from './actionCreators';
 
 export const cancelAppointmentUseCase =
-    (recordId: string): ThunkResult<void> =>
+    (recordUid: string): ThunkResult<void> =>
     async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
         dispatch(actionCreators.Actions.CancelAppointmentPending());
         const { config } = getState().client;
-        const result = await recordGateway.cancelAppointment(config.identifier, recordId);
+
+        const result = await recordGateway.cancelAppointment(config.identifier, recordUid);
 
         if (isRight(result)) {
-            dispatch(getRecordUseCase(recordId));
+            dispatch(getRecordUseCase(recordUid));
             dispatch(actionCreators.Actions.CancelAppointmentSucceed());
         } else {
             dispatch(actionCreators.Actions.CancelAppointmentFailed());

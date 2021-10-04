@@ -16,7 +16,6 @@ import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { CarDetailsMapper } from './mappers/carDetails.mapper';
 import { MakesMapper } from './mappers/makes.mapper';
 import { ReferentialQueryParamsMapper } from './mappers/referentialQueryParams.mapper';
-import { ReferentialMapper } from './mappers/vehicleFilter.mapper';
 
 export class HttpReferentialGateway extends BaseApi implements ReferentialGateway {
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {

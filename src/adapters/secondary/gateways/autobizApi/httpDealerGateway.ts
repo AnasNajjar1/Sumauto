@@ -4,7 +4,8 @@ import { Dealer, Slot } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { DealerGateway } from '../../../../hexagon/gateways/dealerGateway.interface';
 import { DealerMapper } from './mappers/dealer.mapper';
-import { AutobizDealerDto } from './dtos/dealerDto';
+import { AutobizDealerDto, AutobizDealerSlotDto } from './dtos/dealerDto';
+import { DealerSlotMapper } from './mappers/dealerSlot.mapper';
 
 export class HttpDealerGateway extends BaseApi implements DealerGateway {
     async requestDealerList(identifier: string, recordUid: string): Promise<ApiResponse<Dealer[]>> {
@@ -28,7 +29,11 @@ export class HttpDealerGateway extends BaseApi implements DealerGateway {
             const response = await this.get(
                 `/record/${recordUid}/network/${dealerId}/slots?identifier=${identifier}`,
             );
-            const { slots } = response.data;
+
+            const slots = response.data.slots.map((p: AutobizDealerSlotDto) =>
+                DealerSlotMapper.toApp(p),
+            );
+
             return right(slots);
         } catch (error) {
             return left(error as string);

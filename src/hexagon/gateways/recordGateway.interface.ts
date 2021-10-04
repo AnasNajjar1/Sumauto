@@ -38,21 +38,15 @@ export interface RecordGateway {
 
     createQuotation(identifier: string, recordUid: string): Promise<ApiResponse<boolean>>;
 
-    duplicateRecord(identifier: string, recordId: string): Promise<ApiResponse<string>>;
+    duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<string>>;
 
-    cancelAppointment(identifier: string, recordId: string): Promise<ApiResponse<boolean>>;
+    cancelAppointment(identifier: string, recordUid: string): Promise<ApiResponse<boolean>>;
 
     createAppointment(
         identifier: string,
-        recordId: number,
+        recordUid: string,
         resaId: number,
     ): Promise<ApiResponse<TAppointment>>;
-
-    // updateAppointment(
-    //     identifier: string,
-    //     recordId: string,
-    //     resadId: string,
-    // ): Promise<ApiResponse<boolean>>;
 
     updateSellProject(
         identifier: string,

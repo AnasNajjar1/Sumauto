@@ -4,7 +4,6 @@ import {
     Col,
     Button,
     Input,
-    FormGroup,
     Label,
     Container,
     InputGroup,
@@ -14,7 +13,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faUser,
     faCalendarAlt,
     faClock,
     faPlusCircle,
@@ -27,7 +25,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import { t } from 'autobiz-translate';
 
-import { useHistory } from 'react-router-dom';
+import _ from 'lodash';
 import {
     getDealerListSelector,
     getDealerSlotListSelector,
@@ -37,7 +35,6 @@ import { Loader } from './Loader';
 import { getDealerSlotListUseCase } from '../../../../hexagon/usecases/getDealerSlotList/getDealerSlotList.useCase';
 import { Hour } from '../../../../hexagon/interfaces';
 import { CtaBlock } from './CtaBlock';
-import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { AccordionInfo } from './AccordionInfo';
 import { FeatureGroup } from './FeatureGroup';
 import { Feature } from './Feature';
@@ -51,6 +48,8 @@ import { NameInput } from './NameInput';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { saveAppointmentUseCase } from '../../../../hexagon/usecases/saveAppointment/saveAppointment.useCase';
 import { updateUserInformationsUseCase } from '../../../../hexagon/usecases/updateUserInformation/updateUserInformations.useCase';
+import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
+import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 
 type TAppointmentProps = {
     recordUid: string;
@@ -58,9 +57,7 @@ type TAppointmentProps = {
 
 export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const dispatch = useDispatch();
-    const history = useHistory();
 
-    // const [dealerId, setDealerId] = useState<string | undefined>(undefined);
     const [dealer, setDealer] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [showAllDealers, setShowAllDealers] = useState<boolean>(false);
     const [date, setDate] = useState<string>('');
@@ -68,13 +65,18 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const [hourList, setHourList] = useState<Hour[]>([]);
 
     const { data: dealerList, status: dealerStatus } = useSelector(getDealerListSelector);
+    const { data: recordData } = useSelector(getRecordSelector);
     const { data: dealerSlotList, status: dealerSlotStatus } =
         useSelector(getDealerSlotListSelector);
     const { particular } = useSelector(getFormSelector);
 
     useEffect(() => {
         dispatch(getDealerListUseCase(recordUid));
-    }, [dispatch, recordUid]);
+
+        dispatch(setParticularValue('phone', recordData.customer.phone || ''));
+        dispatch(setParticularValue('zipCode', recordData.customer.zipCode || ''));
+        dispatch(setParticularValue('name', recordData.customer.name || ''));
+    }, [dispatch, recordUid, recordData]);
 
     useEffect(() => {
         if (dealer?.id) {
@@ -88,18 +90,25 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
         if (date && dealerSlotList) {
             setHour('');
             const found = dealerSlotList.find((s) => s.date === date)?.hours;
-            if (found) {
-                setHourList(found);
-            }
+            setHourList(found || []);
+            // if (found) {
+            //     setHourList(found.filter((h) => h.id !== '88'));
+            // }
         }
     }, [dispatch, date, dealerSlotList]);
 
-    const formValid = [hour, date, dealer?.id, particular.name].every(Boolean);
+    const formValid = [
+        hour,
+        date,
+        dealer.id,
+        particular.name,
+        particular.phone,
+        // checkFormValid, removing cause setting phone from first form
+    ].every(Boolean);
 
     const submitAppointment = () => {
         dispatch(saveAppointmentUseCase(recordUid, hour));
         dispatch(updateUserInformationsUseCase(recordUid));
-        history.push(`/record/${recordUid}`);
     };
 
     return (
@@ -139,9 +148,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                     />
                                 </div>
                                 <div>
-                                    <div className="button-dealer-name">
-                                        {d.name}({d.id})
-                                    </div>
+                                    <div className="button-dealer-name">{d.name}</div>
                                     <div>
                                         <FontAwesomeIcon icon={faMapMarkerAlt} /> {d.city}{' '}
                                         {d.distance} {t('km')}
@@ -230,7 +237,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                                         <option value="">--</option>
                                                         {hourList.map((s) => (
                                                             <option
-                                                                value={s.id}
+                                                                value={s.id || ''}
                                                                 key={s.hour}
                                                                 disabled={s.status === 'closed'}
                                                             >
@@ -268,7 +275,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                             </Col>
 
                             <Col xs={12} sm={6}>
-                                <PhoneInput />
+                                <PhoneInput required />
                             </Col>
                         </Row>
                     </Container>
@@ -279,13 +286,12 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                 {formValid && (
                     <>
                         <h2 className="mt-4">{t('appointment_resume')}</h2>
-
                         <Row>
                             <Col>
                                 <AppointmentResume
                                     placeName={dealer.name}
                                     date={date}
-                                    hour={hour}
+                                    hour={_.find(hourList, (o) => o.id === hour)?.hour || ''}
                                 />
                             </Col>
                             <Col>

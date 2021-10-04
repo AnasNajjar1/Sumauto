@@ -26,5 +26,4 @@ export const clientReducer = combineReducers({
     name,
     journeyType,
     config,
-    // recordId,
 });
