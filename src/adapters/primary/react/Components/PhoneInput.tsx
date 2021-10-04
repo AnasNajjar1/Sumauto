@@ -34,7 +34,7 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
             if (isValidPhone(particular.phone)) setValid(true);
             else setValid(false);
         }
-    }, [dispatch, particular.phone, isValidPhone]);
+    }, [dispatch, particular.phone]);
 
     const handleChange = (value: string) => {
         if (isValidPhone(value)) {
