@@ -38,7 +38,7 @@ export interface RecordGateway {
 
     createQuotation(identifier: string, recordUid: string): Promise<ApiResponse<boolean>>;
 
-    duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<string>>;
+    duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<RecordIds>>;
 
     cancelAppointment(identifier: string, recordUid: string): Promise<ApiResponse<boolean>>;
 

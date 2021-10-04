@@ -9,9 +9,9 @@ export const data = (state: TRecord = {} as TRecord, action: AnyAction) => {
 };
 
 export const id = (state = 0, action: AnyAction) => {
-    if (action.type === 'record/fetching/SUCCESS') return action.payload.record.id;
-    if (action.type === 'record/saving/SAVED') return action.payload.id;
-    if (action.type === 'record/duplicating/SUCCESS') return action.payload.id;
+    if (action.type === 'record/fetching/SUCCESS') return action.payload.record.uid;
+    if (action.type === 'record/saving/SAVED') return action.payload.uid;
+    if (action.type === 'record/duplicating/SUCCESS') return action.payload.uid;
     if (action.type === 'record/RESET') return 0;
     return state;
 };

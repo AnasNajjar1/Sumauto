@@ -1,6 +1,7 @@
 import { isRight } from 'fp-ts/lib/Either';
 import { ThunkResult } from '../../../redux/configureStore';
 import { RecordGateway } from '../../gateways/recordGateway.interface';
+import { dislayErrorUseCase } from '../displayError/displayError.useCase';
 import * as actionCreators from './actionCreators';
 
 export const duplicateRecordUseCase =
@@ -11,9 +12,10 @@ export const duplicateRecordUseCase =
         const result = await recordGateway.duplicateRecord(config.identifier, recordUid);
 
         if (isRight(result)) {
-            dispatch(actionCreators.Actions.recordRetrieved(result.right));
-            // dispatch(getRecordUseCase(result.right.toString()));
+            await recordGateway.createQuotation(config.identifier, result.right.uid);
+            dispatch(actionCreators.Actions.recordRetrieved(result.right.uid));
         } else {
             dispatch(actionCreators.Actions.recordFailed());
+            dispatch(dislayErrorUseCase('duplication_failed'));
         }
     };

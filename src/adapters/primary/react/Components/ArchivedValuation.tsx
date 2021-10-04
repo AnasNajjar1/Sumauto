@@ -16,22 +16,21 @@ import { duplicateRecordUseCase } from '../../../../hexagon/usecases/duplicateRe
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 
 export const ArchivedValuation: React.FC<TRecord> = (props) => {
-    const { id, vehicle, valuation, customer, offerNumber } = props;
+    const { uid, vehicle, valuation, customer, offerNumber } = props;
     const { client } = useSelector(getClientSelector);
 
-    const { id: duplicateRecordId } = useSelector(getRecordSelector);
+    const { uid: duplicateRecordUid } = useSelector(getRecordSelector);
     const { locale, currency } = client.config;
     const history = useHistory();
     const dispatch = useDispatch();
 
     const submitRefreshRecord = () => {
-        dispatch(duplicateRecordUseCase(id));
+        dispatch(duplicateRecordUseCase(uid));
     };
 
     useEffect(() => {
-        if (duplicateRecordId.toString() !== id)
-            history.push(`/record/${duplicateRecordId.toString()}`);
-    }, [dispatch, duplicateRecordId, history, id]);
+        if (duplicateRecordUid.toString() !== uid) history.push(`/record/${duplicateRecordUid}`);
+    }, [dispatch, duplicateRecordUid, history, uid]);
 
     const submitUpdateRecord = () => {
         dispatch(resetRecordUseCase());

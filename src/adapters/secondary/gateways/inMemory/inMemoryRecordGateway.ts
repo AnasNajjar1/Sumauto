@@ -85,15 +85,16 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
         return right(true);
 
-        return left('error_delete_appointment');
     }
 
     async createQuotation(identifier: string, recordUid: string): Promise<ApiResponse<boolean>> {
         return right(true);
     }
 
-    async duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<string>> {
-        return right('400');
+    async duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<RecordIds>> {
+
+        const result: RecordIds = {id:100, uid:'aaa'};
+        return right(result);
     }
 
     async updateSellProject(

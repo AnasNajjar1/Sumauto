@@ -146,9 +146,20 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         }
     }
 
-    async duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<string>> {
-        console.log(identifier, recordUid);
-        return right('400');
+    async duplicateRecord(identifier: string, recordUid: string): Promise<ApiResponse<RecordIds>> {
+        try {
+            const response = await this.get(
+                `/record/${recordUid}/duplicate?identifier=${identifier}`,
+            );
+
+            if (response.data.uid) {
+                return right(response.data);
+            }
+
+            return left('duplication failed');
+        } catch (error) {
+            return left(error as string);
+        }
     }
 
     async updateSellProject(
