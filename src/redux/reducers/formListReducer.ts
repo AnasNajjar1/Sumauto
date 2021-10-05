@@ -5,10 +5,6 @@ import { TActionStatus } from '../appState';
 function createDataWithNamedType(dataName: string) {
     return function data(state: TRefrentialElement[] = [], action: AnyAction) {
         if (action.type === `${dataName}/SUCCESS`) {
-            // if (dataName === 'make') {
-            //     return action.payload.list[0].others;
-            // }
-
             return action.payload.list;
         }
         return state;

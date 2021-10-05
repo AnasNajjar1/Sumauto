@@ -1,4 +1,5 @@
 import { isRight } from 'fp-ts/lib/Either';
+import { elem } from 'fp-ts/lib/Option';
 import { ThunkResult } from '../../../redux/configureStore';
 import { ReferentialGateway } from '../../gateways/referentialGateway.interface';
 import { TReferentialItem } from '../../interfaces';
@@ -35,6 +36,7 @@ export const setVehicleValueCascade =
                 dispatch(actionCreators.Actions.setVehicle({ key: element, value: '' }));
                 dispatch(actionCreators.Actions.listReset(element));
             }
+
             if (!reset && element === key) reset = true;
         });
 
@@ -43,7 +45,7 @@ export const setVehicleValueCascade =
             const result = await referentialGateway.requestList(
                 config.identifier,
                 nextKey,
-                vehicle,
+                getState().form.vehicle,
             );
 
             if (isRight(result)) {

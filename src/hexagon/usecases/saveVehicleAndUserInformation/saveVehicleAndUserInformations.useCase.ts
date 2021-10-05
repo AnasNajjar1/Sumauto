@@ -79,18 +79,21 @@ export const saveVehicleAndUserInformationsUseCase =
         // Updating purchase project
         const { sellProject } = getState().form.vehicleState;
 
-        const resultSellProject = await recordGateway.updateSellProject(
-            config.identifier,
-            recordUid,
-            sellProject,
-        );
+        if (sellProject) {
+            const resultSellProject = await recordGateway.updateSellProject(
+                config.identifier,
+                recordUid,
+                sellProject,
+            );
 
-        if (isLeft(resultSellProject)) {
-            return dispatch(dislayErrorUseCase('update_sell_project_failed'));
+            if (isLeft(resultSellProject)) {
+                return dispatch(dislayErrorUseCase('update_sell_project_failed'));
+            }
         }
 
         // create quotation
         const resultQuotation = await recordGateway.createQuotation(config.identifier, recordUid);
+        await dispatch(getRecordUseCase(recordUid));
 
         if (isLeft(resultQuotation)) {
             return dispatch(dislayErrorUseCase('create_quotation_failed'));

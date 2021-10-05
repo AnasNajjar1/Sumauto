@@ -26,6 +26,7 @@ import {
 import { t } from 'autobiz-translate';
 
 import _ from 'lodash';
+import { updateLabel } from 'typescript';
 import {
     getDealerListSelector,
     getDealerSlotListSelector,
@@ -72,7 +73,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
 
     useEffect(() => {
         dispatch(getDealerListUseCase(recordUid));
-
+        // Fill redux form values
         dispatch(setParticularValue('phone', recordData.customer.phone || ''));
         dispatch(setParticularValue('zipCode', recordData.customer.zipCode || ''));
         dispatch(setParticularValue('name', recordData.customer.name || ''));
@@ -81,30 +82,24 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     useEffect(() => {
         if (dealer?.id) {
             dispatch(getDealerSlotListUseCase(recordUid, dealer.id));
-            setDate('');
             setHour('');
         }
     }, [dispatch, recordUid, dealer]);
 
     useEffect(() => {
-        if (date && dealerSlotList) {
-            setHour('');
-            const found = dealerSlotList.find((s) => s.date === date)?.hours;
-            setHourList(found || []);
-            // if (found) {
-            //     setHourList(found.filter((h) => h.id !== '88'));
-            // }
-        }
-    }, [dispatch, date, dealerSlotList]);
+        if (!date) setDate(dealerSlotList[0]?.date);
+        const firstHour = hourList?.find((h) => h.status === 'open');
+        setHour(firstHour?.id || '');
+    }, [dispatch, hourList, date, dealerSlotList]);
 
-    const formValid = [
-        hour,
-        date,
-        dealer.id,
-        particular.name,
-        particular.phone,
-        // checkFormValid, removing cause setting phone from first form
-    ].every(Boolean);
+    useEffect(() => {
+        if (dealerSlotList) {
+            const hours = dealerSlotList.find((s) => s.date === date)?.hours;
+            setHourList(hours || []);
+        }
+    }, [dispatch, dealerSlotList, date]);
+
+    const formValid = [hour, date, dealer.id, particular.name, particular.phone].every(Boolean);
 
     const submitAppointment = () => {
         dispatch(saveAppointmentUseCase(recordUid, hour));
@@ -140,7 +135,12 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                 key={d.id}
                                 role="button"
                                 aria-hidden="true"
-                                onClick={() => setDealer({ id: d.id, name: d.name })}
+                                onClick={() =>
+                                    setDealer({
+                                        id: d.id,
+                                        name: `${t('point_of_sale')} ${d.city}`,
+                                    })
+                                }
                             >
                                 <div className="button-dealer-icon">
                                     <FontAwesomeIcon
@@ -148,10 +148,12 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                     />
                                 </div>
                                 <div>
-                                    <div className="button-dealer-name">{d.name}</div>
+                                    <div className="button-dealer-name">
+                                        {`${t('point_of_sale')} ${d.city}`}
+                                    </div>
                                     <div>
-                                        <FontAwesomeIcon icon={faMapMarkerAlt} /> {d.city}{' '}
-                                        {d.distance} {t('km')}
+                                        <FontAwesomeIcon icon={faMapMarkerAlt} /> {d.distance}{' '}
+                                        {t('km')}
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +199,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                         <Loader status={dealerSlotStatus}>
                             <Row>
                                 <Col>
-                                    <Label htmlFor="name">{t('date')}</Label>
+                                    <Label>{t('date')}</Label>
                                     <InputWithValidation>
                                         <InputGroup>
                                             <Input
@@ -205,7 +207,6 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                                 onChange={(e) => setDate(e.currentTarget.value)}
                                                 value={date}
                                             >
-                                                <option value="">--</option>
                                                 {dealerSlotList.map((s) => (
                                                     <option value={s.date} key={s.date}>
                                                         {s.date}
@@ -224,7 +225,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                 <Col>
                                     {hourList && (
                                         <>
-                                            <Label htmlFor="name">{t('hour')}</Label>
+                                            <Label>{t('hour')}</Label>
                                             <InputWithValidation>
                                                 <InputGroup>
                                                     <Input
@@ -289,6 +290,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                         <Row>
                             <Col>
                                 <AppointmentResume
+                                    // placeName={`${t('point_of_sale')} ${dealer.city}`}
                                     placeName={dealer.name}
                                     date={date}
                                     hour={_.find(hourList, (o) => o.id === hour)?.hour || ''}

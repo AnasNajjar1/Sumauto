@@ -75,10 +75,14 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                                             <br />
                                             {record.appointment.zipCode} {record.appointment.city}
                                             <br />
-                                            {t('phone_short')}{' '}
-                                            <a href={`tel:${record.appointment.phone}`}>
-                                                {record.appointment.phone}
-                                            </a>
+                                            {record.appointment.phone && (
+                                                <>
+                                                    {t('phone_short')}{' '}
+                                                    <a href={`tel:${record.appointment.phone}`}>
+                                                        {record.appointment.phone}
+                                                    </a>
+                                                </>
+                                            )}
                                         </p>
                                     </Col>
                                     <Col sm={6} md={12} lg={6}>

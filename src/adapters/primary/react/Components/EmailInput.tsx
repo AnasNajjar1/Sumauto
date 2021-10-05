@@ -32,8 +32,10 @@ export const EmailInput: React.FC = () => {
     const { particular } = useSelector(getFormSelector);
 
     useEffect(() => {
-        setEmail(particular.email);
-        setEmailConfirmation(particular.email);
+        if (!email) {
+            setEmail(particular.email);
+            setEmailConfirmation(particular.email);
+        }
     }, [dispatch, particular]);
 
     const { config } = useSelector(getClientSelector);

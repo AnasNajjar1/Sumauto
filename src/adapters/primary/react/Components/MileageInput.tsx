@@ -98,6 +98,7 @@ export const MileageInput: React.FC = () => {
                                 <Input
                                     type="tel"
                                     id="mileage"
+                                    placeholder={t('mileage_placeholder')}
                                     value={mileage}
                                     onChange={(e) => handleChange(e.target.value)}
                                     onBlur={() => handleBlur()}

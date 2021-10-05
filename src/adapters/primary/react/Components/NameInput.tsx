@@ -14,12 +14,17 @@ export const NameInput: React.FC = () => {
     const { particular } = useSelector(getFormSelector);
 
     const [name, setName] = useState<string>('');
+    const [nameTouched, setNameTouched] = useState<boolean>(false);
 
     useEffect(() => {
-        setName(particular.name);
+        if (particular.name) {
+            setName(particular.name);
+            setNameTouched(true);
+        }
     }, [dispatch, particular.name]);
 
     const handleChange = (value: string) => {
+        setNameTouched(true);
         setName(value);
     };
 
@@ -29,7 +34,7 @@ export const NameInput: React.FC = () => {
 
     return (
         <FormGroup>
-            <Label htmlFor="name">{t('name')} *</Label>
+            <Label htmlFor="name">{t('name')}</Label>
             <InputWithValidation>
                 <InputGroup>
                     <Input
@@ -46,7 +51,7 @@ export const NameInput: React.FC = () => {
                         </InputGroupText>
                     </InputGroupAddon>
                 </InputGroup>
-                <InputValidation valid={!!name} />
+                <InputValidation valid={nameTouched ? !!name : undefined} />
             </InputWithValidation>
         </FormGroup>
     );

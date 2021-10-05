@@ -91,10 +91,10 @@ export const FormVehicle: React.FC = () => {
         const additionalDetails = [
             vehicleState.history,
             vehicleState.running,
-            vehicleState.sellProject,
+            // vehicleState.sellProject, // not required
             particular.email,
             particular.zipCode,
-            // particular.phone,
+            // particular.phone,// not required
         ];
 
         setDisplaySectionMoreDetails(basicInformations.every(Boolean));
@@ -300,7 +300,7 @@ export const FormVehicle: React.FC = () => {
                         <Row>
                             <Col xs={12} sm={8} lg={9}>
                                 <Row>
-                                    <Col xs={12} md={8} lg={6} xl={4}>
+                                    <Col xs={12} md={8} lg={6} xl={5}>
                                         <ButtonRadioInput
                                             label="history"
                                             id="history"
@@ -310,7 +310,7 @@ export const FormVehicle: React.FC = () => {
                                             ]}
                                         />
                                     </Col>
-                                    <Col xs={12} md={8} lg={6} xl={4}>
+                                    <Col xs={12} md={8} lg={6} xl={5}>
                                         <ButtonRadioInput
                                             label="running"
                                             id="running"

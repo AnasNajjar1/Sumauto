@@ -43,16 +43,20 @@ export const UnsubscribePage: React.FC = () => {
     const { status } = useSelector(getUnsubscribeSelector);
 
     const checkForm = () => {
-        setPhoneValid(phone.search(new RegExp(client.config.phoneRegex)) === 0);
+        if (phone) {
+            setPhoneValid(phone.search(new RegExp(client.config.phoneRegex)) === 0);
+        } else {
+            setPhoneValid(undefined);
+        }
         setEmailValid(TextUtils.isEmailValid(email));
     };
 
     useEffect(() => {
-        if (touched) checkForm();
-    }, [dispatch, phone, email, touched]);
+        checkForm();
+    }, [dispatch, phone, email]);
 
     useEffect(() => {
-        setFormValid(phoneValid === true && emailValid === true);
+        setFormValid(phoneValid !== false && emailValid === true);
     }, [dispatch, phoneValid, emailValid]);
 
     const handleSubmit = () => {
@@ -61,11 +65,6 @@ export const UnsubscribePage: React.FC = () => {
         }
         setTouched(true);
     };
-
-    useEffect(() => {
-        setPhone('');
-        setEmail('');
-    }, [dispatch]);
 
     let emailInputClass = '';
     let phoneInputClass = '';
@@ -102,7 +101,7 @@ export const UnsubscribePage: React.FC = () => {
                                     </InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
-                            <InputValidation valid={emailValid} />
+                            <InputValidation valid={touched ? emailValid : undefined} />
                         </InputWithValidation>
                         {touched && !emailValid && (
                             <p className="text-danger small">{t('wrong_email')}</p>
@@ -130,34 +129,31 @@ export const UnsubscribePage: React.FC = () => {
                             </InputGroup>
                             <InputValidation valid={phoneValid} />
                         </InputWithValidation>
-                        {touched && !phoneValid && (
+                        {touched && phoneValid === false && (
                             <p className="text-danger small">{t('wrong_phone')}</p>
                         )}
                     </FormGroup>
                 </div>
-
-                <Loader status={status}>
-                    {status === 'succeeded' && (
-                        <div className="unsubscribe-return valid">
-                            <div className="unsubscribe-return-icon">
-                                <FontAwesomeIcon icon={faCheckCircle} />
-                            </div>
-                            <div className="unsubscribe-return-message">
-                                {t('unsubscribe_confirmation_message')}
-                            </div>
+                {status === 'succeeded' && (
+                    <div className="unsubscribe-return valid">
+                        <div className="unsubscribe-return-icon">
+                            <FontAwesomeIcon icon={faCheckCircle} />
                         </div>
-                    )}
-                    {status === 'failed' && (
-                        <div className="unsubscribe-return error">
-                            <div className="unsubscribe-return-icon">
-                                <FontAwesomeIcon icon={faExclamationTriangle} />
-                            </div>
-                            <div className="unsubscribe-return-message">
-                                {t('unsubscribe_error_message')}
-                            </div>
+                        <div className="unsubscribe-return-message">
+                            {t('unsubscribe_confirmation_message')}
                         </div>
-                    )}
-                </Loader>
+                    </div>
+                )}
+                {status === 'failed' && (
+                    <div className="unsubscribe-return error">
+                        <div className="unsubscribe-return-icon">
+                            <FontAwesomeIcon icon={faExclamationTriangle} />
+                        </div>
+                        <div className="unsubscribe-return-message">
+                            {t('unsubscribe_error_message')}
+                        </div>
+                    </div>
+                )}
 
                 {status !== 'succeeded' && (
                     <CtaBlock>
