@@ -48,6 +48,7 @@ export const FormVehicle: React.FC = () => {
 
     const handleSubmitForm = () => {
         dispatch(saveVehicleAndUserInformationsUseCase());
+        setCanQuote(false);
     };
 
     useEffect(() => {
