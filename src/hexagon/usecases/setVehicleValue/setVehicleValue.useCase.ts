@@ -16,7 +16,7 @@ export const setVehicleValueCascade =
     ) => {
         dispatch(Actions.setVehicle({ key, value }));
 
-        const { cascade, vehicle } = getState().form;
+        const { cascade } = getState().form;
         const { config } = getState().client;
         const i = cascade.findIndex((s) => s === key);
 

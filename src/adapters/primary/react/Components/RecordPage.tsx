@@ -12,9 +12,11 @@ import { ArchivedValuation } from './ArchivedValuation';
 import { ActiveValuation } from './ActiveValuation';
 import { NoValuation } from './NoValuation';
 import { Confirmation } from './Confirmation';
+import useScroll from '../hooks/useScroll';
 
 export const RecordPage: React.FC = () => {
     const dispatch = useDispatch();
+    const { scrollToElement } = useScroll();
 
     const { recordUid } = useParams<{ recordUid: string }>();
 
@@ -24,35 +26,35 @@ export const RecordPage: React.FC = () => {
 
     const { data: record, status } = useSelector(getRecordSelector);
 
+    useEffect(() => {
+        if (status === 'succeeded') scrollToElement('top');
+    }, [dispatch, status]);
+
     if (status === 'failed') {
         return <ErrorPage />;
     }
 
+    let component;
     switch (record.offerStatus) {
         default:
         case 'UNQUOTABLE':
-            return (
-                <Loader status={status}>
-                    <NoValuation {...record} />
-                </Loader>
-            );
+            component = <NoValuation {...record} />;
+            break;
         case 'CONFIRMED':
-            return (
-                <Loader status={status}>
-                    <Confirmation {...record} />
-                </Loader>
-            );
+            component = <Confirmation {...record} />;
+            break;
+
         case 'EXPIRED':
-            return (
-                <Loader status={status}>
-                    <ArchivedValuation {...record} />
-                </Loader>
-            );
+            component = <ArchivedValuation {...record} />;
+            break;
+
         case 'NO_APPOINTMENT':
-            return (
-                <Loader status={status}>
-                    <ActiveValuation {...record} />
-                </Loader>
-            );
+            component = <ActiveValuation {...record} />;
     }
+
+    return (
+        <div id="top">
+            <Loader status={status}>{component}</Loader>
+        </div>
+    );
 };

@@ -303,7 +303,6 @@ h2{
     }
 
     .btn.btn-light{
-        font-weight: 700;
         &.non-selected{
             @extend .btn-outline-info;
             background-color: white;

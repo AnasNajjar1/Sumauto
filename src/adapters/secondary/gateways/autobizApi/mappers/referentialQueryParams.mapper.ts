@@ -11,7 +11,7 @@ export class ReferentialQueryParamsMapper implements Mapper<VehicleFormFilters> 
             bodyId: Number(vehicleForm.body),
             gearId: Number(vehicleForm.gear),
             doors: Number(vehicleForm.door),
-            // versionId: Number(vehicleForm.versionId),
+            engine: Number(vehicleForm.engine),
             identifier: vehicleForm.identifier,
         };
     }

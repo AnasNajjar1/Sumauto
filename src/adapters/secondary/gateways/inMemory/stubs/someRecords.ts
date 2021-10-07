@@ -13,6 +13,7 @@ export const somesRecords: TRecord[] = [
         offerStatus: 'NO_APPOINTMENT',
         offerNumber: 'WITHOUT_APPOINTMENT',
         vehicle: {
+            makeId: '100',
             makeName: 'Peugeot',
             modelName: '2008',
             year: '2020',
@@ -44,6 +45,7 @@ export const somesRecords: TRecord[] = [
         offerStatus: 'CONFIRMED',
         offerNumber: 'WITH_APPOINTMENT',
         vehicle: {
+            makeId: '100',
             makeName: 'Fiat',
             modelName: 'Panda',
             year: '2020',
@@ -98,6 +100,7 @@ export const somesRecords: TRecord[] = [
         offerStatus: 'EXPIRED',
         offerNumber: 'EXPIRED',
         vehicle: {
+            makeId: '100',
             makeName: 'Renault',
             modelName: 'Clio',
             year: '2020',
@@ -130,6 +133,7 @@ export const somesRecords: TRecord[] = [
         offerStatus: 'UNQUOTABLE',
         offerNumber: 'NOT_QUOTABLE',
         vehicle: {
+            makeId: '100',
             makeName: 'Peugeot',
             modelName: '2008',
             year: '2020',
@@ -157,6 +161,7 @@ export const somesRecords: TRecord[] = [
         offerStatus: 'CONFIRMED',
         offerNumber: 'REFRESHED',
         vehicle: {
+            makeId: '100',
             makeName: 'Peugeot',
             modelName: '2008',
             year: '2020',

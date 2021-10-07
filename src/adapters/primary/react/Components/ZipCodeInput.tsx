@@ -33,8 +33,11 @@ export const ZipCodeInput: React.FC = () => {
         } else {
             setValid(false);
         }
-        setZipCode(value);
-        setTouched(true);
+
+        if (value.length <= 5) {
+            setZipCode(value);
+            setTouched(true);
+        }
     };
 
     const handleBlur = (value: string) => {
@@ -66,7 +69,7 @@ export const ZipCodeInput: React.FC = () => {
                         <Input
                             type="tel"
                             id="zipCode"
-                            defaultValue={zipCode}
+                            value={zipCode}
                             placeholder={t('zipCode_placeholder')}
                             onChange={(e) => handleChange(e.target.value)}
                             onBlur={(e) => handleBlur(e.target.value)}

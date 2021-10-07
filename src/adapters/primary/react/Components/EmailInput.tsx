@@ -13,81 +13,54 @@ import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { useForm, useFormState } from 'react-hook-form';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
+
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 
 export const EmailInput: React.FC = () => {
     const dispatch = useDispatch();
-
-    const [email, setEmail] = useState<string>('');
-    const [emailConfirmation, setEmailConfirmation] = useState<string>('');
-    const [validEmail, setValidEmail] = useState<boolean>();
-    const [validEmailConfirmation, setValidEmailConfirmation] = useState<boolean>();
-    const [errorMessage, setErrorMessage] = useState<string>('');
-
-    const { particular } = useSelector(getFormSelector);
-
-    useEffect(() => {
-        if (!email) {
-            setEmail(particular.email);
-            setEmailConfirmation(particular.email);
-        }
-    }, [dispatch, particular]);
-
     const { config } = useSelector(getClientSelector);
+    const { particular } = useSelector(getFormSelector);
+    const {
+        register,
+        formState: { errors },
+        getValues,
+        handleSubmit,
+    } = useForm({
+        mode: 'onSubmit',
+        reValidateMode: 'onChange',
+        defaultValues: {
+            email: particular.email,
+            emailConfirmation: particular.email,
+        },
+    });
 
-    const handleChange = (value: string) => {
-        if (TextUtils.isEmailValid(value)) {
-            setValidEmail(true);
-        } else {
-            setValidEmail(false);
-            if (value === '') {
-                setErrorMessage('email_required');
-            } else {
-                setErrorMessage('wrong_email');
-            }
-        }
-        setEmail(value);
+    const validEmail = () => {
+        let valid;
+        if (errors.email) valid = false;
+        if (!errors.email && getValues('email')) valid = true;
+        return valid;
     };
 
-    const handleChangeConfirmation = (value: string) => {
-        setEmailConfirmation(value);
-        if (TextUtils.isEmailValid(value)) {
-            if (email === value) {
-                setValidEmailConfirmation(true);
-                setValidEmail(true);
-            } else {
-                setValidEmailConfirmation(false);
-                setValidEmail(false);
-                setErrorMessage('email_mismatch');
-            }
-        } else {
-            if (value === '') {
-                setErrorMessage('email_required');
-            } else {
-                setErrorMessage('wrong_email');
-            }
-            setValidEmailConfirmation(false);
-        }
+    const validEmailConfirmation = () => {
+        let valid;
+        if (errors.emailConfirmation) valid = false;
+        if (!errors.emailConfirmation && getValues('emailConfirmation')) valid = true;
+        return valid;
     };
 
-    const handleBlur = () => {
-        if (config.emailConfirmation) {
-            if (validEmail && validEmailConfirmation) {
-                dispatch(setParticularValue('email', email));
-            } else {
-                dispatch(setParticularValue('email', ''));
-            }
-        } else if (validEmail) {
-            dispatch(setParticularValue('email', email));
-        } else {
-            dispatch(setParticularValue('email', ''));
-        }
+    const setEmail = (data: any) => {
+        dispatch(setParticularValue('email', data.email));
     };
+
+    if (errors.email || errors.emailConfirmation) {
+        if (particular.email) dispatch(setParticularValue('email', ''));
+    }
 
     return (
         <Row>
@@ -96,13 +69,19 @@ export const EmailInput: React.FC = () => {
                     <Label for="email">{t('email')}</Label>
                     <InputWithValidation>
                         <InputGroup>
-                            <Input
+                            <input
+                                className="form-control"
+                                placeholder={t('email_placeholder')}
                                 type="email"
                                 id="email"
-                                value={email}
-                                placeholder={t('email_placeholder')}
-                                onChange={(e) => handleChange(e.target.value)}
-                                onBlur={() => handleBlur()}
+                                {...register('email', {
+                                    required: t('email_required'),
+                                    validate: {
+                                        isEmailValid: (value) =>
+                                            TextUtils.isEmailValid(value) ? true : t('wrong_email'),
+                                    },
+                                })}
+                                onBlur={handleSubmit(setEmail)}
                             />
                             <InputGroupAddon addonType="append">
                                 <InputGroupText>
@@ -110,24 +89,37 @@ export const EmailInput: React.FC = () => {
                                 </InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
-                        <InputValidation valid={validEmail} />
+                        <InputValidation valid={validEmail()} />
                     </InputWithValidation>
-                    {validEmail === false && <p className="text-danger small">{t(errorMessage)}</p>}
+                    {errors.email && <p className="text-danger small">{errors.email.message}</p>}
                 </FormGroup>
             </Col>
             {config.emailConfirmation && (
                 <Col xs={12} md={6}>
-                    <FormGroup className={`form-group-${'emailConfirmation'}`}>
+                    <FormGroup className="form-group-emailConfirmation">
                         <Label for="emailConfirmation">{t('emailConfirmation')}</Label>
                         <InputWithValidation>
                             <InputGroup>
-                                <Input
+                                <input
+                                    className="form-control"
+                                    placeholder={t('email_placeholder')}
                                     type="email"
                                     id="emailConfirmation"
-                                    value={emailConfirmation}
-                                    placeholder={t('email_placeholder')}
-                                    onChange={(e) => handleChangeConfirmation(e.target.value)}
-                                    onBlur={() => handleBlur()}
+                                    {...register('emailConfirmation', {
+                                        required: t('email_required'),
+                                        validate: {
+                                            isEmailValid: (value) =>
+                                                TextUtils.isEmailValid(value)
+                                                    ? true
+                                                    : t('wrong_email'),
+
+                                            matchesPreviousPassword: (value) => {
+                                                const { email } = getValues();
+                                                return email === value || t('email_mismatch');
+                                            },
+                                        },
+                                    })}
+                                    onBlur={handleSubmit(setEmail)}
                                 />
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText>
@@ -135,10 +127,10 @@ export const EmailInput: React.FC = () => {
                                     </InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
-                            <InputValidation valid={validEmailConfirmation} />
+                            <InputValidation valid={validEmailConfirmation()} />
                         </InputWithValidation>
-                        {validEmailConfirmation === false && (
-                            <p className="text-danger small">{t(errorMessage)}</p>
+                        {errors.emailConfirmation && (
+                            <p className="text-danger small">{errors.emailConfirmation.message}</p>
                         )}
                     </FormGroup>
                 </Col>

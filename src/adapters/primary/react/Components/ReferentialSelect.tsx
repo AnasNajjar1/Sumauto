@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
+import _ from 'lodash';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { TReferentialItem, TRefrentialElement } from '../../../../hexagon/interfaces';
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
@@ -25,7 +26,7 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scop
     let list = [];
 
     if (data.length > 0 && scope === 'make') {
-        list = [...data[0].preferred, ...data[0].others]; // TODO Fix this
+        list = data.all; // TODO Fix this
     } else {
         list = data;
     }
@@ -58,6 +59,7 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scop
                         disabled={status !== 'succeeded'}
                     >
                         <option value="">{t('choose')}</option>
+                        {scope === 'engine' && <option value="0">{t('i_dont_know')}</option>}
                         {list.map((m: TRefrentialElement) => (
                             <option key={m.id} value={m.id}>
                                 {m.name}

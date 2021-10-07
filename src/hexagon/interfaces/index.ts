@@ -32,6 +32,7 @@ export type VehicleFormFilters = {
     body?: string;
     gear?: string;
     door?: string;
+    engine?: string;
     version?: string;
     identifier: string;
 };
@@ -137,6 +138,7 @@ export type TCustomer = {
 };
 
 export type TVehicleNames = {
+    makeId: string;
     makeName: string;
     modelName: string;
     year: string;

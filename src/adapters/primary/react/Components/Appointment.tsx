@@ -51,6 +51,7 @@ import { saveAppointmentUseCase } from '../../../../hexagon/usecases/saveAppoint
 import { updateUserInformationsUseCase } from '../../../../hexagon/usecases/updateUserInformation/updateUserInformations.useCase';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
+import useScroll from '../hooks/useScroll';
 
 type TAppointmentProps = {
     recordUid: string;
@@ -58,6 +59,7 @@ type TAppointmentProps = {
 
 export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const dispatch = useDispatch();
+    const { scrollToElement } = useScroll();
 
     const [dealer, setDealer] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [showAllDealers, setShowAllDealers] = useState<boolean>(false);
@@ -73,7 +75,6 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
 
     useEffect(() => {
         dispatch(getDealerListUseCase(recordUid));
-        // Fill redux form values
         dispatch(setParticularValue('phone', recordData.customer.phone || ''));
         dispatch(setParticularValue('zipCode', recordData.customer.zipCode || ''));
         dispatch(setParticularValue('name', recordData.customer.name || ''));
@@ -83,6 +84,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
         if (dealer?.id) {
             dispatch(getDealerSlotListUseCase(recordUid, dealer.id));
             setHour('');
+            scrollToElement('date_container');
         }
     }, [dispatch, recordUid, dealer]);
 
@@ -135,12 +137,12 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                 key={d.id}
                                 role="button"
                                 aria-hidden="true"
-                                onClick={() =>
+                                onClick={() => {
                                     setDealer({
                                         id: d.id,
                                         name: `${t('point_of_sale')} ${d.city}`,
-                                    })
-                                }
+                                    });
+                                }}
                             >
                                 <div className="button-dealer-icon">
                                     <FontAwesomeIcon
@@ -176,7 +178,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                 </Loader>
             </Container>
             {dealer.id && (
-                <div className="choose-date-background">
+                <div className="choose-date-background" id="date_container">
                     <Container fluid>
                         <NumberedTitle number={2} textKey="choose_your_date" />
                         <div className="mb-3">
@@ -198,7 +200,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                         </div>
                         <Loader status={dealerSlotStatus}>
                             <Row>
-                                <Col>
+                                <Col xs="12" sm="6">
                                     <Label>{t('date')}</Label>
                                     <InputWithValidation>
                                         <InputGroup>
@@ -222,7 +224,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                         <InputValidation valid={!!date} />
                                     </InputWithValidation>
                                 </Col>
-                                <Col>
+                                <Col xs="12" sm="6">
                                     {hourList && (
                                         <>
                                             <Label>{t('hour')}</Label>
@@ -296,7 +298,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                     hour={_.find(hourList, (o) => o.id === hour)?.hour || ''}
                                 />
                             </Col>
-                            <Col>
+                            <Col className="d-none d-sm-block">
                                 <Picture background="calendar" />
                             </Col>
                         </Row>
@@ -306,6 +308,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                 <CtaBlock>
                     <Button
                         color="primary"
+                        size="lg"
                         disabled={!formValid}
                         className="mt-3"
                         onClick={submitAppointment}
@@ -313,6 +316,9 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                         {t('book_an_appointment_now')}
                     </Button>
                 </CtaBlock>
+
+                <p className="footnote">{t('appoitment_note')}</p>
+
                 <FeatureGroup>
                     <Feature label="immediate_sale_and_without_obligation" icon="clock" />
                     <Feature label="total_security" icon="lock" />
@@ -333,7 +339,6 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                         </div>
                     </Col>
                 </Row>
-                <p className="footnote">{t('appoitment_note')}</p>
             </Container>
         </>
     );

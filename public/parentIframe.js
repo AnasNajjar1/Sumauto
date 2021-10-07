@@ -44,6 +44,7 @@ function launchIframe(iframeElementId,base,type){
       url = url;
       break;
   }
+
   iframe.src = url;
   iFrameResize({ log: false }, '#' + iframeElementId);
 }

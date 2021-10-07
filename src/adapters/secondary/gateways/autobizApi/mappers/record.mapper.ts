@@ -27,6 +27,7 @@ export class RecordMapper implements Mapper<TRecord> {
             offerStatus: status,
             offerNumber: record.HexaRfId,
             vehicle: {
+                makeId: vehicle.brandId,
                 makeName: vehicle.brandLabel,
                 modelName: vehicle.modelLabel,
                 year: new Date(vehicle.registrationDate).getFullYear().toString(),

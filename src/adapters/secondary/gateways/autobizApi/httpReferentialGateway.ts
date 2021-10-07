@@ -1,4 +1,5 @@
 import { left, right } from 'fp-ts/Either';
+import _ from 'lodash';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import {
     ReferentialGateway,
@@ -88,12 +89,20 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
 
             const response = await this.get(url);
 
-            const data = Array.isArray(response.data) ? response.data : [response.data];
+            let data = Array.isArray(response.data) ? response.data : [response.data];
             if (data.length === 0) {
                 return left('no_result');
             }
 
-            // TODO Mapper.toApp
+            if (scope === 'make') {
+                data.all = [...data[0].preferred, ...data[0].others];
+                data.all = _.orderBy(data.all, ['name'], ['asc']);
+            }
+
+            if (scope === 'year') {
+                data = _.orderBy(data, ['name'], ['desc']);
+            }
+
             return right(data);
         } catch (error) {
             return left(error as string);

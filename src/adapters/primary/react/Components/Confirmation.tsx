@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Container,
     Row,
@@ -19,9 +19,11 @@ import { AppointmentResume } from './AppointmentResume';
 import { cancelAppointmentUseCase } from '../../../../hexagon/usecases/cancelAppointment/cancelAppointment.useCase';
 import { Picture } from './Picture';
 import { TRecord } from '../../../../hexagon/interfaces';
+import useScroll from '../hooks/useScroll';
 
 export const Confirmation: React.FC<TRecord> = (props) => {
     const dispatch = useDispatch();
+    const { scrollToElement } = useScroll();
 
     const record = props;
 
@@ -39,8 +41,14 @@ export const Confirmation: React.FC<TRecord> = (props) => {
         dispatch(cancelAppointmentUseCase(record.uid));
     };
 
+    useEffect(() => {
+        if (modalCancel) {
+            scrollToElement('top');
+        }
+    }, [dispatch, modalCancel]);
+
     return (
-        <div className="page page-confirmation">
+        <div className="page page-confirmation" id="top">
             <Container fluid>
                 <div
                     className="text-right text-nowrap print-button d-print-none"
@@ -132,7 +140,7 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                             </Col>
                         </Row>
 
-                        <Modal isOpen={modalCancel} toggle={toggleModalCancel} centered>
+                        <Modal isOpen={modalCancel} toggle={toggleModalCancel}>
                             <ModalHeader toggle={toggleModalCancel}>
                                 {t('cancel_appointment_title')}
                             </ModalHeader>

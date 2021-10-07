@@ -14,6 +14,7 @@ import { RecordPage } from './Components/RecordPage';
 import { UnsubscribePage } from './Components/UnsubscribePage';
 import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
 import { ValuationSwitch } from './Components/ValuationSwitchPage';
+import { PrivacyPolicy } from './Components/PrivacyPolicy';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
@@ -57,6 +58,7 @@ const App: React.FC = () => {
 const ClientHandler: React.FC = () => (
     <BrowserRouter>
         <Switch>
+            <Route exact path="/politica-de-privacidad" component={PrivacyPolicy} />
             <Route exact path="/error/:errorCode" component={ErrorPage} />
             <Route path={['/:clientSlug/:journeyType', '/']} component={App} />
         </Switch>

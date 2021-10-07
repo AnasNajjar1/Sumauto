@@ -52,18 +52,15 @@ export const MileageInput: React.FC = () => {
     };
 
     const warning = () => {
+        console.log(mileage);
         if (isMileageInconsistent(2017, 6, mileage)) setDisplayWarning(true);
         else setDisplayWarning(false);
     };
 
     const handleChange = (value: string) => {
-        const re = /^[0-9\b]+$/;
+        value = value.replace('.', '');
 
-        if (value === '' || re.test(value)) {
-            setMileage(value);
-        }
-
-        if (touched) warning();
+        if (Number(value) <= 999999) setMileage(value);
     };
 
     const handleBlur = () => {
@@ -78,6 +75,8 @@ export const MileageInput: React.FC = () => {
             setDisplayWarning(false);
         }
 
+        if (touched) warning();
+
         if (touched && mileage !== '') {
             setValid(true);
         }
@@ -87,6 +86,8 @@ export const MileageInput: React.FC = () => {
         }
     }, [dispatch, mileage, touched]);
 
+    let formatedValue: string = new Intl.NumberFormat('es-ES').format(Number(mileage));
+    if (formatedValue === '0') formatedValue = '';
     return (
         <>
             <Row>
@@ -99,7 +100,7 @@ export const MileageInput: React.FC = () => {
                                     type="tel"
                                     id="mileage"
                                     placeholder={t('mileage_placeholder')}
-                                    value={mileage}
+                                    value={formatedValue}
                                     onChange={(e) => handleChange(e.target.value)}
                                     onBlur={() => handleBlur()}
                                 />
@@ -117,7 +118,7 @@ export const MileageInput: React.FC = () => {
                     <Message
                         className="warning"
                         display={displayWarning}
-                        title={t('mileage_warning')?.replace('[MILEAGE]', mileage)}
+                        title={t('mileage_warning')?.replace('[MILEAGE]', formatedValue)}
                     />
                 </Col>
             </Row>

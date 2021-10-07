@@ -14,10 +14,12 @@ import { getRecordUseCase } from '../../../../hexagon/usecases/getRecord/getReco
 import { Loader } from './Loader';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
+import useScroll from '../hooks/useScroll';
 
 export const ValuationSwitch: React.FC<TRecord> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+    const { scrollToElement } = useScroll();
     const { journeyType, config } = useSelector(getClientSelector).client;
     const { locale, currency, privateSellLink } = config;
 
@@ -30,6 +32,10 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
         dispatch(getRecordUseCase(recordUid));
     }, [dispatch, recordUid]);
 
+    useEffect(() => {
+        if (status === 'succeeded') scrollToElement('top');
+    }, [dispatch, status]);
+
     if (journeyType !== 'valuation') history.push(`/record/${recordUid}`);
     if (!privateSellLink) history.push(`/record/${recordUid}`);
 
@@ -40,14 +46,14 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
     }
 
     const replacedPrivateSellLink = privateSellLink
-        ?.replace('[make]', vehicle.makeName)
+        ?.replace('[make]', TextUtils.translateMakeId(vehicle.makeId))
         .replace('[year]', vehicle.year)
-        .replace('[month]', vehicle.month);
+        .replace('[month]', Number(vehicle.month).toString());
 
     return (
-        <Loader status={status}>
-            <Container fluid>
-                <div className="page page-record">
+        <div className="page page-record" id="top">
+            <Loader status={status}>
+                <Container fluid>
                     <h1 className="text-center">
                         {t('appraisal_of')} {vehicle.makeName} {vehicle.modelName}
                     </h1>
@@ -134,8 +140,8 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                             </FeatureGroup>
                         </Col>
                     </Row>
-                </div>
-            </Container>
-        </Loader>
+                </Container>
+            </Loader>
+        </div>
     );
 };

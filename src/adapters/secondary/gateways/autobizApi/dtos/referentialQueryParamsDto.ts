@@ -7,6 +7,7 @@ export type AutobizReferentialQueryParamsDto = {
     bodyId?: number;
     gearId?: number;
     doors?: number;
+    engine?: number;
     versionId?: number;
     identifier?: string;
 };

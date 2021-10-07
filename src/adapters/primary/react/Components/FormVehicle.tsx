@@ -127,41 +127,20 @@ export const FormVehicle: React.FC = () => {
     }, [dispatch, recordUid, recordStatus, journeyType, historyHook]);
 
     useEffect(() => {
-        const { make, model, month, year, fuel, body, door, gear, engine, version, mileage } =
-            vehicle;
-        const { imported, history, running, sellProject } = vehicleState;
-        const order = {
-            make,
-            model,
-            month,
-            year,
-            fuel,
-            body,
-            door,
-            gear,
-            engine,
-            version,
-            mileage,
-            imported,
-            history,
-            running,
-            sellProject,
-        };
-
-        let found = false;
-        let idName = '';
-
-        if (order.make) {
-            Object.entries(order).forEach(([key, value]) => {
-                if (!value && !found) {
-                    if (key === 'year') idName = `form_group_month`;
-                    else if (key === 'mileage') idName = `form_group_mileage`;
-                    else idName = `form_group_${key}`;
-                    scrollToElement(idName, 15);
-                    found = true;
-                }
-            });
-        }
+        if (vehicle.model === '') scrollToElement('form_group_model', 15);
+        else if (vehicle.month === '') scrollToElement('form_group_month', 15);
+        else if (vehicle.year === '') scrollToElement('form_group_month', 15);
+        else if (vehicle.fuel === '') scrollToElement('form_group_fuel', 15);
+        else if (vehicle.body === '') scrollToElement('form_group_body', 15);
+        else if (vehicle.door === '') scrollToElement('form_group_door', 15);
+        else if (vehicle.gear === '') scrollToElement('form_group_gear', 15);
+        else if (vehicle.engine === '') scrollToElement('form_group_engine', 15);
+        else if (vehicle.version === '') scrollToElement('form_group_version', 15);
+        else if (vehicle.mileage === '') scrollToElement('form_group_mileage', 15);
+        // else if (!vehicleState.imported) scrollToElement('form_group_imported', 15);
+        else if (!vehicleState.history) scrollToElement('form_group_history', 15);
+        else if (!vehicleState.running) scrollToElement('form_group_running', 15);
+        else if (!vehicleState.sellProject) scrollToElement('form_group_sellProject', 15);
     }, [dispatch, vehicle, vehicleState, scrollToElement]);
 
     return (
@@ -190,7 +169,7 @@ export const FormVehicle: React.FC = () => {
                                 </Col>
                             </>
                         )}
-                        <Col xs={12} sm={8} lg={6} xl={6}>
+                        <Col xs={12} sm={8} lg={5} xl={4}>
                             <MakeLogoInput />
                         </Col>
                     </Row>
