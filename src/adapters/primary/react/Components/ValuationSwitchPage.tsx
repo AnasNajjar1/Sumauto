@@ -52,6 +52,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
 
     return (
         <div className="page page-record" id="top">
+            {status}
             <Loader status={status}>
                 <Container fluid>
                     <h1 className="text-center">

@@ -20,7 +20,12 @@ export class RecordMapper implements Mapper<TRecord> {
         } else {
             status = 'UNQUOTABLE';
         }
+        console.log(vehicle.registrationDate);
+        console.log(new Date(vehicle.registrationDate).getMonth().toString());
 
+        const year = new Date(vehicle.registrationDate).getFullYear().toString();
+        let month = (new Date(vehicle.registrationDate).getMonth() + 1).toString();
+        month = `0${month}`.slice(-2);
         const data: TRecord = {
             id: record.RfId,
             uid: record.uid,
@@ -30,8 +35,8 @@ export class RecordMapper implements Mapper<TRecord> {
                 makeId: vehicle.brandId,
                 makeName: vehicle.brandLabel,
                 modelName: vehicle.modelLabel,
-                year: new Date(vehicle.registrationDate).getFullYear().toString(),
-                month: `0${new Date(vehicle.registrationDate).getMonth().toString()}`.slice(-2),
+                year,
+                month,
                 registrationDate: new Date(vehicle.registrationDate),
                 fuelName: vehicle.fuelLabel,
                 bodyName: vehicle.bodyLabel,
