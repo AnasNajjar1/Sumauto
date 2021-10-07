@@ -9,15 +9,18 @@ import {
     Label,
     Row,
 } from 'reactstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 import { InputWithValidation } from './InputWithValidation';
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { InputValidation } from './InputValidation';
 import { Message } from './Message';
+import { getFormSelector } from '../../view-models-generators/formSelectors';
 
 export const MileageInput: React.FC = () => {
     const dispatch = useDispatch();
+
+    const { vehicle } = useSelector(getFormSelector);
 
     const [mileage, setMileage] = useState<string>('');
     const [touched, setTouched] = useState<boolean>(false);
@@ -52,8 +55,7 @@ export const MileageInput: React.FC = () => {
     };
 
     const warning = () => {
-        console.log(mileage);
-        if (isMileageInconsistent(2017, 6, mileage)) setDisplayWarning(true);
+        if (isMileageInconsistent(vehicle.year, vehicle.month, mileage)) setDisplayWarning(true);
         else setDisplayWarning(false);
     };
 
@@ -88,6 +90,7 @@ export const MileageInput: React.FC = () => {
 
     let formatedValue: string = new Intl.NumberFormat('es-ES').format(Number(mileage));
     if (formatedValue === '0') formatedValue = '';
+
     return (
         <>
             <Row>
