@@ -156,11 +156,16 @@ h2{
     font-size: 2.8rem;
 }
 
-.page-index
+.page-index{
     .cta-block  .btn{
         @extend .btn-primary;
     }
 
+    a{
+        color:$gray-600;
+        text-decoration: underline;
+    }
+}
 
 .page-record{
 

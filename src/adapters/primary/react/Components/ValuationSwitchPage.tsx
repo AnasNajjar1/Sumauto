@@ -26,7 +26,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
     const { recordUid } = useParams<{ recordUid: string }>();
     const { data: record, status } = useSelector(getRecordSelector);
 
-    const { vehicle } = record;
+    const { vehicle, offerNumber } = record;
 
     useEffect(() => {
         dispatch(getRecordUseCase(recordUid));
@@ -59,6 +59,10 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                     <h1 className="text-center">
                         {t('appraisal_of')} {vehicle.makeName} {vehicle.modelName}
                     </h1>
+                    <p className="text-center">
+                        {t('your_file_number')}: <strong>{offerNumber}</strong>
+                    </p>
+
                     <Row>
                         <Col sm={6} className="text-center">
                             <div className="background-private-sell">

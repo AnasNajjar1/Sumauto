@@ -1,4 +1,4 @@
-import { AutobizAppointmentDto } from "./appointmentDto";
+import { AutobizAppointmentDto } from './appointmentDto';
 
 export interface AutobizRecordDetailsDto {
     record: {
@@ -65,6 +65,7 @@ export interface AutobizRecordDetailsDto {
         internet: string;
         price: string;
         boostedPrice: string;
+        status: 'Y' | 'N';
     };
     vehicleState: {
         createdAt: string;
