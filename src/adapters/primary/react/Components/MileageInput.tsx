@@ -29,7 +29,8 @@ export const MileageInput: React.FC = () => {
 
     const isMileageInconsistent = (year: number, month: number, kilometers: string) => {
         const mileageNumber = Number(kilometers);
-        const registrationDate = new Date(year, Number(month), 1, 0, 0, 0);
+        const registrationDate = new Date(year, Number(month - 1), 1, 0, 0, 0);
+
         const today = new Date();
         const currentTime = new Date(
             today.getFullYear(),
@@ -44,6 +45,7 @@ export const MileageInput: React.FC = () => {
             Math.round(
                 (currentTime.getTime() - registrationDate.getTime()) / (1000 * 60 * 60 * 24 * 365),
             ) * 12;
+
         if (
             (mileageNumber / age) * 12 > 30000 ||
             mileageNumber > 350000 ||
@@ -55,7 +57,8 @@ export const MileageInput: React.FC = () => {
     };
 
     const warning = () => {
-        if (isMileageInconsistent(vehicle.year, vehicle.month, mileage)) setDisplayWarning(true);
+        if (mileage && isMileageInconsistent(vehicle.year, vehicle.month, mileage))
+            setDisplayWarning(true);
         else setDisplayWarning(false);
     };
 

@@ -59,12 +59,12 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scop
                         disabled={status !== 'succeeded'}
                     >
                         <option value="">{t('choose')}</option>
-                        {scope === 'engine' && <option value="0">{t('i_dont_know')}</option>}
                         {list.map((m: TRefrentialElement) => (
                             <option key={m.id} value={m.id}>
                                 {m.name}
                             </option>
                         ))}
+                        {scope === 'engine' && <option value="0">{t('i_dont_know')}</option>}
                     </select>
                 )}
                 <InputValidation valid={valid} />

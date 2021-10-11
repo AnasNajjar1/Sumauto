@@ -169,7 +169,7 @@ export const FormVehicle: React.FC = () => {
                                 </Col>
                             </>
                         )}
-                        <Col xs={12} sm={8} lg={5} xl={4}>
+                        <Col xs={12} sm={8} md={6} lg={5} xl={4}>
                             <MakeLogoInput />
                         </Col>
                     </Row>

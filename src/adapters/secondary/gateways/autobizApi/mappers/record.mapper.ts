@@ -9,10 +9,11 @@ export class RecordMapper implements Mapper<TRecord> {
         const { record, vehicle, vehicleState, customer, valuation, appointment } = dto;
 
         let status: TOfferStatus;
+
         if (Number(dto.valuation?.price) > 0) {
             if (dto.record.expired) {
                 status = 'EXPIRED';
-            } else if (!_.isEmpty(dto.appointment)) {
+            } else if (dto.appointment?.id) {
                 status = 'CONFIRMED';
             } else {
                 status = 'NO_APPOINTMENT';

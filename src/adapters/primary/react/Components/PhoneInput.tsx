@@ -62,7 +62,7 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
     return (
         <>
             <FormGroup className="form-group-phone">
-                <Label for="phone">{t('phone')}</Label>
+                <Label for="phone">{required ? t('phone_required') : t('phone')}</Label>
                 <InputWithValidation>
                     <InputGroup>
                         <Input
