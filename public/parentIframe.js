@@ -1,12 +1,1405 @@
-!function(u){var f,l,a,x,M,I,k,r,m,F,t,g,z;function h(){return window.MutationObserver||window.WebKitMutationObserver||window.MozMutationObserver}function O(e,n,t){e.addEventListener(n,t,!1)}function R(e,n,t){e.removeEventListener(n,t,!1)}function o(e){return M+"["+(e="Host page: "+(n=e),e=window.top!==window.self?window.parentIFrame&&window.parentIFrame.getId?window.parentIFrame.getId()+": "+n:"Nested host page: "+n:e)+"]";var n}function i(e){return F[e]?F[e].log:l}function T(e,n){s("log",e,n,i(e))}function E(e,n){s("info",e,n,i(e))}function N(e,n){s("warn",e,n,!0)}function s(e,n,t,i){!0===i&&"object"==typeof window.console&&console[e](o(n),t)}function e(n){function t(){i("Height"),i("Width"),L(function(){A(y),H(v),l("onResized",y)},y,"init")}function e(){var e=b.substr(I).split(":"),n=e[1]?parseInt(e[1],10):0,t=F[e[0]]&&F[e[0]].iframe,i=getComputedStyle(t);return{iframe:t,id:e[0],height:n+function(e){if("border-box"!==e.boxSizing)return 0;var n=e.paddingTop?parseInt(e.paddingTop,10):0,e=e.paddingBottom?parseInt(e.paddingBottom,10):0;return n+e}(i)+function(e){if("border-box"!==e.boxSizing)return 0;var n=e.borderTopWidth?parseInt(e.borderTopWidth,10):0,e=e.borderBottomWidth?parseInt(e.borderBottomWidth,10):0;return n+e}(i),width:e[2],type:e[3]}}function i(e){var n=Number(F[v]["max"+e]),t=Number(F[v]["min"+e]),i=e.toLowerCase(),e=Number(y[i]);T(v,"Checking "+i+" is in range "+t+"-"+n),e<t&&(e=t,T(v,"Set "+i+" to min value")),n<e&&(e=n,T(v,"Set "+i+" to max value")),y[i]=""+e}function o(){function e(){return i.constructor===Array?function(){var e=0,n=!1;for(T(v,"Checking connection is from allowed list of origins: "+i);e<i.length;e++)if(i[e]===t){n=!0;break}return n}():(e=F[v]&&F[v].remoteHost,T(v,"Checking connection is from: "+e),t===e);var e}var t=n.origin,i=F[v]&&F[v].checkOrigin;if(i&&""+t!="null"&&!e())throw new Error("Unexpected message received from: "+t+" for "+y.iframe.id+". Message was: "+n.data+". This error can be disabled by setting the checkOrigin: false option or by providing of array of trusted domains.");return 1}function a(e){return b.substr(b.indexOf(":")+x+e)}function s(t,i){var e,n,o;e=function(){var e,n;B("Send Page Info","pageInfo:"+(e=document.body.getBoundingClientRect(),n=y.iframe.getBoundingClientRect(),JSON.stringify({iframeHeight:n.height,iframeWidth:n.width,clientHeight:Math.max(document.documentElement.clientHeight,window.innerHeight||0),clientWidth:Math.max(document.documentElement.clientWidth,window.innerWidth||0),offsetTop:parseInt(n.top-e.top,10),offsetLeft:parseInt(n.left-e.left,10),scrollTop:window.pageYOffset,scrollLeft:window.pageXOffset,documentHeight:document.documentElement.clientHeight,documentWidth:document.documentElement.clientWidth,windowHeight:window.innerHeight,windowWidth:window.innerWidth})),t,i)},n=32,z[o=i]||(z[o]=setTimeout(function(){z[o]=null,e()},n))}function r(e){e=e.getBoundingClientRect();return S(v),{x:Math.floor(Number(e.left)+Number(k.x)),y:Math.floor(Number(e.top)+Number(k.y))}}function d(e){var n=e?r(y.iframe):{x:0,y:0},t={x:Number(y.width)+n.x,y:Number(y.height)+n.y};T(v,"Reposition requested from iFrame (offset x:"+n.x+" y:"+n.y+")"),window.top!==window.self?window.parentIFrame?window.parentIFrame["scrollTo"+(e?"Offset":"")](t.x,t.y):N(v,"Unable to scroll to requested position, window.parentIFrame not found"):(k=t,c(),T(v,"--"))}function c(){!1!==l("onScroll",k)?H(v):j()}function u(e){var n,t=e.split("#")[1]||"",e=decodeURIComponent(t),i=document.getElementById(e)||document.getElementsByName(e)[0];i?(n=r(i),T(v,"Moving to in page link (#"+t+") at x: "+n.x+" y: "+n.y),k={x:n.x,y:n.y},c(),T(v,"--")):window.top!==window.self?window.parentIFrame?window.parentIFrame.moveToAnchor(t):T(v,"In page link #"+t+" not found and window.parentIFrame not found"):T(v,"In page link #"+t+" not found")}function f(e){var n,t={};t=0===Number(y.width)&&0===Number(y.height)?{x:(n=a(9).split(":"))[1],y:n[0]}:{x:y.width,y:y.height},l(e,{iframe:y.iframe,screenX:Number(t.x),screenY:Number(t.y),type:y.type})}function l(e,n){return W(v,e,n)}function m(){switch(F[v]&&F[v].firstRun&&F[v]&&(F[v].firstRun=!1),y.type){case"close":C(y.iframe);break;case"message":n=a(6),T(v,"onMessage passed: {iframe: "+y.iframe.id+", message: "+n+"}"),l("onMessage",{iframe:y.iframe,message:JSON.parse(n)}),T(v,"--");break;case"mouseenter":f("onMouseEnter");break;case"mouseleave":f("onMouseLeave");break;case"autoResize":F[v].autoResize=JSON.parse(a(9));break;case"scrollTo":d(!1);break;case"scrollToOffset":d(!0);break;case"pageInfo":s(F[v]&&F[v].iframe,v),r=v,e("Add ",O),F[r]&&(F[r].stopPageInfo=o);break;case"pageInfoStop":F[v]&&F[v].stopPageInfo&&(F[v].stopPageInfo(),delete F[v].stopPageInfo);break;case"inPageLink":u(a(9));break;case"reset":P(y);break;case"init":t(),l("onInit",y.iframe);break;default:0===Number(y.width)&&0===Number(y.height)?N("Unsupported message received ("+y.type+"), this is likely due to the iframe containing a later version of iframe-resizer than the parent page"):t()}function e(n,t){function i(){F[r]?s(F[r].iframe,r):o()}["scroll","resize"].forEach(function(e){T(r,n+e+" listener for sendPageInfo"),t(window,e,i)})}function o(){e("Remove ",R)}var r,n}var g,h,p,w,b=n.data,y={},v=null;"[iFrameResizerChild]Ready"===b?function(){for(var e in F)B("iFrame requested init",q(e),F[e].iframe,e)}():M===(""+b).substr(0,I)&&b.substr(I).split(":")[0]in F?(y=e(),v=y.id,F[v]&&(F[v].loaded=!0),(w=y.type in{true:1,false:1,undefined:1})&&T(v,"Ignoring init message from meta parent page"),!w&&(p=!0,F[h=v]||(p=!1,N(y.type+" No settings for "+h+". Message was: "+b)),p)&&(T(v,"Received: "+b),g=!0,null===y.iframe&&(N(v,"IFrame ("+y.id+") not found"),g=!1),g&&o()&&m())):E(v,"Ignored: "+b)}function W(e,n,t){var i=null,o=null;if(F[e]){if("function"!=typeof(i=F[e][n]))throw new TypeError(n+" on iFrame["+e+"] is not a function");o=i(t)}return o}function p(e){e=e.id;delete F[e]}function C(e){var n=e.id;if(!1!==W(n,"onClose",n)){T(n,"Removing iFrame: "+n);try{e.parentNode&&e.parentNode.removeChild(e)}catch(e){N(e)}W(n,"onClosed",n),T(n,"--"),p(e)}else T(n,"Close iframe cancelled by onClose event")}function S(e){null===k&&T(e,"Get page position: "+(k={x:window.pageXOffset!==u?window.pageXOffset:document.documentElement.scrollLeft,y:window.pageYOffset!==u?window.pageYOffset:document.documentElement.scrollTop}).x+","+k.y)}function H(e){null!==k&&(window.scrollTo(k.x,k.y),T(e,"Set page position: "+k.x+","+k.y),j())}function j(){k=null}function P(e){T(e.id,"Size reset requested by "+("init"===e.type?"host page":"iFrame")),S(e.id),L(function(){A(e),B("reset","reset",e.iframe,e.id)},e,"reset")}function A(o){function t(e){function n(){Object.keys(F).forEach(function(e){function n(e){return"0px"===(F[t]&&F[t].iframe.style[e])}var t;F[t=e]&&null!==F[t].iframe.offsetParent&&(n("height")||n("width"))&&B("Visibility change","resize",F[t].iframe,t)})}function t(e){T("window","Mutation observed: "+e[0].target+" "+e[0].type),c(n,16)}var i;a||"0"!==o[e]||(a=!0,T(r,"Hidden iFrame detected, creating visibility listener"),(i=h())&&function(){var e=document.querySelector("body");new i(t).observe(e,{attributes:!0,attributeOldValue:!1,characterData:!0,characterDataOldValue:!1,childList:!0,subtree:!0})}())}function e(e){var n;n=e,o.id?(o.iframe.style[n]=o[n]+"px",T(o.id,"IFrame ("+r+") "+n+" set to "+o[n]+"px")):T("undefined","messageData id not set"),t(e)}var r=o.iframe.id;F[r]&&(F[r].sizeHeight&&e("height"),F[r].sizeWidth&&e("width"))}function L(e,n,t){t!==n.type&&r&&!window.jasmine?(T(n.id,"Requesting animation frame"),r(e)):e()}function B(n,t,i,o,e){function r(){var e;i&&"contentWindow"in i&&null!==i.contentWindow?(e=F[o]&&F[o].targetOrigin,T(o,"["+n+"] Sending msg to iframe["+o+"] ("+t+") targetOrigin: "+e),i.contentWindow.postMessage(M+t,e)):N(o,"["+n+"] IFrame("+o+") not found")}function a(){e&&F[o]&&F[o].warningTimeout&&(F[o].msgTimeout=setTimeout(function(){!F[o]||F[o].loaded||s||(s=!0,N(o,"IFrame has not responded within "+F[o].warningTimeout/1e3+" seconds. Check iFrameResizer.contentWindow.js has been loaded in iFrame. This message can be ignored if everything is working, or you can set the warningTimeout option to a higher value or zero to suppress this warning."))},F[o].warningTimeout))}var s=!1;o=o||i.id,F[o]&&(r(),a())}function q(e){return e+":"+F[e].bodyMarginV1+":"+F[e].sizeWidth+":"+F[e].log+":"+F[e].interval+":"+F[e].enablePublicMethods+":"+F[e].autoResize+":"+F[e].bodyMargin+":"+F[e].heightCalculationMethod+":"+F[e].bodyBackground+":"+F[e].bodyPadding+":"+F[e].tolerance+":"+F[e].inPageLinks+":"+F[e].resizeFrom+":"+F[e].widthCalculationMethod+":"+F[e].mouseEvents}function d(i,e){function n(t){var e,n=h();n&&(e=n,i.parentNode&&new e(function(e){e.forEach(function(e){Array.prototype.slice.call(e.removedNodes).forEach(function(e){e===i&&C(i)})})}).observe(i.parentNode,{childList:!0})),O(i,"load",function(){var e,n;B("iFrame.onload",t,i,u,!0),e=F[s]&&F[s].firstRun,n=F[s]&&F[s].heightCalculationMethod in m,!e&&n&&P({iframe:i,height:0,width:0,type:"init"})}),B("init",t,i,u,!0)}function t(e){var n=e.split("Callback");2===n.length&&(this[n="on"+n[0].charAt(0).toUpperCase()+n[0].slice(1)]=this[e],delete this[e],N(s,"Deprecated: '"+e+"' has been renamed '"+n+"'. The old method will be removed in the next major version."))}function o(e){e=e||{},F[s]={firstRun:!0,iframe:i,remoteHost:i.src&&i.src.split("/").slice(0,3).join("/")},function(e){if("object"!=typeof e)throw new TypeError("Options is not an object")}(e),Object.keys(e).forEach(t,e),function(e){for(var n in g)Object.prototype.hasOwnProperty.call(g,n)&&(F[s][n]=(Object.prototype.hasOwnProperty.call(e,n)?e:g)[n])}(e),F[s]&&(F[s].targetOrigin=!0===F[s].checkOrigin?""===(e=F[s].remoteHost)||null!==e.match(/^(about:blank|javascript:|file:\/\/)/)?"*":e:"*")}var r,a,s=(""===(r=i.id)&&(i.id=(a=e&&e.id||g.id+f++,null!==document.getElementById(a)&&(a+=f++),r=a),l=(e||{}).log,T(r,"Added missing iframe ID: "+r+" ("+i.src+")")),r);function d(e){var n=F[s][e];1/0!==n&&0!==n&&(i.style[e]="number"==typeof n?n+"px":n,T(s,"Set "+e+" = "+i.style[e]))}function c(e){if(F[s]["min"+e]>F[s]["max"+e])throw new Error("Value for min"+e+" can not be greater than max"+e)}s in F&&"iFrameResizer"in i?N(s,"Ignored iFrame, already setup."):(o(e),function(){switch(T(s,"IFrame scrolling "+(F[s]&&F[s].scrolling?"enabled":"disabled")+" for "+s),i.style.overflow=!1===(F[s]&&F[s].scrolling)?"hidden":"auto",F[s]&&F[s].scrolling){case"omit":break;case!0:i.scrolling="yes";break;case!1:i.scrolling="no";break;default:i.scrolling=F[s]?F[s].scrolling:"no"}}(),c("Height"),c("Width"),d("maxHeight"),d("minHeight"),d("maxWidth"),d("minWidth"),"number"!=typeof(F[s]&&F[s].bodyMargin)&&"0"!==(F[s]&&F[s].bodyMargin)||(F[s].bodyMarginV1=F[s].bodyMargin,F[s].bodyMargin=F[s].bodyMargin+"px"),n(q(s)),F[s]&&(F[s].iframe.iFrameResizer={close:C.bind(null,F[s].iframe),removeListeners:p.bind(null,F[s].iframe),resize:B.bind(null,"Window resize","resize",F[s].iframe),moveToAnchor:function(e){B("Move to anchor","moveToAnchor:"+e,F[s].iframe,s)},sendMessage:function(e){B("Send Message","message:"+(e=JSON.stringify(e)),F[s].iframe,s)}}))}function c(e,n){null===t&&(t=setTimeout(function(){t=null,e()},n))}function n(){"hidden"!==document.visibilityState&&(T("document","Trigger event: Visiblity change"),c(function(){w("Tab Visable","resize")},16))}function w(t,i){Object.keys(F).forEach(function(e){var n;F[n=e]&&"parent"===F[n].resizeFrom&&F[n].autoResize&&!F[n].firstRun&&B(t,i,F[e].iframe,e)})}function b(){O(window,"message",e),O(window,"resize",function(){var e;T("window","Trigger event: "+(e="resize")),c(function(){w("Window "+e,"resize")},16)}),O(document,"visibilitychange",n),O(document,"-webkit-visibilitychange",n)}function y(){function i(e,n){n&&(function(){if(!n.tagName)throw new TypeError("Object is not a valid DOM element");if("IFRAME"!==n.tagName.toUpperCase())throw new TypeError("Expected <IFRAME> tag, found <"+n.tagName+">")}(),d(n,e),o.push(n))}var o;return function(){for(var e=["moz","webkit","o","ms"],n=0;n<e.length&&!r;n+=1)r=window[e[n]+"RequestAnimationFrame"];r?r=r.bind(window):T("setup","RequestAnimationFrame not supported")}(),b(),function(e,n){var t;switch(o=[],(t=e)&&t.enablePublicMethods&&N("enablePublicMethods option has been removed, public methods are now always available in the iFrame"),typeof n){case"undefined":case"string":Array.prototype.forEach.call(document.querySelectorAll(n||"iframe"),i.bind(u,e));break;case"object":i(e,n);break;default:throw new TypeError("Unexpected data type ("+typeof n+")")}return o}}function v(e){e.fn?e.fn.iFrameResize||(e.fn.iFrameResize=function(t){return this.filter("iframe").each(function(e,n){d(n,t)}).end()}):E("","Unable to bind to jQuery, it is not fully loaded.")}"undefined"!=typeof window&&(x="message".length,I=(M="[iFrameSizer]").length,r=window.requestAnimationFrame,g={autoResize:!(t=k=null),bodyBackground:null,bodyMargin:null,bodyMarginV1:8,bodyPadding:null,checkOrigin:!(a=l=!1),inPageLinks:!(F={}),enablePublicMethods:!(f=0),heightCalculationMethod:"bodyOffset",id:"iFrameResizer",interval:32,log:!(m={max:1,scroll:1,bodyScroll:1,documentElementScroll:1}),maxHeight:1/0,maxWidth:1/0,minHeight:0,minWidth:0,mouseEvents:!0,resizeFrom:"parent",scrolling:!1,sizeHeight:!0,sizeWidth:!1,warningTimeout:5e3,tolerance:0,widthCalculationMethod:"scroll",onClose:function(){return!0},onClosed:function(){},onInit:function(){},onMessage:function(){N("onMessage function not defined")},onMouseEnter:function(){},onMouseLeave:function(){},onResized:function(){},onScroll:function(){return!0}},z={},window.jQuery&&v(window.jQuery),"function"==typeof define&&define.amd?define([],y):"object"==typeof module&&"object"==typeof module.exports&&(module.exports=y()),window.iFrameResize=window.iFrameResize||y())}();
+;(function (undefined) {
+  if (typeof window === 'undefined') return 
+
+  var count = 0,
+    logEnabled = false,
+    hiddenCheckEnabled = false,
+    msgHeader = 'message',
+    msgHeaderLen = msgHeader.length,
+    msgId = '[iFrameSizer]',
+    msgIdLen = msgId.length,
+    pagePosition = null,
+    requestAnimationFrame = window.requestAnimationFrame,
+    resetRequiredMethods = {
+      max: 1,
+      scroll: 1,
+      bodyScroll: 1,
+      documentElementScroll: 1
+    },
+    settings = {},
+    timer = null,
+    defaults = {
+      autoResize: true,
+      bodyBackground: null,
+      bodyMargin: null,
+      bodyMarginV1: 8,
+      bodyPadding: null,
+      checkOrigin: true,
+      inPageLinks: false,
+      enablePublicMethods: true,
+      heightCalculationMethod: 'bodyOffset',
+      id: 'iFrameResizer',
+      interval: 32,
+      log: false,
+      maxHeight: Infinity,
+      maxWidth: Infinity,
+      minHeight: 0,
+      minWidth: 0,
+      mouseEvents: true,
+      resizeFrom: 'parent',
+      scrolling: false,
+      sizeHeight: true,
+      sizeWidth: false,
+      warningTimeout: 5000,
+      tolerance: 0,
+      widthCalculationMethod: 'scroll',
+      onClose: function () {
+        return true
+      },
+      onClosed: function () {},
+      onInit: function () {},
+      onMessage: function () {
+        warn('onMessage function not defined')
+      },
+      onMouseEnter: function () {},
+      onMouseLeave: function () {},
+      onResized: function () {},
+      onScroll: function () {
+        return true
+      }
+    }
+
+  function getMutationObserver() {
+    return (
+      window.MutationObserver ||
+      window.WebKitMutationObserver ||
+      window.MozMutationObserver
+    )
+  }
+
+  function addEventListener(el, evt, func) {
+    el.addEventListener(evt, func, false)
+  }
+
+  function removeEventListener(el, evt, func) {
+    el.removeEventListener(evt, func, false)
+  }
+
+  function setupRequestAnimationFrame() {
+    var vendors = ['moz', 'webkit', 'o', 'ms']
+    var x
+
+    for (x = 0; x < vendors.length && !requestAnimationFrame; x += 1) {
+      requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame']
+    }
+
+    if (!requestAnimationFrame) {
+      log('setup', 'RequestAnimationFrame not supported')
+    } else {
+      requestAnimationFrame = requestAnimationFrame.bind(window)
+    }
+  }
+
+  function getMyID(iframeId) {
+    var retStr = 'Host page: ' + iframeId
+
+    if (window.top !== window.self) {
+      retStr =
+        window.parentIFrame && window.parentIFrame.getId
+          ? window.parentIFrame.getId() + ': ' + iframeId
+          : 'Nested host page: ' + iframeId
+    }
+
+    return retStr
+  }
+
+  function formatLogHeader(iframeId) {
+    return msgId + '[' + getMyID(iframeId) + ']'
+  }
+
+  function isLogEnabled(iframeId) {
+    return settings[iframeId] ? settings[iframeId].log : logEnabled
+  }
+
+  function log(iframeId, msg) {
+    output('log', iframeId, msg, isLogEnabled(iframeId))
+  }
+
+  function info(iframeId, msg) {
+    output('info', iframeId, msg, isLogEnabled(iframeId))
+  }
+
+  function warn(iframeId, msg) {
+    output('warn', iframeId, msg, true)
+  }
+
+  function output(type, iframeId, msg, enabled) {
+    if (true === enabled && 'object' === typeof window.console) {
+      console[type](formatLogHeader(iframeId), msg)
+    }
+  }
+
+  function iFrameListener(event) {
+    function resizeIFrame() {
+      function resize() {
+        setSize(messageData)
+        setPagePosition(iframeId)
+        on('onResized', messageData)
+      }
+
+      ensureInRange('Height')
+      ensureInRange('Width')
+
+      syncResize(resize, messageData, 'init')
+    }
+
+    function processMsg() {
+      var data = msg.substr(msgIdLen).split(':')
+      var height = data[1] ? parseInt(data[1], 10) : 0
+      var iframe = settings[data[0]] && settings[data[0]].iframe
+      var compStyle = getComputedStyle(iframe)
+
+      return {
+        iframe: iframe,
+        id: data[0],
+        height: height + getPaddingEnds(compStyle) + getBorderEnds(compStyle),
+        width: data[2],
+        type: data[3]
+      }
+    }
+
+    function getPaddingEnds(compStyle) {
+      if (compStyle.boxSizing !== 'border-box') {
+        return 0
+      }
+      var top = compStyle.paddingTop ? parseInt(compStyle.paddingTop, 10) : 0
+      var bot = compStyle.paddingBottom
+        ? parseInt(compStyle.paddingBottom, 10)
+        : 0
+      return top + bot
+    }
+
+    function getBorderEnds(compStyle) {
+      if (compStyle.boxSizing !== 'border-box') {
+        return 0
+      }
+      var top = compStyle.borderTopWidth
+        ? parseInt(compStyle.borderTopWidth, 10)
+        : 0
+      var bot = compStyle.borderBottomWidth
+        ? parseInt(compStyle.borderBottomWidth, 10)
+        : 0
+      return top + bot
+    }
+
+    function ensureInRange(Dimension) {
+      var max = Number(settings[iframeId]['max' + Dimension]),
+        min = Number(settings[iframeId]['min' + Dimension]),
+        dimension = Dimension.toLowerCase(),
+        size = Number(messageData[dimension])
+
+      log(iframeId, 'Checking ' + dimension + ' is in range ' + min + '-' + max)
+
+      if (size < min) {
+        size = min
+        log(iframeId, 'Set ' + dimension + ' to min value')
+      }
+
+      if (size > max) {
+        size = max
+        log(iframeId, 'Set ' + dimension + ' to max value')
+      }
+
+      messageData[dimension] = '' + size
+    }
+
+    function isMessageFromIFrame() {
+      function checkAllowedOrigin() {
+        function checkList() {
+          var i = 0,
+            retCode = false
+
+          log(
+            iframeId,
+            'Checking connection is from allowed list of origins: ' +
+              checkOrigin
+          )
+
+          for (; i < checkOrigin.length; i++) {
+            if (checkOrigin[i] === origin) {
+              retCode = true
+              break
+            }
+          }
+          return retCode
+        }
+
+        function checkSingle() {
+          var remoteHost = settings[iframeId] && settings[iframeId].remoteHost
+          log(iframeId, 'Checking connection is from: ' + remoteHost)
+          return origin === remoteHost
+        }
+
+        return checkOrigin.constructor === Array ? checkList() : checkSingle()
+      }
+
+      var origin = event.origin,
+        checkOrigin = settings[iframeId] && settings[iframeId].checkOrigin
+
+      if (checkOrigin && '' + origin !== 'null' && !checkAllowedOrigin()) {
+        throw new Error(
+          'Unexpected message received from: ' +
+            origin +
+            ' for ' +
+            messageData.iframe.id +
+            '. Message was: ' +
+            event.data +
+            '. This error can be disabled by setting the checkOrigin: false option or by providing of array of trusted domains.'
+        )
+      }
+
+      return true
+    }
+
+    function isMessageForUs() {
+      return (
+        msgId === ('' + msg).substr(0, msgIdLen) &&
+        msg.substr(msgIdLen).split(':')[0] in settings
+      ) 
+    }
+
+    function isMessageFromMetaParent() {
+      var retCode = messageData.type in { true: 1, false: 1, undefined: 1 }
+
+      if (retCode) {
+        log(iframeId, 'Ignoring init message from meta parent page')
+      }
+
+      return retCode
+    }
+
+    function getMsgBody(offset) {
+      return msg.substr(msg.indexOf(':') + msgHeaderLen + offset)
+    }
+
+    function forwardMsgFromIFrame(msgBody) {
+      log(
+        iframeId,
+        'onMessage passed: {iframe: ' +
+          messageData.iframe.id +
+          ', message: ' +
+          msgBody +
+          '}'
+      )
+
+      on('onMessage', {
+        iframe: messageData.iframe,
+        message: JSON.parse(msgBody)
+      })
+
+      log(iframeId, '--')
+    }
+
+    function getPageInfo() {
+      var bodyPosition = document.body.getBoundingClientRect(),
+        iFramePosition = messageData.iframe.getBoundingClientRect()
+
+      return JSON.stringify({
+        iframeHeight: iFramePosition.height,
+        iframeWidth: iFramePosition.width,
+        clientHeight: Math.max(
+          document.documentElement.clientHeight,
+          window.innerHeight || 0
+        ),
+        clientWidth: Math.max(
+          document.documentElement.clientWidth,
+          window.innerWidth || 0
+        ),
+        offsetTop: parseInt(iFramePosition.top - bodyPosition.top, 10),
+        offsetLeft: parseInt(iFramePosition.left - bodyPosition.left, 10),
+        scrollTop: window.pageYOffset,
+        scrollLeft: window.pageXOffset,
+        documentHeight: document.documentElement.clientHeight,
+        documentWidth: document.documentElement.clientWidth,
+        windowHeight: window.innerHeight,
+        windowWidth: window.innerWidth
+      })
+    }
+
+    function sendPageInfoToIframe(iframe, iframeId) {
+      function debouncedTrigger() {
+        trigger('Send Page Info', 'pageInfo:' + getPageInfo(), iframe, iframeId)
+      }
+      debounceFrameEvents(debouncedTrigger, 32, iframeId)
+    }
+
+    function startPageInfoMonitor() {
+      function setListener(type, func) {
+        function sendPageInfo() {
+          if (settings[id]) {
+            sendPageInfoToIframe(settings[id].iframe, id)
+          } else {
+            stop()
+          }
+        }
+
+        ;['scroll', 'resize'].forEach(function (evt) {
+          log(id, type + evt + ' listener for sendPageInfo')
+          func(window, evt, sendPageInfo)
+        })
+      }
+
+      function stop() {
+        setListener('Remove ', removeEventListener)
+      }
+
+      function start() {
+        setListener('Add ', addEventListener)
+      }
+
+      var id = iframeId 
+      start()
+
+      if (settings[id]) {
+        settings[id].stopPageInfo = stop
+      }
+    }
+
+    function stopPageInfoMonitor() {
+      if (settings[iframeId] && settings[iframeId].stopPageInfo) {
+        settings[iframeId].stopPageInfo()
+        delete settings[iframeId].stopPageInfo
+      }
+    }
+
+    function checkIFrameExists() {
+      var retBool = true
+
+      if (null === messageData.iframe) {
+        warn(iframeId, 'IFrame (' + messageData.id + ') not found')
+        retBool = false
+      }
+      return retBool
+    }
+
+    function getElementPosition(target) {
+      var iFramePosition = target.getBoundingClientRect()
+
+      getPagePosition(iframeId)
+
+      return {
+        x: Math.floor(Number(iFramePosition.left) + Number(pagePosition.x)),
+        y: Math.floor(Number(iFramePosition.top) + Number(pagePosition.y))
+      }
+    }
+
+    function scrollRequestFromChild(addOffset) {
+      function reposition() {
+        pagePosition = newPosition
+        scrollTo()
+        log(iframeId, '--')
+      }
+
+      function calcOffset() {
+        return {
+          x: Number(messageData.width) + offset.x,
+          y: Number(messageData.height) + offset.y
+        }
+      }
+
+      function scrollParent() {
+        if (window.parentIFrame) {
+          window.parentIFrame['scrollTo' + (addOffset ? 'Offset' : '')](
+            newPosition.x,
+            newPosition.y
+          )
+        } else {
+          warn(
+            iframeId,
+            'Unable to scroll to requested position, window.parentIFrame not found'
+          )
+        }
+      }
+
+      var offset = addOffset
+          ? getElementPosition(messageData.iframe)
+          : { x: 0, y: 0 },
+        newPosition = calcOffset()
+
+      log(
+        iframeId,
+        'Reposition requested from iFrame (offset x:' +
+          offset.x +
+          ' y:' +
+          offset.y +
+          ')'
+      )
+
+      if (window.top !== window.self) {
+        scrollParent()
+      } else {
+        reposition()
+      }
+    }
+
+    function scrollTo() {
+      if (false !== on('onScroll', pagePosition)) {
+        setPagePosition(iframeId)
+      } else {
+        unsetPagePosition()
+      }
+    }
+
+    function findTarget(location) {
+      function jumpToTarget() {
+        var jumpPosition = getElementPosition(target)
+
+        log(
+          iframeId,
+          'Moving to in page link (#' +
+            hash +
+            ') at x: ' +
+            jumpPosition.x +
+            ' y: ' +
+            jumpPosition.y
+        )
+        pagePosition = {
+          x: jumpPosition.x,
+          y: jumpPosition.y
+        }
+
+        scrollTo()
+        log(iframeId, '--')
+      }
+
+      function jumpToParent() {
+        if (window.parentIFrame) {
+          window.parentIFrame.moveToAnchor(hash)
+        } else {
+          log(
+            iframeId,
+            'In page link #' +
+              hash +
+              ' not found and window.parentIFrame not found'
+          )
+        }
+      }
+
+      var hash = location.split('#')[1] || '',
+        hashData = decodeURIComponent(hash),
+        target =
+          document.getElementById(hashData) ||
+          document.getElementsByName(hashData)[0]
+
+      if (target) {
+        jumpToTarget()
+      } else if (window.top !== window.self) {
+        jumpToParent()
+      } else {
+        log(iframeId, 'In page link #' + hash + ' not found')
+      }
+    }
+
+    function onMouse(event) {
+      var mousePos = {}
+
+      if (Number(messageData.width) === 0 && Number(messageData.height) === 0) {
+        var data = getMsgBody(9).split(':')
+        mousePos = {
+          x: data[1],
+          y: data[0]
+        }
+      } else {
+        mousePos = {
+          x: messageData.width,
+          y: messageData.height
+        }
+      }
+
+      on(event, {
+        iframe: messageData.iframe,
+        screenX: Number(mousePos.x),
+        screenY: Number(mousePos.y),
+        type: messageData.type
+      })
+    }
+
+    function on(funcName, val) {
+      return chkEvent(iframeId, funcName, val)
+    }
+
+    function actionMsg() {
+      if (settings[iframeId] && settings[iframeId].firstRun) firstRun()
+
+      switch (messageData.type) {
+        case 'close':
+          closeIFrame(messageData.iframe)
+          break
+
+        case 'message':
+          forwardMsgFromIFrame(getMsgBody(6))
+          break
+
+        case 'mouseenter':
+          onMouse('onMouseEnter')
+          break
+
+        case 'mouseleave':
+          onMouse('onMouseLeave')
+          break
+
+        case 'autoResize':
+          settings[iframeId].autoResize = JSON.parse(getMsgBody(9))
+          break
+
+        case 'scrollTo':
+          scrollRequestFromChild(false)
+          break
+
+        case 'scrollToOffset':
+          scrollRequestFromChild(true)
+          break
+
+        case 'pageInfo':
+          sendPageInfoToIframe(
+            settings[iframeId] && settings[iframeId].iframe,
+            iframeId
+          )
+          startPageInfoMonitor()
+          break
+
+        case 'pageInfoStop':
+          stopPageInfoMonitor()
+          break
+
+        case 'inPageLink':
+          findTarget(getMsgBody(9))
+          break
+
+        case 'reset':
+          resetIFrame(messageData)
+          break
+
+        case 'init':
+          resizeIFrame()
+          on('onInit', messageData.iframe)
+          break
+
+        default:
+          if (
+            Number(messageData.width) === 0 &&
+            Number(messageData.height) === 0
+          ) {
+            warn(
+              'Unsupported message received (' +
+                messageData.type +
+                '), this is likely due to the iframe containing a later ' +
+                'version of iframe-resizer than the parent page'
+            )
+          } else {
+            resizeIFrame()
+          }
+      }
+    }
+
+    function hasSettings(iframeId) {
+      var retBool = true
+
+      if (!settings[iframeId]) {
+        retBool = false
+        warn(
+          messageData.type +
+            ' No settings for ' +
+            iframeId +
+            '. Message was: ' +
+            msg
+        )
+      }
+
+      return retBool
+    }
+
+    function iFrameReadyMsgReceived() {
+      for (var iframeId in settings) {
+        trigger(
+          'iFrame requested init',
+          createOutgoingMsg(iframeId),
+          settings[iframeId].iframe,
+          iframeId
+        )
+      }
+    }
+
+    function firstRun() {
+      if (settings[iframeId]) {
+        settings[iframeId].firstRun = false
+      }
+    }
+
+    var msg = event.data,
+      messageData = {},
+      iframeId = null
+
+    if ('[iFrameResizerChild]Ready' === msg) {
+      iFrameReadyMsgReceived()
+    } else if (isMessageForUs()) {
+      messageData = processMsg()
+      iframeId = messageData.id
+      if (settings[iframeId]) {
+        settings[iframeId].loaded = true
+      }
+
+      if (!isMessageFromMetaParent() && hasSettings(iframeId)) {
+        log(iframeId, 'Received: ' + msg)
+
+        if (checkIFrameExists() && isMessageFromIFrame()) {
+          actionMsg()
+        }
+      }
+    } else {
+      info(iframeId, 'Ignored: ' + msg)
+    }
+  }
+
+  function chkEvent(iframeId, funcName, val) {
+    var func = null,
+      retVal = null
+
+    if (settings[iframeId]) {
+      func = settings[iframeId][funcName]
+
+      if ('function' === typeof func) {
+        retVal = func(val)
+      } else {
+        throw new TypeError(
+          funcName + ' on iFrame[' + iframeId + '] is not a function'
+        )
+      }
+    }
+
+    return retVal
+  }
+
+  function removeIframeListeners(iframe) {
+    var iframeId = iframe.id
+    delete settings[iframeId]
+  }
+
+  function closeIFrame(iframe) {
+    var iframeId = iframe.id
+    if (chkEvent(iframeId, 'onClose', iframeId) === false) {
+      log(iframeId, 'Close iframe cancelled by onClose event')
+      return
+    }
+    log(iframeId, 'Removing iFrame: ' + iframeId)
+
+    try {
+      if (iframe.parentNode) {
+        iframe.parentNode.removeChild(iframe)
+      }
+    } catch (error) {
+      warn(error)
+    }
+
+    chkEvent(iframeId, 'onClosed', iframeId)
+    log(iframeId, '--')
+    removeIframeListeners(iframe)
+  }
+
+  function getPagePosition(iframeId) {
+    if (null === pagePosition) {
+      pagePosition = {
+        x:
+          window.pageXOffset !== undefined
+            ? window.pageXOffset
+            : document.documentElement.scrollLeft,
+        y:
+          window.pageYOffset !== undefined
+            ? window.pageYOffset
+            : document.documentElement.scrollTop
+      }
+      log(
+        iframeId,
+        'Get page position: ' + pagePosition.x + ',' + pagePosition.y
+      )
+    }
+  }
+
+  function setPagePosition(iframeId) {
+    if (null !== pagePosition) {
+      //window.scrollTo(pagePosition.x, pagePosition.y)
+      window.scrollTo({top: pagePosition.y, left: pagePosition.x,behavior: 'smooth'})
+      log(
+        iframeId,
+        'Set page position: ' + pagePosition.x + ',' + pagePosition.y
+      )
+      unsetPagePosition()
+    }
+  }
+
+  function unsetPagePosition() {
+    pagePosition = null
+  }
+
+  function resetIFrame(messageData) {
+    function reset() {
+      setSize(messageData)
+      trigger('reset', 'reset', messageData.iframe, messageData.id)
+    }
+
+    log(
+      messageData.id,
+      'Size reset requested by ' +
+        ('init' === messageData.type ? 'host page' : 'iFrame')
+    )
+    getPagePosition(messageData.id)
+    syncResize(reset, messageData, 'reset')
+  }
+
+  function setSize(messageData) {
+    function setDimension(dimension) {
+      if (!messageData.id) {
+        log('undefined', 'messageData id not set')
+        return
+      }
+      messageData.iframe.style[dimension] = messageData[dimension] + 'px'
+      log(
+        messageData.id,
+        'IFrame (' +
+          iframeId +
+          ') ' +
+          dimension +
+          ' set to ' +
+          messageData[dimension] +
+          'px'
+      )
+    }
+
+    function chkZero(dimension) {
+      if (!hiddenCheckEnabled && '0' === messageData[dimension]) {
+        hiddenCheckEnabled = true
+        log(iframeId, 'Hidden iFrame detected, creating visibility listener')
+        fixHiddenIFrames()
+      }
+    }
+
+    function processDimension(dimension) {
+      setDimension(dimension)
+      chkZero(dimension)
+    }
+
+    var iframeId = messageData.iframe.id
+
+    if (settings[iframeId]) {
+      if (settings[iframeId].sizeHeight) {
+        processDimension('height')
+      }
+      if (settings[iframeId].sizeWidth) {
+        processDimension('width')
+      }
+    }
+  }
+
+  function syncResize(func, messageData, doNotSync) {
+    if (
+      doNotSync !== messageData.type &&
+      requestAnimationFrame &&
+      !window.jasmine
+    ) {
+      log(messageData.id, 'Requesting animation frame')
+      requestAnimationFrame(func)
+    } else {
+      func()
+    }
+  }
+
+  function trigger(calleeMsg, msg, iframe, id, noResponseWarning) {
+    function postMessageToIFrame() {
+      var target = settings[id] && settings[id].targetOrigin
+      log(
+        id,
+        '[' +
+          calleeMsg +
+          '] Sending msg to iframe[' +
+          id +
+          '] (' +
+          msg +
+          ') targetOrigin: ' +
+          target
+      )
+      iframe.contentWindow.postMessage(msgId + msg, target)
+    }
+
+    function iFrameNotFound() {
+      warn(id, '[' + calleeMsg + '] IFrame(' + id + ') not found')
+    }
+
+    function chkAndSend() {
+      if (
+        iframe &&
+        'contentWindow' in iframe &&
+        null !== iframe.contentWindow
+      ) {
+        postMessageToIFrame()
+      } else {
+        iFrameNotFound()
+      }
+    }
+
+    function warnOnNoResponse() {
+      function warning() {
+        if (settings[id] && !settings[id].loaded && !errorShown) {
+          errorShown = true
+          warn(
+            id,
+            'IFrame has not responded within ' +
+              settings[id].warningTimeout / 1000 +
+              ' seconds. Check iFrameResizer.contentWindow.js has been loaded in iFrame. This message can be ignored if everything is working, or you can set the warningTimeout option to a higher value or zero to suppress this warning.'
+          )
+        }
+      }
+
+      if (
+        !!noResponseWarning &&
+        settings[id] &&
+        !!settings[id].warningTimeout
+      ) {
+        settings[id].msgTimeout = setTimeout(
+          warning,
+          settings[id].warningTimeout
+        )
+      }
+    }
+
+    var errorShown = false
+
+    id = id || iframe.id
+
+    if (settings[id]) {
+      chkAndSend()
+      warnOnNoResponse()
+    }
+  }
+
+  function createOutgoingMsg(iframeId) {
+    return (
+      iframeId +
+      ':' +
+      settings[iframeId].bodyMarginV1 +
+      ':' +
+      settings[iframeId].sizeWidth +
+      ':' +
+      settings[iframeId].log +
+      ':' +
+      settings[iframeId].interval +
+      ':' +
+      settings[iframeId].enablePublicMethods +
+      ':' +
+      settings[iframeId].autoResize +
+      ':' +
+      settings[iframeId].bodyMargin +
+      ':' +
+      settings[iframeId].heightCalculationMethod +
+      ':' +
+      settings[iframeId].bodyBackground +
+      ':' +
+      settings[iframeId].bodyPadding +
+      ':' +
+      settings[iframeId].tolerance +
+      ':' +
+      settings[iframeId].inPageLinks +
+      ':' +
+      settings[iframeId].resizeFrom +
+      ':' +
+      settings[iframeId].widthCalculationMethod +
+      ':' +
+      settings[iframeId].mouseEvents
+    )
+  }
+
+  function isNumber(value) {
+    return typeof value === 'number'
+  }
+
+  function setupIFrame(iframe, options) {
+    function setLimits() {
+      function addStyle(style) {
+        var styleValue = settings[iframeId][style]
+        if (Infinity !== styleValue && 0 !== styleValue) {
+          iframe.style[style] = isNumber(styleValue)
+            ? styleValue + 'px'
+            : styleValue
+          log(iframeId, 'Set ' + style + ' = ' + iframe.style[style])
+        }
+      }
+
+      function chkMinMax(dimension) {
+        if (
+          settings[iframeId]['min' + dimension] >
+          settings[iframeId]['max' + dimension]
+        ) {
+          throw new Error(
+            'Value for min' +
+              dimension +
+              ' can not be greater than max' +
+              dimension
+          )
+        }
+      }
+
+      chkMinMax('Height')
+      chkMinMax('Width')
+
+      addStyle('maxHeight')
+      addStyle('minHeight')
+      addStyle('maxWidth')
+      addStyle('minWidth')
+    }
+
+    function newId() {
+      var id = (options && options.id) || defaults.id + count++
+      if (null !== document.getElementById(id)) {
+        id += count++
+      }
+      return id
+    }
+
+    function ensureHasId(iframeId) {
+      if ('' === iframeId) {
+        iframe.id = iframeId = newId()
+        logEnabled = (options || {}).log
+        log(
+          iframeId,
+          'Added missing iframe ID: ' + iframeId + ' (' + iframe.src + ')'
+        )
+      }
+
+      return iframeId
+    }
+
+    function setScrolling() {
+      log(
+        iframeId,
+        'IFrame scrolling ' +
+          (settings[iframeId] && settings[iframeId].scrolling
+            ? 'enabled'
+            : 'disabled') +
+          ' for ' +
+          iframeId
+      )
+      iframe.style.overflow =
+        false === (settings[iframeId] && settings[iframeId].scrolling)
+          ? 'hidden'
+          : 'auto'
+      switch (settings[iframeId] && settings[iframeId].scrolling) {
+        case 'omit':
+          break
+
+        case true:
+          iframe.scrolling = 'yes'
+          break
+
+        case false:
+          iframe.scrolling = 'no'
+          break
+
+        default:
+          iframe.scrolling = settings[iframeId]
+            ? settings[iframeId].scrolling
+            : 'no'
+      }
+    }
+
+    function setupBodyMarginValues() {
+      if (
+        'number' ===
+          typeof (settings[iframeId] && settings[iframeId].bodyMargin) ||
+        '0' === (settings[iframeId] && settings[iframeId].bodyMargin)
+      ) {
+        settings[iframeId].bodyMarginV1 = settings[iframeId].bodyMargin
+        settings[iframeId].bodyMargin =
+          '' + settings[iframeId].bodyMargin + 'px'
+      }
+    }
+
+    function checkReset() {
+      var firstRun = settings[iframeId] && settings[iframeId].firstRun,
+        resetRequertMethod =
+          settings[iframeId] &&
+          settings[iframeId].heightCalculationMethod in resetRequiredMethods
+
+      if (!firstRun && resetRequertMethod) {
+        resetIFrame({ iframe: iframe, height: 0, width: 0, type: 'init' })
+      }
+    }
+
+    function setupIFrameObject() {
+      if (settings[iframeId]) {
+        settings[iframeId].iframe.iFrameResizer = {
+          close: closeIFrame.bind(null, settings[iframeId].iframe),
+
+          removeListeners: removeIframeListeners.bind(
+            null,
+            settings[iframeId].iframe
+          ),
+
+          resize: trigger.bind(
+            null,
+            'Window resize',
+            'resize',
+            settings[iframeId].iframe
+          ),
+
+          moveToAnchor: function (anchor) {
+            trigger(
+              'Move to anchor',
+              'moveToAnchor:' + anchor,
+              settings[iframeId].iframe,
+              iframeId
+            )
+          },
+
+          sendMessage: function (message) {
+            message = JSON.stringify(message)
+            trigger(
+              'Send Message',
+              'message:' + message,
+              settings[iframeId].iframe,
+              iframeId
+            )
+          }
+        }
+      }
+    }
+
+    function init(msg) {
+      function iFrameLoaded() {
+        trigger('iFrame.onload', msg, iframe, undefined, true)
+        checkReset()
+      }
+
+      function createDestroyObserver(MutationObserver) {
+        if (!iframe.parentNode) {
+          return
+        }
+
+        var destroyObserver = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            var removedNodes = Array.prototype.slice.call(mutation.removedNodes) 
+            removedNodes.forEach(function (removedNode) {
+              if (removedNode === iframe) {
+                closeIFrame(iframe)
+              }
+            })
+          })
+        })
+        destroyObserver.observe(iframe.parentNode, {
+          childList: true
+        })
+      }
+
+      var MutationObserver = getMutationObserver()
+      if (MutationObserver) {
+        createDestroyObserver(MutationObserver)
+      }
+
+      addEventListener(iframe, 'load', iFrameLoaded)
+      trigger('init', msg, iframe, undefined, true)
+    }
+
+    function checkOptions(options) {
+      if ('object' !== typeof options) {
+        throw new TypeError('Options is not an object')
+      }
+    }
+
+    function copyOptions(options) {
+      for (var option in defaults) {
+        if (Object.prototype.hasOwnProperty.call(defaults, option)) {
+          settings[iframeId][option] = Object.prototype.hasOwnProperty.call(
+            options,
+            option
+          )
+            ? options[option]
+            : defaults[option]
+        }
+      }
+    }
+
+    function getTargetOrigin(remoteHost) {
+      return '' === remoteHost ||
+        null !== remoteHost.match(/^(about:blank|javascript:|file:\/\/)/)
+        ? '*'
+        : remoteHost
+    }
+
+    function depricate(key) {
+      var splitName = key.split('Callback')
+
+      if (splitName.length === 2) {
+        var name =
+          'on' + splitName[0].charAt(0).toUpperCase() + splitName[0].slice(1)
+        this[name] = this[key]
+        delete this[key]
+        warn(
+          iframeId,
+          "Deprecated: '" +
+            key +
+            "' has been renamed '" +
+            name +
+            "'. The old method will be removed in the next major version."
+        )
+      }
+    }
+
+    function processOptions(options) {
+      options = options || {}
+      settings[iframeId] = {
+        firstRun: true,
+        iframe: iframe,
+        remoteHost: iframe.src && iframe.src.split('/').slice(0, 3).join('/')
+      }
+
+      checkOptions(options)
+      Object.keys(options).forEach(depricate, options)
+      copyOptions(options)
+
+      if (settings[iframeId]) {
+        settings[iframeId].targetOrigin =
+          true === settings[iframeId].checkOrigin
+            ? getTargetOrigin(settings[iframeId].remoteHost)
+            : '*'
+      }
+    }
+
+    function beenHere() {
+      return iframeId in settings && 'iFrameResizer' in iframe
+    }
+
+    var iframeId = ensureHasId(iframe.id)
+
+    if (!beenHere()) {
+      processOptions(options)
+      setScrolling()
+      setLimits()
+      setupBodyMarginValues()
+      init(createOutgoingMsg(iframeId))
+      setupIFrameObject()
+    } else {
+      warn(iframeId, 'Ignored iFrame, already setup.')
+    }
+  }
+
+  function debouce(fn, time) {
+    if (null === timer) {
+      timer = setTimeout(function () {
+        timer = null
+        fn()
+      }, time)
+    }
+  }
+
+  var frameTimer = {}
+  function debounceFrameEvents(fn, time, frameId) {
+    if (!frameTimer[frameId]) {
+      frameTimer[frameId] = setTimeout(function () {
+        frameTimer[frameId] = null
+        fn()
+      }, time)
+    }
+  }
+
+  function fixHiddenIFrames() {
+    function checkIFrames() {
+      function checkIFrame(settingId) {
+        function chkDimension(dimension) {
+          return (
+            '0px' ===
+            (settings[settingId] && settings[settingId].iframe.style[dimension])
+          )
+        }
+
+        function isVisible(el) {
+          return null !== el.offsetParent
+        }
+
+        if (
+          settings[settingId] &&
+          isVisible(settings[settingId].iframe) &&
+          (chkDimension('height') || chkDimension('width'))
+        ) {
+          trigger(
+            'Visibility change',
+            'resize',
+            settings[settingId].iframe,
+            settingId
+          )
+        }
+      }
+
+      Object.keys(settings).forEach(function (key) {
+        checkIFrame(key)
+      })
+    }
+
+    function mutationObserved(mutations) {
+      log(
+        'window',
+        'Mutation observed: ' + mutations[0].target + ' ' + mutations[0].type
+      )
+      debouce(checkIFrames, 16)
+    }
+
+    function createMutationObserver() {
+      var target = document.querySelector('body'),
+        config = {
+          attributes: true,
+          attributeOldValue: false,
+          characterData: true,
+          characterDataOldValue: false,
+          childList: true,
+          subtree: true
+        },
+        observer = new MutationObserver(mutationObserved)
+
+      observer.observe(target, config)
+    }
+
+    var MutationObserver = getMutationObserver()
+    if (MutationObserver) {
+      createMutationObserver()
+    }
+  }
+
+  function resizeIFrames(event) {
+    function resize() {
+      sendTriggerMsg('Window ' + event, 'resize')
+    }
+
+    log('window', 'Trigger event: ' + event)
+    debouce(resize, 16)
+  }
+
+  function tabVisible() {
+    function resize() {
+      sendTriggerMsg('Tab Visible', 'resize')
+    }
+
+    if ('hidden' !== document.visibilityState) {
+      log('document', 'Trigger event: Visibility change')
+      debouce(resize, 16)
+    }
+  }
+
+  function sendTriggerMsg(eventName, event) {
+    function isIFrameResizeEnabled(iframeId) {
+      return (
+        settings[iframeId] &&
+        'parent' === settings[iframeId].resizeFrom &&
+        settings[iframeId].autoResize &&
+        !settings[iframeId].firstRun
+      )
+    }
+
+    Object.keys(settings).forEach(function (iframeId) {
+      if (isIFrameResizeEnabled(iframeId)) {
+        trigger(eventName, event, settings[iframeId].iframe, iframeId)
+      }
+    })
+  }
+
+  function setupEventListeners() {
+    addEventListener(window, 'message', iFrameListener)
+
+    addEventListener(window, 'resize', function () {
+      resizeIFrames('resize')
+    })
+
+    addEventListener(document, 'visibilitychange', tabVisible)
+
+    addEventListener(document, '-webkit-visibilitychange', tabVisible)
+  }
+
+  function factory() {
+    function init(options, element) {
+      function chkType() {
+        if (!element.tagName) {
+          throw new TypeError('Object is not a valid DOM element')
+        } else if ('IFRAME' !== element.tagName.toUpperCase()) {
+          throw new TypeError(
+            'Expected <IFRAME> tag, found <' + element.tagName + '>'
+          )
+        }
+      }
+
+      if (element) {
+        chkType()
+        setupIFrame(element, options)
+        iFrames.push(element)
+      }
+    }
+
+    function warnDeprecatedOptions(options) {
+      if (options && options.enablePublicMethods) {
+        warn(
+          'enablePublicMethods option has been removed, public methods are now always available in the iFrame'
+        )
+      }
+    }
+
+    var iFrames
+
+    setupRequestAnimationFrame()
+    setupEventListeners()
+
+    return function iFrameResizeF(options, target) {
+      iFrames = [] 
+
+      warnDeprecatedOptions(options)
+
+      switch (typeof target) {
+        case 'undefined':
+        case 'string':
+          Array.prototype.forEach.call(
+            document.querySelectorAll(target || 'iframe'),
+            init.bind(undefined, options)
+          )
+          break
+
+        case 'object':
+          init(options, target)
+          break
+
+        default:
+          throw new TypeError('Unexpected data type (' + typeof target + ')')
+      }
+
+      return iFrames
+    }
+  }
+
+  function createJQueryPublicMethod($) {
+    if (!$.fn) {
+      info('', 'Unable to bind to jQuery, it is not fully loaded.')
+    } else if (!$.fn.iFrameResize) {
+      $.fn.iFrameResize = function $iFrameResizeF(options) {
+        function init(index, element) {
+          setupIFrame(element, options)
+        }
+
+        return this.filter('iframe').each(init).end()
+      }
+    }
+  }
+
+  if (window.jQuery) {
+    createJQueryPublicMethod(window.jQuery)
+  }
+
+  if (typeof define === 'function' && define.amd) {
+    define([], factory)
+  } else if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory()
+  }
+  window.iFrameResize = window.iFrameResize || factory()
+})()
 
 
-// iframeResizer v4.3.2 
 
 var urlParams;
 (window.onpopstate = function () {
     var match,
-        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        pl     = /\+/g,
         search = /([^&=]+)=?([^&]*)/g,
         decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
         query  = window.location.search.substring(1);

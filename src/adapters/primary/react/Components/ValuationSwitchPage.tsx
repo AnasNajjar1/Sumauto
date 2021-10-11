@@ -45,6 +45,8 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
         return <></>;
     }
 
+    console.log(vehicle.makeId, typeof vehicle.makeId, TextUtils.translateMakeId(vehicle.makeId));
+
     const replacedPrivateSellLink = privateSellLink
         ?.replace('[make]', TextUtils.translateMakeId(vehicle.makeId))
         .replace('[year]', vehicle.year)
@@ -52,7 +54,6 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
 
     return (
         <div className="page page-record" id="top">
-            {status}
             <Loader status={status}>
                 <Container fluid>
                     <h1 className="text-center">

@@ -20,8 +20,6 @@ export class RecordMapper implements Mapper<TRecord> {
         } else {
             status = 'UNQUOTABLE';
         }
-        console.log(vehicle.registrationDate);
-        console.log(new Date(vehicle.registrationDate).getMonth().toString());
 
         const year = new Date(vehicle.registrationDate).getFullYear().toString();
         let month = (new Date(vehicle.registrationDate).getMonth() + 1).toString();

@@ -3,6 +3,7 @@ import {
     Error,
     Slot,
     TClientConfig,
+    TJourney,
     TRecord,
     TReferentialItem,
     TRefrentialElement,
@@ -13,7 +14,7 @@ export type TActionStatus = 'idle' | 'pending' | 'succeeded' | 'failed' | 'saved
 export interface AppState {
     client: {
         name: string;
-        journeyType: string;
+        journeyType: TJourney;
         config: TClientConfig;
     };
     unsubscribe: {

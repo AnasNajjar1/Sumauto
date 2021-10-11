@@ -1,11 +1,16 @@
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
-import { TVehicle } from '../../../../../hexagon/interfaces';
+import { TJourney, TVehicle } from '../../../../../hexagon/interfaces';
 import { AutobizRecordVehicleDto } from '../dtos/recordVehicleDto';
 
 export class RecordVehicleMapper implements Mapper<TVehicle> {
-    static toAutobiz(identifier: string, recordVehicle: TVehicle): AutobizRecordVehicleDto {
+    static toAutobiz(
+        identifier: string,
+        offer: TJourney,
+        recordVehicle: TVehicle,
+    ): AutobizRecordVehicleDto {
         return {
             identifier,
+            offer,
             makeId: Number(recordVehicle.make),
             modelId: Number(recordVehicle.model),
             month: Number(recordVehicle.month),

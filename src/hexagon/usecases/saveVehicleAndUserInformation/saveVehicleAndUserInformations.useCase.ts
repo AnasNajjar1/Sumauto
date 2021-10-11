@@ -10,25 +10,29 @@ export const saveVehicleAndUserInformationsUseCase =
     async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
         dispatch(actionCreators.Actions.saveVehicleAndUserInformationsSaving());
 
-        const { config } = getState().client;
+        const { config, journeyType } = getState().client;
 
         const { make, model, month, year, fuel, body, door, gear, engine, version, mileage } =
             getState().form.vehicle;
 
         // Saving vehicle and create record
-        const resultVehicle = await recordGateway.saveVehicleInformation(config.identifier, {
-            make,
-            model,
-            month,
-            year,
-            fuel,
-            body,
-            door,
-            gear,
-            engine,
-            version,
-            mileage,
-        });
+        const resultVehicle = await recordGateway.saveVehicleInformation(
+            config.identifier,
+            journeyType,
+            {
+                make,
+                model,
+                month,
+                year,
+                fuel,
+                body,
+                door,
+                gear,
+                engine,
+                version,
+                mileage,
+            },
+        );
 
         if (isLeft(resultVehicle)) {
             dispatch(dislayErrorUseCase('create_record_failed'));

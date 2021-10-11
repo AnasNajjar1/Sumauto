@@ -78,7 +78,7 @@ export class TextUtils {
             '336': '66',
             '368': '531',
             '91': '35',
-            '2': '36',
+            '92': '36',
             '94': '37',
         };
         return sumautoId[autobizId] ? sumautoId[autobizId] : '0';

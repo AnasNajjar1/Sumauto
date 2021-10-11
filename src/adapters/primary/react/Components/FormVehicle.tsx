@@ -259,8 +259,8 @@ export const FormVehicle: React.FC = () => {
                                             id="imported"
                                             tooltip
                                             data={[
-                                                { name: 'yes', value: '1' },
-                                                { name: 'no', value: '2' },
+                                                { name: 'yes', value: 'yes' },
+                                                { name: 'no', value: 'no' },
                                             ]}
                                         />
                                     </Col>
@@ -285,8 +285,8 @@ export const FormVehicle: React.FC = () => {
                                             label="history"
                                             id="history"
                                             data={[
-                                                { name: 'yes', value: '1' },
-                                                { name: 'no', value: '2' },
+                                                { name: 'yes', value: 'yes' },
+                                                { name: 'no', value: 'no' },
                                             ]}
                                         />
                                     </Col>
@@ -295,8 +295,8 @@ export const FormVehicle: React.FC = () => {
                                             label="running"
                                             id="running"
                                             data={[
-                                                { name: 'yes', value: '1' },
-                                                { name: 'no', value: '2' },
+                                                { name: 'yes', value: 'yes' },
+                                                { name: 'no', value: 'no' },
                                             ]}
                                         />
                                     </Col>

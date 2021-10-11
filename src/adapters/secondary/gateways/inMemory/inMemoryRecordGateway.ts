@@ -9,6 +9,7 @@ import {
     TCustomer,
     TRecord,
     TAppointment,
+    TJourney,
 } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { RecordGateway } from '../../../../hexagon/gateways/recordGateway.interface';
@@ -20,6 +21,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
 
     async saveVehicleInformation(
         identifier: string,
+        offer: TJourney,
         vehicleInformation: TVehicle,
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {

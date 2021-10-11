@@ -1,5 +1,8 @@
+import { TJourney } from '../../../../../hexagon/interfaces';
+
 export interface AutobizRecordVehicleDto {
     identifier: string;
+    offer: TJourney;
     makeId: number;
     modelId: number;
     month: number;

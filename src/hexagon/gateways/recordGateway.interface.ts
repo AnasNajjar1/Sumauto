@@ -6,6 +6,7 @@ import {
     TCustomer,
     TRecord,
     TAppointment,
+    TJourney,
 } from '../interfaces';
 
 import { ApiResponse } from '../infra/ApiResponse';
@@ -13,6 +14,7 @@ import { ApiResponse } from '../infra/ApiResponse';
 export interface RecordGateway {
     saveVehicleInformation(
         identifier: string,
+        offer: TJourney,
         vehicleInformation: TVehicle,
     ): Promise<ApiResponse<RecordIds>>;
 

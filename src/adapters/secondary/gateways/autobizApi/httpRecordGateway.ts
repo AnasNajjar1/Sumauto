@@ -8,6 +8,7 @@ import {
     TCustomer,
     TRecord,
     TAppointment,
+    TJourney,
 } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { RecordGateway } from '../../../../hexagon/gateways/recordGateway.interface';
@@ -21,10 +22,11 @@ import { AppointmentMapper } from './mappers/appointment.mapper';
 export class HttpRecordGateway extends BaseApi implements RecordGateway {
     async saveVehicleInformation(
         identifier: string,
+        offer: TJourney,
         vehicleInformation: TVehicle,
     ): Promise<ApiResponse<RecordIds>> {
         try {
-            const data = RecordVehicleMapper.toAutobiz(identifier, vehicleInformation);
+            const data = RecordVehicleMapper.toAutobiz(identifier, offer, vehicleInformation);
             const response = await this.post(`/records`, data);
             if (response) {
                 return right(response.data);
