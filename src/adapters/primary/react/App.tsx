@@ -33,13 +33,13 @@ const App: React.FC = () => {
 
     moment.locale(lang);
 
-    const tagManagerArgs = {
-        gtmId: 'GTM-000000',
-        dataLayer: {
-            site: clientSlug,
-        },
-    };
-    TagManager.initialize(tagManagerArgs);
+    // const tagManagerArgs = {
+    //     gtmId: 'GTM-000000',
+    //     dataLayer: {
+    //         site: clientSlug,
+    //     },
+    // };
+    // TagManager.initialize(tagManagerArgs);
 
     return (
         <TranslateProvider projectName="sumauto-app" stage="dev" language={lang}>

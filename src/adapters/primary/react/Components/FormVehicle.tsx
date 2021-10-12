@@ -50,12 +50,12 @@ export const FormVehicle: React.FC = () => {
     const handleSubmitForm = () => {
         dispatch(saveVehicleAndUserInformationsUseCase());
         setCanQuote(false);
-        TagManager.dataLayer({
-            dataLayer: {
-                event: 'step4_validate',
-                step: 'form/validation_formulaire',
-            },
-        });
+        // TagManager.dataLayer({
+        //     dataLayer: {
+        //         event: 'step4_validate',
+        //         step: 'form/validation_formulaire',
+        //     },
+        // });
     };
 
     useEffect(() => {
@@ -76,12 +76,12 @@ export const FormVehicle: React.FC = () => {
 
         dispatch(getReferentialList('make'));
 
-        TagManager.dataLayer({
-            dataLayer: {
-                event: 'step1_validate',
-                step: 'form/information_de_base',
-            },
-        });
+        // TagManager.dataLayer({
+        //     dataLayer: {
+        //         event: 'step1_validate',
+        //         step: 'form/information_de_base',
+        //     },
+        // });
     }, [dispatch]);
 
     useEffect(() => {
@@ -133,27 +133,27 @@ export const FormVehicle: React.FC = () => {
         );
     }, [dispatch, vehicle, vehicleState, particular, checkZipCode, checkFormValid]);
 
-    useEffect(() => {
-        if (displaySectionMoreDetails) {
-            TagManager.dataLayer({
-                dataLayer: {
-                    event: 'step2_validate',
-                    step: 'form/mes_details',
-                },
-            });
-        }
-    }, [dispatch, displaySectionMoreDetails]);
+    // useEffect(() => {
+    //     if (displaySectionMoreDetails) {
+    //         TagManager.dataLayer({
+    //             dataLayer: {
+    //                 event: 'step2_validate',
+    //                 step: 'form/mes_details',
+    //             },
+    //         });
+    //     }
+    // }, [dispatch, displaySectionMoreDetails]);
 
-    useEffect(() => {
-        if (displaySectionAdditionalInformation) {
-            TagManager.dataLayer({
-                dataLayer: {
-                    event: 'step3_validate',
-                    step: 'form/information_additionnelle',
-                },
-            });
-        }
-    }, [dispatch, displaySectionAdditionalInformation]);
+    // useEffect(() => {
+    //     if (displaySectionAdditionalInformation) {
+    //         TagManager.dataLayer({
+    //             dataLayer: {
+    //                 event: 'step3_validate',
+    //                 step: 'form/information_additionnelle',
+    //             },
+    //         });
+    //     }
+    // }, [dispatch, displaySectionAdditionalInformation]);
 
     useEffect(() => {
         if (recordUid && recordStatus === 'saved') {

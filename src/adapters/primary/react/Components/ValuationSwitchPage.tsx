@@ -45,8 +45,6 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
         return <></>;
     }
 
-    console.log(vehicle.makeId, typeof vehicle.makeId, TextUtils.translateMakeId(vehicle.makeId));
-
     const replacedPrivateSellLink = privateSellLink
         ?.replace('[make]', TextUtils.translateMakeId(vehicle.makeId))
         .replace('[year]', vehicle.year)
