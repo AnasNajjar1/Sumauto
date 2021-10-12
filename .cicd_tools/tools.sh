@@ -17,11 +17,18 @@ change_environment_variable_to(){
   sed -i "s/REACT_APP_ENV=.*/REACT_APP_ENV=${NEW_ENV}/g" ./.env
 }
 
-npm_build(){
+npm_build_prod(){
   npm set registry https://nx.aut.bz/repository/npm/ 
   npm install --prefer-offline --no-audit --progress=false
   npm rebuild node-sass 
-  CI=false npm run-script build 
+  CI=false npm run-script build:prod 
+}
+
+npm_build_staging(){
+  npm set registry https://nx.aut.bz/repository/npm/ 
+  npm install --prefer-offline --no-audit --progress=false
+  npm rebuild node-sass 
+  CI=false npm run-script build:staging 
 }
 
 assert_build_folder_exists(){
