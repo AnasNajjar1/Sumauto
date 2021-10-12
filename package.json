@@ -12,6 +12,7 @@
         "autobiz-translate": "^1.0.15",
         "axios": "^0.21.4",
         "bootstrap": "4.6.0",
+        "env-cmd": "^10.1.0",
         "fp-ts": "^2.11.4",
         "immer": "^9.0.6",
         "lodash": "^4.17.21",
