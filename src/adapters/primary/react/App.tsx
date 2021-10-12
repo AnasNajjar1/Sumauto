@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
 import { Spinner } from 'reactstrap';
+import moment from 'moment';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
@@ -15,9 +16,15 @@ import { UnsubscribePage } from './Components/UnsubscribePage';
 import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
 import { ValuationSwitch } from './Components/ValuationSwitchPage';
 import { PrivacyPolicy } from './Components/PrivacyPolicy';
+import 'moment/locale/es';
+import { getClientSelector } from '../view-models-generators/clientSelector';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
+    const { config } = useSelector(getClientSelector).client;
+    const { lang } = config;
+
+    moment.locale(lang);
 
     const dispatch = useDispatch();
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
