@@ -41,6 +41,8 @@ const App: React.FC = () => {
     };
     TagManager.initialize(tagManagerArgs);
 
+    console.log(process.env.REACT_APP_ENV);
+
     return (
         <TranslateProvider projectName="sumauto-app" stage="dev" language={lang}>
             <React.Suspense
