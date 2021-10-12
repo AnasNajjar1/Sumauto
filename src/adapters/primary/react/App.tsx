@@ -17,14 +17,9 @@ import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/
 import { ValuationSwitch } from './Components/ValuationSwitchPage';
 import { PrivacyPolicy } from './Components/PrivacyPolicy';
 import 'moment/locale/es';
-import { getClientSelector } from '../view-models-generators/clientSelector';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
-    const { config } = useSelector(getClientSelector).client;
-    const { lang } = config;
-
-    moment.locale(lang);
 
     const dispatch = useDispatch();
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
