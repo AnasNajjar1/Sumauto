@@ -14,7 +14,7 @@ npm_install_optimized(){
 
 change_environment_variable_to(){
   local NEW_ENV=${1:?Error, I expected new environement}
-  sed -i "s/REACT_APP_ENV=.*/REACT_APP_ENV=${NEW_ENV}/g" ./.env
+  sed -i "s/REACT_APP_ENV=.*/REACT_APP_ENV=${NEW_ENV}/g" ./.env.production
 }
 
 npm_build_prod(){
