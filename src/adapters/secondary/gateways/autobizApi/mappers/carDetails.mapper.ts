@@ -1,5 +1,4 @@
 import moment from 'moment';
-import 'moment/locale/es';
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
 import { AutobizCarDetailsDto } from '../dtos/carDetailsDto';
 import { CarDetails } from '../../../../../hexagon/interfaces';
@@ -9,7 +8,6 @@ export class CarDetailsMapper implements Mapper<CarDetails> {
         const year = moment(carDetailsDto.regDate, 'YYYY-MM-DD').toDate().getFullYear().toString();
         const month = moment(carDetailsDto.regDate, 'YYYY-MM-DD').toDate().getMonth().toString();
         const monthName = moment(carDetailsDto.regDate, 'YYYY-MM-DD')
-            .locale('es')
             .format('MMMM')
             .toString()
             .toUpperCase();

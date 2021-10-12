@@ -60,7 +60,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                         {t('appraisal_of')} {vehicle.makeName} {vehicle.modelName}
                     </h1>
                     <p className="text-center">
-                        {t('your_file_number')}: <strong>{offerNumber}</strong>
+                        {t('your_file_number')} <strong>{offerNumber}</strong>
                     </p>
 
                     <Row>

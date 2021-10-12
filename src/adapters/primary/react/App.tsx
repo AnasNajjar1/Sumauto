@@ -1,8 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
 import { Spinner } from 'reactstrap';
+import TagManager from 'react-gtm-module';
+import moment from 'moment';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
@@ -15,10 +17,13 @@ import { UnsubscribePage } from './Components/UnsubscribePage';
 import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/setJourneyType.useCase';
 import { ValuationSwitch } from './Components/ValuationSwitchPage';
 import { PrivacyPolicy } from './Components/PrivacyPolicy';
+import 'moment/locale/es';
+import { getClientSelector } from '../view-models-generators/clientSelector';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
-
+    const { config } = useSelector(getClientSelector).client;
+    const { lang } = config;
     const dispatch = useDispatch();
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
         return <ErrorPage />;
@@ -26,8 +31,18 @@ const App: React.FC = () => {
     dispatch(setClientNameUseCase(clientSlug));
     dispatch(setJourneyTypeUseCase(journeyType));
 
+    moment.locale(lang);
+
+    const tagManagerArgs = {
+        gtmId: 'GTM-000000',
+        dataLayer: {
+            site: clientSlug,
+        },
+    };
+    TagManager.initialize(tagManagerArgs);
+
     return (
-        <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
+        <TranslateProvider projectName="sumauto-app" stage="dev" language={lang}>
             <React.Suspense
                 fallback={
                     <div className="loading-page">

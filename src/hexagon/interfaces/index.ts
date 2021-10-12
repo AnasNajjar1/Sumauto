@@ -82,6 +82,7 @@ export type CarDetails = {
 };
 
 export type TClientConfig = {
+    lang: 'es';
     locale: string;
     currency: string;
     identifier: string;
