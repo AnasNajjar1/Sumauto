@@ -21,135 +21,15 @@
       <link rel="canonical" href='https://www.autocasion.com' />
       <link type="text/css" rel="stylesheet" href="https://assets0.autocasion.com/assets/vendor/autocasion-design/dist/css/print.f7e7d00aa59e785182be.css" media="print"/>
       <!-- Variable Analytic -->
-      <script type="text/javascript" title="googleAnalytics">
-         var pagina_ga = 'home';
-      </script>
-      <script type="didomi/javascript" data-vendor="didomi:google" async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-      <script>var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];</script>
-      <script async="async" type="text/javascript">
-         var tamRoba   = 300;
-         
-         var gptAdSlots = [];
-         
-         (function () {
-         //luego simplificar
-         googletag.cmd.push(function () {
-             // window.googletag.pubads().setRequestNonPersonalizedAds(1);
-             var _parts = ("; " + document.cookie).split("; LeyCookiesV2=");
-             var uhc = (_parts === 2 && _parts.pop().split(";").shift() === "1") ? 0 : 1;
-             window.googletag.pubads().setRequestNonPersonalizedAds(uhc);
-         
-             var app = Voonto.getInstance();
-             app.when('consent:advertising').then(function(result) {
-                 window.googletag.pubads().setRequestNonPersonalizedAds(result ? 0 : 1);
-             });
-             // Define a size mapping object. The first parameter to addSize is
-             // a viewport size, while the second is a list of allowed ad sizes.
-                 var mappingRobapaginas = googletag.sizeMapping().
-         addSize([0, 0], [320, 50],[320, 100]).
-         addSize([768, 426], [728, 90]).
-         addSize([1024, 426], [[300, 250],[300, 600]]). // Horizontal Tablet
-         build();
-         
-         
-         // This mapping will display ads all users
-         var mappingAll = googletag.sizeMapping().
-         addSize([0, 0], 'fluid').
-         build();
-         
-         gptAdSlots['botonHome_1'] = googletag.defineSlot('/4900/vocento.autocasion/HOME', 'fluid', 'botonHome_1').defineSizeMapping(mappingAll).setCollapseEmptyDiv(true).addService(googletag.pubads().set("page_url", 'https://www.autocasion.com/')).setTargeting('pos', 'botonHome_1');
-         gptAdSlots['botonHome_2'] = googletag.defineSlot('/4900/vocento.autocasion/HOME', 'fluid', 'botonHome_2').defineSizeMapping(mappingAll).setCollapseEmptyDiv(true).addService(googletag.pubads().set("page_url", 'https://www.autocasion.com/')).setTargeting('pos', 'botonHome_2');
-         gptAdSlots['botonHome_3'] = googletag.defineSlot('/4900/vocento.autocasion/HOME', 'fluid', 'botonHome_3').defineSizeMapping(mappingAll).setCollapseEmptyDiv(true).addService(googletag.pubads().set("page_url", 'https://www.autocasion.com/')).setTargeting('pos', 'botonHome_3');
-         gptAdSlots['botonHome_4'] = googletag.defineSlot('/4900/vocento.autocasion/HOME', 'fluid', 'botonHome_4').defineSizeMapping(mappingAll).setCollapseEmptyDiv(true).addService(googletag.pubads().set("page_url", 'https://www.autocasion.com/')).setTargeting('pos', 'botonHome_4');
-         gptAdSlots['robapaginas'] = googletag.defineSlot('/4900/vocento.autocasion/HOME', [[300, 250],[300, 600], [728, 90],[320, 50], [320, 100]], 'robapaginas').defineSizeMapping(mappingRobapaginas).setCollapseEmptyDiv(true).addService(googletag.pubads().set("page_url", 'https://www.autocasion.com/')).setTargeting('pos', 'robapaginas');
-         gptAdSlots['robapaginas_dos'] = googletag.defineSlot('/4900/vocento.autocasion/HOME', [[300, 250],[300, 600]], 'robapaginas_dos').defineSizeMapping(mappingRobapaginas).setCollapseEmptyDiv(true).addService(googletag.pubads().set("page_url", 'https://www.autocasion.com/')).setTargeting('pos', 'robapaginas_dos');
-         gptAdSlots['FloorAd'] = googletag.defineSlot('/4900/vocento.autocasion/HOME', [[728, 90]], 'FloorAd').setCollapseEmptyDiv(true).addService(googletag.pubads().set("page_url", 'https://www.autocasion.com/')).setTargeting('pos', 'FloorAd');
-         ; googletag.pubads().enableSingleRequest(); googletag.pubads().collapseEmptyDivs();
-             // Start ad fetching
-             googletag.enableServices();
-         });
-         })();
-         
-      </script>
-      <!-- Google Tag Manager -->
-      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                                                   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-         })(window,document,'script','dataLayer','GTM-5XGST7');
-      </script>
-      <!-- End Google Tag Manager -->
-      <script src="https://assets0.autocasion.com/assets/vendor/autocasion-design/dist/adBlock.417358b121302bc4e4af.bundle.js"></script>
-      <script type="text/javascript">
-         if (!String.prototype.includes) {
-             String.prototype.includes = function(search, start) {
-                 'use strict';
-                 if (typeof start !== 'number') {
-                     start = 0;
-                 }
-         
-                 if (start + search.length > this.length) {
-                     return false;
-                 } else {
-                     return this.indexOf(search, start) !== -1;
-                 }
-             };
-         }
-         if (!Array.prototype.includes) {
-             Object.defineProperty(Array.prototype, 'includes', {
-                 value: function(searchElement, fromIndex) {
-         
-                     if (this == null) {
-                         throw new TypeError('"this" es null o no está definido');
-                     }
-         
-                     var o = Object(this);
-         
-                     var len = o.length >>> 0;
-         
-                     if (len === 0) {
-                         return false;
-                     }
-         
-                     var n = fromIndex | 0;
-         
-                     var k = Math.max(n >= 0 ? n : len - Math.abs(n), 0);
-         
-                     function sameValueZero(x, y) {
-                         return x === y || (typeof x === 'number' && typeof y === 'number' && isNaN(x) && isNaN(y));
-                     }
-                     while (k < len) {
-                         if (sameValueZero(o[k], searchElement)) {
-                             return true;
-                         }
-                         k++;
-                     }
-         
-                     return false;
-                 }
-             });
-         }
-      </script>
-      <script src="//static.vocento.com/voonto2/latest/voonto.js?version=20211011091455" data-cmp="true" data-gdpr-migrate="LeyCookiesV2" data-cmp-position="bottom" data-kangaroo="false"></script>
+     
    </head>
    <body data-ng-app="Autocasion" class="">
-      <!-- Google Tag Manager (noscript) -->
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5XGST7"
-         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-      <!-- End Google Tag Manager (noscript) -->
+
       <div class="cartel-footer">
          <div id="FloorAd" class="FloorAd">
-            <script defer type="text/javascript">
-               googletag.cmd.push(function () { window.googletag.display("FloorAd"); });
-            </script>
+
          </div>
-         <script>
-            window.onmessage = function(event) {
-                if(event.data === 'cerrarFloorAd'){
-                    document.getElementsByClassName('cartel-footer')[0].remove();
-                }
-            }
-         </script>
+
       </div>
       <nav class="navbar">
          <div id="navbar-vue" class="navbar-vue">
