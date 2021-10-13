@@ -55,7 +55,14 @@
                 }
                 else{
                     var link = document.getElementById(target + '_link');
-                    link.href = target + '-sale.html?sif_page=record&sif_recordUid=' + uid;
+                    var page = target;
+                    if(target == "unoauto"){
+                        page = page + ".html";
+                    }
+                    else{
+                        page = page + "-sale.html";
+                    }
+                    link.href = page + '?sif_page=record&sif_recordUid=' + uid;
                 }
             }
         </script>
