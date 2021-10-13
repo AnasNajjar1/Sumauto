@@ -150,9 +150,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                     />
                                 </div>
                                 <div>
-                                    <div className="button-dealer-name">
-                                        {`${t('point_of_sale')} ${d.city}`}
-                                    </div>
+                                    <div className="button-dealer-name">{d.name}</div>
                                     <div>
                                         <FontAwesomeIcon icon={faMapMarkerAlt} /> {d.distance}{' '}
                                         {t('km')}
