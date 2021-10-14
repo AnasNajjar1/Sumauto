@@ -17,13 +17,17 @@ import { InputValidation } from './InputValidation';
 import { Message } from './Message';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 
-export const MileageInput: React.FC = () => {
+type MileageInputProps = {
+    error: boolean;
+};
+
+export const MileageInput: React.FC<MileageInputProps> = ({ error }) => {
     const dispatch = useDispatch();
 
     const { vehicle } = useSelector(getFormSelector);
 
     const [mileage, setMileage] = useState<string>('');
-    const [touched, setTouched] = useState<boolean>(false);
+    const [touched, setTouched] = useState<boolean>();
     const [displayWarning, setDisplayWarning] = useState<boolean>(false);
     const [valid, setValid] = useState<boolean>();
 
@@ -90,6 +94,10 @@ export const MileageInput: React.FC = () => {
             setValid(false);
         }
     }, [dispatch, mileage, touched]);
+
+    useEffect(() => {
+        if (error) setValid(false);
+    }, [dispatch, error]);
 
     let formatedValue: string = new Intl.NumberFormat('es-ES').format(Number(mileage));
     if (formatedValue === '0') formatedValue = '';

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import _ from 'lodash';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { TReferentialItem, TRefrentialElement } from '../../../../hexagon/interfaces';
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
@@ -15,9 +14,15 @@ type ReferentialInputProps = {
     scope: TReferentialItem;
     label: string;
     tooltip?: boolean;
+    error?: boolean;
 };
 
-export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scope, tooltip }) => {
+export const ReferentialSelect: React.FC<ReferentialInputProps> = ({
+    label,
+    scope,
+    tooltip,
+    error,
+}) => {
     const { referential, vehicle, vehicleName } = useSelector(getFormSelector);
     const dispatch = useDispatch();
 
@@ -41,6 +46,8 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({ label, scop
     let valid: boolean | undefined;
     if (value) valid = true;
     if (status === 'failed') valid = false;
+    if (error && !value) valid = false;
+
     return (
         <FormGroup className={`form-group-${scope}`} id={`form_group_${scope}`}>
             <Label for={scope}>

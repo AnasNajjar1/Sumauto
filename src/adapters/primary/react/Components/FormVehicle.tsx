@@ -34,6 +34,7 @@ export const FormVehicle: React.FC = () => {
 
     const { uid: recordUid, status: recordStatus } = useSelector(getRecordSelector);
     const [submitting, setSubmitting] = useState<boolean>(false);
+    const [errors, setErrors] = useState<any>({});
     const [canQuote, setCanQuote] = useState<boolean>(false);
     const [trySubmit, setTrySubmit] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
@@ -142,8 +143,8 @@ export const FormVehicle: React.FC = () => {
         else if (vehicle.gear === '') scrollToElement('form_group_gear', 15);
         else if (vehicle.engine === '') scrollToElement('form_group_engine', 15);
         else if (vehicle.version === '') scrollToElement('form_group_version', 15);
-        else if (vehicle.mileage === '') scrollToElement('form_group_mileage', 15);
-        // else if (!vehicleState.imported) scrollToElement('form_group_imported', 15);
+        else if (!vehicle.mileage) scrollToElement('form_group_mileage', 15);
+        else if (!vehicleState.imported) scrollToElement('form_group_imported', 15);
         else if (!vehicleState.history) scrollToElement('form_group_history', 15);
         else if (!vehicleState.running) scrollToElement('form_group_running', 15);
         else if (!vehicleState.sellProject) scrollToElement('form_group_sellProject', 15);
@@ -152,6 +153,28 @@ export const FormVehicle: React.FC = () => {
 
         setTrySubmit(false);
     }, [dispatch, vehicle, vehicleState, scrollToElement, trySubmit]);
+
+    useEffect(() => {
+        if (trySubmit) {
+            setErrors({
+                model: !vehicle.model,
+                month: !vehicle.month,
+                year: !vehicle.year,
+                version: !vehicle.version,
+                fuel: !vehicle.fuel,
+                body: !vehicle.body,
+                door: !vehicle.door,
+                gear: !vehicle.gear,
+                engine: !vehicle.engine,
+                mileage: !vehicle.mileage,
+                import: !vehicleState.imported,
+                history: !vehicleState.history,
+                running: !vehicleState.running,
+                email: !particular.email,
+                zipCode: !particular.zipCode,
+            });
+        }
+    }, [dispatch, trySubmit, vehicle]);
 
     if (submitting) {
         return (
@@ -201,7 +224,11 @@ export const FormVehicle: React.FC = () => {
                                 </Col>
 
                                 <Col xs={12} sm={6} lg={4}>
-                                    <ReferentialSelect label="model" scope="model" />
+                                    <ReferentialSelect
+                                        label="model"
+                                        scope="model"
+                                        error={errors.model}
+                                    />
                                 </Col>
                             </Row>
                             <Row>
@@ -210,21 +237,30 @@ export const FormVehicle: React.FC = () => {
                                         label="registration_date"
                                         scope="month"
                                         tooltip
+                                        error={errors.month}
                                     />
                                 </Col>
 
                                 <Col xs={12} sm={6} lg={4}>
-                                    <ReferentialSelect label="" scope="year" />
+                                    <ReferentialSelect label="" scope="year" error={errors.year} />
                                 </Col>
                             </Row>
                             <p className="form-help">{t('registration_date_help')}</p>
                             <Row>
                                 <Col xs={12} sm={6} lg={4}>
-                                    <ReferentialSelect label="fuel" scope="fuel" />
+                                    <ReferentialSelect
+                                        label="fuel"
+                                        scope="fuel"
+                                        error={errors.fuel}
+                                    />
                                 </Col>
 
                                 <Col xs={12} sm={6} lg={4}>
-                                    <ReferentialSelect label="body" scope="body" />
+                                    <ReferentialSelect
+                                        label="body"
+                                        scope="body"
+                                        error={errors.body}
+                                    />
                                 </Col>
                             </Row>
                         </Col>
@@ -237,15 +273,28 @@ export const FormVehicle: React.FC = () => {
                             <Col xs={12} sm={8} lg={9}>
                                 <Row>
                                     <Col xs={12} sm={6} lg={4}>
-                                        <ReferentialSelect label="door" scope="door" />
+                                        <ReferentialSelect
+                                            label="door"
+                                            scope="door"
+                                            error={errors.door}
+                                        />
                                     </Col>
 
                                     <Col xs={12} sm={6} lg={4}>
-                                        <ReferentialSelect label="gear" scope="gear" />
+                                        <ReferentialSelect
+                                            label="gear"
+                                            scope="gear"
+                                            error={errors.gear}
+                                        />
                                     </Col>
 
                                     <Col xs={12} sm={6} lg={4}>
-                                        <ReferentialSelect label="engine" scope="engine" tooltip />
+                                        <ReferentialSelect
+                                            label="engine"
+                                            scope="engine"
+                                            tooltip
+                                            error={errors.engine}
+                                        />
                                     </Col>
                                 </Row>
 
@@ -255,7 +304,12 @@ export const FormVehicle: React.FC = () => {
 
                         <Row>
                             <Col xs={12} sm={8} lg={6}>
-                                <ReferentialSelect label="version" scope="version" tooltip />
+                                <ReferentialSelect
+                                    label="version"
+                                    scope="version"
+                                    tooltip
+                                    error={errors.version}
+                                />
                                 <p className="form-help">{t('version_help')}</p>
                             </Col>
                             <Col xs={12} sm={4} lg={{ size: 3, offset: 3 }}>
@@ -268,7 +322,7 @@ export const FormVehicle: React.FC = () => {
                             </Col>
                         </Row>
 
-                        <MileageInput />
+                        <MileageInput error={errors.mileage} />
 
                         <Row>
                             <Col xs={12} sm={8} lg={9}>
@@ -282,6 +336,7 @@ export const FormVehicle: React.FC = () => {
                                                 { name: 'yes', value: 'yes' },
                                                 { name: 'no', value: 'no' },
                                             ]}
+                                            error={errors.import}
                                         />
                                     </Col>
                                 </Row>
@@ -308,6 +363,7 @@ export const FormVehicle: React.FC = () => {
                                                 { name: 'yes', value: 'yes' },
                                                 { name: 'no', value: 'no' },
                                             ]}
+                                            error={errors.history}
                                         />
                                     </Col>
                                     <Col xs={12} md={8} lg={6} xl={5}>
@@ -318,6 +374,7 @@ export const FormVehicle: React.FC = () => {
                                                 { name: 'yes', value: 'yes' },
                                                 { name: 'no', value: 'no' },
                                             ]}
+                                            error={errors.running}
                                         />
                                     </Col>
                                     <Col xs={12} md={12} lg={12} xl={8}>
@@ -325,6 +382,7 @@ export const FormVehicle: React.FC = () => {
                                             label="sellProject"
                                             id="sellProject"
                                             data={sellDelay}
+                                            error={errors.running}
                                         />
                                     </Col>
                                 </Row>
@@ -335,11 +393,11 @@ export const FormVehicle: React.FC = () => {
                             <Col xs={12} sm={8} lg={9} xl={6}>
                                 <Row>
                                     <Col xs={12}>
-                                        <EmailInput />
+                                        <EmailInput error={errors.email} />
                                     </Col>
 
                                     <Col xs={12} md={6}>
-                                        <ZipCodeInput />
+                                        <ZipCodeInput error={errors.zipCode} />
                                     </Col>
                                     <Col xs={12} md={6}>
                                         <PhoneInput required={false} />

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
     Col,
     FormGroup,
-    Input,
     InputGroup,
     InputGroupAddon,
     InputGroupText,
@@ -13,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { useForm, useFormState } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
@@ -22,7 +21,11 @@ import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 
-export const EmailInput: React.FC = () => {
+type EmailInputProps = {
+    error?: boolean;
+};
+
+export const EmailInput: React.FC<EmailInputProps> = ({ error }) => {
     const dispatch = useDispatch();
     const { config } = useSelector(getClientSelector);
     const { particular } = useSelector(getFormSelector);
@@ -42,7 +45,7 @@ export const EmailInput: React.FC = () => {
 
     const validEmail = () => {
         let valid;
-        if (errors.email) valid = false;
+        if (errors.email || error) valid = false;
         if (!errors.email && getValues('email')) valid = true;
         return valid;
     };

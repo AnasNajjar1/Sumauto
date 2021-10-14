@@ -12,14 +12,18 @@ import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { checkZipcodeUseCase } from '../../../../hexagon/usecases/checkZipCode/checkZipcode.useCase';
 import { getCheckZipCodeSelector } from '../../view-models-generators/checkZipCodeSelector';
 
-export const ZipCodeInput: React.FC = () => {
+type ZipCodeInputProps = {
+    error: boolean;
+};
+
+export const ZipCodeInput: React.FC<ZipCodeInputProps> = ({ error }) => {
     const dispatch = useDispatch();
 
     const { config } = useSelector(getClientSelector);
     const { particular } = useSelector(getFormSelector);
     const [zipCode, setZipCode] = useState<string>('');
     const [touched, setTouched] = useState<boolean>(false);
-    const [valid, setValid] = useState<boolean>();
+    const [valid, setValid] = useState<boolean>(false);
 
     useEffect(() => {
         setZipCode(particular.zipCode);
@@ -51,6 +55,13 @@ export const ZipCodeInput: React.FC = () => {
     useEffect(() => {
         if (valid) dispatch(checkZipcodeUseCase(zipCode));
     }, [zipCode, valid]);
+
+    useEffect(() => {
+        if (error) {
+            setValid(false);
+            setTouched(true);
+        }
+    }, [error]);
 
     useEffect(() => {
         if (checkZipCode) {
