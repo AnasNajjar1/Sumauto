@@ -13,6 +13,8 @@ $input-btn-focus-width:  0;
 $grid-gutter-width: 15px;
 $label-margin-bottom: 5px;
 
+$input-btn-padding-y: .587rem;
+
 @import '~bootstrap/scss/bootstrap';
 
 $primaryOpacity : rgba($primary, .1);
@@ -54,12 +56,30 @@ body{
 
 .makes-logo{
     margin-bottom: 1rem;
-    .fivecol{
-        width: 20%;
-        position: relative;
-        padding-right: $halfGutter;
-        padding-left: $halfGutter;
+
+    .fivecol-container{
+        .fivecol{
+            width: 20%;
+            position: relative;
+            padding-right: $halfGutter;
+            padding-left: $halfGutter;
+        }
+
+        // removing the two last logo for mobile
+        @include media-breakpoint-down(xs) {
+            .fivecol{
+                width: 25%;
+            }
+
+            .fivecol:nth-last-child(1),
+            .fivecol:nth-last-child(2){
+                display: none !important;
+                width: 1px;
+            }
+        }
+        // ----
     }
+
     .make-logo-button-container{
         text-align: center;
         font-size: 10px;
@@ -146,6 +166,11 @@ body{
 .cta-block{
     margin: 2rem 0;
     text-align: center;
+    @include media-breakpoint-up(md) {
+        .btn{
+            min-width: 325px;
+        }
+    }
 }
 
 .dealers-list{
@@ -211,10 +236,7 @@ ol {
 
 .page-index{
     .cta-block{
-        @include media-breakpoint-up(lg) {
-            text-align: left;
 
-        }
 
         .btn{
             width: 100%;
@@ -270,9 +292,15 @@ ol {
     .background-private-sell,
     .background-direct-sell{
         padding: $grid-gutter-width;
-        margin-bottom: 2rem;
-        
+        height: 100% !important;
+        display: flex;
+        flex-direction: column;
+
+
+
     }
+
+    
     
 }
 

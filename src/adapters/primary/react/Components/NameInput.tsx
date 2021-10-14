@@ -28,9 +28,9 @@ export const NameInput: React.FC = () => {
         setName(value);
     };
 
-    const handleBlur = () => {
+    useEffect(() => {
         dispatch(setParticularValue('name', name));
-    };
+    }, [dispatch, name]);
 
     return (
         <FormGroup>
@@ -43,7 +43,6 @@ export const NameInput: React.FC = () => {
                         id="name"
                         defaultValue={name}
                         onChange={(e) => handleChange(e.currentTarget.value)}
-                        onBlur={() => handleBlur()}
                     />
                     <InputGroupAddon addonType="append">
                         <InputGroupText>

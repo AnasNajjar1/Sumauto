@@ -61,7 +61,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                         {t('your_file_number')} <strong>{offerNumber}</strong>
                     </p>
 
-                    <Row>
+                    <Row className=" mb-4">
                         <Col sm={6} className="text-center">
                             <div className="background-private-sell">
                                 <Button
@@ -91,7 +91,12 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                     }}
                                 />
 
-                                <Button target="_parent" href={replacedPrivateSellLink} block>
+                                <Button
+                                    target="_parent"
+                                    href={replacedPrivateSellLink}
+                                    className="mt-auto"
+                                    block
+                                >
                                     {t('place_an_ad')}
                                 </Button>
                             </div>
@@ -123,7 +128,11 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                     }}
                                 />
 
-                                <Button block onClick={() => history.push(`/record/${recordUid}`)}>
+                                <Button
+                                    block
+                                    onClick={() => history.push(`/record/${recordUid}`)}
+                                    className="mt-auto"
+                                >
                                     {t('book_an_appointment')}
                                 </Button>
                             </div>

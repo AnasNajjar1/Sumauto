@@ -63,7 +63,7 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                 <h1 className="mb-4">{t('confirmation_title')}</h1>
 
                 <p className="text-center">
-                    {t('your_file_number')}: <strong>{record.offerNumber}</strong>
+                    {t('your_file_number')} <strong>{record.offerNumber}</strong>
                 </p>
 
                 {record.appointment && (

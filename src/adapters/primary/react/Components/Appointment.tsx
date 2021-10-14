@@ -26,7 +26,6 @@ import {
 import { t } from 'autobiz-translate';
 
 import _ from 'lodash';
-import { updateLabel } from 'typescript';
 import {
     getDealerListSelector,
     getDealerSlotListSelector,
@@ -140,7 +139,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                                 onClick={() => {
                                     setDealer({
                                         id: d.id,
-                                        name: `${t('point_of_sale')} ${d.city}`,
+                                        name: d.name,
                                     });
                                 }}
                             >
@@ -284,25 +283,6 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
             )}
 
             <Container fluid>
-                {formValid && (
-                    <>
-                        <h2 className="mt-4">{t('appointment_resume')}</h2>
-                        <Row>
-                            <Col>
-                                <AppointmentResume
-                                    // placeName={`${t('point_of_sale')} ${dealer.city}`}
-                                    placeName={dealer.name}
-                                    date={date}
-                                    hour={_.find(hourList, (o) => o.id === hour)?.hour || ''}
-                                />
-                            </Col>
-                            <Col className="d-none d-sm-block">
-                                <Picture background="calendar" />
-                            </Col>
-                        </Row>
-                    </>
-                )}
-
                 <CtaBlock>
                     <Button
                         color="primary"
@@ -314,6 +294,24 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                         {t('book_an_appointment_now')}
                     </Button>
                 </CtaBlock>
+
+                {formValid && (
+                    <>
+                        <h2 className="mt-4">{t('appointment_resume')}</h2>
+                        <Row>
+                            <Col>
+                                <AppointmentResume
+                                    placeName={dealer.name}
+                                    date={date}
+                                    hour={_.find(hourList, (o) => o.id === hour)?.hour || ''}
+                                />
+                            </Col>
+                            <Col className="d-none d-sm-block">
+                                <Picture background="calendar" />
+                            </Col>
+                        </Row>
+                    </>
+                )}
 
                 <p className="footnote">{t('appoitment_note')}</p>
 
