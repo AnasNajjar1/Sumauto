@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, Spinner } from 'reactstrap';
 import { t } from 'autobiz-translate';
 import { useHistory } from 'react-router';
 import { ProgressSteps } from './ProgressSteps';
@@ -33,8 +33,9 @@ export const FormVehicle: React.FC = () => {
     const { journeyType, config } = useSelector(getClientSelector).client;
 
     const { uid: recordUid, status: recordStatus } = useSelector(getRecordSelector);
-
+    const [submitting, setSubmitting] = useState<boolean>(false);
     const [canQuote, setCanQuote] = useState<boolean>(false);
+    const [trySubmit, setTrySubmit] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
     const [displaySectionMoreDetails, setDisplaySectionMoreDetails] = useState<boolean>(false);
     const [displaySectionAdditionalInformation, setDisplaySectionAdditionalInformation] =
@@ -47,8 +48,12 @@ export const FormVehicle: React.FC = () => {
     if (vehicleState.running) displayEncouragementEmail = true;
 
     const handleSubmitForm = () => {
-        dispatch(saveVehicleAndUserInformationsUseCase());
-        setCanQuote(false);
+        if (canQuote) {
+            dispatch(saveVehicleAndUserInformationsUseCase());
+            setSubmitting(true);
+            setCanQuote(false);
+        }
+        setTrySubmit(true);
     };
 
     useEffect(() => {
@@ -127,7 +132,8 @@ export const FormVehicle: React.FC = () => {
     }, [dispatch, recordUid, recordStatus, journeyType, historyHook]);
 
     useEffect(() => {
-        if (vehicle.model === '') scrollToElement('form_group_model', 15);
+        if (!vehicle.make && trySubmit) scrollToElement('form_group_make', 15);
+        else if (vehicle.model === '') scrollToElement('form_group_model', 15);
         else if (vehicle.month === '') scrollToElement('form_group_month', 15);
         else if (vehicle.year === '') scrollToElement('form_group_month', 15);
         else if (vehicle.fuel === '') scrollToElement('form_group_fuel', 15);
@@ -141,7 +147,21 @@ export const FormVehicle: React.FC = () => {
         else if (!vehicleState.history) scrollToElement('form_group_history', 15);
         else if (!vehicleState.running) scrollToElement('form_group_running', 15);
         else if (!vehicleState.sellProject) scrollToElement('form_group_sellProject', 15);
-    }, [dispatch, vehicle, vehicleState, scrollToElement]);
+        else if (!particular.email) scrollToElement('form_group_email', 15);
+        else if (!particular.zipCode) scrollToElement('form_group_zipCode', 15);
+
+        setTrySubmit(false);
+    }, [dispatch, vehicle, vehicleState, scrollToElement, trySubmit]);
+
+    if (submitting) {
+        return (
+            <div className="page page-index">
+                <div className="my-5 py-5 text-center">
+                    <Spinner />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="page page-index">
@@ -344,9 +364,7 @@ export const FormVehicle: React.FC = () => {
                     </div>
                 )}
                 <CtaBlock>
-                    <Button disabled={!canQuote} onClick={handleSubmitForm}>
-                        {t('value_your_car_now')}
-                    </Button>
+                    <Button onClick={handleSubmitForm}>{t('value_your_car_now')}</Button>
                 </CtaBlock>
                 <p className="footnote">{t('form_vehicle_footnote')}</p>
             </Container>

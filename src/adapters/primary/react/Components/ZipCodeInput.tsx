@@ -62,7 +62,7 @@ export const ZipCodeInput: React.FC = () => {
 
     return (
         <>
-            <FormGroup className="form-group-zipCode">
+            <FormGroup className="form-group-zipCode" id="form_group_zipCode">
                 <Label for="zipCode">{t('zipCode')}</Label>
                 <InputWithValidation>
                     <InputGroup>

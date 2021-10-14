@@ -29,7 +29,7 @@ export const MakeLogoInput: React.FC = () => {
     };
 
     return (
-        <div className="makes-logo">
+        <div className="makes-logo" id="form_group_make">
             {makes.length > 0 && (
                 <>
                     <Label>{t('make')}</Label>

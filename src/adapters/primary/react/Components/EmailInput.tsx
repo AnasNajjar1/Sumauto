@@ -65,7 +65,7 @@ export const EmailInput: React.FC = () => {
     return (
         <Row>
             <Col xs={12} md={6}>
-                <FormGroup className="form-group-email">
+                <FormGroup className="form-group-email" id="form_group_email">
                     <Label for="email">{t('email')}</Label>
                     <InputWithValidation>
                         <InputGroup>
