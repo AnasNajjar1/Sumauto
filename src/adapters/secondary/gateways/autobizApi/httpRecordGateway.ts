@@ -85,13 +85,9 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         vehicleUserInformation: TCustomer,
     ): Promise<ApiResponse<UpdateStatus>> {
         try {
-            const params = RecordUserMapper.toAutobiz(
-                identifier,
-                recordUid,
-                vehicleUserInformation,
-            );
+            const data = RecordUserMapper.toAutobiz(identifier, recordUid, vehicleUserInformation);
 
-            const response = await this.put(`/customers/${recordUid}`, null, params);
+            const response = await this.put(`/customers/${recordUid}`, data);
 
             return right(response.data);
         } catch (error) {
@@ -170,13 +166,9 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         delay: string,
     ): Promise<ApiResponse<UpdateStatus>> {
         try {
-            const params = PurchaseProjectMapper.toAutobiz(identifier, delay);
+            const data = PurchaseProjectMapper.toAutobiz(identifier, delay);
 
-            const response = await this.put(
-                `/customer/${recordUid}/purchase-project`,
-                null,
-                params,
-            );
+            const response = await this.put(`/customer/${recordUid}/purchase-project`, data);
 
             return right(response.data);
         } catch (error) {
