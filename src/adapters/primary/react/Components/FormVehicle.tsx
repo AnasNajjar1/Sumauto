@@ -133,23 +133,23 @@ export const FormVehicle: React.FC = () => {
     }, [dispatch, recordUid, recordStatus, journeyType, historyHook]);
 
     useEffect(() => {
-        if (!vehicle.make && trySubmit) scrollToElement('form_group_make', 15);
-        else if (vehicle.model === '') scrollToElement('form_group_model', 15);
-        else if (vehicle.month === '') scrollToElement('form_group_month', 15);
-        else if (vehicle.year === '') scrollToElement('form_group_month', 15);
-        else if (vehicle.fuel === '') scrollToElement('form_group_fuel', 15);
-        else if (vehicle.body === '') scrollToElement('form_group_body', 15);
-        else if (vehicle.door === '') scrollToElement('form_group_door', 15);
-        else if (vehicle.gear === '') scrollToElement('form_group_gear', 15);
-        else if (vehicle.engine === '') scrollToElement('form_group_engine', 15);
-        else if (vehicle.version === '') scrollToElement('form_group_version', 15);
-        else if (!vehicle.mileage) scrollToElement('form_group_mileage', 15);
-        else if (!vehicleState.imported) scrollToElement('form_group_imported', 15);
-        else if (!vehicleState.history) scrollToElement('form_group_history', 15);
-        else if (!vehicleState.running) scrollToElement('form_group_running', 15);
-        else if (!vehicleState.sellProject) scrollToElement('form_group_sellProject', 15);
-        else if (!particular.email) scrollToElement('form_group_email', 15);
-        else if (!particular.zipCode) scrollToElement('form_group_zipCode', 15);
+        if (!vehicle.make && trySubmit) scrollToElement('form_group_make', 45);
+        else if (vehicle.model === '') scrollToElement('form_group_model', 45);
+        else if (vehicle.month === '') scrollToElement('form_group_month', 45);
+        else if (vehicle.year === '') scrollToElement('form_group_month', 45);
+        else if (vehicle.fuel === '') scrollToElement('form_group_fuel', 45);
+        else if (vehicle.body === '') scrollToElement('form_group_body', 45);
+        else if (vehicle.door === '') scrollToElement('form_group_door', 45);
+        else if (vehicle.gear === '') scrollToElement('form_group_gear', 45);
+        else if (vehicle.engine === '') scrollToElement('form_group_engine', 45);
+        else if (vehicle.version === '') scrollToElement('form_group_version', 45);
+        else if (!vehicle.mileage) scrollToElement('form_group_mileage', 45);
+        else if (!vehicleState.imported) scrollToElement('form_group_imported', 45);
+        else if (!vehicleState.history) scrollToElement('form_group_history', 45);
+        else if (!vehicleState.running) scrollToElement('form_group_running', 45);
+        else if (!vehicleState.sellProject) scrollToElement('form_group_sellProject', 45);
+        else if (!particular.email) scrollToElement('form_group_email', 45);
+        else if (!particular.zipCode) scrollToElement('form_group_zipCode', 45);
 
         setTrySubmit(false);
     }, [dispatch, vehicle, vehicleState, scrollToElement, trySubmit]);

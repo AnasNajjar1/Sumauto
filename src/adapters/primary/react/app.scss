@@ -185,7 +185,9 @@ body{
             font-weight: bold;
         }
         .button-dealer-icon{
-            width: 30px;
+            width: 25px;
+            min-width: 25px;
+            max-width: 25px;
             align-self: center;
         }
         &.hidden-dealer{
@@ -298,7 +300,6 @@ ol {
         height: 100% !important;
         display: flex;
         flex-direction: column;
-
 
 
     }

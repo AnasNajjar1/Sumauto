@@ -61,8 +61,8 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                         {t('your_file_number')} <strong>{offerNumber}</strong>
                     </p>
 
-                    <Row className=" mb-4">
-                        <Col sm={6} className="text-center">
+                    <Row className="mb-3">
+                        <Col sm={6} className="text-center mb-3">
                             <div className="background-private-sell">
                                 <Button
                                     target="_parent"
@@ -101,7 +101,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                 </Button>
                             </div>
                         </Col>
-                        <Col sm={6} className="text-center">
+                        <Col sm={6} className="text-center mb-3">
                             <div className="background-direct-sell">
                                 <Button
                                     block

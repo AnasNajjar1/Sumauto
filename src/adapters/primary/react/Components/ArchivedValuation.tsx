@@ -44,7 +44,7 @@ export const ArchivedValuation: React.FC<TRecord> = (props) => {
                     <Col>
                         <h1>{t('archived_valuation_title')}</h1>
                         <p>
-                            {t('your_file_number')}: <strong>{offerNumber}</strong>
+                            {t('your_file_number')} <strong>{offerNumber}</strong>
                         </p>
                     </Col>
                     <Col className="d-none d-sm-block">

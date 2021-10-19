@@ -70,7 +70,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const { data: recordData } = useSelector(getRecordSelector);
     const { data: dealerSlotList, status: dealerSlotStatus } =
         useSelector(getDealerSlotListSelector);
-    const { particular } = useSelector(getFormSelector);
+    const { particular, checkFormValid } = useSelector(getFormSelector);
 
     useEffect(() => {
         dispatch(getDealerListUseCase(recordUid));
@@ -100,7 +100,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
         }
     }, [dispatch, dealerSlotList, date]);
 
-    const formValid = [hour, date, dealer.id, particular.name, particular.phone].every(Boolean);
+    const formValid = [hour, date, dealer.id, particular.name, checkFormValid].every(Boolean);
 
     const submitAppointment = () => {
         dispatch(saveAppointmentUseCase(recordUid, hour));
