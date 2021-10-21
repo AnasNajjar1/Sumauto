@@ -135,9 +135,13 @@ body{
 }
 
 .form-help{
-    color:$gray-700;
-    margin-top: -5px;
-    font-size: .8rem;
+    display: none;
+    @include media-breakpoint-up(sm) {
+        display: block;
+        color:$gray-700;
+        margin-top: -5px;
+        font-size: .8rem;
+    }
 }
 
 .input-with-validation{
@@ -300,12 +304,7 @@ ol {
         height: 100% !important;
         display: flex;
         flex-direction: column;
-
-
     }
-
-    
-    
 }
 
 .page-error {
@@ -366,6 +365,10 @@ label{
     font-weight: 700;
     color: $body-color;
     transition: $input-transition;
+    svg.fa-question-circle{
+        width: 19px !important;
+        height: 19px !important;
+    }
 }
 
 

@@ -17,6 +17,7 @@ import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { CarDetailsMapper } from './mappers/carDetails.mapper';
 import { MakesMapper } from './mappers/makes.mapper';
 import { ReferentialQueryParamsMapper } from './mappers/referentialQueryParams.mapper';
+import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 
 export class HttpReferentialGateway extends BaseApi implements ReferentialGateway {
     async requestAllMakes(identifier: string): Promise<ApiResponse<Makes>> {
@@ -93,14 +94,25 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
             if (data.length === 0) {
                 return left('no_result');
             }
-
             if (scope === 'make') {
+                data.preferred = data[0].preferred;
+                data.others = data[0].others;
                 data.all = [...data[0].preferred, ...data[0].others];
                 data.all = _.orderBy(data.all, ['name'], ['asc']);
+
+                data.all.forEach((d: any, key: number) => {
+                    data.all[key].name = TextUtils.toTitleCase(d.name);
+                });
             }
 
             if (scope === 'year') {
                 data = _.orderBy(data, ['name'], ['desc']);
+            }
+
+            if (['model', 'month', 'fuel', 'gear', 'body'].includes(scope)) {
+                data.forEach((d: any, key: any) => {
+                    data[key].name = TextUtils.toTitleCase(d.name);
+                });
             }
 
             return right(data);

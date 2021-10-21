@@ -23,6 +23,12 @@ export class TextUtils {
             year: 'numeric',
         }).format(value);
 
+    public static toTitleCase = (phrase: string) => {
+        phrase = phrase.toLowerCase();
+        const capitalizeLetterFunc = (match: string) => match.toUpperCase();
+        return phrase.replace(/(^\w{1})|(\s{1}\w{1})|([-\s]\w)/g, capitalizeLetterFunc);
+    };
+
     public static translateMakeId = (autobizId: string): string => {
         const sumautoId: any = {
             '355': '40',

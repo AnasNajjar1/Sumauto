@@ -7,10 +7,9 @@ import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleV
 import { TRefrentialElement } from '../../../../hexagon/interfaces';
 
 const getMakeLogoUrl = (name: string) =>
-    `https://b2b-pictures-prod.s3-eu-west-1.amazonaws.com/brandsLogos/${name.replace(
-        / /g,
-        '_',
-    )}.jpg`;
+    `https://b2b-pictures-prod.s3-eu-west-1.amazonaws.com/brandsLogos/${name
+        .replace(/ /g, '_')
+        .toUpperCase()}.jpg`;
 
 export const MakeLogoInput: React.FC = () => {
     const dispatch = useDispatch();
@@ -19,7 +18,7 @@ export const MakeLogoInput: React.FC = () => {
 
     let makes;
     if (referential.make.status === 'succeeded' && referential.make.data[0]) {
-        makes = referential.make.data[0].preferred;
+        makes = referential.make.data.preferred;
     } else {
         return <></>;
     }
