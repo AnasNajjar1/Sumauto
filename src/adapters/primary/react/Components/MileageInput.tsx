@@ -119,7 +119,7 @@ export const MileageInput: React.FC<MileageInputProps> = ({ error }) => {
                                     onBlur={() => handleBlur()}
                                 />
                                 <InputGroupAddon addonType="append">
-                                    <InputGroupText>Km</InputGroupText>
+                                    <InputGroupText>km</InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
                             <InputValidation valid={valid} />

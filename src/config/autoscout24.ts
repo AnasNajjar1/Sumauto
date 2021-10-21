@@ -5,6 +5,7 @@ const config: TClientConfig = {
     locale: 'es-ES',
     currency: 'EUR',
     identifier: 'autoscout24',
+    name: 'AutoScout24',
     privateSellLink:
         'https://www.autoscout24.es/vender-coche/?make=[make]&year=[year]&month=[month]',
     displayRegistrationOption: false,

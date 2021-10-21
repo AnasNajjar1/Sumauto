@@ -31,7 +31,7 @@ export const MakeLogoInput: React.FC = () => {
         <div className="makes-logo" id="form_group_make">
             {makes.length > 0 && (
                 <>
-                    <Label>{t('make')}</Label>
+                    <Label>{t('preferred_makes')}</Label>
                     <Row className="fivecol-container">
                         {makes.map((f: TRefrentialElement) => (
                             <div key={f.id} className="fivecol">

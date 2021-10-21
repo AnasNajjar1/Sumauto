@@ -21,7 +21,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
     const dispatch = useDispatch();
     const { scrollToElement } = useScroll();
     const { journeyType, config } = useSelector(getClientSelector).client;
-    const { locale, currency, privateSellLink } = config;
+    const { locale, currency, privateSellLink, name: siteName } = config;
 
     const { recordUid } = useParams<{ recordUid: string }>();
     const { data: record, status } = useSelector(getRecordSelector);
@@ -73,9 +73,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                     {t('place_an_ad')}
                                 </Button>
                                 <Picture background="chat" />
-
                                 <h3>{t('private_sell')}</h3>
-
                                 <div className="valuation valuation-private">
                                     {TextUtils.formatPrice(
                                         locale,
@@ -83,14 +81,12 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                         record.valuation.privateValue,
                                     )}
                                 </div>
-
                                 <div
                                     className="text-left"
                                     dangerouslySetInnerHTML={{
                                         __html: t('private_sell_description_html') || '',
                                     }}
                                 />
-
                                 <Button
                                     target="_parent"
                                     href={replacedPrivateSellLink}
@@ -99,6 +95,17 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                 >
                                     {t('place_an_ad')}
                                 </Button>
+
+                                <p
+                                    className="small mt-3"
+                                    dangerouslySetInnerHTML={{
+                                        __html:
+                                            t('valuation_footnote')?.replace(
+                                                '[SITE_NAME]',
+                                                siteName,
+                                            ) || '',
+                                    }}
+                                />
                             </div>
                         </Col>
                         <Col sm={6} className="text-center mb-3">
@@ -110,7 +117,6 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                 >
                                     {t('book_an_appointment')}
                                 </Button>
-
                                 <Picture background="meeting" />
                                 <h3>{t('direct_sell')}</h3>
                                 <div className="valuation valuation-direct">
@@ -120,14 +126,12 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                         record.valuation?.value,
                                     )}
                                 </div>
-
                                 <div
                                     className="text-left"
                                     dangerouslySetInnerHTML={{
                                         __html: t('direct_sell_description_html') || '',
                                     }}
                                 />
-
                                 <Button
                                     block
                                     onClick={() => history.push(`/record/${recordUid}`)}

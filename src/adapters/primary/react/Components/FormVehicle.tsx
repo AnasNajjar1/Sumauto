@@ -236,7 +236,7 @@ export const FormVehicle: React.FC = () => {
                                     <ReferentialSelect
                                         label="registration_date"
                                         scope="month"
-                                        tooltip
+                                        tooltip={t('registration_date_help')}
                                         error={errors.month}
                                     />
                                 </Col>
@@ -292,7 +292,7 @@ export const FormVehicle: React.FC = () => {
                                         <ReferentialSelect
                                             label="engine"
                                             scope="engine"
-                                            tooltip
+                                            tooltip={t('engine_help')}
                                             error={errors.engine}
                                         />
                                     </Col>
@@ -307,7 +307,7 @@ export const FormVehicle: React.FC = () => {
                                 <ReferentialSelect
                                     label="version"
                                     scope="version"
-                                    tooltip
+                                    tooltip={t('version_help')}
                                     error={errors.version}
                                 />
                                 <p className="form-help">{t('version_help')}</p>
@@ -331,7 +331,7 @@ export const FormVehicle: React.FC = () => {
                                         <ButtonRadioInput
                                             label="imported"
                                             id="imported"
-                                            tooltip
+                                            tooltip={t('import_help')}
                                             data={[
                                                 { name: 'yes', value: 'yes' },
                                                 { name: 'no', value: 'no' },

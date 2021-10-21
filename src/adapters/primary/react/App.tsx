@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { TranslateProvider } from 'autobiz-translate';
 import { Spinner } from 'reactstrap';
-import moment from 'moment';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';

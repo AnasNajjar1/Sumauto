@@ -12,6 +12,10 @@ $input-focus-width: 0;
 $input-btn-focus-width:  0;
 $grid-gutter-width: 15px;
 $label-margin-bottom: 5px;
+$tooltip-bg:#BABABA;
+$tooltip-color:#000;
+$tooltip-font-size:.8em;
+$tooltip-max-width: 300px;
 
 $input-btn-padding-y: .587rem;
 
@@ -715,4 +719,12 @@ input[type=number] {
 .form-group-month label{
     width: 200%;
 }
+}
+
+
+.mobile-help{
+ display: inline;
+ @include media-breakpoint-up(sm) {
+    display: none;
+ }
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormGroup, Input, Label, Spinner } from 'reactstrap';
+import React, { useState } from 'react';
+import { FormGroup, Input, Label, Spinner, Tooltip } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +13,7 @@ import { InputValidation } from './InputValidation';
 type ReferentialInputProps = {
     scope: TReferentialItem;
     label: string;
-    tooltip?: boolean;
+    tooltip?: string;
     error?: boolean;
 };
 
@@ -25,7 +25,9 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({
 }) => {
     const { referential, vehicle, vehicleName } = useSelector(getFormSelector);
     const dispatch = useDispatch();
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
+    const toggle = () => setTooltipOpen(!tooltipOpen);
     const { data, status } = referential[scope];
 
     let list = [];
@@ -52,7 +54,21 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({
         <FormGroup className={`form-group-${scope}`} id={`form_group_${scope}`}>
             <Label for={scope}>
                 {(label && t(label)) || '\u00A0'} {/* \u00A0 specific for empty labels */}
-                {tooltip && <FontAwesomeIcon icon={faQuestionCircle} />}
+                {tooltip && (
+                    <span className="mobile-help">
+                        <span role="button" id={`tootltip_${scope}`}>
+                            <FontAwesomeIcon icon={faQuestionCircle} />
+                        </span>
+                        <Tooltip
+                            placement="bottom"
+                            isOpen={tooltipOpen}
+                            target={`tootltip_${scope}`}
+                            toggle={toggle}
+                        >
+                            {tooltip}
+                        </Tooltip>
+                    </span>
+                )}
                 {status === 'pending' && <Spinner size="sm" />}
             </Label>
             <InputWithValidation>

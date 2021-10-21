@@ -5,6 +5,7 @@ const config: TClientConfig = {
     locale: 'es-ES',
     currency: 'EUR',
     identifier: 'autocasion',
+    name: 'Autocasion',
     privateSellLink:
         'https://www.autocasion.com/vender-coche/coche-de-segunda-mano?make=[make]&year=[year]&month=[month]',
     displayRegistrationOption: false,

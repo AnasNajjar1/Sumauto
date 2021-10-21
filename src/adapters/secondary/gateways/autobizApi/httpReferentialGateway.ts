@@ -99,19 +99,15 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
                 data.others = data[0].others;
                 data.all = [...data[0].preferred, ...data[0].others];
                 data.all = _.orderBy(data.all, ['name'], ['asc']);
-
-                data.all.forEach((d: any, key: number) => {
-                    data.all[key].name = TextUtils.toTitleCase(d.name);
-                });
             }
 
             if (scope === 'year') {
                 data = _.orderBy(data, ['name'], ['desc']);
             }
 
-            if (['model', 'month', 'fuel', 'gear', 'body'].includes(scope)) {
+            if (['month', 'fuel', 'gear', 'body'].includes(scope)) {
                 data.forEach((d: any, key: any) => {
-                    data[key].name = TextUtils.toTitleCase(d.name);
+                    data[key].name = TextUtils.toTitleCase(d.name).replace('Suv', 'SUV');
                 });
             }
 

@@ -1,3 +1,5 @@
+import { string } from 'fp-ts';
+
 export type Dealer = {
     id: string;
     name: string;
@@ -84,6 +86,7 @@ export type CarDetails = {
 export type TClientConfig = {
     lang: 'es';
     locale: string;
+    name: string;
     currency: string;
     identifier: string;
     privateSellLink?: string;

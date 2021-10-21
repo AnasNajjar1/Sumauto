@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FormGroup, Label, ButtonGroup, Button } from 'reactstrap';
+import { FormGroup, Label, ButtonGroup, Button, Tooltip } from 'reactstrap';
 import { t } from 'autobiz-translate';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +17,7 @@ type ButtonRadioInputProps = {
     label: string;
     id: TVehicleStateItem;
     data: Data[];
-    tooltip?: boolean;
+    tooltip?: string;
     error?: boolean;
 };
 
@@ -30,11 +30,29 @@ export const ButtonRadioInput: React.FC<ButtonRadioInputProps> = ({
 }) => {
     const dispatch = useDispatch();
     const { vehicleState } = useSelector(getFormSelector);
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
+    const toggle = () => setTooltipOpen(!tooltipOpen);
     return (
         <FormGroup className={`form-group-${id}`} id={`form_group_${id}`}>
             <Label className={`label-${id}`} htmlFor={id}>
-                {t(label)} {tooltip && <FontAwesomeIcon icon={faQuestionCircle} />}
+                {t(label)}
+
+                {tooltip && (
+                    <span className="mobile-help">
+                        <span role="button" id={`tootltip_${id}`}>
+                            <FontAwesomeIcon icon={faQuestionCircle} />
+                        </span>
+                        <Tooltip
+                            placement="bottom"
+                            isOpen={tooltipOpen}
+                            target={`tootltip_${id}`}
+                            toggle={toggle}
+                        >
+                            {tooltip}
+                        </Tooltip>
+                    </span>
+                )}
             </Label>
             <div className="input-with-validation">
                 <ButtonGroup>
