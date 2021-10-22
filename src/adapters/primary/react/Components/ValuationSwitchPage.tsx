@@ -100,7 +100,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                     className="small mt-3"
                                     dangerouslySetInnerHTML={{
                                         __html:
-                                            t('valuation_footnote')?.replace(
+                                            t('valuation_footnote_html')?.replace(
                                                 '[SITE_NAME]',
                                                 siteName,
                                             ) || '',

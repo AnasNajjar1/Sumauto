@@ -312,7 +312,12 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                     </>
                 )}
 
-                <p className="footnote">{t('appoitment_note')}</p>
+                <p
+                    className="footnote"
+                    dangerouslySetInnerHTML={{
+                        __html: t('appointment_footnote_html') || '',
+                    }}
+                />
 
                 <FeatureGroup>
                     <Feature label="immediate_sale_and_without_obligation" icon="clock" />

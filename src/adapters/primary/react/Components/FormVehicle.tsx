@@ -424,7 +424,12 @@ export const FormVehicle: React.FC = () => {
                 <CtaBlock>
                     <Button onClick={handleSubmitForm}>{t('value_your_car_now')}</Button>
                 </CtaBlock>
-                <p className="footnote">{t('form_vehicle_footnote')}</p>
+                <p
+                    className="footnote"
+                    dangerouslySetInnerHTML={{
+                        __html: t('form_vehicle_footnote_html') || '',
+                    }}
+                />
             </Container>
         </div>
     );
