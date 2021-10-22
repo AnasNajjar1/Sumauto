@@ -160,7 +160,7 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         }
     }
 
-    async updateSellProject(
+    async updatePurchaseProject(
         identifier: string,
         recordUid: string,
         delay: string,
@@ -192,5 +192,26 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         } catch (error) {
             return left(error as string);
         }
+    }
+
+    async createIndicator(
+        identifier: string,
+        recordUid: string,
+        name: string,
+        value: number,
+    ): Promise<ApiResponse<UpdateStatus>> {
+        try {
+            const response = await this.post(`/record/${recordUid}/indicator`, {
+                identifier,
+                indicatorName: name,
+                indicatorValue: value,
+            });
+
+            return right(response.data);
+        } catch (error) {
+            return left(error as string);
+        }
+
+        return right({ status: true });
     }
 }

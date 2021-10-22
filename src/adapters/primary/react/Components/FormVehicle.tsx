@@ -98,10 +98,8 @@ export const FormVehicle: React.FC = () => {
         const additionalDetails = [
             vehicleState.history,
             vehicleState.running,
-            // vehicleState.sellProject, // not required
             particular.email,
             particular.zipCode,
-            // particular.phone,// not required
         ];
 
         setDisplaySectionMoreDetails(basicInformations.every(Boolean));
@@ -147,7 +145,7 @@ export const FormVehicle: React.FC = () => {
         else if (!vehicleState.imported) scrollToElement('form_group_imported', 45);
         else if (!vehicleState.history) scrollToElement('form_group_history', 45);
         else if (!vehicleState.running) scrollToElement('form_group_running', 45);
-        else if (!vehicleState.sellProject) scrollToElement('form_group_sellProject', 45);
+        else if (!vehicleState.purchaseProject) scrollToElement('form_group_purchaseProject', 45);
         else if (!particular.email) scrollToElement('form_group_email', 45);
         else if (!particular.zipCode) scrollToElement('form_group_zipCode', 45);
 
@@ -379,8 +377,8 @@ export const FormVehicle: React.FC = () => {
                                     </Col>
                                     <Col xs={12} md={12} lg={12} xl={8}>
                                         <ButtonRadioInput
-                                            label="sellProject"
-                                            id="sellProject"
+                                            label="purchaseProject"
+                                            id="purchaseProject"
                                             data={sellDelay}
                                             error={errors.running}
                                         />

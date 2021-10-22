@@ -99,7 +99,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         return right(result);
     }
 
-    async updateSellProject(
+    async updatePurchaseProject(
         identifier: string,
         recordUid: string,
         delay: string,
@@ -126,5 +126,14 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         }
         found.appointment = <TAppointment>{ id: 1111 };
         return right(found.appointment);
+    }
+
+    async createIndicator(
+        identifier: string,
+        recordUid: string,
+        name: string,
+        value: number,
+    ): Promise<ApiResponse<UpdateStatus>> {
+        return right({ status: true });
     }
 }

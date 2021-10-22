@@ -16,6 +16,7 @@ import { setJourneyTypeUseCase } from '../../../hexagon/usecases/setJourneyType/
 import { ValuationSwitch } from './Components/ValuationSwitchPage';
 import { PrivacyPolicy } from './Components/PrivacyPolicy';
 import 'moment/locale/es';
+import { Cookies } from './Components/Cookies';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
@@ -59,6 +60,7 @@ const App: React.FC = () => {
 const ClientHandler: React.FC = () => (
     <BrowserRouter>
         <Switch>
+            <Route exact path="/politica-de-cookies" component={Cookies} />
             <Route exact path="/politica-de-privacidad" component={PrivacyPolicy} />
             <Route exact path="/error/:errorCode" component={ErrorPage} />
             <Route path={['/:clientSlug/:journeyType', '/']} component={App} />

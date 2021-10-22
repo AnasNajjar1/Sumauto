@@ -24,6 +24,7 @@ export class AppointmentMapper implements Mapper<TAppointment> {
             networkId: Number(dto.networkId),
             dealerId: Number(dto.dealerId),
             dealerName: dto.dealerName,
+            realDealerName: dto.realDealerName,
             address: dto.address,
             zipCode: Number(dto.zipCode),
             city: dto.city,

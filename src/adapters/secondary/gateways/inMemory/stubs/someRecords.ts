@@ -86,6 +86,7 @@ export const somesRecords: TRecord[] = [
             networkId: 5701,
             dealerId: 503546,
             dealerName: 'TEST PDV 2',
+            realDealerName: 'real TEST PDV 2',
             address: 'Paris, test, 70',
             zipCode: 25633,
             city: 'Paris',

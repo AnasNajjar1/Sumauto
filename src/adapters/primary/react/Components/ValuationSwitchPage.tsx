@@ -15,6 +15,7 @@ import { Loader } from './Loader';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import useScroll from '../hooks/useScroll';
+import { createIndicatorUseCase } from '../../../../hexagon/usecases/createIndicator/createIndicator.useCase';
 
 export const ValuationSwitch: React.FC<TRecord> = () => {
     const history = useHistory();
@@ -45,10 +46,20 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
         return <></>;
     }
 
-    const replacedPrivateSellLink = privateSellLink
-        ?.replace('[make]', TextUtils.translateMakeId(vehicle.makeId))
-        .replace('[year]', vehicle.year)
-        .replace('[month]', Number(vehicle.month).toString());
+    const trackAndNavigate = async (type: 'private-sell' | 'direct-sell') => {
+        if (type === 'private-sell') {
+            const replacedPrivateSellLink = privateSellLink
+                ?.replace('[make]', TextUtils.translateMakeId(vehicle.makeId))
+                .replace('[year]', vehicle.year)
+                .replace('[month]', Number(vehicle.month).toString());
+
+            await dispatch(createIndicatorUseCase(recordUid, 'selling_option_chosen', 1));
+            window.open(replacedPrivateSellLink, '_parent');
+        } else {
+            await dispatch(createIndicatorUseCase(recordUid, 'selling_option_chosen', 2));
+            history.push(`/record/${recordUid}`);
+        }
+    };
 
     return (
         <div className="page page-record" id="top">
@@ -66,7 +77,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                             <div className="background-private-sell">
                                 <Button
                                     target="_parent"
-                                    href={replacedPrivateSellLink}
+                                    onClick={() => trackAndNavigate('private-sell')}
                                     block
                                     className="d-none d-sm-block"
                                 >
@@ -87,15 +98,6 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                         __html: t('private_sell_description_html') || '',
                                     }}
                                 />
-                                <Button
-                                    target="_parent"
-                                    href={replacedPrivateSellLink}
-                                    className="mt-auto"
-                                    block
-                                >
-                                    {t('place_an_ad')}
-                                </Button>
-
                                 <p
                                     className="small mt-3"
                                     dangerouslySetInnerHTML={{
@@ -106,6 +108,15 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                             ) || '',
                                     }}
                                 />
+
+                                <Button
+                                    target="_parent"
+                                    onClick={() => trackAndNavigate('private-sell')}
+                                    className="mt-auto"
+                                    block
+                                >
+                                    {t('place_an_ad')}
+                                </Button>
                             </div>
                         </Col>
                         <Col sm={6} className="text-center mb-3">
@@ -113,7 +124,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                 <Button
                                     block
                                     className="d-none d-sm-block"
-                                    onClick={() => history.push(`/record/${recordUid}`)}
+                                    onClick={() => trackAndNavigate('direct-sell')}
                                 >
                                     {t('book_an_appointment')}
                                 </Button>
@@ -134,12 +145,24 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                 />
                                 <Button
                                     block
-                                    onClick={() => history.push(`/record/${recordUid}`)}
+                                    onClick={() => trackAndNavigate('direct-sell')}
                                     className="mt-auto"
                                 >
                                     {t('book_an_appointment')}
                                 </Button>
                             </div>
+                        </Col>
+                        <Col xs={12}>
+                            <p
+                                className="small mt-3"
+                                dangerouslySetInnerHTML={{
+                                    __html:
+                                        t('valuation_footnote_html')?.replace(
+                                            '[SITE_NAME]',
+                                            siteName,
+                                        ) || '',
+                                }}
+                            />
                         </Col>
                     </Row>
                     <Row>

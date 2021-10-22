@@ -1,13 +1,11 @@
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
 import { AutobizPurchaseProjectDto } from '../dtos/purchaseProjectDto';
 
-type SellProject = string;
-
-export class PurchaseProjectMapper implements Mapper<SellProject> {
-    static toAutobiz(identifier: string, sellProject: SellProject): AutobizPurchaseProjectDto {
+export class PurchaseProjectMapper implements Mapper<string> {
+    static toAutobiz(identifier: string, purchaseProject: string): AutobizPurchaseProjectDto {
         return {
             identifier,
-            purchaseProjectDelay: Number(sellProject),
+            purchaseProjectDelayToSell: Number(purchaseProject),
         };
     }
 }

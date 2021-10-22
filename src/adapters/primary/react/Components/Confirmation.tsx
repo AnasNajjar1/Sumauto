@@ -73,7 +73,7 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                                 <AppointmentResume
                                     date={record.appointment.appointmentDate}
                                     hour={record.appointment.startHour}
-                                    placeName={record.appointment.dealerName}
+                                    placeName={record.appointment.realDealerName}
                                 />
 
                                 <Row>
@@ -81,7 +81,7 @@ export const Confirmation: React.FC<TRecord> = (props) => {
                                         <h2>{t('your_point_of_sale')}</h2>
 
                                         <p>
-                                            <strong>{record.appointment.dealerName}</strong>
+                                            <strong>{record.appointment.realDealerName}</strong>
                                         </p>
                                         <p>
                                             {record.appointment.address}

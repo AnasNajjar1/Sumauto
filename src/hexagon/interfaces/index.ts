@@ -56,7 +56,7 @@ export type TReferentialItem =
     | 'engine'
     | 'mileage';
 
-export type TVehicleStateItem = 'imported' | 'history' | 'running' | 'sellProject';
+export type TVehicleStateItem = 'imported' | 'history' | 'running' | 'purchaseProject';
 export type TParticularItem = 'zipCode' | 'email' | 'phone' | 'name';
 
 export type QuestionKey = TReferentialItem | TVehicleStateItem | TParticularItem;
@@ -178,6 +178,7 @@ export type TAppointment = {
     networkId: number;
     dealerId: number;
     dealerName: string;
+    realDealerName: string;
     address: string;
     zipCode: number;
     city: string;
@@ -225,7 +226,7 @@ export interface Makes {
     all: TRefrentialElement[];
 }
 
-export type TSellDelay = {
+export type TPurchaseDelay = {
     name: string;
     value: string;
 };

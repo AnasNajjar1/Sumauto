@@ -50,9 +50,16 @@ export interface RecordGateway {
         resaId: number,
     ): Promise<ApiResponse<TAppointment>>;
 
-    updateSellProject(
+    updatePurchaseProject(
         identifier: string,
         recordUid: string,
         delay: string,
+    ): Promise<ApiResponse<UpdateStatus>>;
+
+    createIndicator(
+        identifier: string,
+        recordUid: string,
+        name: string,
+        value: number,
     ): Promise<ApiResponse<UpdateStatus>>;
 }
