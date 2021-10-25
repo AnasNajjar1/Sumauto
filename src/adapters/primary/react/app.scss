@@ -1,4 +1,3 @@
-
 $label-margin-bottom: 0rem;
 $body-color: #000;
 $progress-height:4px; 
@@ -30,18 +29,12 @@ $input-inactive-border-color: #E3E3E3;
 $input-error-border-color:#d91a2a;
 $input-success-border-color:#3cc850;
 
-
-
 $input-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, color .15s ease-in-out;
 
 body{
     padding-bottom: $halfGutter;
     min-width: 320px;
     padding: 0 10px;
-}
-
-.container-fluid{
-//    padding: 0 20px;
 }
 
 @include media-breakpoint-down(xs) {
@@ -225,8 +218,6 @@ ul,ol{
     }
 }
 
-
-
 ol {
     list-style: none;
     counter-reset: bold-counter;
@@ -239,15 +230,12 @@ ol {
     }
 }
 
-
 .page{
     padding: $grid-gutter-width 0;
 }
 
 .page-index{
     .cta-block{
-
-
         .btn{
             width: 100%;
             @include media-breakpoint-up(sm) {
@@ -263,7 +251,6 @@ ol {
 }
 
 .page-confirmation{
-
     padding-top: 15px;
 
     h1{
@@ -308,6 +295,10 @@ ol {
         height: 100% !important;
         display: flex;
         flex-direction: column;
+
+        a{
+            color: $gray-600;
+        }
     }
 }
 
@@ -329,7 +320,6 @@ ol {
 }
 
 .page-unsubscribe{
-
     .form-unsubscribe{
         
         max-width: map-get($grid-breakpoints, "sm");
@@ -364,6 +354,7 @@ ol {
             }
         }
 }
+
 label{
     font-size: $font-size-base;
     font-weight: 700;
@@ -375,19 +366,12 @@ label{
     }
 }
 
-
-
 .input-group-append,.input-group-text{
     background-color: white;
     color: $gray-500;
 }
-// .input-group{
-//     select,input{border-right:0}
-    
-// }
 
 .form-group{
-
     .text-danger {
         margin: 5px 0;
     }
@@ -486,7 +470,6 @@ label{
                         position: relative;
                         top: -1px;
                     }
-     
                 }
             }
         }
@@ -504,9 +487,7 @@ label{
     margin:1rem 0rem;
     border-bottom: 1px solid $gray-500;
     .motivation-title{
-   
         max-width: 500px;
-        
         margin-left: auto;
         margin-right: auto;
     }
@@ -585,9 +566,7 @@ label{
 }
 
 .form-section-title{
-    
     font-size: .8rem;
-    
     padding-bottom: 6px;
     margin: 1rem 0;
     text-transform: uppercase;
@@ -602,8 +581,6 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-
-
 
 .btn-group{
     .btn{
@@ -621,10 +598,8 @@ input[type=number] {
         padding-top: 4px;
         font-weight: 400;
         font-size: .8rem;
-        
     }
 }
-
 
 .numbered-title{
     @extend h2;
@@ -665,37 +640,34 @@ input[type=number] {
     }
 
     @include media-breakpoint-up(lg) {
-            border:0;
-            display: flex;
-            align-items: center;
-            height: 100%;
-            position: relative;
+        border:0;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        position: relative;
+        width: 50px;
+        border-bottom: 0 !important;
+
+        span{
+            text-align: center;
+            display: block;
+            background-color: $body-bg;
             width: 50px;
-            border-bottom: 0 !important;
-
-            span{
-                text-align: center;
-                display: block;
-                background-color: $body-bg;
-                width: 50px;
-                height: 40px;
-                line-height: 40px;
-            }
-            span:before {
-                content: "";
-                position: absolute;
-                z-index: -1;
-                top: 0;
-                bottom: 0;
-                left: 25px;
-                
-                border-left-width: 1px;
-                border-left-style: solid;
-                transform: translate(-50%);
-              }
-              
+            height: 40px;
+            line-height: 40px;
+        }
+        span:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            bottom: 0;
+            left: 25px;
+            border-left-width: 1px;
+            border-left-style: solid;
+            transform: translate(-50%);
+        }
     }
-
 }
 
 .form-group-mileage{
@@ -716,9 +688,9 @@ input[type=number] {
 }
 
 @include media-breakpoint-up(sm) {
-.form-group-month label{
-    width: 200%;
-}
+    .form-group-month label{
+        width: 200%;
+    }
 }
 
 
@@ -742,5 +714,22 @@ input[type=number] {
         font-size: 1.5em;
         margin: 2em 0 1em 0;
         padding: .15em;
+    }
+}
+
+.page.page-general-conditions{
+    margin-bottom: 3rem;
+    h1{
+        font-weight: 700;
+    }
+    h2{
+        font-weight: 700;
+        font-size: 1.5em;
+        margin: 2em 0 1em 0;
+    }
+    h3,h4,h5{
+        font-weight: 700;
+        font-size: 1.2em;
+        margin: 1em 0;
     }
 }

@@ -152,18 +152,6 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
                                 </Button>
                             </div>
                         </Col>
-                        <Col xs={12}>
-                            <p
-                                className="small mt-3"
-                                dangerouslySetInnerHTML={{
-                                    __html:
-                                        t('valuation_footnote_html')?.replace(
-                                            '[SITE_NAME]',
-                                            siteName,
-                                        ) || '',
-                                }}
-                            />
-                        </Col>
                     </Row>
                     <Row>
                         <Col>

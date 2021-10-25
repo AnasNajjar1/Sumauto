@@ -411,12 +411,12 @@ export const FormVehicle: React.FC = () => {
                                 />
                             </Col>
                         </Row>
-                        <p className="small">
-                            {t('i_have_read_the')}{' '}
-                            <a href={config.pdfPrivacyLink} target="_blank" rel="noreferrer">
-                                {t('policy_of_privacy')}
-                            </a>
-                        </p>
+                        <p
+                            className="small"
+                            dangerouslySetInnerHTML={{
+                                __html: t('policy_of_privacy_html') || '',
+                            }}
+                        />
                     </div>
                 )}
                 <CtaBlock>
