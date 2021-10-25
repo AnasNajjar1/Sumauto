@@ -15,13 +15,10 @@ export const PrivacyPolicy: React.FC = () => (
                 <h4>Datos personales</h4>
                 <p>
                     autobiz, en calidad de responsable del tratamiento, informa a los usuarios de su
-                    sitio web del tratamiento de sus datos personales, conforme a la Ley 34/2002 de
-                    Servicios de la Sociedad de la Información y de Comercio Electrónico aprobada
-                    por el Parlamento Español y de la vigente Ley Orgánica 15/1999 de Protección de
-                    Datos de Carácter Personal española y su Reglamento de Desarrollo aprobado por
-                    el Real Decreto 1720/2007, junto con el Reglamento (EU) 2016/679 del Parlamento
-                    Europeo y del Consejo de 27 de abril de 2016 y/o a toda la reglamentación
-                    aplicable.
+                    sitio web del tratamiento de sus datos personales, conforme a la Ley 3/2018 de
+                    Protección de Datos Personales y Garantía de los Derechos Digitales, junto con
+                    el Reglamento (EU) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril
+                    de 2016 y/o a toda la reglamentación aplicable.
                 </p>
 
                 <h4>Identidad y datos del responsable del tratamiento</h4>
