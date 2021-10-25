@@ -1,5 +1,3 @@
-import { t } from 'autobiz-translate';
-
 import React, { useEffect, useState } from 'react';
 import {
     Button,
@@ -27,9 +25,11 @@ import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import { unsubscribeUseCase } from '../../../../hexagon/usecases/unsubscribe/unsubscribe.useCase';
 import { getUnsubscribeSelector } from '../../view-models-generators/unsubscribeSelectors';
 import { Loader } from './Loader';
+import useTranslation from '../hooks/useTranslation';
 
 export const UnsubscribePage: React.FC = () => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const { client } = useSelector(getClientSelector);
 
     const [phone, setPhone] = useState<string>('');

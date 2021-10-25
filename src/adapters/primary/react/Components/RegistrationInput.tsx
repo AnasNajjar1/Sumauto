@@ -3,15 +3,15 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, Input, InputGroup, InputGroupAddon, Button, Spinner } from 'reactstrap';
 
-import { t } from 'autobiz-translate';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { dislayErrorUseCase } from '../../../../hexagon/usecases/displayError/displayError.useCase';
 import { getCarDetailsByRegistrationUseCase } from '../../../../hexagon/usecases/getCarDetailsByRegistration/getCarDetailsByRegistration.useCase';
 import { getRegistrationSelector } from '../../view-models-generators/registrationSelector';
+import useTranslation from '../hooks/useTranslation';
 
 export const RegistrationInput: React.FC = () => {
     const dispatch = useDispatch();
-
+    const { t } = useTranslation();
     const { config } = useSelector(getClientSelector);
     const { status } = useSelector(getRegistrationSelector);
 

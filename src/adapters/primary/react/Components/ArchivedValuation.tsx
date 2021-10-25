@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Button, Col, Row } from 'reactstrap';
-import { t } from 'autobiz-translate';
+
 import { useHistory } from 'react-router';
 import { TRecord } from '../../../../hexagon/interfaces';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
@@ -14,10 +14,12 @@ import { CtaBlock } from './CtaBlock';
 import { resetRecordUseCase } from '../../../../hexagon/usecases/resetRecord/resetRecord.useCase';
 import { duplicateRecordUseCase } from '../../../../hexagon/usecases/duplicateRecord/duplicateRecord.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
+import useTranslation from '../hooks/useTranslation';
 
 export const ArchivedValuation: React.FC<TRecord> = (props) => {
     const { uid, vehicle, valuation, customer, offerNumber } = props;
     const { client } = useSelector(getClientSelector);
+    const { t } = useTranslation();
 
     const { uid: duplicateRecordUid } = useSelector(getRecordSelector);
     const { locale, currency } = client.config;

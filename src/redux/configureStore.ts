@@ -12,6 +12,7 @@ import { recordReducer } from './reducers/recordReducer';
 import { unsubscribeReducer } from './reducers/unsubscribeReducer';
 import { cancelAppointmentReducer } from './reducers/cancelAppointmentReducer';
 import { carDetailsReducer } from './reducers/carDetailsReducer';
+import { translationReducer } from './reducers/translationReducer';
 
 export const configureStore = (dependencies?: Partial<Dependencies>) =>
     createStore(
@@ -24,6 +25,7 @@ export const configureStore = (dependencies?: Partial<Dependencies>) =>
             error: errorReducer,
             unsubscribe: unsubscribeReducer,
             cancelAppointment: cancelAppointmentReducer,
+            translation: translationReducer,
         }),
         composeWithDevTools(
             applyMiddleware(

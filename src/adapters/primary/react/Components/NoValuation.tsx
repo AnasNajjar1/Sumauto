@@ -1,8 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Button, Col, Row } from 'reactstrap';
-import { t } from 'autobiz-translate';
 import { TRecord } from '../../../../hexagon/interfaces';
+import useTranslation from '../hooks/useTranslation';
 import { CtaBlock } from './CtaBlock';
 import { Feature } from './Feature';
 import { FeatureGroup } from './FeatureGroup';
@@ -11,6 +11,7 @@ import { VehicleInformations } from './VehicleInformations';
 
 export const NoValuation: React.FC<TRecord> = ({ vehicle }) => {
     const history = useHistory();
+    const { t } = useTranslation();
     return (
         <div className="page page-novaluation">
             <Container fluid>

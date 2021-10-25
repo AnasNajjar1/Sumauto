@@ -19,14 +19,18 @@ import { InMemoryTrackerGateway } from '../adapters/secondary/gateways/inMemory/
 import { HttpDealerGateway } from '../adapters/secondary/gateways/autobizApi/httpDealerGateway';
 import { HttpTrackerGateway } from '../adapters/secondary/gateways/autobizApi/httpTrackerGateway';
 
+import { HttpTranslationGateway } from '../adapters/secondary/gateways/autobizApi/httpTranslationGateway';
+
 let referentialGateway;
 let dealerGateway;
 let recordGateway;
 let clientConfigGateway;
 let trackerGateway;
+let translationGateway;
 
 switch (process.env.REACT_APP_SOURCE) {
     case 'inMemory':
+        translationGateway = new HttpTranslationGateway();
         referentialGateway = new InMemoryReferentialGateway();
         referentialGateway.feedWith(inMemoryReferential);
 
@@ -46,6 +50,8 @@ switch (process.env.REACT_APP_SOURCE) {
         break;
 
     default:
+        translationGateway = new HttpTranslationGateway();
+
         referentialGateway = new HttpReferentialGateway();
 
         dealerGateway = new HttpDealerGateway();
@@ -64,6 +70,7 @@ const store = configureStore({
     recordGateway,
     clientConfigGateway,
     trackerGateway,
+    translationGateway,
 });
 
 export default store;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Container } from 'reactstrap';
-import { t } from 'autobiz-translate';
 import '../Themes/default/default.scss';
 import { useSelector } from 'react-redux';
 import { CtaBlock } from './CtaBlock';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
+import useTranslation from '../hooks/useTranslation';
 
 type TErrorPageProps = {
     title?: string;
@@ -16,6 +16,7 @@ export const ErrorPage: React.FC<TErrorPageProps> = ({ title, description }) => 
     const { name, journeyType } = useSelector(getClientSelector).client;
 
     const history = useHistory();
+    const { t } = useTranslation();
     return (
         <div className="page page-error">
             <Container fluid>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Button, Spinner } from 'reactstrap';
-import { t } from 'autobiz-translate';
 import { useHistory } from 'react-router';
 import { ProgressSteps } from './ProgressSteps';
 import { Picture } from './Picture';
@@ -23,11 +22,13 @@ import { setCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehi
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { sellDelay } from '../../../../config';
 import useScroll from '../hooks/useScroll';
+import useTranslation from '../hooks/useTranslation';
 
 export const FormVehicle: React.FC = () => {
     const dispatch = useDispatch();
     const historyHook = useHistory();
     const { scrollToElement } = useScroll();
+    const { t } = useTranslation();
     const { vehicle, vehicleState, particular, checkFormValid, checkZipCode } =
         useSelector(getFormSelector);
     const { journeyType, config } = useSelector(getClientSelector).client;

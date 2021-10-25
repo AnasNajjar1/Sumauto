@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Label, Row } from 'reactstrap';
-import { t } from 'autobiz-translate';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { TRefrentialElement } from '../../../../hexagon/interfaces';
+import useTranslation from '../hooks/useTranslation';
 
 const getMakeLogoUrl = (name: string) =>
     `https://b2b-pictures-prod.s3-eu-west-1.amazonaws.com/brandsLogos/${name
@@ -13,6 +13,7 @@ const getMakeLogoUrl = (name: string) =>
 
 export const MakeLogoInput: React.FC = () => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const { referential, vehicle, vehicleName } = useSelector(getFormSelector);
 

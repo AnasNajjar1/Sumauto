@@ -1,20 +1,22 @@
-import { t } from 'autobiz-translate';
-
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import { TVehicleNames } from '../../../../hexagon/interfaces';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
+import useTranslation from '../hooks/useTranslation';
 
-const VehiclePropLine: React.FC<{ label: string; value: string }> = ({ label, value }) => (
-    <Row>
-        <Col>{t(label)}</Col>
-        <Col>
-            <strong>{value}</strong>
-        </Col>
-    </Row>
-);
+const VehiclePropLine: React.FC<{ label: string; value: string }> = ({ label, value }) => {
+    const { t } = useTranslation();
+    return (
+        <Row>
+            <Col>{t(label)}</Col>
+            <Col>
+                <strong>{value}</strong>
+            </Col>
+        </Row>
+    );
+};
 
 type TVehicleProps = {
     vehicle: TVehicleNames;
@@ -23,6 +25,7 @@ type TVehicleProps = {
 export const VehicleInformations: React.FC<TVehicleProps> = ({ vehicle }: TVehicleProps) => {
     const { client } = useSelector(getClientSelector);
     const { locale } = client.config;
+    const { t } = useTranslation();
     return (
         <div className="vehicle-informations">
             <Row>

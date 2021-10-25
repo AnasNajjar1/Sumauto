@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { InputWithValidation } from './InputWithValidation';
@@ -11,6 +10,7 @@ import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { checkZipcodeUseCase } from '../../../../hexagon/usecases/checkZipCode/checkZipcode.useCase';
 import { getCheckZipCodeSelector } from '../../view-models-generators/checkZipCodeSelector';
+import useTranslation from '../hooks/useTranslation';
 
 type ZipCodeInputProps = {
     error: boolean;
@@ -18,7 +18,7 @@ type ZipCodeInputProps = {
 
 export const ZipCodeInput: React.FC<ZipCodeInputProps> = ({ error }) => {
     const dispatch = useDispatch();
-
+    const { t } = useTranslation();
     const { config } = useSelector(getClientSelector);
     const { particular } = useSelector(getFormSelector);
     const [zipCode, setZipCode] = useState<string>('');

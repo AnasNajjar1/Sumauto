@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FormGroup, Input, Label, Spinner, Tooltip } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
@@ -9,6 +8,7 @@ import { TReferentialItem, TRefrentialElement } from '../../../../hexagon/interf
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
+import useTranslation from '../hooks/useTranslation';
 
 type ReferentialInputProps = {
     scope: TReferentialItem;
@@ -25,6 +25,7 @@ export const ReferentialSelect: React.FC<ReferentialInputProps> = ({
 }) => {
     const { referential, vehicle, vehicleName } = useSelector(getFormSelector);
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const [tooltipOpen, setTooltipOpen] = useState(false);
 
     const toggle = () => setTooltipOpen(!tooltipOpen);

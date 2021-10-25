@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
+import useTranslation from '../hooks/useTranslation';
 
 export const NameInput: React.FC = () => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const { particular } = useSelector(getFormSelector);
 
     const [name, setName] = useState<string>('');

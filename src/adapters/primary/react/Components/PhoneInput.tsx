@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { InputWithValidation } from './InputWithValidation';
@@ -10,6 +9,7 @@ import { setParticularValue } from '../../../../hexagon/usecases/setParticularVa
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { checkFormValidUseCase } from '../../../../hexagon/usecases/checkFormValid/checkFormValid.useCase';
+import useTranslation from '../hooks/useTranslation';
 
 type TPhoneInputProps = {
     required: boolean;
@@ -17,6 +17,7 @@ type TPhoneInputProps = {
 
 export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const { particular } = useSelector(getFormSelector);
     const { config } = useSelector(getClientSelector);
 

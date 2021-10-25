@@ -10,12 +10,12 @@ import {
     Row,
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { t } from 'autobiz-translate';
 import { InputWithValidation } from './InputWithValidation';
 import { setVehicleValueCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { InputValidation } from './InputValidation';
 import { Message } from './Message';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
+import useTranslation from '../hooks/useTranslation';
 
 type MileageInputProps = {
     error: boolean;
@@ -23,6 +23,7 @@ type MileageInputProps = {
 
 export const MileageInput: React.FC<MileageInputProps> = ({ error }) => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const { vehicle } = useSelector(getFormSelector);
 

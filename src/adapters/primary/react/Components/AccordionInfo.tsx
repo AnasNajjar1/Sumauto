@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { t } from 'autobiz-translate';
 
 import { Collapse } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import useTranslation from '../hooks/useTranslation';
 
 type TIcon = 'circle' | 'triangle';
 
@@ -19,7 +19,7 @@ export const AccordionInfo: React.FC<TAccordionInfoProps> = ({
 }: TAccordionInfoProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggle = () => setIsOpen(!isOpen);
-
+    const { t } = useTranslation();
     return (
         <div className="accordion-info">
             <div className="accordion-info-title" role="button" aria-hidden="true" onClick={toggle}>

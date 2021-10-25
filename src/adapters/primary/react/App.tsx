@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { TranslateProvider } from 'autobiz-translate';
 import { Spinner } from 'reactstrap';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
@@ -18,11 +17,15 @@ import { PrivacyPolicy } from './Components/PrivacyPolicy';
 import 'moment/locale/es';
 import { Cookies } from './Components/Cookies';
 import { GeneralConditions } from './Components/GeneralConditions';
+import { getTranslationUseCase } from '../../../hexagon/usecases/getTranslation/getRecord.useCase';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
-
     const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getTranslationUseCase());
+    }, [dispatch]);
+
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
         return <ErrorPage />;
     }
@@ -30,7 +33,7 @@ const App: React.FC = () => {
     dispatch(setJourneyTypeUseCase(journeyType));
 
     return (
-        <TranslateProvider projectName="sumauto-app" stage="dev" language="es">
+        <>
             <React.Suspense
                 fallback={
                     <div className="loading-page">
@@ -54,7 +57,7 @@ const App: React.FC = () => {
                     </div>
                 </BrowserRouter>
             </React.Suspense>
-        </TranslateProvider>
+        </>
     );
 };
 

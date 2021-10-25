@@ -17,6 +17,10 @@ export interface AppState {
         journeyType: TJourney;
         config: TClientConfig;
     };
+    translation: {
+        status: TActionStatus;
+        data: any;
+    };
     unsubscribe: {
         status: TActionStatus;
     };

@@ -9,7 +9,6 @@ import {
     Row,
 } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { t } from 'autobiz-translate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useForm } from 'react-hook-form';
@@ -20,6 +19,7 @@ import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 
 import { getFormSelector } from '../../view-models-generators/formSelectors';
+import useTranslation from '../hooks/useTranslation';
 
 type EmailInputProps = {
     error?: boolean;
@@ -27,6 +27,7 @@ type EmailInputProps = {
 
 export const EmailInput: React.FC<EmailInputProps> = ({ error }) => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const { config } = useSelector(getClientSelector);
     const { particular } = useSelector(getFormSelector);
     const {

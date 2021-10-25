@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Container, Button, Col, Row } from 'reactstrap';
 
-import { t } from 'autobiz-translate';
 import { useDispatch, useSelector } from 'react-redux';
 import { TRecord } from '../../../../hexagon/interfaces';
 import { Feature } from './Feature';
@@ -16,9 +15,11 @@ import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import useScroll from '../hooks/useScroll';
 import { createIndicatorUseCase } from '../../../../hexagon/usecases/createIndicator/createIndicator.useCase';
+import useTranslation from '../hooks/useTranslation';
 
 export const ValuationSwitch: React.FC<TRecord> = () => {
     const history = useHistory();
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { scrollToElement } = useScroll();
     const { journeyType, config } = useSelector(getClientSelector).client;

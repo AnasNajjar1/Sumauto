@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { t } from 'autobiz-translate';
 import { Button, Col, Container, Row } from 'reactstrap';
 
 import { TRecord } from '../../../../hexagon/interfaces';
@@ -10,9 +9,11 @@ import { AccordionInfo } from './AccordionInfo';
 import { ProgressSteps } from './ProgressSteps';
 import { Appointment } from './Appointment';
 import useScroll from '../hooks/useScroll';
+import useTranslation from '../hooks/useTranslation';
 
 export const ActiveValuation: React.FC<TRecord> = (props) => {
     const { scrollToElement } = useScroll();
+    const { t } = useTranslation();
     const { client } = useSelector(getClientSelector);
     const { locale, currency } = client.config;
     const { vehicle, valuation, uid, offerNumber } = props;

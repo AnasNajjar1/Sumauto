@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormGroup, Label, ButtonGroup, Button, Tooltip } from 'reactstrap';
-import { t } from 'autobiz-translate';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faQuestionCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { TVehicleStateItem } from '../../../../hexagon/interfaces';
 import { setVehicleStateValue } from '../../../../hexagon/usecases/setVehicleStateValue/setVehicleStateValue.useCase';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
+import useTranslation from '../hooks/useTranslation';
 
 type Data = {
     name: string;
@@ -29,6 +29,7 @@ export const ButtonRadioInput: React.FC<ButtonRadioInputProps> = ({
     error,
 }) => {
     const dispatch = useDispatch();
+    const { t } = useTranslation();
     const { vehicleState } = useSelector(getFormSelector);
     const [tooltipOpen, setTooltipOpen] = useState(false);
 

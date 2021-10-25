@@ -23,7 +23,6 @@ import {
     faDotCircle as farDotCircle,
     faCircle as farCircle,
 } from '@fortawesome/free-regular-svg-icons';
-import { t } from 'autobiz-translate';
 
 import _ from 'lodash';
 import {
@@ -51,6 +50,7 @@ import { updateUserInformationsUseCase } from '../../../../hexagon/usecases/upda
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import useScroll from '../hooks/useScroll';
+import useTranslation from '../hooks/useTranslation';
 
 type TAppointmentProps = {
     recordUid: string;
@@ -59,6 +59,7 @@ type TAppointmentProps = {
 export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const dispatch = useDispatch();
     const { scrollToElement } = useScroll();
+    const { t } = useTranslation();
 
     const [dealer, setDealer] = useState<{ id: string; name: string }>({ id: '', name: '' });
     const [showAllDealers, setShowAllDealers] = useState<boolean>(false);

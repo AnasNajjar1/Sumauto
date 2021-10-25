@@ -1,8 +1,8 @@
 import React from 'react';
-import { t } from 'autobiz-translate';
 import { Progress } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import useTranslation from '../hooks/useTranslation';
 
 type TProgressStepsProps = {
     withLabels: boolean;
@@ -12,6 +12,7 @@ export const ProgressSteps: React.FC<TProgressStepsProps> = ({
     withLabels,
     progress,
 }: TProgressStepsProps) => {
+    const { t } = useTranslation();
     let class1;
     let class2;
     let class3;

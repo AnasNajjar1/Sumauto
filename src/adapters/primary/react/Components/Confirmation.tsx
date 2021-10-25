@@ -10,7 +10,6 @@ import {
     ModalFooter,
 } from 'reactstrap';
 import { useDispatch } from 'react-redux';
-import { t } from 'autobiz-translate';
 
 import { Map } from './Map';
 import { FeatureGroup } from './FeatureGroup';
@@ -20,8 +19,10 @@ import { cancelAppointmentUseCase } from '../../../../hexagon/usecases/cancelApp
 import { Picture } from './Picture';
 import { TRecord } from '../../../../hexagon/interfaces';
 import useScroll from '../hooks/useScroll';
+import useTranslation from '../hooks/useTranslation';
 
 export const Confirmation: React.FC<TRecord> = (props) => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const { scrollToElement } = useScroll();
 
