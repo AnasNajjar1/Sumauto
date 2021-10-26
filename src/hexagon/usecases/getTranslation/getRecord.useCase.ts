@@ -11,7 +11,7 @@ export const getTranslationUseCase =
         { translationGateway }: { translationGateway: TranslationGateway },
     ) => {
         dispatch(actionCreators.Actions.translationFetching());
-        const result = await translationGateway.requestTranslations('prod', 'sumauto-app', 'es');
+        const result = await translationGateway.requestTranslations('dev', 'sumauto-app', 'es');
 
         if (isRight(result)) {
             dispatch(actionCreators.Actions.translationRetrieved(result.right));
