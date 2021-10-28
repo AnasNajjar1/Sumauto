@@ -733,3 +733,19 @@ input[type=number] {
         margin: 1em 0;
     }
 }
+
+.form-group-privacy{
+    .form-check-input{
+        margin-top: 0.15rem;
+    }
+    label{
+        font-weight: normal;
+        @extend .small;
+    }
+    &.invalid{
+        label{
+            color: $danger;
+            border-bottom: 2px solid $danger;
+        }
+    }
+}

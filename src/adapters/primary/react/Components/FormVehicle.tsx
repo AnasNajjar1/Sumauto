@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Row, Col, Button, Spinner } from 'reactstrap';
+import { Container, Row, Col, Button, Spinner, FormGroup, Input, Label } from 'reactstrap';
 import { useHistory } from 'react-router';
 import { ProgressSteps } from './ProgressSteps';
 import { Picture } from './Picture';
@@ -37,6 +37,7 @@ export const FormVehicle: React.FC = () => {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const [errors, setErrors] = useState<any>({});
     const [canQuote, setCanQuote] = useState<boolean>(false);
+    const [privacyChecked, setPrivacyChecked] = useState<boolean>(false);
     const [trySubmit, setTrySubmit] = useState<boolean>(false);
     const [progress, setProgress] = useState<number>(0);
     const [displaySectionMoreDetails, setDisplaySectionMoreDetails] = useState<boolean>(false);
@@ -55,6 +56,7 @@ export const FormVehicle: React.FC = () => {
             setSubmitting(true);
             setCanQuote(false);
         }
+
         setTrySubmit(true);
     };
 
@@ -108,11 +110,11 @@ export const FormVehicle: React.FC = () => {
         setDisplaySectionAdditionalInformation(
             [displaySectionMoreDetails, ...moreDetails].every(Boolean),
         );
-
         setCanQuote(
             [displaySectionMoreDetails, ...moreDetails, ...additionalDetails].every(Boolean) &&
                 checkFormValid &&
-                checkZipCode,
+                checkZipCode &&
+                privacyChecked,
         );
 
         setProgress(
@@ -122,7 +124,7 @@ export const FormVehicle: React.FC = () => {
                 (((additionalDetails.filter(Boolean).length / additionalDetails.length) * 1) / 3) *
                     100,
         );
-    }, [dispatch, vehicle, vehicleState, particular, checkZipCode, checkFormValid]);
+    }, [dispatch, vehicle, vehicleState, particular, checkZipCode, checkFormValid, privacyChecked]);
 
     useEffect(() => {
         if (recordUid && recordStatus === 'saved') {
@@ -171,6 +173,7 @@ export const FormVehicle: React.FC = () => {
                 running: !vehicleState.running,
                 email: !particular.email,
                 zipCode: !particular.zipCode,
+                privacy: !privacyChecked,
             });
         }
     }, [dispatch, trySubmit, vehicle]);
@@ -387,7 +390,6 @@ export const FormVehicle: React.FC = () => {
                                 </Row>
                             </Col>
                         </Row>
-
                         <Row>
                             <Col xs={12} sm={8} lg={9} xl={6}>
                                 <Row>
@@ -412,14 +414,29 @@ export const FormVehicle: React.FC = () => {
                                 />
                             </Col>
                         </Row>
-                        <p
-                            className="small"
-                            dangerouslySetInnerHTML={{
-                                __html: t('policy_of_privacy_html') || '',
-                            }}
-                        />
+                        <FormGroup
+                            check
+                            className={`form-group-privacy ${
+                                errors.privacy && !privacyChecked ? 'invalid' : ''
+                            }`}
+                        >
+                            <Input
+                                type="checkbox"
+                                id="privacy"
+                                checked={privacyChecked}
+                                onClick={() => setPrivacyChecked(!privacyChecked)}
+                            />
+                            <Label
+                                htmlFor="privacy"
+                                check
+                                dangerouslySetInnerHTML={{
+                                    __html: t('policy_of_privacy_html') || '',
+                                }}
+                            />
+                        </FormGroup>
                     </div>
                 )}
+
                 <CtaBlock>
                     <Button onClick={handleSubmitForm}>{t('value_your_car_now')}</Button>
                 </CtaBlock>
