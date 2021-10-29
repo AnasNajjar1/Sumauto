@@ -740,7 +740,6 @@ input[type=number] {
     }
     label{
         font-weight: normal;
-        @extend .small;
     }
     &.invalid{
         label{

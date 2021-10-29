@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Button, Spinner, FormGroup, Input, Label } from 'reactstrap';
 import { useHistory } from 'react-router';
+import TagManager from 'react-gtm-module';
 import { ProgressSteps } from './ProgressSteps';
 import { Picture } from './Picture';
 import { ReferentialSelect } from './ReferentialSelect';
@@ -130,8 +131,48 @@ export const FormVehicle: React.FC = () => {
         if (recordUid && recordStatus === 'saved') {
             if (journeyType === 'valuation') historyHook.push(`./switch/${recordUid}`);
             else historyHook.push(`./record/${recordUid}`);
+
+            TagManager.dataLayer({
+                dataLayer: {
+                    event: 'step4_validate',
+                    step: 'form/validation_formulaire',
+                },
+            });
         }
     }, [dispatch, recordUid, recordStatus, journeyType, historyHook]);
+
+    useEffect(() => {
+        if (displaySectionMoreDetails) {
+            TagManager.dataLayer({
+                dataLayer: {
+                    event: 'step1_validate',
+                    step: 'form/information_de_base',
+                },
+            });
+        }
+    }, [dispatch, displaySectionMoreDetails]);
+
+    useEffect(() => {
+        if (displaySectionAdditionalInformation) {
+            TagManager.dataLayer({
+                dataLayer: {
+                    event: 'step2_validate',
+                    step: 'form/mes_details',
+                },
+            });
+        }
+    }, [dispatch, displaySectionAdditionalInformation]);
+
+    useEffect(() => {
+        if (canQuote) {
+            TagManager.dataLayer({
+                dataLayer: {
+                    event: 'step3_validate',
+                    step: 'form/information_additionnelle',
+                },
+            });
+        }
+    }, [dispatch, canQuote]);
 
     useEffect(() => {
         if (!vehicle.make && trySubmit) scrollToElement('form_group_make', 45);

@@ -100,6 +100,8 @@ $input-focus-border-color: #8F8F8F;
 $input-active-bg: #ffffff;
 $input-inactive-bg: #ffffff;
 $input-error-bg: #ffdddd;
+$link-color: #6c757d;
+$link-decoration: underline;
 
 
 $font-family-base:"makeitsans";
@@ -160,12 +162,9 @@ h2{
     .cta-block  .btn{
         @extend .btn-primary;
     }
-
-    a{
-        color:$gray-600;
-        text-decoration: underline;
-    }
 }
+
+
 
 .page-record{
 
