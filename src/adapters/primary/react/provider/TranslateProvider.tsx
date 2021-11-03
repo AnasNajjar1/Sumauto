@@ -45,8 +45,6 @@ export const TranslateProvider = ({
         try {
             const pathname = `https://translations-host-${stage}.s3-eu-west-1.amazonaws.com/${projectName}/${language}/locale.json`;
             const reponse = await axios.get(pathname);
-
-            console.log(reponse.data);
         } catch (err: any) {
             throw new Error(err.message);
         }

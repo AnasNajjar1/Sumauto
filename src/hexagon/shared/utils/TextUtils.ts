@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export class TextUtils {
     public static isEmailValid = (email: string): boolean =>
         /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email);
@@ -17,11 +19,13 @@ export class TextUtils {
         }).format(value);
 
     public static formatDateNumeric = (locale: string, value: Date): string =>
-        new Intl.DateTimeFormat(locale, {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-        }).format(value);
+        // return new Intl.DateTimeFormat(locale, {
+        //     day: '2-digit',
+        //     month: '2-digit',
+        //     year: 'numeric',
+        // }).format(value);
+
+        moment(value).format('L');
 
     public static toTitleCase = (phrase: string) => {
         phrase = phrase.toLowerCase();

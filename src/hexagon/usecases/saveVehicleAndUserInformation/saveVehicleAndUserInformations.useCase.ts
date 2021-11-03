@@ -81,19 +81,19 @@ export const saveVehicleAndUserInformationsUseCase =
         }
 
         // Updating purchase project
-        // const { purchaseProject } = getState().form.vehicleState;
+        const { purchaseProject } = getState().form.vehicleState;
 
-        // if (purchaseProject) {
-        //     const resultPurchaseProject = await recordGateway.updatePurchaseProject(
-        //         config.identifier,
-        //         recordUid,
-        //         purchaseProject,
-        //     );
+        if (purchaseProject) {
+            const resultPurchaseProject = await recordGateway.updatePurchaseProject(
+                config.identifier,
+                recordUid,
+                purchaseProject,
+            );
 
-        //     if (isLeft(resultPurchaseProject)) {
-        //         return dispatch(dislayErrorUseCase('update_purchase_project_failed'));
-        //     }
-        // }
+            if (isLeft(resultPurchaseProject)) {
+                return dispatch(dislayErrorUseCase('update_purchase_project_failed'));
+            }
+        }
 
         // create quotation
         const resultQuotation = await recordGateway.createQuotation(config.identifier, recordUid);
