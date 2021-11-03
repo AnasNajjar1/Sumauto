@@ -40,6 +40,8 @@ const App: React.FC = () => {
 
     TagManager.initialize(tagManagerArgs);
 
+    console.log('test staging env');
+
     return (
         <>
             <React.Suspense

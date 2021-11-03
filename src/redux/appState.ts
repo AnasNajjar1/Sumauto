@@ -38,10 +38,10 @@ export interface AppState {
         // data: CarDetails;
     };
     form: {
-        vehicle: any; // TODO type this
-        vehicleName: any; // TODO type this
-        vehicleState: any; // TODO type this
-        particular: any; // TODO type this
+        vehicle: any;
+        vehicleName: any;
+        vehicleState: any;
+        particular: any;
         cascade: TReferentialItem[];
         checkZipCode: boolean;
         checkFormValid: boolean;
