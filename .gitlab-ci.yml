@@ -133,7 +133,7 @@ build_ppr:
   script:
     - change_environment_variable_to "prod"
     - npm_install_optimized
-    - npm_build_staging
+    - npm_build_prod
   artifacts:
     paths:
       - ./build
