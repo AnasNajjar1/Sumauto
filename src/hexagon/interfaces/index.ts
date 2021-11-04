@@ -16,10 +16,6 @@ export type Hour = {
     status: HourStatus;
 };
 
-// export type Slots = {
-//     slots: Slot[];
-// };
-
 export type Slot = {
     date: string;
     hours?: Hour[];

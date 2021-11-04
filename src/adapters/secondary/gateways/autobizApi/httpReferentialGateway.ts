@@ -94,6 +94,7 @@ export class HttpReferentialGateway extends BaseApi implements ReferentialGatewa
             if (data.length === 0) {
                 return left('no_result');
             }
+
             if (scope === 'make') {
                 data.preferred = data[0].preferred;
                 data.others = data[0].others;

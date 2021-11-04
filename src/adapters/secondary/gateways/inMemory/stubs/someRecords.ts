@@ -34,10 +34,6 @@ export const somesRecords: TRecord[] = [
             name: 'john',
             zipCode: '12345',
         },
-        // valuation: {
-        //     value: 10000,
-        //     date: new Date('2020-08-20'),
-        // },
     },
     {
         id: '200',
@@ -129,8 +125,8 @@ export const somesRecords: TRecord[] = [
         },
     },
     {
-        id: '500',
-        uid: 'eee',
+        id: '400',
+        uid: 'ddd',
         offerStatus: 'UNQUOTABLE',
         offerNumber: 'NOT_QUOTABLE',
         vehicle: {
@@ -154,39 +150,6 @@ export const somesRecords: TRecord[] = [
             phone: '912341234',
             name: 'john',
             zipCode: '12345',
-        },
-    },
-    {
-        id: '400',
-        uid: 'ddd',
-        offerStatus: 'CONFIRMED',
-        offerNumber: 'REFRESHED',
-        vehicle: {
-            makeId: '100',
-            makeName: 'Peugeot',
-            modelName: '2008',
-            year: '2020',
-            month: 'Enero',
-            registrationDate: new Date(),
-            bodyName: 'Sedan',
-            fuelName: 'Gasolina',
-            engineName: '92CH',
-            gearName: 'automatica',
-            versionName: '1.6 bluehdi 75 active',
-            import: true,
-            mileage: 90000,
-            doors: '5',
-        },
-        customer: {
-            email: 'john@doe.fr',
-            phone: '912341234',
-            name: 'john',
-            zipCode: '12345',
-        },
-        valuation: {
-            value: 16500,
-            privateValue: 17500,
-            date: new Date('2020-08-20'),
         },
     },
 ];

@@ -18,7 +18,7 @@ export const MakeLogoInput: React.FC = () => {
     const { referential, vehicle, vehicleName } = useSelector(getFormSelector);
 
     let makes;
-    if (referential.make.status === 'succeeded' && referential.make.data[0]) {
+    if (referential.make.status === 'succeeded' && referential.make.data) {
         makes = referential.make.data.preferred;
     } else {
         return <></>;

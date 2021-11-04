@@ -38,6 +38,16 @@ export const inMemoryReferential: InMemoryReferential = {
                     name: 'RENAULT',
                 },
             ],
+            0: [
+                {
+                    id: 82,
+                    name: 'PEUGEOT',
+                },
+                {
+                    id: 84,
+                    name: 'RENAULT',
+                },
+            ],
         },
     ],
     models: [

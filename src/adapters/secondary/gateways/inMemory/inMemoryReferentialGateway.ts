@@ -34,7 +34,11 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
     ): Promise<ApiResponse<Scope[]>> {
         switch (scope) {
             case 'make':
-                return right(this.inMemoryReferential.makes);
+                let data: any = Array.isArray(this.inMemoryReferential.makes) ? this.inMemoryReferential.makes : [this.inMemoryReferential.makes];
+                data.preferred = data[0].preferred;
+                data.others = data[0].others;
+                data.all = [...data[0].preferred, ...data[0].others];
+                return right(data);
 
             case 'model':
                 return right(this.inMemoryReferential.models);
@@ -66,6 +70,7 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
             default:
                 return left('error');
         }
+
     }
 
     async requestCartDetailsByRegsitration(registration: string): Promise<ApiResponse<CarDetails>> {
@@ -82,7 +87,7 @@ export class InMemoryReferentialGateway extends BaseApi implements ReferentialGa
                 gear: this.inMemoryReferential.gears[0].id.toString(),
                 gearName: this.inMemoryReferential.gears[0].name,
                 year: this.inMemoryReferential.years[0].id.toString(),
-                month: this.inMemoryReferential.months[0].id.toString().toString(),
+                month: this.inMemoryReferential.months[0].id.toString(),
                 monthName: 'septiembre',
                 fuel: this.inMemoryReferential.fuels[0].id.toString(),
                 fuelName: this.inMemoryReferential.fuels[0].name,
