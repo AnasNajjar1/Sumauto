@@ -121,9 +121,11 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         resaId: number,
     ): Promise<ApiResponse<TAppointment>> {
         const found = this.records.find((e) => e.uid === recordUid);
+
         if (!found) {
             return left('error_create_appointement');
         }
+
         found.appointment = <TAppointment>{ id: 1111 };
         return right(found.appointment);
     }

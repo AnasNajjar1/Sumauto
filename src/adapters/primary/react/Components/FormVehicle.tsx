@@ -132,15 +132,18 @@ export const FormVehicle: React.FC = () => {
             if (journeyType === 'valuation') historyHook.push(`./switch/${recordUid}`);
             else historyHook.push(`./record/${recordUid}`);
 
+            // Tracking step4
             TagManager.dataLayer({
                 dataLayer: {
                     event: 'step4_validate',
                     step: 'form/validation_formulaire',
                 },
             });
+            // Tracking step4
         }
     }, [dispatch, recordUid, recordStatus, journeyType, historyHook]);
 
+    // Tracking step1
     useEffect(() => {
         if (displaySectionMoreDetails) {
             TagManager.dataLayer({
@@ -151,7 +154,9 @@ export const FormVehicle: React.FC = () => {
             });
         }
     }, [dispatch, displaySectionMoreDetails]);
+    // End Tracking step1
 
+    // Tracking step2
     useEffect(() => {
         if (displaySectionAdditionalInformation) {
             TagManager.dataLayer({
@@ -162,7 +167,9 @@ export const FormVehicle: React.FC = () => {
             });
         }
     }, [dispatch, displaySectionAdditionalInformation]);
+    // End Tracking step2
 
+    // Tracking step3
     useEffect(() => {
         if (canQuote) {
             TagManager.dataLayer({
@@ -173,6 +180,7 @@ export const FormVehicle: React.FC = () => {
             });
         }
     }, [dispatch, canQuote]);
+    // End Tracking step3
 
     useEffect(() => {
         if (!vehicle.make && trySubmit) scrollToElement('form_group_make', 45);
