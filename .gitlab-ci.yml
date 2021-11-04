@@ -131,7 +131,7 @@ build_ppr:
       - node_modules/
     policy: pull
   script:
-    - change_environment_variable_to "staging"
+    - change_environment_variable_to "prod"
     - npm_install_optimized
     - npm_build_staging
   artifacts:
