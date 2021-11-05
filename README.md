@@ -19,13 +19,13 @@ Thats means no API are required, data is populated by fakes json stubs in ``app/
 
 
 
-### `npm start:staging`
+### `npm run start:staging`
 
 connect to autobiz staging API
 Runs the app in the development mode.
 
 
-### `npm start:prod`
+### `npm run start:prod`
 
 connect to autobiz prod API
 Runs the app in the development mode.

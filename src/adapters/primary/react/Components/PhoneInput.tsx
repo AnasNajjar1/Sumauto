@@ -3,6 +3,7 @@ import { FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label } 
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import _ from 'lodash';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
@@ -30,11 +31,8 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
 
     useEffect(() => {
         setPhone(particular.phone);
-
-        if (particular.phone) {
-            if (isValidPhone(particular.phone)) setValid(true);
-            else setValid(false);
-        }
+        if (isValidPhone(particular.phone || '')) setValid(true);
+        else setValid(false);
     }, [dispatch, particular.phone]);
 
     const handleChange = (value: string) => {
@@ -56,8 +54,7 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
 
     useEffect(() => {
         if (!phone && required === false) dispatch(checkFormValidUseCase(true));
-        if (phone && valid === false) dispatch(checkFormValidUseCase(false));
-        if (phone && valid === true) dispatch(checkFormValidUseCase(true));
+        if (_.isBoolean(valid)) dispatch(checkFormValidUseCase(valid));
     }, [phone, valid]);
 
     return (
@@ -80,7 +77,7 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
                             </InputGroupText>
                         </InputGroupAddon>
                     </InputGroup>
-                    <InputValidation valid={valid} />
+                    {!_.isUndefined(phone) && <InputValidation valid={valid} />}
                 </InputWithValidation>
             </FormGroup>
         </>
