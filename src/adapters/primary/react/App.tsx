@@ -35,7 +35,9 @@ const App: React.FC = () => {
 
     const tagManagerArgs = {
         gtmId: 'GTM-KK2NJ66',
-        site: clientSlug,
+        dataLayer: {
+            site: clientSlug,
+        },
     };
 
     TagManager.initialize(tagManagerArgs);
