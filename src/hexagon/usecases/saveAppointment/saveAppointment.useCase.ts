@@ -1,4 +1,4 @@
-import { isRight } from 'fp-ts/lib/Either';
+import { isLeft, isRight } from 'fp-ts/lib/Either';
 import { ThunkResult } from '../../../redux/configureStore';
 import { RecordGateway } from '../../gateways/recordGateway.interface';
 import { dislayErrorUseCase } from '../displayError/displayError.useCase';
@@ -10,6 +10,17 @@ export const saveAppointmentUseCase =
     async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
         dispatch(actionCreators.Actions.SaveAppointmentPending());
         const { config } = getState().client;
+        const { particular } = getState().form;
+        const resultUpdateParticular = await recordGateway.updateUserInformation(
+            config.identifier,
+            recordUid,
+            particular,
+        );
+
+        if (isLeft(resultUpdateParticular)) {
+            dispatch(dislayErrorUseCase('update_particular_failed'));
+        }
+
         const result = await recordGateway.createAppointment(
             config.identifier,
             recordUid,

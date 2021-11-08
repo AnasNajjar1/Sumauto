@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Spinner } from 'reactstrap';
-import TagManager from 'react-gtm-module';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
@@ -19,12 +18,15 @@ import 'moment/locale/es';
 import { Cookies } from './Components/Cookies';
 import { GeneralConditions } from './Components/GeneralConditions';
 import { getTranslationUseCase } from '../../../hexagon/usecases/getTranslation/getRecord.useCase';
+import useTracker from './hooks/useTracker';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
     const dispatch = useDispatch();
+    const { trackerInitialize } = useTracker();
     useEffect(() => {
         dispatch(getTranslationUseCase());
+        trackerInitialize(clientSlug);
     }, [dispatch]);
 
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
@@ -32,13 +34,6 @@ const App: React.FC = () => {
     }
     dispatch(setClientNameUseCase(clientSlug));
     dispatch(setJourneyTypeUseCase(journeyType));
-
-    const tagManagerArgs = {
-        gtmId: 'GTM-KK2NJ66',
-        site: clientSlug,
-    };
-
-    TagManager.initialize(tagManagerArgs);
 
     return (
         <>

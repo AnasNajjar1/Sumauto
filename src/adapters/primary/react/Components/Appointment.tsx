@@ -46,7 +46,6 @@ import { AppointmentResume } from './AppointmentResume';
 import { NameInput } from './NameInput';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { saveAppointmentUseCase } from '../../../../hexagon/usecases/saveAppointment/saveAppointment.useCase';
-import { updateUserInformationsUseCase } from '../../../../hexagon/usecases/updateUserInformation/updateUserInformations.useCase';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import useScroll from '../hooks/useScroll';
@@ -103,9 +102,8 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
 
     const formValid = [hour, date, dealer.id, particular.name, checkFormValid].every(Boolean);
 
-    const submitAppointment = () => {
+    const submitForm = () => {
         dispatch(saveAppointmentUseCase(recordUid, hour));
-        dispatch(updateUserInformationsUseCase(recordUid));
     };
 
     return (
@@ -289,7 +287,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                         size="lg"
                         disabled={!formValid}
                         className="mt-3"
-                        onClick={submitAppointment}
+                        onClick={submitForm}
                     >
                         {t('book_an_appointment_now')}
                     </Button>

@@ -91,6 +91,7 @@ export type TClientConfig = {
     phoneRegex: string;
     emailConfirmation: boolean;
     registrationRegex: string;
+    nameRegex: string;
 };
 
 export interface Error {

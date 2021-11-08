@@ -13,5 +13,6 @@ const config: TClientConfig = {
     zipCodeRegex: '^[0-9]{5}$|^(AD)[0-9]{3}$',
     phoneRegex: '^(6|7|9)[0-9]{8}$',
     emailConfirmation: true,
+    nameRegex: '^[a-zA-Z ]*$',
 };
 export default config;

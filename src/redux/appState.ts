@@ -45,7 +45,6 @@ export interface AppState {
         cascade: TReferentialItem[];
         checkZipCode: boolean;
         checkFormValid: boolean;
-
         referential: {
             make: {
                 status: TActionStatus;
