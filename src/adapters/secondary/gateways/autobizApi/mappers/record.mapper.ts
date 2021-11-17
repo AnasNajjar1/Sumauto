@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
 import { TOfferStatus, TRecord } from '../../../../../hexagon/interfaces';
 import { AutobizRecordDetailsDto } from '../dtos/recordDetailsDto';
