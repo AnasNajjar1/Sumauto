@@ -46,7 +46,7 @@ export const NameInput: React.FC = () => {
                         type="text"
                         name="name"
                         id="name"
-                        defaultValue={name}
+                        value={name}
                         onChange={(e) => handleChange(e.currentTarget.value)}
                     />
                     <InputGroupAddon addonType="append">

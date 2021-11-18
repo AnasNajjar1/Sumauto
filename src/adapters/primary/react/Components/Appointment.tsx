@@ -46,7 +46,6 @@ import { AppointmentResume } from './AppointmentResume';
 import { NameInput } from './NameInput';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import { saveAppointmentUseCase } from '../../../../hexagon/usecases/saveAppointment/saveAppointment.useCase';
-import { updateUserInformationsUseCase } from '../../../../hexagon/usecases/updateUserInformation/updateUserInformations.useCase';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import useScroll from '../hooks/useScroll';
@@ -71,7 +70,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const { data: recordData } = useSelector(getRecordSelector);
     const { data: dealerSlotList, status: dealerSlotStatus } =
         useSelector(getDealerSlotListSelector);
-    const { particular, checkFormValid, updateUserInformation } = useSelector(getFormSelector);
+    const { particular, checkFormValid } = useSelector(getFormSelector);
 
     useEffect(() => {
         dispatch(getDealerListUseCase(recordUid));
@@ -104,13 +103,8 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const formValid = [hour, date, dealer.id, particular.name, checkFormValid].every(Boolean);
 
     const submitForm = () => {
-        dispatch(updateUserInformationsUseCase(recordUid));
+        dispatch(saveAppointmentUseCase(recordUid, hour));
     };
-
-    useEffect(() => {
-        if (updateUserInformation === 'succeeded')
-            dispatch(saveAppointmentUseCase(recordUid, hour));
-    }, [dispatch, updateUserInformation]);
 
     return (
         <>
