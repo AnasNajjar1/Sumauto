@@ -76,6 +76,19 @@ export const checkFormValid = (state = false, action: AnyAction) => {
     return state;
 };
 
+export const updateUserInformation = (state = false, action: AnyAction) => {
+    if (action.type === 'updateUserInformation/Pending') {
+        return 'pending';
+    }
+    if (action.type === 'updateUserInformation/FAILED') {
+        return 'failed';
+    }
+    if (action.type === 'updateUserInformation/SUCCESS') {
+        return 'succeeded';
+    }
+    return state;
+};
+
 const referential = combineReducers({
     make: formListReducer('make'),
     model: formListReducer('model'),
@@ -98,4 +111,5 @@ export const formReducer = combineReducers({
     cascade,
     checkZipCode,
     checkFormValid,
+    updateUserInformation,
 });

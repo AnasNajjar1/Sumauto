@@ -71,7 +71,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     const { data: recordData } = useSelector(getRecordSelector);
     const { data: dealerSlotList, status: dealerSlotStatus } =
         useSelector(getDealerSlotListSelector);
-    const { particular, checkFormValid } = useSelector(getFormSelector);
+    const { particular, checkFormValid, updateUserInformation } = useSelector(getFormSelector);
 
     useEffect(() => {
         dispatch(getDealerListUseCase(recordUid));
@@ -103,10 +103,14 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
 
     const formValid = [hour, date, dealer.id, particular.name, checkFormValid].every(Boolean);
 
-    const submitAppointment = () => {
-        dispatch(saveAppointmentUseCase(recordUid, hour));
+    const submitForm = () => {
         dispatch(updateUserInformationsUseCase(recordUid));
     };
+
+    useEffect(() => {
+        if (updateUserInformation === 'succeeded')
+            dispatch(saveAppointmentUseCase(recordUid, hour));
+    }, [dispatch, updateUserInformation]);
 
     return (
         <>
@@ -289,7 +293,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                         size="lg"
                         disabled={!formValid}
                         className="mt-3"
-                        onClick={submitAppointment}
+                        onClick={submitForm}
                     >
                         {t('book_an_appointment_now')}
                     </Button>

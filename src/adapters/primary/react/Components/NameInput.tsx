@@ -8,14 +8,18 @@ import { InputValidation } from './InputValidation';
 import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 import { getFormSelector } from '../../view-models-generators/formSelectors';
 import useTranslation from '../hooks/useTranslation';
+import { getClientSelector } from '../../view-models-generators/clientSelector';
 
 export const NameInput: React.FC = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { particular } = useSelector(getFormSelector);
+    const { config } = useSelector(getClientSelector);
 
     const [name, setName] = useState<string>('');
     const [nameTouched, setNameTouched] = useState<boolean>(false);
+
+    const isValidName = (value: string) => new RegExp(config.nameRegex).test(value);
 
     useEffect(() => {
         if (particular.name) {
@@ -26,7 +30,7 @@ export const NameInput: React.FC = () => {
 
     const handleChange = (value: string) => {
         setNameTouched(true);
-        setName(value);
+        if (isValidName(value)) setName(value);
     };
 
     useEffect(() => {
