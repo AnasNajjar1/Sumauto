@@ -18,15 +18,13 @@ import 'moment/locale/es';
 import { Cookies } from './Components/Cookies';
 import { GeneralConditions } from './Components/GeneralConditions';
 import { getTranslationUseCase } from '../../../hexagon/usecases/getTranslation/getRecord.useCase';
-import useTracker from './hooks/useTracker';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
     const dispatch = useDispatch();
-    const { trackerInitialize } = useTracker();
+
     useEffect(() => {
         dispatch(getTranslationUseCase());
-        trackerInitialize(clientSlug);
     }, [dispatch]);
 
     if (!clients.includes(clientSlug) || !journeys.includes(journeyType)) {
