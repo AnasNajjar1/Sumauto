@@ -1464,11 +1464,10 @@ function launchIframe(iframeElementId,base,type){
     },
     messageCallback: function(messageData){ 
       var type = messageData.message.type;
-
-     if(type === "event"){
+      if(type === "event"){
         var event = messageData.message.event;
         var step = messageData.message.step;
-        sumautoDataLayer.push({event:event, step:step});
+        window.sumautoDataLayer.push({event:event, step:step});
       }
     },
   }, '#' + iframeElementId);
