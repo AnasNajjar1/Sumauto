@@ -75,6 +75,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
     useEffect(() => {
         dispatch(getDealerListUseCase(recordUid));
         dispatch(setParticularValue('phone', recordData.customer.phone || ''));
+        dispatch(setParticularValue('phone2', recordData.customer.phone2 || ''));
         dispatch(setParticularValue('zipCode', recordData.customer.zipCode || ''));
         dispatch(setParticularValue('name', recordData.customer.name || ''));
     }, [dispatch, recordUid, recordData]);
@@ -273,7 +274,7 @@ export const Appointment: React.FC<TAppointmentProps> = ({ recordUid }) => {
                             </Col>
 
                             <Col xs={12} sm={6}>
-                                <PhoneInput required />
+                                <PhoneInput scope="phone2" required />
                             </Col>
                         </Row>
                     </Container>

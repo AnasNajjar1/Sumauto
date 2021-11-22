@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Mapper } from '../../../../../hexagon/infra/Mapper';
 import { TOfferStatus, TRecord } from '../../../../../hexagon/interfaces';
 import { AutobizRecordDetailsDto } from '../dtos/recordDetailsDto';
@@ -56,6 +55,7 @@ export class RecordMapper implements Mapper<TRecord> {
                 email: customer.email,
                 zipCode: customer.zipCode,
                 phone: customer.phone,
+                phone2: customer.phone2,
                 name: customer.lastName,
             },
         };

@@ -14,9 +14,10 @@ import useTranslation from '../hooks/useTranslation';
 
 type TPhoneInputProps = {
     required: boolean;
+    scope: 'phone' | 'phone2';
 };
 
-export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
+export const PhoneInput: React.FC<TPhoneInputProps> = ({ required, scope }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { particular } = useSelector(getFormSelector);
@@ -30,10 +31,13 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
         (value.length === 0 && required === false);
 
     useEffect(() => {
-        setPhone(particular.phone);
-        if (isValidPhone(particular.phone || '')) setValid(true);
+        let telephone = '';
+        if (scope === 'phone') telephone = particular.phone;
+        else if (scope === 'phone2') telephone = particular.phone2;
+        setPhone(telephone);
+        if (isValidPhone(telephone || '')) setValid(true);
         else setValid(false);
-    }, [dispatch, particular.phone]);
+    }, [dispatch, particular.phone, particular.phone2]);
 
     const handleChange = (value: string) => {
         if (isValidPhone(value)) {
@@ -46,10 +50,10 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required }) => {
 
     const handleBlur = () => {
         if (valid) {
-            dispatch(setParticularValue('phone', phone));
-        } else {
-            dispatch(setParticularValue('phone', ''));
-        }
+            if (scope === 'phone') dispatch(setParticularValue('phone', phone));
+            else if (scope === 'phone2') dispatch(setParticularValue('phone2', phone));
+        } else if (scope === 'phone') dispatch(setParticularValue('phone', ''));
+        else if (scope === 'phone2') dispatch(setParticularValue('phone2', ''));
     };
 
     useEffect(() => {

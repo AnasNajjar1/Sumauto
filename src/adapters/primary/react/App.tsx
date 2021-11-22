@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Switch, Route, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Spinner } from 'reactstrap';
-import TagManager from 'react-gtm-module';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
 import { RouteParams } from '../../../hexagon/interfaces';
@@ -23,6 +22,7 @@ import { getTranslationUseCase } from '../../../hexagon/usecases/getTranslation/
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(getTranslationUseCase());
     }, [dispatch]);
@@ -32,15 +32,6 @@ const App: React.FC = () => {
     }
     dispatch(setClientNameUseCase(clientSlug));
     dispatch(setJourneyTypeUseCase(journeyType));
-
-    const tagManagerArgs = {
-        gtmId: 'GTM-KK2NJ66',
-        dataLayer: {
-            site: clientSlug,
-        },
-    };
-
-    TagManager.initialize(tagManagerArgs);
 
     return (
         <>

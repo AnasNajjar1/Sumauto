@@ -64,11 +64,13 @@ export const saveVehicleAndUserInformationsUseCase =
 
         const params = {
             phone,
+            phone2: phone,
             email,
             zipCode,
         };
 
         if (params.phone === '') delete params.phone;
+        if (params.phone === '') delete params.phone2;
 
         const resultUser = await recordGateway.saveUserInformation(
             config.identifier,

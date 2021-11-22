@@ -53,7 +53,7 @@ export type TReferentialItem =
     | 'mileage';
 
 export type TVehicleStateItem = 'imported' | 'history' | 'running' | 'purchaseProject';
-export type TParticularItem = 'zipCode' | 'email' | 'phone' | 'name';
+export type TParticularItem = 'zipCode' | 'email' | 'phone' | 'phone2' | 'name';
 
 export type QuestionKey = TReferentialItem | TVehicleStateItem | TParticularItem;
 
@@ -133,6 +133,7 @@ export type TValuation = {
 export type TCustomer = {
     email: string;
     phone: string;
+    phone2: string;
     zipCode: string;
     name?: string;
 };

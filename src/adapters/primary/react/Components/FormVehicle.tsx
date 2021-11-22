@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Col, Button, Spinner, FormGroup, Input, Label } from 'reactstrap';
 import { useHistory } from 'react-router';
-import TagManager from 'react-gtm-module';
 import { ProgressSteps } from './ProgressSteps';
 import { Picture } from './Picture';
 import { ReferentialSelect } from './ReferentialSelect';
@@ -24,8 +23,10 @@ import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { sellDelay } from '../../../../config';
 import useScroll from '../hooks/useScroll';
 import useTranslation from '../hooks/useTranslation';
+import useTracker from '../hooks/useTracker';
 
 export const FormVehicle: React.FC = () => {
+    const { trackerPushEvent } = useTracker();
     const dispatch = useDispatch();
     const historyHook = useHistory();
     const { scrollToElement } = useScroll();
@@ -133,12 +134,7 @@ export const FormVehicle: React.FC = () => {
             else historyHook.push(`./record/${recordUid}`);
 
             // Tracking step4
-            TagManager.dataLayer({
-                dataLayer: {
-                    event: 'step4_validate',
-                    step: 'form/validation_formulaire',
-                },
-            });
+            trackerPushEvent('step4_validate', 'form/validation_formulaire');
             // Tracking step4
         }
     }, [dispatch, recordUid, recordStatus, journeyType, historyHook]);
@@ -146,12 +142,7 @@ export const FormVehicle: React.FC = () => {
     // Tracking step1
     useEffect(() => {
         if (displaySectionMoreDetails) {
-            TagManager.dataLayer({
-                dataLayer: {
-                    event: 'step1_validate',
-                    step: 'form/information_de_base',
-                },
-            });
+            trackerPushEvent('step1_validate', 'form/information_de_base');
         }
     }, [dispatch, displaySectionMoreDetails]);
     // End Tracking step1
@@ -159,12 +150,7 @@ export const FormVehicle: React.FC = () => {
     // Tracking step2
     useEffect(() => {
         if (displaySectionAdditionalInformation) {
-            TagManager.dataLayer({
-                dataLayer: {
-                    event: 'step2_validate',
-                    step: 'form/mes_details',
-                },
-            });
+            trackerPushEvent('step2_validate', 'form/mes_details');
         }
     }, [dispatch, displaySectionAdditionalInformation]);
     // End Tracking step2
@@ -172,12 +158,7 @@ export const FormVehicle: React.FC = () => {
     // Tracking step3
     useEffect(() => {
         if (canQuote) {
-            TagManager.dataLayer({
-                dataLayer: {
-                    event: 'step3_validate',
-                    step: 'form/information_additionnelle',
-                },
-            });
+            trackerPushEvent('step3_validate', 'form/information_additionnelle');
         }
     }, [dispatch, canQuote]);
     // End Tracking step3
@@ -450,7 +431,7 @@ export const FormVehicle: React.FC = () => {
                                         <ZipCodeInput error={errors.zipCode} />
                                     </Col>
                                     <Col xs={12} md={6}>
-                                        <PhoneInput required={false} />
+                                        <PhoneInput scope="phone" required={false} />
                                     </Col>
                                 </Row>
                             </Col>

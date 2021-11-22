@@ -1409,6 +1409,12 @@ var urlParams;
        urlParams[decode(match[1])] = decode(match[2]);
 })();
 
+function dynamicallyLoadScript(url) {
+  var script = document.createElement("script"); 
+  script.src = url;  
+  document.head.appendChild(script);  
+}
+
 function launchIframe(iframeElementId,base,type){
 
   if(type !== "sale" && type !== "valuation"){
@@ -1439,6 +1445,31 @@ function launchIframe(iframeElementId,base,type){
   }
 
   iframe.src = url;
-  iFrameResize({ log: false }, '#' + iframeElementId);
+
+
+  iFrameResize({ 
+    log: false,
+    onInit : function(){ 
+      dynamicallyLoadScript("https://www.googletagmanager.com/gtag/js?id=GTM-KK2NJ66&l=sumautoDataLayer");
+      sumautoDataLayer = window.dataLayer || [];
+      var site;
+      if(url.includes("autocasion"))
+        site = "autocasion";
+      else if (url.includes("autoscout24"))
+        site = "autoscout24";
+      else if (url.includes("unoauto"))
+        site = "unoauto";
+
+      sumautoDataLayer.push({site:site});
+    },
+    messageCallback: function(messageData){ 
+      var type = messageData.message.type;
+      if(type === "event"){
+        var event = messageData.message.event;
+        var step = messageData.message.step;
+        window.sumautoDataLayer.push({event:event, step:step});
+      }
+    },
+  }, '#' + iframeElementId);
 }
 

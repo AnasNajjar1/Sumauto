@@ -1,5 +1,4 @@
 import { isRight } from 'fp-ts/lib/Either';
-import { elem } from 'fp-ts/lib/Option';
 import { ThunkResult } from '../../../redux/configureStore';
 import { ReferentialGateway } from '../../gateways/referentialGateway.interface';
 import { TReferentialItem } from '../../interfaces';
