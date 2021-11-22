@@ -1464,12 +1464,9 @@ function launchIframe(iframeElementId,base,type){
     },
     messageCallback: function(messageData){ 
       var type = messageData.message.type;
-      console.log("type", type)
       if(type === "event"){
         var event = messageData.message.event;
         var step = messageData.message.step;
-        console.log("window", window)
-        console.log("sumautoDataLayer", sumautoDataLayer)
         window.sumautoDataLayer.push({event:event, step:step});
       }
     },
