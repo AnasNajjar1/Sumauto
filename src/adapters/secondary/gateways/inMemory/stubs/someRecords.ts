@@ -31,6 +31,7 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
+            phone2: '912341234',
             name: 'john',
             zipCode: '12345',
         },
@@ -59,6 +60,7 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
+            phone2: '912341234',
             name: 'john',
             zipCode: '12345',
         },
@@ -115,6 +117,7 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
+            phone2: '912341234',
             name: 'john',
             zipCode: '12345',
         },
@@ -148,6 +151,7 @@ export const somesRecords: TRecord[] = [
         customer: {
             email: 'john@doe.fr',
             phone: '912341234',
+            phone2: '912341234',
             name: 'john',
             zipCode: '12345',
         },

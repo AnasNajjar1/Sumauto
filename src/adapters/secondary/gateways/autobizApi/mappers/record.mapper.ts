@@ -55,6 +55,7 @@ export class RecordMapper implements Mapper<TRecord> {
                 email: customer.email,
                 zipCode: customer.zipCode,
                 phone: customer.phone,
+                phone2: customer.phone2,
                 name: customer.lastName,
             },
         };

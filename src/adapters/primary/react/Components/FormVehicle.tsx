@@ -431,7 +431,7 @@ export const FormVehicle: React.FC = () => {
                                         <ZipCodeInput error={errors.zipCode} />
                                     </Col>
                                     <Col xs={12} md={6}>
-                                        <PhoneInput required={false} />
+                                        <PhoneInput scope="phone" required={false} />
                                     </Col>
                                 </Row>
                             </Col>
