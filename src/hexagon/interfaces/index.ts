@@ -1,4 +1,4 @@
-import { string } from 'fp-ts';
+export type TDeviceType = 'mobile' | 'tablet' | 'desktop' | '';
 
 export type Dealer = {
     id: string;

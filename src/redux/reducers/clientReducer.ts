@@ -1,6 +1,13 @@
 import { AnyAction, combineReducers } from 'redux';
 import { TClientConfig } from '../../hexagon/interfaces';
 
+export const deviceType = (state = '', action: AnyAction) => {
+    if (action.type === 'client/SET_DEVICE_TYPE') {
+        return action.payload.deviceType;
+    }
+    return state;
+};
+
 export const name = (state = '', action: AnyAction) => {
     if (action.type === 'client/SET_NAME') {
         return action.payload.name;
@@ -24,6 +31,7 @@ export const config = (state: TClientConfig = clientConfigInitialState, action: 
 
 export const clientReducer = combineReducers({
     name,
+    deviceType,
     journeyType,
     config,
 });
