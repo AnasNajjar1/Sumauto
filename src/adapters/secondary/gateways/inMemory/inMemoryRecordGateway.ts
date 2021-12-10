@@ -5,7 +5,7 @@ import {
     RecordIds,
     UpdateStatus,
     TVehicle,
-    VehicleStateInformation,
+    TVehicleState,
     TCustomer,
     TRecord,
     TAppointment,
@@ -22,7 +22,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     async saveVehicleInformation(
         identifier: string,
         offer: TJourney,
-        vehicleInformation: TVehicle,
+        vehicleInformation: TVehicle, 
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
             return right(this.recordIds);
@@ -34,7 +34,7 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     async saveVehicleStateInformation(
         identifier: string,
         recordUid: string,
-        vehicleStateInformation: VehicleStateInformation ,
+        vehicleState: TVehicleState ,
     ): Promise<ApiResponse<RecordIds>> {
         if (this.recordIds) {
             return right(this.recordIds);
@@ -135,6 +135,13 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
         recordUid: string,
         name: string,
         value: number,
+    ): Promise<ApiResponse<UpdateStatus>> {
+        return right({ status: true });
+    }
+
+    async updateNotRollingProject(
+        identifier: string,
+        recordUid: string,
     ): Promise<ApiResponse<UpdateStatus>> {
         return right({ status: true });
     }

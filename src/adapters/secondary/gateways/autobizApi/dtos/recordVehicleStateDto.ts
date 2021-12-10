@@ -10,4 +10,6 @@ export interface AutobizRecordVehicleStateDto {
     running?: number;
     frontTire?: number;
     rearTire?: number;
+    notRollingReason?: number;
+    notRollingDescription?: string;
 }

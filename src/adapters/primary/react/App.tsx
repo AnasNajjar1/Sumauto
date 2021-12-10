@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Spinner } from 'reactstrap';
 import { FormVehicle } from './Components/FormVehicle';
 import ErrorModal from './Components/ErrorModal';
-import { RouteParams } from '../../../hexagon/interfaces';
+import { RouteParams, TDeviceType } from '../../../hexagon/interfaces';
 import { themeSelector } from './Themes';
 import { ErrorPage } from './Components/ErrorPage';
 import { clients, journeys } from '../../../config';
@@ -18,6 +18,7 @@ import 'moment/locale/es';
 import { Cookies } from './Components/Cookies';
 import { GeneralConditions } from './Components/GeneralConditions';
 import { getTranslationUseCase } from '../../../hexagon/usecases/getTranslation/getRecord.useCase';
+import { setClientDeviceTypeUseCase } from '../../../hexagon/usecases/setClientDevice/setClientName.useCase';
 
 const App: React.FC = () => {
     const { clientSlug, journeyType } = useParams<RouteParams>();
@@ -32,6 +33,13 @@ const App: React.FC = () => {
     }
     dispatch(setClientNameUseCase(clientSlug));
     dispatch(setJourneyTypeUseCase(journeyType));
+    const { innerWidth: width } = window;
+    let deviceType: TDeviceType = '';
+    if (width < 768) deviceType = 'mobile';
+    else if (width < 1199) deviceType = 'tablet';
+    else if (width > 1200) deviceType = 'desktop';
+
+    dispatch(setClientDeviceTypeUseCase(deviceType));
 
     return (
         <>

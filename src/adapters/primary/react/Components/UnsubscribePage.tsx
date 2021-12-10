@@ -24,7 +24,6 @@ import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { TextUtils } from '../../../../hexagon/shared/utils/TextUtils';
 import { unsubscribeUseCase } from '../../../../hexagon/usecases/unsubscribe/unsubscribe.useCase';
 import { getUnsubscribeSelector } from '../../view-models-generators/unsubscribeSelectors';
-import { Loader } from './Loader';
 import useTranslation from '../hooks/useTranslation';
 
 export const UnsubscribePage: React.FC = () => {

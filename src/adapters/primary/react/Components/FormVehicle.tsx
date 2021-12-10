@@ -18,15 +18,20 @@ import { saveVehicleAndUserInformationsUseCase } from '../../../../hexagon/useca
 import { getRecordSelector } from '../../view-models-generators/recordSelectors';
 import { getReferentialList } from '../../../../hexagon/usecases/getReferentialList/getReferentialList';
 import { RegistrationInput } from './RegistrationInput';
-import { setCascade } from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
+import {
+    setCascade,
+    setVehicleValueCascade,
+} from '../../../../hexagon/usecases/setVehicleValue/setVehicleValue.useCase';
 import { getClientSelector } from '../../view-models-generators/clientSelector';
 import { sellDelay } from '../../../../config';
 import useScroll from '../hooks/useScroll';
 import useTranslation from '../hooks/useTranslation';
 import useTracker from '../hooks/useTracker';
+import { SimpleInput } from './SimpleInput';
+import { setVehicleStateValue } from '../../../../hexagon/usecases/setVehicleStateValue/setVehicleStateValue.useCase';
+import { setParticularValue } from '../../../../hexagon/usecases/setParticularValue/setParticularValue.useCase';
 
 export const FormVehicle: React.FC = () => {
-    const { trackerPushEvent } = useTracker();
     const dispatch = useDispatch();
     const historyHook = useHistory();
     const { scrollToElement } = useScroll();
@@ -48,7 +53,16 @@ export const FormVehicle: React.FC = () => {
 
     let displayEncouragementVersion = false;
     let displayEncouragementEmail = false;
-
+    useTracker(
+        vehicle,
+        vehicleState,
+        particular,
+        displaySectionMoreDetails,
+        displaySectionAdditionalInformation,
+        privacyChecked,
+        canQuote,
+        submitting,
+    );
     if (vehicle.engine) displayEncouragementVersion = true;
     if (vehicleState.running) displayEncouragementEmail = true;
 
@@ -79,6 +93,24 @@ export const FormVehicle: React.FC = () => {
         );
 
         dispatch(getReferentialList('make'));
+
+        // TODO REMOVE
+        dispatch(setVehicleValueCascade('make', '162'));
+        dispatch(setVehicleValueCascade('model', '668'));
+        dispatch(setVehicleValueCascade('mileage', '121125'));
+        dispatch(setVehicleStateValue('imported', 'no'));
+        dispatch(setVehicleStateValue('history', 'yes'));
+
+        // dispatch(setVehicleStateValue('running', 'yes'));
+        // dispatch(setVehicleStateValue('purchaseProject', '3'));
+
+        dispatch(setVehicleStateValue('running', 'no'));
+        dispatch(setVehicleStateValue('notRollingReason', 'seriousDammage'));
+        dispatch(setVehicleStateValue('notRollingDescription', 'Lorem'));
+
+        dispatch(setParticularValue('email', 'ma@yopmail.com'));
+        dispatch(setParticularValue('zipCode', '28029'));
+        dispatch(setParticularValue('phone', '911112222'));
     }, [dispatch]);
 
     useEffect(() => {
@@ -132,36 +164,8 @@ export const FormVehicle: React.FC = () => {
         if (recordUid && recordStatus === 'saved') {
             if (journeyType === 'valuation') historyHook.push(`./switch/${recordUid}`);
             else historyHook.push(`./record/${recordUid}`);
-
-            // Tracking step4
-            trackerPushEvent('step4_validate', 'form/validation_formulaire');
-            // Tracking step4
         }
     }, [dispatch, recordUid, recordStatus, journeyType, historyHook]);
-
-    // Tracking step1
-    useEffect(() => {
-        if (displaySectionMoreDetails) {
-            trackerPushEvent('step1_validate', 'form/information_de_base');
-        }
-    }, [dispatch, displaySectionMoreDetails]);
-    // End Tracking step1
-
-    // Tracking step2
-    useEffect(() => {
-        if (displaySectionAdditionalInformation) {
-            trackerPushEvent('step2_validate', 'form/mes_details');
-        }
-    }, [dispatch, displaySectionAdditionalInformation]);
-    // End Tracking step2
-
-    // Tracking step3
-    useEffect(() => {
-        if (canQuote) {
-            trackerPushEvent('step3_validate', 'form/information_additionnelle');
-        }
-    }, [dispatch, canQuote]);
-    // End Tracking step3
 
     useEffect(() => {
         if (!vehicle.make && trySubmit) scrollToElement('form_group_make', 45);
@@ -178,7 +182,12 @@ export const FormVehicle: React.FC = () => {
         else if (!vehicleState.imported) scrollToElement('form_group_imported', 45);
         else if (!vehicleState.history) scrollToElement('form_group_history', 45);
         else if (!vehicleState.running) scrollToElement('form_group_running', 45);
-        else if (!vehicleState.purchaseProject) scrollToElement('form_group_purchaseProject', 45);
+        else if (vehicleState.running === 'yes' && !vehicleState.purchaseProject)
+            scrollToElement('form_group_purchaseProject', 45);
+        else if (vehicleState.running === 'no' && !vehicleState.notRollingReason)
+            scrollToElement('form_group_notRollingReason', 45);
+        else if (vehicleState.running === 'no' && !vehicleState.notRollingDescription)
+            scrollToElement('form_group_notRollingDescription', 45);
         else if (!particular.email) scrollToElement('form_group_email', 45);
         else if (!particular.zipCode) scrollToElement('form_group_zipCode', 45);
 
@@ -201,6 +210,9 @@ export const FormVehicle: React.FC = () => {
                 import: !vehicleState.imported,
                 history: !vehicleState.history,
                 running: !vehicleState.running,
+                notRollingReason: vehicleState.running === 'no' && !vehicleState.notRollingReason,
+                notRollingDescription:
+                    vehicleState.running === 'no' && !vehicleState.notRollingDescription,
                 email: !particular.email,
                 zipCode: !particular.zipCode,
                 privacy: !privacyChecked,
@@ -409,14 +421,43 @@ export const FormVehicle: React.FC = () => {
                                             error={errors.running}
                                         />
                                     </Col>
-                                    <Col xs={12} md={12} lg={12} xl={8}>
-                                        <ButtonRadioInput
-                                            label="purchaseProject"
-                                            id="purchaseProject"
-                                            data={sellDelay}
-                                            error={errors.running}
-                                        />
-                                    </Col>
+                                    {vehicleState.running === 'no' && (
+                                        <Col xs={12} md={12} lg={12} xl={8}>
+                                            <ButtonRadioInput
+                                                label="notRollingReason"
+                                                id="notRollingReason"
+                                                data={[
+                                                    {
+                                                        name: 'seriousDammage',
+                                                        value: 'seriousDammage',
+                                                    },
+                                                    {
+                                                        name: 'accidentWithDammage',
+                                                        value: 'accidentWithDammage',
+                                                    },
+                                                    { name: 'floodOrFire', value: 'floodOrFire' },
+                                                ]}
+                                                error={errors.notRollingReason}
+                                            />
+                                            <SimpleInput
+                                                label="notRollingDescription"
+                                                id="notRollingDescription"
+                                                inputType="textarea"
+                                                placeholder="notRollingDescription_placeholder"
+                                                error={errors.notRollingDescription}
+                                            />
+                                        </Col>
+                                    )}
+                                    {vehicleState.running === 'yes' && (
+                                        <Col xs={12} md={12} lg={12} xl={8}>
+                                            <ButtonRadioInput
+                                                label="purchaseProject"
+                                                id="purchaseProject"
+                                                data={sellDelay}
+                                                error={errors.running}
+                                            />
+                                        </Col>
+                                    )}
                                 </Row>
                             </Col>
                         </Row>

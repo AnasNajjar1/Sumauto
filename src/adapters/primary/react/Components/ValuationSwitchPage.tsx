@@ -42,6 +42,7 @@ export const ValuationSwitch: React.FC<TRecord> = () => {
     if (!privateSellLink) history.push(`/record/${recordUid}`);
 
     if (record.offerStatus === 'UNQUOTABLE') history.push(`/record/${recordUid}`);
+    if (record.offerStatus === 'NOT_ROLLING') history.push(`/record/${recordUid}`);
 
     if (!record.valuation) {
         return <></>;

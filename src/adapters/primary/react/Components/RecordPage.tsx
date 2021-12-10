@@ -13,6 +13,7 @@ import { ActiveValuation } from './ActiveValuation';
 import { NoValuation } from './NoValuation';
 import { Confirmation } from './Confirmation';
 import useScroll from '../hooks/useScroll';
+import { NotRolling } from './NotRolling';
 
 export const RecordPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -40,6 +41,7 @@ export const RecordPage: React.FC = () => {
         case 'UNQUOTABLE':
             component = <NoValuation {...record} />;
             break;
+
         case 'CONFIRMED':
             component = <Confirmation {...record} />;
             break;
@@ -50,6 +52,11 @@ export const RecordPage: React.FC = () => {
 
         case 'NO_APPOINTMENT':
             component = <ActiveValuation {...record} />;
+            break;
+
+        case 'NOT_ROLLING':
+            component = <NotRolling {...record} />;
+            break;
     }
 
     return (

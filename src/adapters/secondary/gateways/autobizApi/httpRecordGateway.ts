@@ -4,7 +4,7 @@ import {
     RecordIds,
     UpdateStatus,
     TVehicle,
-    VehicleStateInformation,
+    TVehicleState,
     TCustomer,
     TRecord,
     TAppointment,
@@ -18,6 +18,7 @@ import { RecordVehicleStateMapper } from './mappers/recordVehicleState.mapper';
 import { RecordMapper } from './mappers/record.mapper';
 import { PurchaseProjectMapper } from './mappers/purchaseProjectVehicle.mapper';
 import { AppointmentMapper } from './mappers/appointment.mapper';
+import { NotRollingProjectMapper } from './mappers/notRollingProjectVehicle.mapper';
 
 export class HttpRecordGateway extends BaseApi implements RecordGateway {
     async saveVehicleInformation(
@@ -40,14 +41,10 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
     async saveVehicleStateInformation(
         identifier: string,
         recordUid: string,
-        vehicleStateInformation: VehicleStateInformation,
+        vehicleState: TVehicleState,
     ): Promise<ApiResponse<RecordIds>> {
         try {
-            const data = RecordVehicleStateMapper.toAutobiz(
-                identifier,
-                recordUid,
-                vehicleStateInformation,
-            );
+            const data = RecordVehicleStateMapper.toAutobiz(identifier, recordUid, vehicleState);
 
             const response = await this.post(`/record/${recordUid}/state`, data);
 
@@ -213,5 +210,20 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
         }
 
         return right({ status: true });
+    }
+
+    async updateNotRollingProject(
+        identifier: string,
+        recordUid: string,
+    ): Promise<ApiResponse<UpdateStatus>> {
+        try {
+            const data = NotRollingProjectMapper.toAutobiz(identifier);
+
+            const response = await this.put(`/record/${recordUid}/not-rolling`, data);
+
+            return right(response.data);
+        } catch (error) {
+            return left(error as string);
+        }
     }
 }

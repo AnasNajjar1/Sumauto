@@ -2,7 +2,7 @@ import {
     RecordIds,
     UpdateStatus,
     TVehicle,
-    VehicleStateInformation,
+    TVehicleState,
     TCustomer,
     TRecord,
     TAppointment,
@@ -21,7 +21,7 @@ export interface RecordGateway {
     saveVehicleStateInformation(
         identifier: string,
         recordUid: string,
-        vehicleStateInformation: VehicleStateInformation,
+        vehicleStateInformation: TVehicleState,
     ): Promise<ApiResponse<RecordIds>>;
 
     saveUserInformation(
@@ -61,5 +61,10 @@ export interface RecordGateway {
         recordUid: string,
         name: string,
         value: number,
+    ): Promise<ApiResponse<UpdateStatus>>;
+
+    updateNotRollingProject(
+        identifier: string,
+        recordUid: string,
     ): Promise<ApiResponse<UpdateStatus>>;
 }

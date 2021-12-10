@@ -31,14 +31,17 @@ module.exports = {
         'arrow-body-style': ['warn'],
         'no-restricted-syntax': ['warn'],
         'import/no-extraneous-dependencies': 'off',
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        'no-param-reassign': "off",
-        'react/jsx-props-no-spreading': "off",
-        'react/no-danger': "off", 
-        'react-hooks/exhaustive-deps':"warn",
-        "react/prop-types": "off",
-        "react/require-default-props": "off",
-        "@typescript-eslint/ban-ts-comment": "off"
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        'no-param-reassign': 'off',
+        'react/jsx-props-no-spreading': 'off',
+        'react/no-danger': 'off', 
+        'react-hooks/exhaustive-deps':'warn',
+        'react/prop-types': 'off',
+        'react/require-default-props': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        'react-hooks/exhaustive-deps': 'off'
+
     },
     ignorePatterns: ['.eslintrc.js']
 };

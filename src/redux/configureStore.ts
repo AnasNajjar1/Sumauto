@@ -9,6 +9,7 @@ import { dealerReducer } from './reducers/dealerReducer';
 import { errorReducer } from './reducers/errorReducer';
 import { clientReducer } from './reducers/clientReducer';
 import { recordReducer } from './reducers/recordReducer';
+import { notRollingReducer } from './reducers/notRollingReducer';
 import { unsubscribeReducer } from './reducers/unsubscribeReducer';
 import { cancelAppointmentReducer } from './reducers/cancelAppointmentReducer';
 import { carDetailsReducer } from './reducers/carDetailsReducer';
@@ -22,6 +23,7 @@ export const configureStore = (dependencies?: Partial<Dependencies>) =>
             form: formReducer,
             dealer: dealerReducer,
             record: recordReducer,
+            notRolling: notRollingReducer,
             error: errorReducer,
             unsubscribe: unsubscribeReducer,
             cancelAppointment: cancelAppointmentReducer,

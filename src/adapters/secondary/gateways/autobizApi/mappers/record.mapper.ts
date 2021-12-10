@@ -21,6 +21,10 @@ export class RecordMapper implements Mapper<TRecord> {
             status = 'UNQUOTABLE';
         }
 
+        if (dto.vehicleState.general === 'not-rolling') {
+            status = 'NOT_ROLLING';
+        }
+
         const year = new Date(vehicle.registrationDate).getFullYear().toString();
         let month = (new Date(vehicle.registrationDate).getMonth() + 1).toString();
         month = `0${month}`.slice(-2);
