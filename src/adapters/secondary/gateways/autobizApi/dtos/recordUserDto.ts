@@ -7,6 +7,7 @@ export interface AutobizRecordUserDto {
     zipCode: string;
     lastName?: string;
     firstName?: string;
+    device?: 'mobile' | 'tablet' | 'desktop';
     ip?: string;
     civility?: number;
     unsubscribed?: boolean;

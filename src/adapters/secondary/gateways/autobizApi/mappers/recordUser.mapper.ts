@@ -16,6 +16,7 @@ export class RecordUserMapper implements Mapper<TVehicle> {
             phone2: recordUser.phone2,
             lastName: recordUser.name,
             zipCode: recordUser.zipCode,
+            device: recordUser.deviceType ? recordUser.deviceType : undefined,
         };
     }
 }

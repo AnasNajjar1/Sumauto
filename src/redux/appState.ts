@@ -3,6 +3,7 @@ import {
     Error,
     Slot,
     TClientConfig,
+    TDeviceType,
     TJourney,
     TRecord,
     TReferentialItem,
@@ -15,6 +16,7 @@ export interface AppState {
     client: {
         name: string;
         journeyType: TJourney;
+        deviceType: TDeviceType;
         config: TClientConfig;
     };
     translation: {
@@ -32,6 +34,9 @@ export interface AppState {
         uid: string;
         status: TActionStatus;
         data: TRecord;
+    };
+    notRolling: {
+        status: TActionStatus;
     };
     carDetails: {
         status: TActionStatus;

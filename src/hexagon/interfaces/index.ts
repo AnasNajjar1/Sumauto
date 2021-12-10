@@ -52,7 +52,13 @@ export type TReferentialItem =
     | 'engine'
     | 'mileage';
 
-export type TVehicleStateItem = 'imported' | 'history' | 'running' | 'purchaseProject';
+export type TVehicleStateItem =
+    | 'imported'
+    | 'history'
+    | 'running'
+    | 'notRollingReason'
+    | 'notRollingDescription'
+    | 'purchaseProject';
 export type TParticularItem = 'zipCode' | 'email' | 'phone' | 'phone2' | 'name';
 
 export type QuestionKey = TReferentialItem | TVehicleStateItem | TParticularItem;
@@ -118,9 +124,11 @@ export type TVehicle = {
     mileage: string;
 };
 
-export type VehicleStateInformation = {
+export type TVehicleState = {
     imported: string;
     running: string;
+    notRollingReason?: 'seriousDammage' | 'accidentWithDammage' | 'floodOrFire';
+    notRollingDescription?: string;
     history: string;
 };
 
@@ -136,6 +144,7 @@ export type TCustomer = {
     phone2: string;
     zipCode: string;
     name?: string;
+    deviceType?: TDeviceType;
 };
 
 export type TVehicleNames = {
@@ -183,7 +192,12 @@ export type TAppointment = {
     latitude: number;
     longitude: number;
 };
-export type TOfferStatus = 'EXPIRED' | 'CONFIRMED' | 'NO_APPOINTMENT' | 'UNQUOTABLE';
+export type TOfferStatus =
+    | 'EXPIRED'
+    | 'CONFIRMED'
+    | 'NO_APPOINTMENT'
+    | 'UNQUOTABLE'
+    | 'NOT_ROLLING';
 
 export type TRecord = {
     id: string;

@@ -43,7 +43,9 @@ export const saveVehicleAndUserInformationsUseCase =
         dispatch(getRecordUseCase(recordUid));
 
         // Saving State
-        const { history, imported, running } = getState().form.vehicleState;
+
+        const { history, imported, running, notRollingReason, notRollingDescription } =
+            getState().form.vehicleState;
 
         const resultState = await recordGateway.saveVehicleStateInformation(
             config.identifier,
@@ -52,6 +54,8 @@ export const saveVehicleAndUserInformationsUseCase =
                 history,
                 imported,
                 running,
+                notRollingReason,
+                notRollingDescription,
             },
         );
 
@@ -61,12 +65,14 @@ export const saveVehicleAndUserInformationsUseCase =
 
         // saving user information
         const { email, phone, zipCode } = getState().form.particular;
+        const { deviceType } = getState().client;
 
         const params = {
             phone,
             phone2: phone,
             email,
             zipCode,
+            deviceType,
         };
 
         if (params.phone === '') delete params.phone;

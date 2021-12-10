@@ -748,3 +748,9 @@ input[type=number] {
         }
     }
 }
+
+textarea,
+textarea::placeholder {
+    font-size: 0.85rem;
+  }
+  
