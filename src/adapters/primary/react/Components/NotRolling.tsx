@@ -54,7 +54,7 @@ export const NotRolling: React.FC<TRecord> = ({ customer, vehicle, offerNumber }
 
     useEffect(() => {
         checkForm();
-    }, [dispatch, status]);
+    }, [dispatch, status, phone]);
 
     useEffect(() => {
         setFormValid(phoneValid !== false);
