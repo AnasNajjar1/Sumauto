@@ -14,6 +14,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { stat } from 'fs';
 import { CtaBlock } from './CtaBlock';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';
@@ -24,10 +25,12 @@ import { Picture } from './Picture';
 import { VehicleInformations } from './VehicleInformations';
 import { submitNotRollingVehicleUseCase } from '../../../../hexagon/usecases/submitNotRollingVehicle/submitNotRollingVehicle.useCase';
 import { getNotRollingSelector } from '../../view-models-generators/notRollingSelectors';
+import useScroll from '../hooks/useScroll';
 
 export const NotRolling: React.FC<TRecord> = ({ customer, vehicle, offerNumber }) => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const { scrollToElement } = useScroll();
     const { client } = useSelector(getClientSelector);
     const { status } = useSelector(getNotRollingSelector);
 
@@ -46,8 +49,12 @@ export const NotRolling: React.FC<TRecord> = ({ customer, vehicle, offerNumber }
     };
 
     useEffect(() => {
+        if (status === 'succeeded') scrollToElement('top', 0);
+    }, [dispatch, status]);
+
+    useEffect(() => {
         checkForm();
-    }, [dispatch, phone]);
+    }, [dispatch, status]);
 
     useEffect(() => {
         setFormValid(phoneValid !== false);
