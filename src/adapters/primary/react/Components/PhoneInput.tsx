@@ -51,7 +51,10 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required, scope }) => {
     const handleBlur = () => {
         if (valid) {
             if (scope === 'phone') dispatch(setParticularValue('phone', phone));
-            else if (scope === 'phone2') dispatch(setParticularValue('phone2', phone));
+            else if (scope === 'phone2') {
+                dispatch(setParticularValue('phone2', phone));
+                if (!particular.phone) dispatch(setParticularValue('phone', phone));
+            }
         } else if (scope === 'phone') dispatch(setParticularValue('phone', ''));
         else if (scope === 'phone2') dispatch(setParticularValue('phone2', ''));
     };

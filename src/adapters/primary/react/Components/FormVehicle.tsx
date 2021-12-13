@@ -144,10 +144,16 @@ export const FormVehicle: React.FC = () => {
         setDisplaySectionAdditionalInformation(
             [displaySectionMoreDetails, ...moreDetails].every(Boolean),
         );
+        let checkVoi = true;
+        if (vehicleState.running === 'no') {
+            checkVoi = vehicleState.notRollingDescription && vehicleState.notRollingReason;
+        }
+
         setCanQuote(
             [displaySectionMoreDetails, ...moreDetails, ...additionalDetails].every(Boolean) &&
                 checkFormValid &&
                 checkZipCode &&
+                checkVoi &&
                 privacyChecked,
         );
 

@@ -27,7 +27,7 @@ export const MileageInput: React.FC<MileageInputProps> = ({ error }) => {
 
     const { vehicle } = useSelector(getFormSelector);
 
-    const [mileage, setMileage] = useState<string>(vehicle.mileage);
+    const [mileage, setMileage] = useState<string>(vehicle.mileage || '');
     const [touched, setTouched] = useState<boolean>();
     const [displayWarning, setDisplayWarning] = useState<boolean>(false);
     const [valid, setValid] = useState<boolean>();
