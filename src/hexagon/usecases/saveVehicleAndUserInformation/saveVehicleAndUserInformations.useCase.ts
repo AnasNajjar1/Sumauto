@@ -88,10 +88,11 @@ export const saveVehicleAndUserInformationsUseCase =
             return dispatch(dislayErrorUseCase('create_particular_failed'));
         }
 
-        // Updating purchase project
+        // purchase project
         const { purchaseProject } = getState().form.vehicleState;
 
         if (purchaseProject) {
+            // Updating purchase project
             const resultPurchaseProject = await recordGateway.updatePurchaseProject(
                 config.identifier,
                 recordUid,
@@ -101,14 +102,17 @@ export const saveVehicleAndUserInformationsUseCase =
             if (isLeft(resultPurchaseProject)) {
                 return dispatch(dislayErrorUseCase('update_purchase_project_failed'));
             }
-        }
 
-        // create quotation
-        const resultQuotation = await recordGateway.createQuotation(config.identifier, recordUid);
-        await dispatch(getRecordUseCase(recordUid));
+            // create quotation
+            const resultQuotation = await recordGateway.createQuotation(
+                config.identifier,
+                recordUid,
+            );
+            await dispatch(getRecordUseCase(recordUid));
 
-        if (isLeft(resultQuotation)) {
-            return dispatch(dislayErrorUseCase('create_quotation_failed'));
+            if (isLeft(resultQuotation)) {
+                return dispatch(dislayErrorUseCase('create_quotation_failed'));
+            }
         }
 
         return dispatch(
