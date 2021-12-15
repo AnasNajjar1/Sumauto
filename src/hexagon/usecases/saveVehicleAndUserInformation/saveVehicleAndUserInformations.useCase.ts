@@ -88,19 +88,21 @@ export const saveVehicleAndUserInformationsUseCase =
             return dispatch(dislayErrorUseCase('create_particular_failed'));
         }
 
-        // purchase project
-        const { purchaseProject } = getState().form.vehicleState;
+        // Running / or VOI vehicle
+        if (running === 'yes') {
+            const { purchaseProject } = getState().form.vehicleState;
 
-        if (purchaseProject) {
-            // Updating purchase project
-            const resultPurchaseProject = await recordGateway.updatePurchaseProject(
-                config.identifier,
-                recordUid,
-                purchaseProject,
-            );
+            if (purchaseProject) {
+                // Updating purchase project
+                const resultPurchaseProject = await recordGateway.updatePurchaseProject(
+                    config.identifier,
+                    recordUid,
+                    purchaseProject,
+                );
 
-            if (isLeft(resultPurchaseProject)) {
-                return dispatch(dislayErrorUseCase('update_purchase_project_failed'));
+                if (isLeft(resultPurchaseProject)) {
+                    return dispatch(dislayErrorUseCase('update_purchase_project_failed'));
+                }
             }
 
             // create quotation

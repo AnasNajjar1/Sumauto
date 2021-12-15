@@ -93,24 +93,6 @@ export const FormVehicle: React.FC = () => {
         );
 
         dispatch(getReferentialList('make'));
-
-        // TEST DEV
-        // dispatch(setVehicleValueCascade('make', '162'));
-        // dispatch(setVehicleValueCascade('model', '668'));
-        // dispatch(setVehicleValueCascade('mileage', '121125'));
-        // dispatch(setVehicleStateValue('imported', 'no'));
-        // dispatch(setVehicleStateValue('history', 'yes'));
-
-        // // dispatch(setVehicleStateValue('running', 'yes'));
-        // // dispatch(setVehicleStateValue('purchaseProject', '3'));
-
-        // dispatch(setVehicleStateValue('running', 'no'));
-        // dispatch(setVehicleStateValue('notRollingReason', 'seriousDammage'));
-        // dispatch(setVehicleStateValue('notRollingDescription', 'Lorem'));
-
-        // dispatch(setParticularValue('email', 'ma@yopmail.com'));
-        // dispatch(setParticularValue('zipCode', '28029'));
-        // dispatch(setParticularValue('phone', '911112222'));
     }, [dispatch]);
 
     useEffect(() => {
