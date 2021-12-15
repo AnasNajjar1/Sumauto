@@ -77,6 +77,7 @@ export const saveVehicleAndUserInformationsUseCase =
 
         if (params.phone === '') delete params.phone;
         if (params.phone === '') delete params.phone2;
+        if (params.phone2 === '') delete params.phone2;
 
         const resultUser = await recordGateway.saveUserInformation(
             config.identifier,
