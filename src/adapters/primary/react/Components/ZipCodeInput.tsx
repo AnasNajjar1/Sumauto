@@ -80,6 +80,7 @@ export const ZipCodeInput: React.FC<ZipCodeInputProps> = ({ error }) => {
                         <Input
                             type="tel"
                             id="zipCode"
+                            autoComplete="off"
                             value={zipCode}
                             placeholder={t('zipCode_placeholder')}
                             onChange={(e) => handleChange(e.target.value)}

@@ -50,6 +50,7 @@ export const SimpleInput: React.FC<SimpleInputProps> = ({
                         id={id}
                         name={id}
                         type={inputType}
+                        autoComplete="off"
                         placeholder={placeholder && t(placeholder)}
                         onBlur={(e) => handleChange(e.target.value)}
                     />

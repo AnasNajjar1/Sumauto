@@ -74,6 +74,7 @@ export const PhoneInput: React.FC<TPhoneInputProps> = ({ required, scope }) => {
                             type="tel"
                             id="phone"
                             value={phone}
+                            autoComplete="off"
                             onChange={(e) => handleChange(e.target.value)}
                             placeholder={t('phone_placeholder')}
                             onBlur={() => handleBlur()}

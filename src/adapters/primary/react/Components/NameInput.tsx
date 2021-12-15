@@ -45,6 +45,7 @@ export const NameInput: React.FC = () => {
                     <Input
                         type="text"
                         name="name"
+                        autoComplete="off"
                         id="name"
                         value={name}
                         onChange={(e) => handleChange(e.currentTarget.value)}

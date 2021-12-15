@@ -114,6 +114,7 @@ export const MileageInput: React.FC<MileageInputProps> = ({ error }) => {
                                 <Input
                                     type="tel"
                                     id="mileage"
+                                    autoComplete="off"
                                     placeholder={t('mileage_placeholder')}
                                     value={formatedValue}
                                     onChange={(e) => handleChange(e.target.value)}

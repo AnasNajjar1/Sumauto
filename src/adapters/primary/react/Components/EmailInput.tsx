@@ -108,6 +108,7 @@ export const EmailInput: React.FC<EmailInputProps> = ({ error }) => {
                                     className="form-control"
                                     placeholder={t('email_placeholder')}
                                     type="email"
+                                    autoComplete="off"
                                     id="emailConfirmation"
                                     {...register('emailConfirmation', {
                                         required: t('email_required'),
