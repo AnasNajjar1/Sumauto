@@ -92,6 +92,8 @@ export type TClientConfig = {
     currency: string;
     identifier: string;
     privateSellLink?: string;
+    noDealersAdsLinkValuation: string;
+    noDealersAdsLinkSale: string;
     displayRegistrationOption: boolean;
     zipCodeRegex: string;
     phoneRegex: string;
