@@ -1,5 +1,7 @@
 export type TDeviceType = 'mobile' | 'tablet' | 'desktop' | '';
 
+export type TEmailCategory = 'restitution_mail' | 'cq_mail' | 'empty_network_mail';
+
 export type Dealer = {
     id: string;
     name: string;

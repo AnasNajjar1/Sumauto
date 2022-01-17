@@ -7,6 +7,7 @@ import {
     TRecord,
     TAppointment,
     TJourney,
+    TEmailCategory,
 } from '../interfaces';
 
 import { ApiResponse } from '../infra/ApiResponse';
@@ -66,5 +67,11 @@ export interface RecordGateway {
     updateNotRollingProject(
         identifier: string,
         recordUid: string,
+    ): Promise<ApiResponse<UpdateStatus>>;
+
+    sendMail(
+        identifier: string,
+        recordUid: string,
+        emailCategory: TEmailCategory,
     ): Promise<ApiResponse<UpdateStatus>>;
 }

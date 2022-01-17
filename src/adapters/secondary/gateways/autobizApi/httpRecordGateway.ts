@@ -9,6 +9,7 @@ import {
     TRecord,
     TAppointment,
     TJourney,
+    TEmailCategory,
 } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { RecordGateway } from '../../../../hexagon/gateways/recordGateway.interface';
@@ -19,6 +20,7 @@ import { RecordMapper } from './mappers/record.mapper';
 import { PurchaseProjectMapper } from './mappers/purchaseProjectVehicle.mapper';
 import { AppointmentMapper } from './mappers/appointment.mapper';
 import { NotRollingProjectMapper } from './mappers/notRollingProjectVehicle.mapper';
+import { SendMailMapper } from './mappers/sendMail.mapper';
 
 export class HttpRecordGateway extends BaseApi implements RecordGateway {
     async saveVehicleInformation(
@@ -220,6 +222,22 @@ export class HttpRecordGateway extends BaseApi implements RecordGateway {
             const data = NotRollingProjectMapper.toAutobiz(identifier);
 
             const response = await this.put(`/record/${recordUid}/not-rolling`, data);
+
+            return right(response.data);
+        } catch (error) {
+            return left(error as string);
+        }
+    }
+
+    async sendMail(
+        identifier: string,
+        recordUid: string,
+        emailCategory: TEmailCategory,
+    ): Promise<ApiResponse<UpdateStatus>> {
+        try {
+            const data = SendMailMapper.toAutobiz(identifier, emailCategory);
+
+            const response = await this.post(`/record/${recordUid}/send-mail`, data);
 
             return right(response.data);
         } catch (error) {

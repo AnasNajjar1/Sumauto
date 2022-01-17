@@ -14,7 +14,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { stat } from 'fs';
 import { CtaBlock } from './CtaBlock';
 import { InputWithValidation } from './InputWithValidation';
 import { InputValidation } from './InputValidation';

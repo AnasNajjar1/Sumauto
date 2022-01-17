@@ -1,4 +1,5 @@
 import { left, right } from 'fp-ts/Either';
+import { of } from 'fp-ts/lib/ReaderT';
 import { BaseApi } from '../../../../hexagon/infra/BaseApi';
 import { Dealer, Slot } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
@@ -14,7 +15,12 @@ export class HttpDealerGateway extends BaseApi implements DealerGateway {
                 `/record/${recordUid}/networks?identifier=${identifier}`,
             );
             const dealers = response.data.map((p: AutobizDealerDto) => DealerMapper.toApp(p));
-            return right(dealers);
+
+            if (dealers.length > 0) {
+                return right(dealers);
+            }
+
+            return left('no_dealer');
         } catch (error) {
             return left(error as string);
         }

@@ -1,5 +1,6 @@
-import { isLeft } from 'fp-ts/lib/Either';
+import { isLeft, isRight } from 'fp-ts/lib/Either';
 import { ThunkResult } from '../../../redux/configureStore';
+import { DealerGateway } from '../../gateways/dealerGateway.interface';
 import { RecordGateway } from '../../gateways/recordGateway.interface';
 import { dislayErrorUseCase } from '../displayError/displayError.useCase';
 import { getRecordUseCase } from '../getRecord/getRecord.useCase';
@@ -7,7 +8,14 @@ import * as actionCreators from './actionCreators';
 
 export const saveVehicleAndUserInformationsUseCase =
     (): ThunkResult<void> =>
-    async (dispatch, getState, { recordGateway }: { recordGateway: RecordGateway }) => {
+    async (
+        dispatch,
+        getState,
+        {
+            recordGateway,
+            dealerGateway,
+        }: { recordGateway: RecordGateway; dealerGateway: DealerGateway },
+    ) => {
         dispatch(actionCreators.Actions.saveVehicleAndUserInformationsSaving());
 
         const { config, journeyType } = getState().client;
@@ -89,6 +97,8 @@ export const saveVehicleAndUserInformationsUseCase =
             return dispatch(dislayErrorUseCase('create_particular_failed'));
         }
 
+        let quotationStatus = false;
+
         // Running / or VOI vehicle
         if (running === 'yes') {
             const { purchaseProject } = getState().form.vehicleState;
@@ -116,6 +126,26 @@ export const saveVehicleAndUserInformationsUseCase =
             if (isLeft(resultQuotation)) {
                 return dispatch(dislayErrorUseCase('create_quotation_failed'));
             }
+
+            if (resultQuotation.right) {
+                // quotation status == true
+                quotationStatus = true;
+            }
+        }
+
+        if (quotationStatus) {
+            const resultDealerList = await dealerGateway.requestDealerList(
+                config.identifier,
+                recordUid,
+            );
+
+            if (isRight(resultDealerList)) {
+                await recordGateway.sendMail(config.identifier, recordUid, 'restitution_mail');
+            } else {
+                await recordGateway.sendMail(config.identifier, recordUid, 'empty_network_mail');
+            }
+        } else {
+            await recordGateway.sendMail(config.identifier, recordUid, 'cq_mail');
         }
 
         return dispatch(

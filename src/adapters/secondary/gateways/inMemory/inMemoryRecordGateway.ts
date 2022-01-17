@@ -10,6 +10,7 @@ import {
     TRecord,
     TAppointment,
     TJourney,
+    TEmailCategory,
 } from '../../../../hexagon/interfaces';
 import { ApiResponse } from '../../../../hexagon/infra/ApiResponse';
 import { RecordGateway } from '../../../../hexagon/gateways/recordGateway.interface';
@@ -142,6 +143,14 @@ export class InMemoryRecordGateway extends BaseApi implements RecordGateway {
     async updateNotRollingProject(
         identifier: string,
         recordUid: string,
+    ): Promise<ApiResponse<UpdateStatus>> {
+        return right({ status: true });
+    }
+
+    async sendMail(
+        identifier: string,
+        recordUid: string,
+        emailCategory: TEmailCategory,
     ): Promise<ApiResponse<UpdateStatus>> {
         return right({ status: true });
     }
